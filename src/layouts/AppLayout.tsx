@@ -1,6 +1,9 @@
 import React from 'react';
 import { AppSEO } from '@/components/App';
 import { UIAppLayoutWrapper, UIContainer } from '@/components/UI';
+import SidebarLayout from './SidebarLayout';
+import { Topbar } from '@/components';
+import { Box } from '@mui/material';
 
 interface Props {
   bg?: string;
@@ -9,11 +12,17 @@ interface Props {
   children: React.ReactNode | React.ReactNode[];
 }
 
-const AppLayout = (props: Props) => {
+const AppLayout = ({ bg, title, description, children }: Props) => {
   return (
-    <UIAppLayoutWrapper sx={{ background: props.bg }}>
-      <AppSEO title={props.title || ''} description={props.description || ''} />
-      <UIContainer sx={{ py: 3 }}>{props.children}</UIContainer>
+    <UIAppLayoutWrapper sx={{ background: bg }}>
+      <AppSEO title={title || ''} description={description || ''} />
+      <Box sx={{ display: 'flex' }}>
+        <SidebarLayout />
+        <Box sx={{ width: '100%' }}>
+          <Topbar />
+          <UIContainer>{children}</UIContainer>
+        </Box>
+      </Box>
     </UIAppLayoutWrapper>
   );
 };
