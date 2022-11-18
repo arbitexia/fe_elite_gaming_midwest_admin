@@ -1,0 +1,115 @@
+import { UserType } from '@/types';
+
+export const userStatusData = [
+  {
+    id: 1,
+    label: 'Activated',
+  },
+  {
+    id: 2,
+    label: 'Archived',
+  },
+  {
+    id: 3,
+    label: 'Disabled',
+  },
+];
+
+export const menuActions = [
+  { label: 'View more', color: '#28B446' },
+  { label: 'Edit', color: '#667180' },
+  { label: 'Delete', color: 'rgba(251, 2, 2, 0.6)' },
+];
+
+export const usersTableData: UserType[] = [
+  {
+    id: 1,
+    name: 'Esthera Jackson',
+    email: 'alecthompson@mail.com',
+    phonenumber: '+14898903328',
+    birthday: '14/06/91',
+    role: 'Customer',
+    status: 'Activated',
+    createdAt: '17/09/21',
+  },
+  {
+    id: 2,
+    name: 'Alexa Liras',
+    email: 'alexa@gmail.com',
+    phonenumber: '+14898903328',
+    birthday: '12/06/71',
+    role: 'Customer',
+    status: 'Activated',
+    createdAt: '16/09/21',
+  },
+  {
+    id: 3,
+    name: 'Laurent Michael',
+    email: 'laurentamachael@gmail.com',
+    phonenumber: '+14898903328',
+    birthday: '11/06/99',
+    role: 'Customer',
+    status: 'Activated',
+    createdAt: '15/09/21',
+  },
+  {
+    id: 4,
+    name: 'Esthera Jackson',
+    email: 'alecthompson@mail.com',
+    phonenumber: '+14898903328',
+    birthday: '14/06/91',
+    role: 'Customer',
+    status: 'Archived',
+    createdAt: '17/09/21',
+  },
+  {
+    id: 5,
+    name: 'Alexa Liras',
+    email: 'alexa@gmail.com',
+    phonenumber: '+14898903328',
+    birthday: '12/06/71',
+    role: 'Customer',
+    status: 'Archived',
+    createdAt: '16/09/21',
+  },
+  {
+    id: 6,
+    name: 'Laurent Michael',
+    email: 'laurentamachael@gmail.com',
+    phonenumber: '+14898903328',
+    birthday: '11/06/99',
+    role: 'Customer',
+    status: 'Disabled',
+    createdAt: '15/09/21',
+  },
+  {
+    id: 7,
+    name: 'Esthera Jackson',
+    email: 'alecthompson@mail.com',
+    phonenumber: '+14898903328',
+    birthday: '14/06/91',
+    role: 'Customer',
+    status: 'Disabled',
+    createdAt: '17/09/21',
+  },
+  {
+    id: 8,
+    name: 'Alexa Liras',
+    email: 'alexa@gmail.com',
+    phonenumber: '+14898903328',
+    birthday: '12/06/71',
+    role: 'Customer',
+    status: 'Activated',
+    createdAt: '16/09/21',
+  },
+  {
+    id: 9,
+    name: 'Laurent Michael',
+    email: 'laurentamachael@gmail.com',
+    phonenumber: '+14898903328',
+    birthday: '11/06/99',
+    role: 'Customer',
+    status: 'Pending',
+    createdAt: '15/09/21',
+  },
+];

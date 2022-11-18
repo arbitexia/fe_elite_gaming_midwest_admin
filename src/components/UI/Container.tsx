@@ -1,7 +1,7 @@
 import { styled, Container, ContainerProps } from '@mui/material';
 
 const UIContentWrapper = styled(Container)(({ theme }) => ({
-  padding: theme.spacing(2, 6),
+  padding: theme.spacing(4, 2),
   gap: theme.spacing(3),
   width: '100%',
 }));
