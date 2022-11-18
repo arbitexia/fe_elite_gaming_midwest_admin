@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppSEO } from '@/components/App';
-import { UIAppLayoutWrapper, UIContainer } from '@/components/UI';
+import { UIFlexCenterBox } from '@/components/UI';
 
 interface Props {
   bg?: string;
@@ -9,13 +9,13 @@ interface Props {
   children: React.ReactNode | React.ReactNode[];
 }
 
-const AppLayout = (props: Props) => {
+const AuthLayout = (props: Props) => {
   return (
-    <UIAppLayoutWrapper sx={{ background: props.bg }}>
+    <UIFlexCenterBox height="100vh" sx={{ background: props.bg }}>
       <AppSEO title={props.title || ''} description={props.description || ''} />
-      <UIContainer sx={{ py: 0 }}>{props.children}</UIContainer>
-    </UIAppLayoutWrapper>
+      {props.children}
+    </UIFlexCenterBox>
   );
 };
 
-export default AppLayout;
+export default AuthLayout;
