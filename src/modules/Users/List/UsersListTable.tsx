@@ -16,8 +16,13 @@ import {
   StyledOptionMenuItemText,
   StyledOptionMenu,
   StyledOptionMenuItem,
-} from '../ui';
-import { usersTableData, menuActions } from '@/_mock/users';
+} from './ui';
+import {
+  usersTableData,
+  menuActions,
+  userRole,
+  userStatus,
+} from '@/_mock/users';
 import { getColor } from '@/libs/data-helper';
 import { MenuAction } from '@/constants/Enum';
 
@@ -34,7 +39,7 @@ const UsersTable = () => {
       //TODO Delete Action
     } else
       router.push(
-        `/users/${anchorElOptionsMenu?.getAttribute('data-key')}/${
+        `/${router.asPath}/${anchorElOptionsMenu?.getAttribute('data-key')}/${
           key === MenuAction.EDIT ? MenuAction.EDIT : ''
         }`
       );
@@ -120,11 +125,13 @@ const UsersTable = () => {
               <StyledTableCell>{userItem.email}</StyledTableCell>
               <StyledTableCell>{userItem.phonenumber}</StyledTableCell>
               <StyledTableCell>{userItem.birthday}</StyledTableCell>
-              <StyledTableCell align="center">{userItem.role}</StyledTableCell>
+              <StyledTableCell align="center">
+                {userRole[userItem.role - 1].value}
+              </StyledTableCell>
               <StyledTableCell align="center">
                 <UIChip
-                  label={userItem.status}
-                  color={getColor(userItem.status)}
+                  label={userStatus[userItem.status - 1].value}
+                  color={getColor(userStatus[userItem.status - 1].value)}
                 />
               </StyledTableCell>
               <StyledTableCell>{userItem.createdAt}</StyledTableCell>

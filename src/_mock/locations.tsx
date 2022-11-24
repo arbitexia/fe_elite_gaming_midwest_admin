@@ -1,0 +1,86 @@
+import { LocationType } from '@/types';
+
+export const locationsData: LocationType[] = [
+  {
+    name: 'Palm Casino Resort',
+    coordinates: { lat: 40.7127837, lng: -74.0059413 },
+    id: 1,
+    location: 'New York, USA',
+    status: true,
+    type: 'Palm',
+    urls: [
+      'images/palm.png',
+      'images/roulette.png',
+      'images/palm.png',
+      'images/roulette.png',
+    ],
+  },
+  {
+    name: 'Roulette Casino Resort',
+    coordinates: { lat: 34.0522342, lng: -118.2436849 },
+    id: 2,
+    location: 'California, USA',
+    status: true,
+    type: 'Roulette',
+    urls: ['images/roulette.png'],
+  },
+  {
+    name: 'Palm Casino Resort',
+    coordinates: { lat: 41.8781136, lng: -87.6297982 },
+    id: 3,
+    location: 'Illinois, USA',
+    status: true,
+    type: 'Palm',
+    urls: ['images/palm.png'],
+  },
+  {
+    name: 'Roulette Casino Resort',
+    coordinates: { lat: 29.7604267, lng: -95.3698028 },
+    id: 4,
+    location: 'Texas, USA',
+    status: true,
+    type: 'Roulette',
+    urls: ['images/roulette.png'],
+  },
+  {
+    name: 'Palm Casino Resort',
+    coordinates: { lat: 39.9525839, lng: -75.1652215 },
+    id: 5,
+    location: 'Pennsylvania, USA',
+    status: true,
+    type: 'Palm',
+    urls: ['images/palm.png'],
+  },
+  {
+    name: 'Roulette Casino Resort',
+    coordinates: { lat: 33.4483771, lng: -112.0740373 },
+    id: 6,
+    location: 'Arizona, USA',
+    status: true,
+    type: 'Roulette',
+    urls: ['images/roulette.png'],
+  },
+  {
+    name: 'Palm Casino Resort',
+    coordinates: { lat: 29.4241219, lng: -98.49362819999999 },
+    id: 7,
+    location: 'Texas, USA',
+    status: true,
+    type: 'Palm',
+    urls: ['images/palm.png'],
+  },
+  {
+    name: 'Roulette Casino Resort',
+    coordinates: { lat: 32.715738, lng: -117.1610838 },
+    id: 8,
+    location: 'California, USA',
+    status: true,
+    type: 'Roulette',
+    urls: ['images/roulette.png'],
+  },
+];
+
+export const locationStatus = [
+  { id: 1, value: 'Open' },
+  { id: 2, value: 'Close' },
+];
