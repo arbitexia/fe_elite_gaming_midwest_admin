@@ -5,7 +5,7 @@ import {
   TimelineSeparator,
   TimelineConnector,
 } from '@mui/lab';
-import { Typography } from '@mui/material';
+import { SvgIcon, Typography } from '@mui/material';
 import {
   ShoppingCart,
   IntegrationInstructions,
@@ -17,7 +17,21 @@ import { UIFlexSpaceBox } from '@/components/UI';
 import { StyledUserDetailCard, StyledUserRequestButton } from './ui';
 import { guestActivityData } from '@/_mock/users';
 
-const activityIcons = {
+type SvgIconComponent = typeof SvgIcon;
+
+type ActivityType = {
+  icon: SvgIconComponent;
+  color: string;
+};
+
+interface ActiveIconProps {
+  ORDER: ActivityType;
+  QUOTE: ActivityType;
+  INVITATION: ActivityType;
+  PAYMENT: ActivityType;
+}
+
+const activityIcons: ActiveIconProps = {
   ORDER: { icon: ShoppingCart, color: '#4299E1' },
   QUOTE: { icon: IntegrationInstructions, color: '#E53E3E' },
   INVITATION: { icon: Notifications, color: '#4FD1C5' },
@@ -61,19 +75,28 @@ const UserDetailActivityCard = () => {
         }}
       >
         {guestActivityData.map((activity, index) => {
-          const Icon = activityIcons[activity.model].icon;
+          const Icon =
+            activityIcons[activity.model as keyof ActiveIconProps].icon;
           return (
             <TimelineItem key={index}>
               {index === guestActivityData.length - 1 ? (
                 <Icon
                   fontSize="small"
-                  sx={{ color: activityIcons[activity.model].color }}
+                  sx={{
+                    color:
+                      activityIcons[activity.model as keyof ActiveIconProps]
+                        .color,
+                  }}
                 />
               ) : (
                 <TimelineSeparator>
                   <Icon
                     fontSize="small"
-                    sx={{ color: activityIcons[activity.model].color }}
+                    sx={{
+                      color:
+                        activityIcons[activity.model as keyof ActiveIconProps]
+                          .color,
+                    }}
                   />
                   <TimelineConnector />
                 </TimelineSeparator>
