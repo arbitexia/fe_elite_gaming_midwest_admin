@@ -9,12 +9,8 @@ import {
   UIFlexCenterBox,
   UIDefaultButton,
 } from '@/components/UI';
-import {
-  Close,
-  ArrowBackIos,
-  ArrowForwardIos,
-  AddAPhoto,
-} from '@mui/icons-material';
+import { ArrowBackIos, ArrowForwardIos, AddAPhoto } from '@mui/icons-material';
+import Thumbnail from './Thumbnail';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -89,36 +85,13 @@ const LocationsDetailCarouselEditCard = ({
           <Box>
             {images.map((url, index) => {
               return (
-                <Box key={index} sx={{ position: 'relative' }}>
-                  <Box
-                    component="img"
-                    sx={{
-                      marginBottom: '15px',
-                      height: '60px',
-                      display: 'block',
-                      width: '100%',
-                      overflow: 'hidden',
-                      borderRadius: '4px',
-                      opacity: index === activeStep ? '100%' : '60%',
-                    }}
-                    src={`/${url}`}
-                    alt="image"
-                  />
-                  <IconButton
-                    sx={{
-                      position: 'absolute',
-                      width: '27px',
-                      height: '27px',
-                      top: -13,
-                      right: -13,
-                      border: '1px solid #89C8C6',
-                      background: 'rgba(255, 255, 255, 1)',
-                    }}
-                    onClick={() => handleRemove(index)}
-                  >
-                    <Close />
-                  </IconButton>
-                </Box>
+                <Thumbnail
+                  key={index}
+                  index={index}
+                  url={url}
+                  handleRemove={handleRemove}
+                  activeStep={activeStep}
+                />
               );
             })}
           </Box>
