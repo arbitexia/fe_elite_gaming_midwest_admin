@@ -9,5 +9,9 @@ export { UIImage } from './Image';
 export { UIChip } from './Chip';
 export { UIAppLayoutWrapper } from './Wrapper';
 export { UIAuthCardWrapper } from './Card';
-export { UIAuthTextField, UIDefaultTextField } from './TextField';
-export { UIDefaultButton, UIAuthButton } from './Button';
+export {
+  UIAuthTextField,
+  UIDefaultTextField,
+  UIEditTextField,
+} from './TextField';
+export { UIDefaultButton, UIAuthButton, UIActionButton } from './Button';

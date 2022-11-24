@@ -8,12 +8,16 @@ import {
   UIFlexCenterBox,
   UIAuthButton,
 } from '@/components/UI';
-import { userStatusData } from '@/_mock/users';
-import { StyledSelectMenuItem } from '../ui';
+import { userStatus } from '@/_mock/users';
+import { StyledSelectMenuItem } from './ui';
+import { useRouter } from 'next/router';
 
 const UsersListHeader = () => {
+  const router = useRouter();
   const [searchStatus, setSearchStatus] = useState(1);
-
+  const handleCreate = () => {
+    router.push('/users/create');
+  };
   return (
     <UIFlexSpaceBox>
       <Typography
@@ -49,9 +53,9 @@ const UsersListHeader = () => {
               },
             }}
           >
-            {userStatusData.map((option) => (
+            {userStatus.map((option) => (
               <StyledSelectMenuItem key={option.id} value={option.id}>
-                {option.label}
+                {option.value}
               </StyledSelectMenuItem>
             ))}
           </UIDefaultTextField>
@@ -69,7 +73,10 @@ const UsersListHeader = () => {
           }}
         />
         <Divider orientation="vertical" sx={{ height: '40px' }} />
-        <UIAuthButton sx={{ minWidth: '110px', borderRadius: '8px' }}>
+        <UIAuthButton
+          sx={{ minWidth: '110px', borderRadius: '8px' }}
+          onClick={handleCreate}
+        >
           Create +
         </UIAuthButton>
       </UIFlexWrapBox>

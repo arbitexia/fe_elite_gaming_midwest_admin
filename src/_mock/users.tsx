@@ -1,20 +1,5 @@
 import { UserType } from '@/types';
 
-export const userStatusData = [
-  {
-    id: 1,
-    label: 'Activated',
-  },
-  {
-    id: 2,
-    label: 'Archived',
-  },
-  {
-    id: 3,
-    label: 'Disabled',
-  },
-];
-
 export const menuActions = [
   { label: 'View more', color: '#28B446' },
   { label: 'Edit', color: '#667180' },
@@ -28,9 +13,11 @@ export const usersTableData: UserType[] = [
     email: 'alecthompson@mail.com',
     phonenumber: '+14898903328',
     birthday: '14/06/91',
-    role: 'Customer',
-    status: 'Activated',
+    role: 4,
+    status: 1,
     createdAt: '17/09/21',
+    asset: '',
+    location: '96607 Claire Square Suite 591 - St. Louis Park, HI / 40802',
   },
   {
     id: 2,
@@ -38,9 +25,11 @@ export const usersTableData: UserType[] = [
     email: 'alexa@gmail.com',
     phonenumber: '+14898903328',
     birthday: '12/06/71',
-    role: 'Customer',
-    status: 'Activated',
+    role: 4,
+    status: 1,
     createdAt: '16/09/21',
+    asset: '',
+    location: '96607 Claire Square Suite 591 - St. Louis Park, HI / 40802',
   },
   {
     id: 3,
@@ -48,9 +37,11 @@ export const usersTableData: UserType[] = [
     email: 'laurentamachael@gmail.com',
     phonenumber: '+14898903328',
     birthday: '11/06/99',
-    role: 'Customer',
-    status: 'Activated',
+    role: 4,
+    status: 1,
     createdAt: '15/09/21',
+    asset: '',
+    location: '96607 Claire Square Suite 591 - St. Louis Park, HI / 40802',
   },
   {
     id: 4,
@@ -58,9 +49,11 @@ export const usersTableData: UserType[] = [
     email: 'alecthompson@mail.com',
     phonenumber: '+14898903328',
     birthday: '14/06/91',
-    role: 'Customer',
-    status: 'Archived',
+    role: 4,
+    status: 2,
     createdAt: '17/09/21',
+    asset: '',
+    location: '96607 Claire Square Suite 591 - St. Louis Park, HI / 40802',
   },
   {
     id: 5,
@@ -68,9 +61,11 @@ export const usersTableData: UserType[] = [
     email: 'alexa@gmail.com',
     phonenumber: '+14898903328',
     birthday: '12/06/71',
-    role: 'Customer',
-    status: 'Archived',
+    role: 4,
+    status: 2,
     createdAt: '16/09/21',
+    asset: '',
+    location: '96607 Claire Square Suite 591 - St. Louis Park, HI / 40802',
   },
   {
     id: 6,
@@ -78,9 +73,11 @@ export const usersTableData: UserType[] = [
     email: 'laurentamachael@gmail.com',
     phonenumber: '+14898903328',
     birthday: '11/06/99',
-    role: 'Customer',
-    status: 'Disabled',
+    role: 4,
+    status: 3,
     createdAt: '15/09/21',
+    asset: '',
+    location: '96607 Claire Square Suite 591 - St. Louis Park, HI / 40802',
   },
   {
     id: 7,
@@ -88,9 +85,11 @@ export const usersTableData: UserType[] = [
     email: 'alecthompson@mail.com',
     phonenumber: '+14898903328',
     birthday: '14/06/91',
-    role: 'Customer',
-    status: 'Disabled',
+    role: 4,
+    status: 3,
     createdAt: '17/09/21',
+    asset: '',
+    location: '96607 Claire Square Suite 591 - St. Louis Park, HI / 40802',
   },
   {
     id: 8,
@@ -98,9 +97,11 @@ export const usersTableData: UserType[] = [
     email: 'alexa@gmail.com',
     phonenumber: '+14898903328',
     birthday: '12/06/71',
-    role: 'Customer',
-    status: 'Activated',
+    role: 4,
+    status: 1,
     createdAt: '16/09/21',
+    asset: '',
+    location: '96607 Claire Square Suite 591 - St. Louis Park, HI / 40802',
   },
   {
     id: 9,
@@ -108,8 +109,149 @@ export const usersTableData: UserType[] = [
     email: 'laurentamachael@gmail.com',
     phonenumber: '+14898903328',
     birthday: '11/06/99',
-    role: 'Customer',
-    status: 'Pending',
+    role: 4,
+    status: 4,
     createdAt: '15/09/21',
+    asset: '',
+    location: '96607 Claire Square Suite 591 - St. Louis Park, HI / 40802',
   },
+];
+
+export const userRequestData = [
+  {
+    id: 1,
+    rewardName: 'iPhone 5',
+    location: 'Roulette Casino Resort',
+    point: '15000',
+    status: 'Pending',
+    createdAt: '17/09/21',
+  },
+  {
+    id: 2,
+    rewardName: 'iPhone 5',
+    location: 'Roulette Casino Resort',
+    point: '15000',
+    status: 'Pending',
+    createdAt: '17/09/21',
+  },
+  {
+    id: 3,
+    rewardName: 'iPhone 5',
+    location: 'Roulette Casino Resort',
+    point: '15000',
+    status: 'Pending',
+    createdAt: '17/09/21',
+  },
+  {
+    id: 4,
+    rewardName: 'iPhone 5',
+    location: 'Roulette Casino Resort',
+    point: '15000',
+    status: 'Pending',
+    createdAt: '17/09/21',
+  },
+];
+
+export const userPointsData = [
+  {
+    id: 1,
+    point: '25000',
+    location: 'Roulette Casino Resort',
+    updatedAt: '14/06/21',
+  },
+  {
+    id: 2,
+    point: '35000',
+    location: 'Palm Casino Resort',
+    updatedAt: '14/06/21',
+  },
+  {
+    id: 3,
+    point: '45000',
+    location: 'Roulette Casino Resort',
+    updatedAt: '14/06/21',
+  },
+  {
+    id: 4,
+    point: '55000',
+    location: 'Palm Casino Resort',
+    updatedAt: '14/06/21',
+  },
+  {
+    id: 5,
+    point: '65000',
+    location: 'Roulette Casino Resort',
+    updatedAt: '14/06/21',
+  },
+];
+
+export const userTransactionData = [
+  {
+    id: 1,
+    amount: '1336.19',
+    type: 'spend',
+    createdAt: '15/12/2022',
+  },
+  {
+    id: 2,
+    amount: '1336.19',
+    type: 'spend',
+    createdAt: '8/12/2022',
+  },
+  {
+    id: 3,
+    amount: '22216.19',
+    type: 'earn',
+    createdAt: '7/12/2022',
+  },
+  {
+    id: 4,
+    amount: '316.19',
+    type: 'spend',
+    createdAt: '5/12/2022',
+  },
+  {
+    id: 5,
+    amount: '636.19',
+    type: 'earn',
+    createdAt: '3/12/2022',
+  },
+  {
+    id: 6,
+    amount: '536.19',
+    type: 'spend',
+    createdAt: '1/12/2022',
+  },
+];
+
+export type GuestActivityDataType = {
+  model: string;
+  sentence: string;
+};
+
+export const guestActivityData: GuestActivityDataType[] = [
+  { model: 'ORDER', sentence: 'New order #4219423' },
+  { model: 'INVITATION', sentence: '$2400, Design changes' },
+  {
+    model: 'PAYMENT',
+    sentence: 'New card added for order #3210145',
+  },
+  { model: 'ORDER', sentence: 'New order #4219424' },
+  {
+    model: 'PAYMENT',
+    sentence: 'New card added for order #3210145',
+  },
+];
+
+export const userRole = [
+  { id: 1, value: 'Super Admin' },
+  { id: 2, value: 'Administrator' },
+  { id: 3, value: 'Tablet' },
+  { id: 4, value: 'Customer' },
+];
+export const userStatus = [
+  { id: 1, value: 'Activated' },
+  { id: 2, value: 'Archived' },
+  { id: 3, value: 'Disabled' },
+  { id: 4, value: 'Pending' },
 ];

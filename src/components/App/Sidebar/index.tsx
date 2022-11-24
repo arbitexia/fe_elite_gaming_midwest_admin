@@ -23,7 +23,7 @@ const Sidebar = () => {
     superSidebarItems.map((item) => {
       if (item.dropdown)
         item.dropdown.map((dropdown) => {
-          if (dropdown.route?.includes(path)) {
+          if (dropdown.route && path.includes(dropdown.route)) {
             setSelectedMenu(item.id);
             setDropdownOpen(item.text);
             setSelectedDropdown(dropdown.text);
@@ -47,6 +47,7 @@ const Sidebar = () => {
             <Box sx={{ position: 'relative' }} key={index}>
               {item.id === selectedMenu && <StyledSidebarActiveBar />}
               <StyledSidebarButton
+                disabled={item.disabled}
                 onClick={() => {
                   setSelectedMenu(item.id);
                   setDropdownOpen(item.dropdown ? item.text : '');
