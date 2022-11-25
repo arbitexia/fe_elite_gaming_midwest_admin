@@ -53,7 +53,7 @@ const Sidebar = () => {
                   setDropdownOpen(item.dropdown ? item.text : '');
                   item.route && router.push(item.route);
                 }}
-                key={index}
+                // key={index}
                 sx={item.id === selectedMenu ? StyledSidebarActiveButton : {}}
               >
                 {item.text}
