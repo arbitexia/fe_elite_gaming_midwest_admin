@@ -1,8 +1,12 @@
+import { LocationType } from './Location';
+import { RewardItemType } from './Rewards';
+import { UserType } from './Users';
+
 export type RequestItemType = {
   id: number;
-  item: { name: string; price: number; color: string; point: number };
-  user: { name: string; phone: string };
-  location: string;
+  item: RewardItemType;
+  user: UserType;
+  location: LocationType;
   status: string;
   requestedAt: string;
 };
