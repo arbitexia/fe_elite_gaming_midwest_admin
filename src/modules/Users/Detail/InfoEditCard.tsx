@@ -21,18 +21,20 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
     <StyledUserInfoCard sx={{ height: '360px' }}>
       <StyledUserInfoCardHeader />
       <StyledUserInfoCardContent>
-        <StyledUserInfoCardStatus>
-          <Typography
-            sx={{
-              fontWeight: '400',
-              fontSize: '14px',
-              lineHeight: '22px',
-              color: '#667180',
-            }}
-          >
-            ID #{user.id}
-          </Typography>
-        </StyledUserInfoCardStatus>
+        {user.id !== 0 && (
+          <StyledUserInfoCardStatus>
+            <Typography
+              sx={{
+                fontWeight: '400',
+                fontSize: '14px',
+                lineHeight: '22px',
+                color: '#667180',
+              }}
+            >
+              ID #{user.id}
+            </Typography>
+          </StyledUserInfoCardStatus>
+        )}
         <Box sx={{ input: { display: 'none' } }}>
           <label htmlFor="photo-upload">
             <StyledUserInfoAvatar src={user.asset} alt="avatar">

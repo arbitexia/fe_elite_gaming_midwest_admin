@@ -23,7 +23,10 @@ const LocationsById = () => {
     );
   }, [id]);
   return (
-    <DashboardLayout title={locationItem ? locationItem.name : 'Locations'}>
+    <DashboardLayout
+      title={locationItem ? locationItem.name : 'Locations'}
+      bg="#F8F8F8"
+    >
       {locationItem && (
         <>
           <LocationDetailHeader name={locationItem.name} isEditable={false} />

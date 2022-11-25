@@ -1,7 +1,7 @@
 import { styled, Box, Button } from '@mui/material';
 
 export const StyledSidebarWrapper = styled(Box)(({ theme }) => ({
-  width: '270px',
+  width: '220px',
   minHeight: '100vh',
   display: 'flex',
   flexShrink: '0',
@@ -24,9 +24,9 @@ export const StyledSidebarMenuWrapper = styled(Box)({
 
 export const StyledSidebarButton = styled(Button)({
   position: 'relative',
-  width: '230px',
+  width: '195px',
   height: '42px',
-  justifyContent: 'flex-start',
+  justifyContent: 'space-between',
   fontWeight: '500',
   fontSize: '14px',
   lineHeight: '21px',
@@ -38,13 +38,13 @@ export const StyledSidebarButton = styled(Button)({
 
 export const StyledSidebarDropButton = styled(Button)({
   position: 'relative',
-  width: '230px',
+  width: '195px',
   height: '42px',
   justifyContent: 'flex-start',
   fontWeight: '400',
   fontSize: '14px',
   lineHeight: '21px',
-  color: 'rgba(5, 34, 33, 0.6)',
+  color: 'rgba(5, 34, 33, 0.8)',
   borderRadius: '50px 0 0 50px',
   paddingLeft: '32px',
   textTransform: 'none',
@@ -53,7 +53,7 @@ export const StyledSidebarDropButton = styled(Button)({
     width: '4px',
     height: '4px',
     borderRadius: '2px',
-    marginRight: '10px',
+    marginRight: '20px',
     backgroundColor: '#697A7A',
   },
 });
@@ -70,5 +70,5 @@ export const StyledSidebarActiveBar = styled(Box)({
   height: '24px',
   background: '#008A83',
   top: '8px',
-  left: '-18px',
+  left: '-16px',
 });

@@ -1,20 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Box, IconButton, Typography } from '@mui/material';
-import { StyledLocationCardBox } from './ui';
+import {
+  StyledLocationCardBox,
+  StyledLocationEditPhotoButton,
+  StyledLocationAddPhotoButton,
+} from './ui';
 import { LocationsDetailProps } from '@/types';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
-import {
-  UIFlexSpaceBox,
-  UIFlexCenterBox,
-  UIDefaultButton,
-} from '@/components/UI';
-import {
-  Close,
-  ArrowBackIos,
-  ArrowForwardIos,
-  AddAPhoto,
-} from '@mui/icons-material';
+import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
+import { ArrowBackIos, ArrowForwardIos, AddAPhoto } from '@mui/icons-material';
+import Thumbnail from './Thumbnail';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -89,36 +85,13 @@ const LocationsDetailCarouselEditCard = ({
           <Box>
             {images.map((url, index) => {
               return (
-                <Box key={index} sx={{ position: 'relative' }}>
-                  <Box
-                    component="img"
-                    sx={{
-                      marginBottom: '15px',
-                      height: '60px',
-                      display: 'block',
-                      width: '100%',
-                      overflow: 'hidden',
-                      borderRadius: '4px',
-                      opacity: index === activeStep ? '100%' : '60%',
-                    }}
-                    src={`/${url}`}
-                    alt="image"
-                  />
-                  <IconButton
-                    sx={{
-                      position: 'absolute',
-                      width: '27px',
-                      height: '27px',
-                      top: -13,
-                      right: -13,
-                      border: '1px solid #89C8C6',
-                      background: 'rgba(255, 255, 255, 1)',
-                    }}
-                    onClick={() => handleRemove(index)}
-                  >
-                    <Close />
-                  </IconButton>
-                </Box>
+                <Thumbnail
+                  key={index}
+                  index={index}
+                  url={url}
+                  handleRemove={handleRemove}
+                  activeStep={activeStep}
+                />
               );
             })}
           </Box>
@@ -150,39 +123,17 @@ const LocationsDetailCarouselEditCard = ({
         }}
       >
         Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3.1 MB
+        <br /> Maximium image count: 4
       </Typography>
       <UIFlexCenterBox sx={{ gap: '15px', marginTop: '31px' }}>
-        <UIDefaultButton
-          sx={{
-            width: '190px',
-            height: '42px',
-            background: 'rgba(191, 215, 225, 0.05)',
-            border: '2px solid rgba(137, 200, 198, 0.4)',
-            borderRadius: '8px',
-            fontWeight: '500',
-            fontSize: '16px',
-            lineHeight: '24px',
-            color: '#008A83',
-          }}
-        >
+        <StyledLocationEditPhotoButton>
           Edit Photo
-        </UIDefaultButton>
-        <UIDefaultButton
-          sx={{
-            width: '190px',
-            height: '42px',
-            background: 'rgba(60, 96, 95, 0.8)',
-            border: '1px solid rgba(191, 215, 225, 0.05)',
-            borderRadius: '8px',
-            fontWeight: '500',
-            fontSize: '16px',
-            lineHeight: '24px',
-            color: '#FFFFFF',
-          }}
+        </StyledLocationEditPhotoButton>
+        <StyledLocationAddPhotoButton
           startIcon={<AddAPhoto sx={{ color: 'rgba(255, 255, 255, 0.54)' }} />}
         >
           Add Photo
-        </UIDefaultButton>
+        </StyledLocationAddPhotoButton>
       </UIFlexCenterBox>
     </StyledLocationCardBox>
   );

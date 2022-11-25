@@ -15,6 +15,7 @@ import {
 } from './ui';
 import { getColor } from '@/libs/data-helper';
 import { rewardsData } from '@/_mock/rewards';
+import RewardsPagination from './Pagination';
 
 const LocationDetailRewardTable = () => {
   const getSpecTableCell = (specifications: any) => {
@@ -99,6 +100,7 @@ const LocationDetailRewardTable = () => {
           })}
         </TableBody>
       </StyledLocationTable>
+      <RewardsPagination />
     </StyledLocationCardBox>
   );
 };

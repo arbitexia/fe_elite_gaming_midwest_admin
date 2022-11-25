@@ -19,7 +19,7 @@ const AppLayout = (props: Props) => {
     if (!isAuthenticated) router.push('/login');
   });
   return (
-    <UIAppLayoutWrapper sx={{ background: props.bg }}>
+    <UIAppLayoutWrapper sx={{ background: '#F7F7F7' }}>
       <AppSEO title={props.title as string} description="" />
       {isAuthenticated && (
         <Box sx={{ display: 'flex' }}>
@@ -27,7 +27,7 @@ const AppLayout = (props: Props) => {
           <Box
             sx={(theme) => ({
               gap: 0,
-              width: `calc(100% - 270px)`,
+              width: `calc(100% - 220px)`,
               // width: `calc(100% - ${isSidebarOpen ? 270 : 100}px)`,
               // marginLeft: `${isSidebarOpen ? 270 : 100}px`,
               height: '100vh',

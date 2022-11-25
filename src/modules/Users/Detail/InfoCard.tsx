@@ -11,7 +11,7 @@ import {
   StyledUserInfoCardStatus,
 } from './ui';
 import { getColor } from '@/libs/data-helper';
-import { userStatus } from '@/_mock/users';
+import { userStatus, userRole } from '@/_mock/users';
 
 interface UsersDetailHeaderProps {
   user: UserType;
@@ -74,7 +74,9 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
               </UIFlexWrapBox>
               <UIFlexWrapBox>
                 <StyledUserInfoTitle>User role:</StyledUserInfoTitle>
-                <StyledUserInfoValue>{user.role}</StyledUserInfoValue>
+                <StyledUserInfoValue>
+                  {userRole[user.role - 1].value}
+                </StyledUserInfoValue>
               </UIFlexWrapBox>
               <UIFlexWrapBox>
                 <StyledUserInfoTitle sx={{ alignItems: 'flex-end' }}>

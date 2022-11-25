@@ -39,9 +39,9 @@ const UsersTable = () => {
       //TODO Delete Action
     } else
       router.push(
-        `/${router.asPath}/${anchorElOptionsMenu?.getAttribute('data-key')}/${
-          key === MenuAction.EDIT ? MenuAction.EDIT : ''
-        }`
+        `${router.asPath}${
+          key === MenuAction.EDIT ? '/edit' : ''
+        }/${anchorElOptionsMenu?.getAttribute('data-key')}`
       );
   };
 
@@ -120,7 +120,12 @@ const UsersTable = () => {
                   }
                 />
               </StyledTableCell>
-              <StyledTableCell>#{userItem.id}</StyledTableCell>
+              <StyledTableCell
+                onClick={() => router.push(`${router.asPath}/${userItem.id}`)}
+                sx={{ cursor: 'pointer' }}
+              >
+                #{userItem.id}
+              </StyledTableCell>
               <StyledTableCell>{userItem.name}</StyledTableCell>
               <StyledTableCell>{userItem.email}</StyledTableCell>
               <StyledTableCell>{userItem.phonenumber}</StyledTableCell>
@@ -171,7 +176,7 @@ const UsersTable = () => {
               <StyledOptionMenuItem
                 disableRipple
                 disableTouchRipple
-                onClick={() => handleNavBtnClick(MenuAction.VIEW)}
+                onClick={() => handleNavBtnClick(item.action)}
               >
                 <StyledOptionMenuItemText
                   key={index}
