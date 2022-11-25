@@ -13,7 +13,7 @@ const AppLayout = (props: Props) => {
   return (
     <UIAppLayoutWrapper sx={{ background: props.bg }}>
       <AppSEO title={props.title || ''} description={props.description || ''} />
-      <UIContainer sx={{ py: 3 }}>{props.children}</UIContainer>
+      <UIContainer sx={{ py: 0 }}>{props.children}</UIContainer>
     </UIAppLayoutWrapper>
   );
 };
