@@ -1,8 +1,12 @@
 import { useRouter } from 'next/router';
-import { UIImage, UIDefaultButton, UIFlexSpaceBox } from '@/components/UI';
+import { UIImage, UIFlexSpaceBox } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
 import { LocationType } from '@/types';
-import { StyledCardBox } from './ui';
+import {
+  StyledCardBox,
+  StyledLocationViewButton,
+  StyledLocationEditButton,
+} from './ui';
 
 export type LocationsCardProps = {
   item: LocationType;
@@ -12,8 +16,15 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
   const router = useRouter();
   return (
     <StyledCardBox>
-      <Box sx={{ borderRadius: '6px', overflow: 'hidden' }}>
-        <UIImage src={item.urls[0]} width={220} height={150} />
+      <Box
+        sx={{
+          padding: 0,
+          borderRadius: '6px',
+          height: '150px',
+          overflow: 'hidden',
+        }}
+      >
+        <UIImage src={item.urls[0]} width={220} height={160} />
       </Box>
       <Typography
         sx={{
@@ -48,18 +59,16 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
         {item.location}
       </Typography>
       <UIFlexSpaceBox sx={{ marginTop: '30px' }}>
-        <UIDefaultButton onClick={() => router.push(`/locations/${item.id}`)}>
+        <StyledLocationViewButton
+          onClick={() => router.push(`/locations/${item.id}`)}
+        >
           View
-        </UIDefaultButton>
-        <UIDefaultButton
+        </StyledLocationViewButton>
+        <StyledLocationEditButton
           onClick={() => router.push(`/locations/edit/${item.id}`)}
-          sx={{
-            background: 'rgba(137, 200, 198, 0.2)',
-            color: '#83A9A8',
-          }}
         >
           Edit
-        </UIDefaultButton>
+        </StyledLocationEditButton>
       </UIFlexSpaceBox>
     </StyledCardBox>
   );

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import {
   Box,
@@ -56,7 +55,6 @@ const LoginPage = () => {
       // await authorize({ variables: { ...values } });
     },
   });
-  // const { t } = useTranslation();
 
   return (
     <AuthLayout bg="rgba(137, 200, 198, 0.2)">
@@ -198,7 +196,11 @@ const LoginPage = () => {
           </Box>
         </Stack>
         <UIFlexColumnBox>
-          <a href="https://customer.elitegaming.rpatdev.com/">
+          <Box
+            component="a"
+            href="https://customer.elitegaming.rpatdev.com/"
+            sx={{ textDecoration: 'none' }}
+          >
             <Typography
               sx={{
                 paddingTop: '15px',
@@ -207,12 +209,11 @@ const LoginPage = () => {
                 color: '#83A9A8',
                 fonSize: '14px',
                 fontWeight: 500,
-                textDecoration: 'none',
               }}
             >
               Customer Login
             </Typography>
-          </a>
+          </Box>
         </UIFlexColumnBox>
       </UIAuthCardWrapper>
     </AuthLayout>

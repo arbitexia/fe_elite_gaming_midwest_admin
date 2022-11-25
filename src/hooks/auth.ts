@@ -9,7 +9,7 @@ export const useAuth = () => {
 
   const onLogin = (authToken: string) => {
     dispatch(setAuthState(authToken));
-    router.push('/');
+    router.push('/users/customers');
   };
 
   return {

@@ -52,7 +52,14 @@ export const superSidebarItems: MenuItemObj[] = [
     text: 'Rewards',
     route: '/rewards',
     isSelected: false,
-    disabled: true,
+    disabled: false,
+  },
+  {
+    id: 5,
+    text: 'Request',
+    route: '/requests',
+    isSelected: false,
+    disabled: false,
   },
   {
     id: 5,

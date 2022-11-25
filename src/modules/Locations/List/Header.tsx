@@ -1,7 +1,6 @@
 import {
   UIFlexSpaceBox,
   UIFlexWrapBox,
-  UIImage,
   UIDefaultTextField,
   UIAuthButton,
 } from '@/components/UI';
@@ -18,7 +17,6 @@ export const LocationsHeader = () => {
     <>
       <UIFlexSpaceBox sx={{ mt: '35px' }}>
         <UIFlexWrapBox sx={{ alignItems: 'center', gap: '12px' }}>
-          <UIImage src="images/icons/pin.svg" width={25} height={25} />
           <Typography
             sx={{
               fontWeight: '600',
@@ -48,7 +46,7 @@ export const LocationsHeader = () => {
             sx={{ minWidth: '110px', borderRadius: '8px' }}
             onClick={handleCreate}
           >
-            Create +
+            + Create
           </UIAuthButton>
         </UIFlexWrapBox>
       </UIFlexSpaceBox>

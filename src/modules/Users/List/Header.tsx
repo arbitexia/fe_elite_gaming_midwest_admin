@@ -16,7 +16,7 @@ const UsersListHeader = () => {
   const router = useRouter();
   const [searchStatus, setSearchStatus] = useState(1);
   const handleCreate = () => {
-    router.push('/users/create');
+    router.push(`${router.asPath}/create`);
   };
   return (
     <UIFlexSpaceBox>
@@ -77,7 +77,7 @@ const UsersListHeader = () => {
           sx={{ minWidth: '110px', borderRadius: '8px' }}
           onClick={handleCreate}
         >
-          Create +
+          + Create
         </UIAuthButton>
       </UIFlexWrapBox>
     </UIFlexSpaceBox>

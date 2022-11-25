@@ -8,7 +8,7 @@ const Locations = () => {
     <DashboardLayout title="Locations">
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
         <LocationsHeader />
-        <UIFlexWrapBox sx={{ gap: '40px', py: '60px' }}>
+        <UIFlexWrapBox sx={{ gap: '26px', py: '60px' }}>
           {locationsData.map((item) => {
             return <LocationsCard key={item.id} item={item} />;
           })}

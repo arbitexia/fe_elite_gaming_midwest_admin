@@ -1,24 +1,22 @@
 import { useState } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { Close } from '@mui/icons-material';
-
-interface ThumbnailProps {
+interface LocationsDetailThumbnailProps {
   index: number;
-  url: string;
   activeStep: number;
+  url: string;
   handleRemove: (index: number) => void;
 }
 
-const Thumbnail = ({
-  url,
+const LocationsDetailThumbnail = ({
   index,
   activeStep,
+  url,
   handleRemove,
-}: ThumbnailProps) => {
+}: LocationsDetailThumbnailProps) => {
   const [isHover, setIsHover] = useState(false);
   return (
     <Box
-      key={index}
       sx={{ position: 'relative' }}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
@@ -56,4 +54,4 @@ const Thumbnail = ({
   );
 };
 
-export default Thumbnail;
+export default LocationsDetailThumbnail;

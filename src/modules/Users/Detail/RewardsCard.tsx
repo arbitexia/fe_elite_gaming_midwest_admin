@@ -35,7 +35,8 @@ const UserDetailRewardsCard = () => {
         }}
       >
         <TableBody>
-          {rewardsData.map((data) => {
+          {rewardsData.map((data, index) => {
+            if (index >= 4) return null;
             return (
               <StyledRequestTableRow key={data.id}>
                 <StyledRewardsTableCell>

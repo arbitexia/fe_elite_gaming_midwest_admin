@@ -53,12 +53,14 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
                 justifyContent: 'flex-end',
               }}
             >
-              <UIActionButton
-                icon={<ReplayIcon />}
-                color="#667180"
-                title="Change password"
-                handleClick={() => console.log('ActionButton')}
-              />
+              {user.id !== 0 && (
+                <UIActionButton
+                  icon={<ReplayIcon />}
+                  color="#667180"
+                  title="Change password"
+                  handleClick={() => console.log('ActionButton')}
+                />
+              )}
               {router.asPath.includes('edit') || user.id === 0 ? (
                 <UIAuthButton sx={{ marginLeft: '8px' }}>Save</UIAuthButton>
               ) : (
@@ -74,7 +76,7 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
                   <UIActionButton
                     icon={<DeleteIcon />}
                     color="#F14336"
-                    title="Delete User"
+                    title="Delete"
                     handleClick={() => setOpenDeleteModal(true)}
                   />
                 </>

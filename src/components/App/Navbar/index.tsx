@@ -92,10 +92,9 @@ export default function AppNavbar(props: Props) {
           position: 'relative',
           height: '70px',
           width: '100%',
-          background: 'rgba(255, 255, 255, 0.85)',
+          background: '#FFFFFFD5',
           border: '2px solid rgba(54, 70, 70, 0.05)',
           boxShadow: '0px 3px 20px rgba(0, 0, 0, 0.05)',
-          backdropFilter: 'blur(7.5px)',
         }}
       >
         <Toolbar sx={{ height: '70px' }}>

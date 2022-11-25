@@ -1,6 +1,7 @@
 import {
   styled,
   Box,
+  Button,
   Typography,
   Table,
   TableRow,
@@ -74,4 +75,28 @@ export const StyledLocationTableCell = styled(TableCell)({
       color: '',
     },
   },
+});
+
+export const StyledLocationEditPhotoButton = styled(Button)({
+  width: '190px',
+  height: '42px',
+  background: 'rgba(191, 215, 225, 0.05)',
+  border: '2px solid rgba(137, 200, 198, 0.4)',
+  borderRadius: '8px',
+  fontWeight: '500',
+  fontSize: '16px',
+  lineHeight: '24px',
+  color: '#008A83',
+});
+
+export const StyledLocationAddPhotoButton = styled(Button)({
+  width: '190px',
+  height: '42px',
+  background: 'rgba(60, 96, 95, 0.8)',
+  border: '1px solid rgba(191, 215, 225, 0.05)',
+  borderRadius: '8px',
+  fontWeight: '500',
+  fontSize: '16px',
+  lineHeight: '24px',
+  color: '#FFFFFF',
 });
