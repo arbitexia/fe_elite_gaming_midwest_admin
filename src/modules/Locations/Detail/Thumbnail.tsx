@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { Close } from '@mui/icons-material';
-
 interface LocationsDetailThumbnailProps {
   index: number;
   activeStep: number;
@@ -40,10 +39,10 @@ const LocationsDetailThumbnail = ({
         sx={{
           display: isHover ? 'flex' : 'none',
           position: 'absolute',
-          width: '18px',
-          height: '18px',
-          top: -9,
-          right: -9,
+          width: '16px',
+          height: '16px',
+          top: -8,
+          right: -8,
           border: '1px solid #89C8C6',
           background: 'rgba(255, 255, 255, 1)',
         }}
