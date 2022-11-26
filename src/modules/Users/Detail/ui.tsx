@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 
 export const StyledUserInfoTitle = styled(Typography)({
-  width: '85px',
+  width: '110px',
   fontWeight: '600',
   fontSize: '14px',
   lineHeight: '150%',
@@ -158,5 +158,20 @@ export const StyledRewardsTableCell = styled(TableCell)({
 });
 
 export const StyledUserEditTextField = styled(UIEditTextField)({
-  width: '300px',
+  width: '250px',
+});
+
+export const StyledUserUploadButton = styled(Button)({
+  width: '130px',
+  height: '42px',
+  background: 'rgba(60, 96, 95, 0.8)',
+  border: '1px solid rgba(191, 215, 225, 0.05)',
+  borderRadius: '8px',
+  fontWeight: '500',
+  fontSize: '16px',
+  lineHeight: '24px',
+  color: '#FFFFFF',
+  '&:hover': {
+    background: 'rgba(60, 96, 95, 0.5)',
+  },
 });

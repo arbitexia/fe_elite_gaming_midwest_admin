@@ -87,6 +87,9 @@ export const StyledLocationEditPhotoButton = styled(Button)({
   fontSize: '16px',
   lineHeight: '24px',
   color: '#008A83',
+  '&:hover': {
+    color: '#83A9A8',
+  },
 });
 
 export const StyledLocationAddPhotoButton = styled(Button)({
@@ -99,4 +102,7 @@ export const StyledLocationAddPhotoButton = styled(Button)({
   fontSize: '16px',
   lineHeight: '24px',
   color: '#FFFFFF',
+  '&:hover': {
+    background: 'rgba(60, 96, 95, 0.5)',
+  },
 });

@@ -6,6 +6,7 @@ import { LocationsDetailProps } from '@/types';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { locationStatus } from '@/_mock/locations';
+import { useFormik } from 'formik';
 
 const accessToken =
   'pk.eyJ1Ijoic2FoaWx0aGFrYXJlNTIxIiwiYSI6ImNrbjVvMTkzNDA2MXQydnM2OHJ6aHJvbXEifQ.z5aEqRBTtDMWoxVzf3aGsg';
@@ -13,6 +14,14 @@ const accessToken =
 const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState<mapboxgl.Map>();
+
+  const userFormik = useFormik({
+    initialValues: locationItem,
+    onSubmit: async (values) => {
+      console.log(values);
+      // await authorize({ variables: { ...values } });
+    },
+  });
 
   const mapNode = useRef(null);
 
@@ -62,13 +71,12 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
             <StyledLocationInfoTitle>Name:</StyledLocationInfoTitle>
             <Box>
-              <UIEditTextField value={locationItem.name} fullWidth />
-            </Box>
-          </UIFlexWrapBox>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>Location:</StyledLocationInfoTitle>
-            <Box>
-              <UIEditTextField value={locationItem.location} fullWidth />
+              <UIEditTextField
+                name="name"
+                value={userFormik.values.name}
+                onChange={userFormik.handleChange}
+                fullWidth
+              />
             </Box>
           </UIFlexWrapBox>
         </Stack>
@@ -76,7 +84,13 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
             <StyledLocationInfoTitle>Status:</StyledLocationInfoTitle>
             <Box flexGrow={1}>
-              <UIEditTextField value={locationItem.status} fullWidth select>
+              <UIEditTextField
+                name="status"
+                value={userFormik.values.status}
+                onChange={userFormik.handleChange}
+                fullWidth
+                select
+              >
                 {locationStatus.map((item) => {
                   return (
                     <MenuItem key={item.id} value={item.value}>
@@ -90,11 +104,40 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
             <StyledLocationInfoTitle>Type:</StyledLocationInfoTitle>
             <Box flexGrow={1}>
-              <UIEditTextField value={locationItem.type} fullWidth />
+              <UIEditTextField
+                name="type"
+                value={userFormik.values.type}
+                onChange={userFormik.handleChange}
+                fullWidth
+              />
             </Box>
           </UIFlexWrapBox>
         </Stack>
       </UIFlexWrapBox>
+      <Box>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <StyledLocationInfoTitle>Location:</StyledLocationInfoTitle>
+          <Box>
+            <UIEditTextField
+              name="location"
+              value={userFormik.values.location.address1}
+              onChange={userFormik.handleChange}
+              fullWidth
+            />
+          </Box>
+        </UIFlexWrapBox>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <StyledLocationInfoTitle>Location:</StyledLocationInfoTitle>
+          <Box>
+            <UIEditTextField
+              name="location"
+              value={userFormik.values.location.address1}
+              onChange={userFormik.handleChange}
+              fullWidth
+            />
+          </Box>
+        </UIFlexWrapBox>
+      </Box>
       <UIFlexWrapBox sx={{ alignItems: 'center', my: '18px' }}>
         <StyledLocationInfoTitle sx={{ width: '90px' }}>
           Description:

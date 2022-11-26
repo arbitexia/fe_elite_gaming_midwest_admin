@@ -56,7 +56,7 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
           color: 'rgba(0, 0, 0, 0.3)',
         }}
       >
-        {item.location}
+        {`${item.location.address1} ${item.location.address2} ${item.location.city} ${item.location.state} ${item.location.zipcode} ${item.location.country}`}
       </Typography>
       <UIFlexSpaceBox sx={{ marginTop: '30px' }}>
         <StyledLocationViewButton

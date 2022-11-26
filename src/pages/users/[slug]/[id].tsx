@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { Stack } from '@mui/material';
 import { UIFlexWrapBox } from '@/components/UI';
 import {
-  UsersDetailHeader,
   UserDetailInfoCard,
   UserDetailRequestCard,
   UserDetailPointsCard,
@@ -30,7 +29,6 @@ const UsersDetailPage = () => {
     <DashboardLayout bg="#F8F8F8" title="Users">
       {userData && (
         <Stack direction="column" spacing={2.5} paddingTop={4}>
-          <UsersDetailHeader user={userData} />
           <UserDetailInfoCard user={userData} />
           <UserDetailRequestCard />
           <UIFlexWrapBox sx={{ gap: '20px' }}>

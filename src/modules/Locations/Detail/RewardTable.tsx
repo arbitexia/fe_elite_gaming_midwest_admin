@@ -1,4 +1,5 @@
 import {
+  Box,
   TableHead,
   TableBody,
   TableRow,
@@ -21,7 +22,7 @@ const LocationDetailRewardTable = () => {
   const getSpecTableCell = (specifications: any) => {
     return Object.keys(specifications).map((key, index) => {
       return (
-        <>
+        <UIFlexWrapBox key={index}>
           <Typography
             sx={{
               color: 'rgba(0, 0, 0, 0.3)',
@@ -29,17 +30,13 @@ const LocationDetailRewardTable = () => {
               fontWeight: 500,
               textTransform: 'capitalize',
             }}
-            key={index}
           >
             {key}:
           </Typography>
-          <Typography
-            sx={{ color: '#06251F', fontSize: 14, fontWeight: 500 }}
-            key={index}
-          >
+          <Typography sx={{ color: '#06251F', fontSize: 14, fontWeight: 500 }}>
             {specifications[key]}
           </Typography>
-        </>
+        </UIFlexWrapBox>
       );
     });
   };
@@ -74,9 +71,7 @@ const LocationDetailRewardTable = () => {
                 <StyledLocationTableCell>{item.id}</StyledLocationTableCell>
                 <StyledLocationTableCell>{item.name}</StyledLocationTableCell>
                 <StyledLocationTableCell>
-                  <UIFlexWrapBox>
-                    {getSpecTableCell(item.specifications)}
-                  </UIFlexWrapBox>
+                  {getSpecTableCell(item.specifications)}
                 </StyledLocationTableCell>
                 <StyledLocationTableCell>{item.point}</StyledLocationTableCell>
                 <StyledLocationTableCell>
