@@ -1,16 +1,24 @@
 // import { useRouter } from 'next/router';
 import { Stack } from '@mui/material';
-import { UsersDetailHeader, UserDetailInfoEditCard } from '@/modules/Users';
+import { UserDetailInfoEditCard } from '@/modules/Users';
 import { DashboardLayout } from '@/layouts';
 
 const UsersDetailPage = () => {
   // const router = useRouter();
   const userData = {
     id: 0,
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     asset: '',
-    location: '',
+    location: {
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      country: '',
+    },
     phonenumber: '',
     birthday: '',
     role: 1,
@@ -22,7 +30,6 @@ const UsersDetailPage = () => {
     <DashboardLayout bg="#F8F8F8" title="Users">
       {userData && (
         <Stack direction="column" spacing={2.5} paddingTop={4}>
-          <UsersDetailHeader user={userData} />
           <UserDetailInfoEditCard user={userData} />
         </Stack>
       )}

@@ -33,7 +33,7 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
     setOpenDeleteModal(false);
   };
   return (
-    <Box>
+    <Box sx={{ marginBottom: '20px' }}>
       {user && (
         <>
           <Typography
@@ -44,7 +44,9 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
               color: '#06251F',
             }}
           >
-            {user.id === 0 ? 'Create User' : `${user.name}'s Information`}
+            {user.id === 0
+              ? 'Create User'
+              : `${user.firstName} ${user.lastName}'s Information`}
           </Typography>
           <Stack direction="row" spacing={2} justifyContent="flex-end">
             <Box
@@ -62,7 +64,9 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
                 />
               )}
               {router.asPath.includes('edit') || user.id === 0 ? (
-                <UIAuthButton sx={{ marginLeft: '8px' }}>Save</UIAuthButton>
+                <UIAuthButton sx={{ marginLeft: '8px' }} type="submit">
+                  Save
+                </UIAuthButton>
               ) : (
                 <>
                   <UIActionButton

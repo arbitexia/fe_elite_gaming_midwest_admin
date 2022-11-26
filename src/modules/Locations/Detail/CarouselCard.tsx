@@ -35,7 +35,7 @@ const LocationsDetailCarouselCard = ({
   };
 
   return (
-    <StyledLocationCardBox>
+    <StyledLocationCardBox alignSelf="flex-start">
       <UIFlexCenterBox sx={{ gap: '20px' }}>
         <Box
           sx={{

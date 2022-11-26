@@ -17,16 +17,16 @@ import {
   StyledOptionMenu,
   StyledOptionMenuItem,
 } from './ui';
-import {
-  usersTableData,
-  menuActions,
-  userRole,
-  userStatus,
-} from '@/_mock/users';
+import { menuActions, userRole, userStatus } from '@/_mock/users';
 import { getColor } from '@/libs/data-helper';
 import { MenuAction } from '@/constants/Enum';
+import { UserType } from '@/types';
 
-const UsersTable = () => {
+type UsersTableProps = {
+  usersTableData: UserType[];
+};
+
+const UsersTable = ({ usersTableData }: UsersTableProps) => {
   const router = useRouter();
   const [selected, setSelected] = useState<readonly string[]>([]);
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
@@ -126,7 +126,7 @@ const UsersTable = () => {
               >
                 #{userItem.id}
               </StyledTableCell>
-              <StyledTableCell>{userItem.name}</StyledTableCell>
+              <StyledTableCell>{`${userItem.firstName} ${userItem.lastName}`}</StyledTableCell>
               <StyledTableCell>{userItem.email}</StyledTableCell>
               <StyledTableCell>{userItem.phonenumber}</StyledTableCell>
               <StyledTableCell>{userItem.birthday}</StyledTableCell>
@@ -135,8 +135,8 @@ const UsersTable = () => {
               </StyledTableCell>
               <StyledTableCell align="center">
                 <UIChip
-                  label={userStatus[userItem.status - 1].value}
-                  color={getColor(userStatus[userItem.status - 1].value)}
+                  label={userStatus[userItem.status].value}
+                  color={getColor(userStatus[userItem.status].value)}
                 />
               </StyledTableCell>
               <StyledTableCell>{userItem.createdAt}</StyledTableCell>
