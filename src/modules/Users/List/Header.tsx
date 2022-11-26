@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Typography, InputAdornment, Divider } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import {
@@ -11,13 +11,26 @@ import {
 import { userStatus } from '@/_mock/users';
 import { StyledSelectMenuItem } from './ui';
 import { useRouter } from 'next/router';
+import { UserType } from '@/types';
 
-const UsersListHeader = () => {
+interface UsersListHeaderProps {
+  searchValue: string;
+  searchStatus: number;
+  onValueChange: (value: string) => void;
+  onStatusChange: (value: number) => void;
+}
+
+const UsersListHeader = ({
+  searchValue,
+  searchStatus,
+  onValueChange,
+  onStatusChange,
+}: UsersListHeaderProps) => {
   const router = useRouter();
-  const [searchStatus, setSearchStatus] = useState(1);
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);
   };
+
   return (
     <UIFlexSpaceBox>
       <Typography
@@ -41,7 +54,7 @@ const UsersListHeader = () => {
             select
             value={searchStatus}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setSearchStatus(parseInt(e.target.value))
+              onStatusChange(parseInt(e.target.value))
             }
             sx={{
               width: '160px',
@@ -64,6 +77,8 @@ const UsersListHeader = () => {
           placeholder="Search"
           size="small"
           sx={{ width: '160px', input: { color: '#b7b7b7' } }}
+          value={searchValue}
+          onChange={(e) => onValueChange(e.target.value)}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

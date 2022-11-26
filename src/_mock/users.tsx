@@ -323,6 +323,7 @@ export const userRole = [
   { id: 4, value: 'Customer' },
 ];
 export const userStatus = [
+  { id: 0, value: 'All' },
   { id: 1, value: 'Activated' },
   { id: 2, value: 'Archived' },
   { id: 3, value: 'Disabled' },

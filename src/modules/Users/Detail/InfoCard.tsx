@@ -27,8 +27,8 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
         <StyledUserInfoCardContent>
           <StyledUserInfoCardStatus>
             <UIChip
-              label={userStatus[user.status - 1].value}
-              color={getColor(userStatus[user.status - 1].value)}
+              label={userStatus[user.status].value}
+              color={getColor(userStatus[user.status].value)}
             />
             <Typography
               sx={{
