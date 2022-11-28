@@ -5,4 +5,7 @@ export const createAppTheme = (mode: PaletteMode) =>
     palette: {
       mode,
     },
+    typography: {
+      fontFamily: `Poppins`,
+    },
   });

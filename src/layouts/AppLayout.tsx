@@ -14,15 +14,9 @@ interface Props {
 
 const AppLayout = ({ bg, title, description, children }: Props) => {
   return (
-    <UIAppLayoutWrapper sx={{ background: bg }}>
-      <AppSEO title={title || ''} description={description || ''} />
-      <Box sx={{ display: 'flex' }}>
-        <SidebarLayout />
-        <Box sx={{ width: '100%' }}>
-          <Topbar />
-          <UIContainer>{children}</UIContainer>
-        </Box>
-      </Box>
+    <UIAppLayoutWrapper sx={{ background: props.bg }}>
+      <AppSEO title={props.title || ''} description={props.description || ''} />
+      <UIContainer sx={{ py: 0 }}>{props.children}</UIContainer>
     </UIAppLayoutWrapper>
   );
 };
