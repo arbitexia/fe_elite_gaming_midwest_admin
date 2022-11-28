@@ -4,6 +4,12 @@ export enum UserStatus {
   DISABLED = `Disabled`,
 }
 
+export enum RequestStatus {
+  ACCEPTED = 'Accepted',
+  DECLINED = 'Declined',
+  WAITING = 'Waiting',
+}
+
 export enum MenuAction {
   VIEW = `view`,
   EDIT = `edit`,

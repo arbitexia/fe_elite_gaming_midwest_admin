@@ -2,25 +2,19 @@ import {
   UIFlexSpaceBox,
   UIFlexWrapBox,
   UIDefaultTextField,
-  UIDefaultButton,
 } from '@/components/UI';
 import { Typography, InputAdornment } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
-import { useRouter } from 'next/router';
 
-interface LocationsHeaderProps {
+interface RequestsHeaderProps {
   searchValue: string;
   onValueChange: (value: string) => void;
 }
 
-export const LocationsHeader = ({
+export const RequestsHeader = ({
   searchValue,
   onValueChange,
-}: LocationsHeaderProps) => {
-  const router = useRouter();
-  const handleCreate = () => {
-    router.push('/locations/create');
-  };
+}: RequestsHeaderProps) => {
   return (
     <>
       <UIFlexSpaceBox sx={{ mt: '35px' }}>
@@ -34,7 +28,7 @@ export const LocationsHeader = ({
               color: '#89C8C6',
             }}
           >
-            Locations
+            Requests
           </Typography>
         </UIFlexWrapBox>
         <UIFlexWrapBox sx={{ gap: '40px' }}>
@@ -52,12 +46,6 @@ export const LocationsHeader = ({
               ),
             }}
           />
-          <UIDefaultButton
-            sx={{ minWidth: '110px', borderRadius: '8px' }}
-            onClick={handleCreate}
-          >
-            + Create
-          </UIDefaultButton>
         </UIFlexWrapBox>
       </UIFlexSpaceBox>
     </>

@@ -6,6 +6,7 @@ import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
+import Thumbnail from './Thumbnail';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -54,56 +55,35 @@ const LocationsDetailCarouselCard = ({
                 <Box
                   component="img"
                   sx={{
-                    display: 'block',
-                    overflow: 'hidden',
-                    // maxWidth: '400px',
                     width: '100%',
                     height: '350px',
                   }}
-                  src={`/${url}`}
+                  src={`${url}`}
                   alt="image"
                 />
               ) : null;
             })}
           </AutoPlaySwipeableViews>
         </Box>
-        <UIFlexSpaceBox
-          flexDirection="column"
-          sx={{ width: '100px', height: 350 }}
-        >
+        <UIFlexSpaceBox flexDirection="column" width="100px" height="350px">
           <Box>
             {images.map((url, index) => {
               return (
-                <Box
+                <Thumbnail
                   key={index}
-                  component="img"
-                  sx={{
-                    marginBottom: '15px',
-                    height: '60px',
-                    display: 'block',
-                    width: '100%',
-                    overflow: 'hidden',
-                    borderRadius: '4px',
-                    opacity: index === activeStep ? '100%' : '60%',
-                  }}
-                  src={`/${url}`}
-                  alt="image"
+                  index={index}
+                  url={url}
+                  activeStep={activeStep}
                 />
               );
             })}
           </Box>
           <UIFlexSpaceBox>
-            <IconButton
-              onClick={handleBack}
-              sx={{ color: 'rgba(137, 200, 198, 0.8)' }}
-            >
-              <ArrowBackIos />
+            <IconButton onClick={handleBack}>
+              <ArrowBackIos sx={{ color: 'rgba(137, 200, 198, 0.8)' }} />
             </IconButton>
-            <IconButton
-              onClick={handleNext}
-              sx={{ color: 'rgba(137, 200, 198, 0.8)' }}
-            >
-              <ArrowForwardIos />
+            <IconButton onClick={handleNext}>
+              <ArrowForwardIos sx={{ color: 'rgba(137, 200, 198, 0.8)' }} />
             </IconButton>
           </UIFlexSpaceBox>
         </UIFlexSpaceBox>

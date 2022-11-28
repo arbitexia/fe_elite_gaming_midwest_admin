@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks';
 import {
-  AppBar,
   Avatar,
   Box,
   Divider,
@@ -21,6 +20,7 @@ import {
   Notifications as NotificationsIcon,
 } from '@mui/icons-material';
 import {
+  StyledAppBar,
   StyledIconButton,
   StyledNavbarMenu,
   StyledProfileMenuItem,
@@ -86,17 +86,7 @@ export default function AppNavbar(props: Props) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar
-        component="nav"
-        sx={{
-          position: 'relative',
-          height: '70px',
-          width: '100%',
-          background: '#FFFFFFD5',
-          border: '2px solid rgba(54, 70, 70, 0.05)',
-          boxShadow: '0px 3px 20px rgba(0, 0, 0, 0.05)',
-        }}
-      >
+      <StyledAppBar>
         <Toolbar sx={{ height: '70px' }}>
           <IconButton
             aria-label="open drawer"
@@ -150,7 +140,7 @@ export default function AppNavbar(props: Props) {
             )}
           </Box>
         </Toolbar>
-      </AppBar>
+      </StyledAppBar>
       <Box component="nav">
         <Drawer
           container={container}

@@ -1,21 +1,6 @@
 import { styled, Box, Button } from '@mui/material';
 import { UIDefaultTextField } from '@/components/UI';
 
-export const StyledCardBox = styled(Box)({
-  width: '254px',
-  height: '360px',
-  background: '#FFFFFF',
-  boxShadow: '0px 4px 30px rgba(0, 0, 0, 0.05)',
-  border: ' 2px solid rgba(137, 200, 198, 0.2)',
-  borderRadius: '10px',
-  padding: '15px 17px',
-  '&:hover': {
-    border: '2px solid rgba(137, 200, 198, 0.25)',
-    backdropFilter: 'blur(15px)',
-    filter: 'drop-shadow(0px 4px 50px rgba(0, 0, 0, 0.25))',
-  },
-});
-
 export const StyledSearchTextField = styled(UIDefaultTextField)({
   width: '250px',
   height: '40px',
@@ -61,4 +46,11 @@ export const StyledLocationViewButton = styled(Button)({
     color: '#008A83',
     border: '2px solid rgba(137, 200, 198, 0.5)',
   },
+});
+
+export const StyledImageBox = styled(Box)({
+  padding: 0,
+  borderRadius: '6px',
+  height: '150px',
+  overflow: 'hidden',
 });

@@ -19,16 +19,16 @@ const UsersListPage = () => {
       return usersTableData.filter((item) => {
         const name = `${item.firstName} ${item.lastName}`;
         return (
-          (name.includes(searchValue) ||
+          (name.toLowerCase().includes(searchValue.toLowerCase()) ||
             item.phonenumber.includes(searchValue) ||
-            item.email.includes(searchValue)) &&
+            item.email.toLowerCase().includes(searchValue.toLowerCase())) &&
           (searchStatus === 0 || item.status === searchStatus)
         );
       });
     });
   }, [searchValue, searchStatus]);
   return (
-    <DashboardLayout bg="#F8F8F8" title="Users">
+    <DashboardLayout title="Users">
       <UsersListHeader
         searchValue={searchValue}
         searchStatus={searchStatus}

@@ -19,7 +19,7 @@ import {
   UIImage,
   UIFlexColumnBox,
   UIAuthTextField,
-  UIAuthButton,
+  UIDefaultButton,
 } from '@/components/UI';
 import { AuthLayout } from '@/layouts';
 import { useFormik } from 'formik';
@@ -186,13 +186,13 @@ const LoginPage = () => {
               width: 170,
             }}
           >
-            <UIAuthButton type="submit" disabled={loading}>
+            <UIDefaultButton type="submit" disabled={loading}>
               {loading ? (
                 <CircularProgress color="inherit" size={24} />
               ) : (
                 'Log in'
               )}
-            </UIAuthButton>
+            </UIDefaultButton>
           </Box>
         </Stack>
         <UIFlexColumnBox>

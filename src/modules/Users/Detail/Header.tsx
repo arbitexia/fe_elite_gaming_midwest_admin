@@ -14,7 +14,7 @@ import {
   Delete as DeleteIcon,
   Replay as ReplayIcon,
 } from '@mui/icons-material';
-import { UIActionButton, UIAuthButton } from '@/components/UI';
+import { UIActionButton, UIDefaultButton } from '@/components/UI';
 import { UserType } from '@/types';
 import { useRouter } from 'next/router';
 
@@ -64,9 +64,9 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
                 />
               )}
               {router.asPath.includes('edit') || user.id === 0 ? (
-                <UIAuthButton sx={{ marginLeft: '8px' }} type="submit">
+                <UIDefaultButton sx={{ marginLeft: '8px' }} type="submit">
                   Save
-                </UIAuthButton>
+                </UIDefaultButton>
               ) : (
                 <>
                   <UIActionButton

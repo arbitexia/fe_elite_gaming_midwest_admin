@@ -16,10 +16,10 @@ export const locationsData: LocationType[] = [
     status: true,
     type: 'Palm',
     urls: [
-      'images/palm.png',
-      'images/roulette.png',
-      'images/palm.png',
-      'images/roulette.png',
+      '/images/palm.png',
+      '/images/roulette.png',
+      '/images/palm.png',
+      '/images/roulette.png',
     ],
   },
   {
@@ -36,7 +36,7 @@ export const locationsData: LocationType[] = [
     },
     status: true,
     type: 'Roulette',
-    urls: ['images/roulette.png'],
+    urls: ['/images/roulette.png'],
   },
   {
     name: 'Palm Casino Resort',
@@ -52,7 +52,7 @@ export const locationsData: LocationType[] = [
     },
     status: true,
     type: 'Palm',
-    urls: ['images/palm.png'],
+    urls: ['/images/palm.png'],
   },
   {
     name: 'Roulette Casino Resort',
@@ -68,7 +68,7 @@ export const locationsData: LocationType[] = [
     },
     status: true,
     type: 'Roulette',
-    urls: ['images/roulette.png'],
+    urls: ['/images/roulette.png'],
   },
   {
     name: 'Palm Casino Resort',
@@ -84,7 +84,7 @@ export const locationsData: LocationType[] = [
     },
     status: true,
     type: 'Palm',
-    urls: ['images/palm.png'],
+    urls: ['/images/palm.png'],
   },
   {
     name: 'Roulette Casino Resort',
@@ -100,7 +100,7 @@ export const locationsData: LocationType[] = [
     },
     status: true,
     type: 'Roulette',
-    urls: ['images/roulette.png'],
+    urls: ['/images/roulette.png'],
   },
   {
     name: 'Palm Casino Resort',
@@ -116,7 +116,7 @@ export const locationsData: LocationType[] = [
     },
     status: true,
     type: 'Palm',
-    urls: ['images/palm.png'],
+    urls: ['/images/palm.png'],
   },
   {
     name: 'Roulette Casino Resort',
@@ -132,7 +132,7 @@ export const locationsData: LocationType[] = [
     },
     status: true,
     type: 'Roulette',
-    urls: ['images/roulette.png'],
+    urls: ['/images/roulette.png'],
   },
 ];
 

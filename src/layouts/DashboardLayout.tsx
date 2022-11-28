@@ -6,7 +6,6 @@ import { useAuth } from '@/hooks';
 import { Box } from '@mui/material';
 
 interface Props {
-  bg?: string;
   title?: string;
   description?: string;
   children: React.ReactNode | React.ReactNode[];
@@ -28,8 +27,6 @@ const AppLayout = (props: Props) => {
             sx={(theme) => ({
               gap: 0,
               width: `calc(100% - 220px)`,
-              // width: `calc(100% - ${isSidebarOpen ? 270 : 100}px)`,
-              // marginLeft: `${isSidebarOpen ? 270 : 100}px`,
               height: '100vh',
               overflowY: 'auto',
               [theme.breakpoints.down('md')]: {

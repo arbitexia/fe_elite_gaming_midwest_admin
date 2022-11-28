@@ -4,7 +4,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 1,
     name: 'AirPods 2',
-    url: ['images/earphone.jpg'],
+    url: ['/images/earphone.jpg'],
     location: 'Mariland, USA',
     point: 12000,
     specifications: { price: 600, color: 'Silver/Black' },
@@ -14,7 +14,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 2,
     name: 'Marshal V6',
-    url: ['images/marshal.jpg'],
+    url: ['/images/marshal.jpg'],
     location: 'Mariland, USA',
     point: 19000,
     specifications: { price: 600, color: 'Silver/Black' },
@@ -24,7 +24,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 3,
     name: 'AppleWatch 8',
-    url: ['images/iwatch.jpg'],
+    url: ['/images/iwatch.jpg'],
     location: 'Mariland, USA',
     point: 23000,
     specifications: { price: 600, color: 'Silver/Black' },
@@ -34,7 +34,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 4,
     name: 'iPhone 14 pro',
-    url: ['images/iphone.jpg'],
+    url: ['/images/iphone.jpg'],
     location: 'Mariland, USA',
     point: 30000,
     specifications: { price: 600, color: 'Silver/Black' },
@@ -44,7 +44,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 5,
     name: 'AirPods 2',
-    url: ['images/earphone.jpg'],
+    url: ['/images/earphone.jpg'],
     location: 'Mariland, USA',
     point: 32000,
     specifications: { price: 600, color: 'Silver/Black' },
@@ -54,7 +54,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 6,
     name: 'Marshal V6',
-    url: ['images/marshal.jpg'],
+    url: ['/images/marshal.jpg'],
     location: 'Mariland, USA',
     point: 39000,
     specifications: { price: 600, color: 'Silver/Black' },
@@ -64,7 +64,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 7,
     name: 'AppleWatch 8',
-    url: ['images/iwatch.jpg'],
+    url: ['/images/iwatch.jpg'],
     location: 'Mariland, USA',
     point: 43000,
     specifications: { price: 600, color: 'Silver/Black' },
@@ -74,7 +74,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 8,
     name: 'iPhone 14 pro',
-    url: ['images/iphone.jpg'],
+    url: ['/images/iphone.jpg'],
     location: 'Mariland, USA',
     point: 50000,
     specifications: { price: 600, color: 'Silver/Black' },
@@ -84,7 +84,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 9,
     name: 'iPhone 14 pro',
-    url: ['images/iphone.jpg'],
+    url: ['/images/iphone.jpg'],
     location: 'Mariland, USA',
     point: 60000,
     specifications: { price: 600, color: 'Silver/Black' },
