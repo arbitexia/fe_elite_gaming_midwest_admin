@@ -62,14 +62,14 @@ export const superSidebarItems: MenuItemObj[] = [
     disabled: false,
   },
   {
-    id: 5,
+    id: 6,
     text: 'Comments',
     route: '/comments',
     isSelected: false,
     disabled: true,
   },
   {
-    id: 6,
+    id: 7,
     text: 'Reports',
     disabled: true,
     isSelected: false,
@@ -87,7 +87,7 @@ export const superSidebarItems: MenuItemObj[] = [
     ],
   },
   {
-    id: 7,
+    id: 8,
     text: 'Site Settings',
     route: '/settings',
     disabled: true,

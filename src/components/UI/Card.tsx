@@ -11,6 +11,19 @@ export type DefaultChildProps = {
   elevation?: number;
 };
 
+export const UIItemCard = styled(Paper)({
+  background: '#FFFFFF',
+  boxShadow: '0px 4px 30px rgba(0, 0, 0, 0.05)',
+  border: ' 2px solid rgba(137, 200, 198, 0.2)',
+  borderRadius: '10px',
+  padding: '15px 17px',
+  '&:hover': {
+    border: '2px solid rgba(137, 200, 198, 0.25)',
+    backdropFilter: 'blur(15px)',
+    filter: 'drop-shadow(0px 4px 50px rgba(0, 0, 0, 0.25))',
+  },
+});
+
 export const UIStyledCard = styled(Paper)(({ theme }) => ({
   width: 760,
   borderRadius: 20,
@@ -35,19 +48,3 @@ export const UIAuthCardWrapper = ({ children }: DefaultChildProps) => {
     </Stack>
   );
 };
-
-export const UIWhiteCard = ({
-  children,
-  sx,
-  spacing,
-  ...rest
-}: DefaultChildProps) => (
-  <Stack
-    component={Paper}
-    spacing={spacing || 3}
-    sx={{ position: 'relative', padding: 3, ...sx }}
-    {...rest}
-  >
-    {children}
-  </Stack>
-);

@@ -26,7 +26,7 @@ const UsersDetailPage = () => {
   }, [userData, id]);
 
   return (
-    <DashboardLayout bg="#F8F8F8" title="Users">
+    <DashboardLayout title="Users">
       {userData && (
         <Stack direction="column" spacing={2.5} paddingTop={4}>
           <UserDetailInfoCard user={userData} />

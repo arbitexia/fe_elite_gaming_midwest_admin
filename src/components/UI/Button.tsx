@@ -2,17 +2,6 @@ import React from 'react';
 import { styled, Button, SvgIcon, Typography } from '@mui/material';
 
 export const UIDefaultButton = styled(Button)({
-  minWidth: 100,
-  height: 40,
-  color: '#8794BA',
-  textTransform: 'none',
-  borderRadius: 8,
-  padding: '0 22px',
-  border: '2px solid rgba(137, 200, 198, 0.2)',
-  letterSpacing: '0.15px',
-});
-
-export const UIAuthButton = styled(Button)({
   boxShadow: 'none',
   textTransform: 'none',
   fontSize: 15,
@@ -71,3 +60,36 @@ export const UIActionButton = ({
     </Button>
   );
 };
+
+export const UIEditButton = styled(Button)({
+  width: '105px',
+  height: '42px',
+  background: 'rgba(137, 200, 198, 0.2)',
+  border: '1px solid rgba(191, 215, 225, 0.05)',
+  borderRadius: '8px',
+  fontWeight: '500',
+  fontSize: '16px',
+  lineHeight: '24px',
+  color: '#83A9A8',
+  '&:hover': {
+    color: '#FFFFFF',
+    background: '#008A83',
+    border: '1px solid rgba(191, 215, 225, 0.05)',
+  },
+});
+
+export const UIViewButton = styled(Button)({
+  width: '105px',
+  height: '42px',
+  background: 'rgba(191, 215, 225, 0.05)',
+  border: '2px solid rgba(137, 200, 198, 0.2)',
+  borderRadius: '8px',
+  fontWeight: '500',
+  fontSize: '16px',
+  lineHeight: '24px',
+  color: '#83A9A8',
+  '&:hover': {
+    color: '#008A83',
+    border: '2px solid rgba(137, 200, 198, 0.5)',
+  },
+});

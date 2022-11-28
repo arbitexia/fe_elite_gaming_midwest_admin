@@ -1,8 +1,11 @@
-import { UserStatus } from '@/constants/Enum';
+import { UserStatus, RequestStatus } from '@/constants/Enum';
 
 export const getColor = (value: string) => {
-  if (value === UserStatus.ACTIVATED) return 'success';
-  else if (value === UserStatus.DISABLED) return 'error';
-  else if (value === UserStatus.ARCHIVED) return 'info';
+  if (value === UserStatus.ACTIVATED || value === RequestStatus.ACCEPTED)
+    return 'success';
+  else if (value === UserStatus.DISABLED || value === RequestStatus.DECLINED)
+    return 'error';
+  else if (value === UserStatus.ARCHIVED || value === RequestStatus.WAITING)
+    return 'info';
   else return 'default';
 };

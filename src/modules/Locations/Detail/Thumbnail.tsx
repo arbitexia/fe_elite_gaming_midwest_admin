@@ -5,7 +5,7 @@ interface LocationsDetailThumbnailProps {
   index: number;
   activeStep: number;
   url: string;
-  handleRemove: (index: number) => void;
+  handleRemove?: (index: number) => void;
 }
 
 const LocationsDetailThumbnail = ({
@@ -32,7 +32,7 @@ const LocationsDetailThumbnail = ({
           borderRadius: '4px',
           opacity: index === activeStep ? '100%' : '60%',
         }}
-        src={`/${url}`}
+        src={`${url}`}
         alt="image"
       />
       <IconButton
@@ -46,7 +46,9 @@ const LocationsDetailThumbnail = ({
           border: '1px solid #89C8C6',
           background: 'rgba(255, 255, 255, 1)',
         }}
-        onClick={() => handleRemove(index)}
+        onClick={() => {
+          if (handleRemove) handleRemove(index);
+        }}
       >
         <Close sx={{ fontSize: 14 }} />
       </IconButton>

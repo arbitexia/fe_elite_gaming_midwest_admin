@@ -1,5 +1,6 @@
 import {
   styled,
+  AppBar,
   Button,
   IconButton,
   MenuProps,
@@ -35,6 +36,15 @@ export const StyledNavButton = styled(Button)<StyledNavButtonProp>(
     color: '#FFFFFF',
   })
 );
+
+export const StyledAppBar = styled(AppBar)({
+  position: 'relative',
+  height: '70px',
+  width: '100%',
+  background: '#FFFFFFD5',
+  border: '2px solid rgba(54, 70, 70, 0.05)',
+  boxShadow: '0px 3px 20px rgba(0, 0, 0, 0.05)',
+});
 
 export const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -89,6 +99,5 @@ export const StyledProfileMenuItem = styled(MenuItem)(() => ({
     marginLeft: 5,
     fontSize: 14,
     fontWeight: 500,
-    // color: '#667180',
   },
 }));

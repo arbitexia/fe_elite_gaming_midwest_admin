@@ -98,12 +98,10 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
       </UIFlexWrapBox>
       <Box
         ref={mapNode}
-        sx={{
-          width: '100%',
-          height: '170px',
-          borderRadius: '8px',
-          overflow: 'hidden',
-        }}
+        width="100%"
+        height="170px"
+        borderRadius="8px"
+        overflow="hiddend"
       />
     </StyledLocationCardBox>
   );

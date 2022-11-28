@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Typography, InputAdornment, Divider } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import {
@@ -6,12 +5,11 @@ import {
   UIFlexWrapBox,
   UIDefaultTextField,
   UIFlexCenterBox,
-  UIAuthButton,
+  UIDefaultButton,
 } from '@/components/UI';
 import { userStatus } from '@/_mock/users';
 import { StyledSelectMenuItem } from './ui';
 import { useRouter } from 'next/router';
-import { UserType } from '@/types';
 
 interface UsersListHeaderProps {
   searchValue: string;
@@ -88,12 +86,12 @@ const UsersListHeader = ({
           }}
         />
         <Divider orientation="vertical" sx={{ height: '40px' }} />
-        <UIAuthButton
+        <UIDefaultButton
           sx={{ minWidth: '110px', borderRadius: '8px' }}
           onClick={handleCreate}
         >
           + Create
-        </UIAuthButton>
+        </UIDefaultButton>
       </UIFlexWrapBox>
     </UIFlexSpaceBox>
   );
