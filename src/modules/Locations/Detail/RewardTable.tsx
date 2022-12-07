@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import {
   TableHead,
   TableBody,
@@ -18,6 +19,7 @@ import { rewardsData } from '@/_mock/rewards';
 import RewardsPagination from './Pagination';
 
 const LocationDetailRewardTable = () => {
+  const router = useRouter();
   const getSpecTableCell = (specifications: any) => {
     return Object.keys(specifications).map((key, index) => {
       return (
@@ -67,7 +69,12 @@ const LocationDetailRewardTable = () => {
           {rewardsData.map((item) => {
             return (
               <StyledLocationTableRow key={item.id}>
-                <StyledLocationTableCell>{item.id}</StyledLocationTableCell>
+                <StyledLocationTableCell
+                  onClick={() => router.push(`locations/${item.id}`)}
+                  sx={{ cursor: 'pointer' }}
+                >
+                  #{item.id}
+                </StyledLocationTableCell>
                 <StyledLocationTableCell>{item.name}</StyledLocationTableCell>
                 <StyledLocationTableCell>
                   {getSpecTableCell(item.specifications)}
