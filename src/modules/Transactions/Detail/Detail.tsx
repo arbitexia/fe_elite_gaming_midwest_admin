@@ -22,7 +22,7 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
 
       <StyledDetailBox component="div">
         <StyledDetailBoxHeader component="div">
-          <UIImage src={'/images/icons/logo.svg'} width={150} height={150} />
+          <UIImage src={'images/icons/logo.svg'} width={150} height={150} />
 
           <StyledStatusCol component="div">
             <StyledLabel variant="h6">{transactionItem.status}</StyledLabel>
