@@ -28,7 +28,7 @@ const RewardsCreate = () => {
       urls: [],
     },
     point: 0,
-    specifications: {},
+    short: '',
     description: '',
     amount: 0,
     status: '',
