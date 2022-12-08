@@ -83,6 +83,7 @@ const Sidebar = () => {
                     item.dropdown.map((dropdownItem, i) => (
                       <List disablePadding key={i}>
                         <StyledSidebarDropButton
+                          disabled={dropdownItem.disabled}
                           sx={{
                             color:
                               selectedDropdown === dropdownItem.text &&

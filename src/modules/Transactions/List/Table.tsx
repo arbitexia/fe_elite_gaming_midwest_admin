@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import {
-  Box,
   Table,
   TableHead,
   TableBody,
-  Checkbox,
   IconButton,
   Divider,
-  Typography,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import { UIChip } from '@/components/UI';
@@ -22,15 +19,16 @@ import {
 import { menuActions } from '@/_mock/users';
 import { getColor } from '@/libs/data-helper';
 import { MenuAction } from '@/constants/Enum';
-import { RewardItemType } from '@/types';
+import { TransactionType } from '@/types';
 
-type RewardsTableProps = {
-  rewardsTableData: RewardItemType[];
+type TransactionsTableProps = {
+  transactionTableData: TransactionType[];
 };
 
-const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
+const TransactionsTable = ({
+  transactionTableData,
+}: TransactionsTableProps) => {
   const router = useRouter();
-  const [selected, setSelected] = useState<readonly string[]>([]);
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
@@ -47,128 +45,58 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
       );
   };
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = rewardsTableData.map((n) => n.id.toString());
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: readonly string[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
-  const isSelected = (id: string) => selected.indexOf(id) !== -1;
-
   return (
     <Table>
       <TableHead>
         <StyledTableRow>
-          <StyledTableCell>
-            <Checkbox
-              indeterminate={
-                selected.length > 0 && selected.length < rewardsTableData.length
-              }
-              checked={
-                rewardsTableData.length > 0 &&
-                selected.length === rewardsTableData.length
-              }
-              onChange={handleSelectAllClick}
-            />
-          </StyledTableCell>
           <StyledTableCell>Id</StyledTableCell>
+          <StyledTableCell>Customer</StyledTableCell>
           <StyledTableCell>Product</StyledTableCell>
-          <StyledTableCell>Detail</StyledTableCell>
-          <StyledTableCell>Points</StyledTableCell>
+          <StyledTableCell>Amount</StyledTableCell>
+          <StyledTableCell>Type</StyledTableCell>
+          <StyledTableCell>Assignee</StyledTableCell>
           <StyledTableCell align="center">Status</StyledTableCell>
           <StyledTableCell align="center">Due Date</StyledTableCell>
           <StyledTableCell />
         </StyledTableRow>
       </TableHead>
       <TableBody>
-        {rewardsTableData.map((rewardItem) => {
-          const isItemSelected = isSelected(rewardItem.id.toString());
+        {transactionTableData.map((transactionItem) => {
           // const labelId = `enhanced-table-checkbox-${index}`;
           return (
             <StyledTableRow
-              key={rewardItem.id}
-              data-key={rewardItem.id}
-              role="checkbox"
+              key={transactionItem.id}
+              data-key={transactionItem.id}
               sx={{ position: 'relative' }}
             >
-              <StyledTableCell>
-                <Checkbox
-                  checked={isItemSelected}
-                  onClick={(event) =>
-                    handleClick(event, rewardItem.id.toString())
-                  }
-                />
-              </StyledTableCell>
               <StyledTableCell
-                onClick={() => router.push(`${router.asPath}/${rewardItem.id}`)}
+                onClick={() =>
+                  router.push(`${router.asPath}/${transactionItem.id}`)
+                }
                 sx={{ cursor: 'pointer' }}
               >
-                #{rewardItem.id}
+                #{transactionItem.id}
               </StyledTableCell>
               <StyledTableCell>
-                <Typography
-                  sx={{
-                    cursor: 'pointer',
-                    div: { display: 'none' },
-                    ':hover>div': { display: 'block' },
-                    position: 'relative',
-                  }}
-                >
-                  {rewardItem.name}
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      zIndex: 1,
-                      left: 150,
-                      top: -150,
-                    }}
-                  >
-                    <Box
-                      component="img"
-                      src={rewardItem.urls[0]}
-                      alt="Image"
-                      width={300}
-                      height={300}
-                    />
-                  </Box>
-                </Typography>
+                {`${transactionItem.user.firstName} ${transactionItem.user.lastName}`}
               </StyledTableCell>
-              <StyledTableCell>{rewardItem.short}</StyledTableCell>
-              <StyledTableCell>{rewardItem.point}</StyledTableCell>
+
+              <StyledTableCell>{transactionItem.reward.name}</StyledTableCell>
+              <StyledTableCell>{transactionItem.amount}</StyledTableCell>
+              <StyledTableCell>{transactionItem.type}</StyledTableCell>
+              <StyledTableCell>{`${transactionItem.assignee.firstName} ${transactionItem.assignee.lastName}`}</StyledTableCell>
               <StyledTableCell align="center">
                 <UIChip
-                  label={rewardItem.status}
-                  color={getColor(rewardItem.status)}
+                  label={transactionItem.status}
+                  color={getColor(transactionItem.status)}
                 />
               </StyledTableCell>
               <StyledTableCell align="center">
-                {rewardItem.createdAt}
+                {transactionItem.createdAt}
               </StyledTableCell>
               <StyledTableCell>
                 <IconButton
-                  data-key={rewardItem.id}
+                  data-key={transactionItem.id}
                   onClick={(event: React.MouseEvent<HTMLElement>) => {
                     setAnchorElOptionsMenu(event.currentTarget);
                   }}
@@ -223,4 +151,4 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
   );
 };
 
-export default RewardsTable;
+export default TransactionsTable;

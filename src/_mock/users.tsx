@@ -36,7 +36,7 @@ export const usersTableData: UserType[] = [
     email: 'alecthompson@mail.com',
     phonenumber: '+14898903328',
     birthday: '14/06/1991',
-    role: 4,
+    role: 2,
     status: 1,
     createdAt: '17/09/2021',
     asset: '',

@@ -7,7 +7,7 @@ import {
   IconButton,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
-import { UIChip, UIFlexWrapBox } from '@/components/UI';
+import { UIChip } from '@/components/UI';
 import {
   StyledLocationCardBox,
   StyledLocationTable,
@@ -20,27 +20,27 @@ import RewardsPagination from './Pagination';
 
 const LocationDetailRewardTable = () => {
   const router = useRouter();
-  const getSpecTableCell = (specifications: any) => {
-    return Object.keys(specifications).map((key, index) => {
-      return (
-        <UIFlexWrapBox key={index}>
-          <Typography
-            sx={{
-              color: 'rgba(0, 0, 0, 0.3)',
-              fontSize: 12,
-              fontWeight: 500,
-              textTransform: 'capitalize',
-            }}
-          >
-            {key}:
-          </Typography>
-          <Typography sx={{ color: '#06251F', fontSize: 14, fontWeight: 500 }}>
-            {specifications[key]}
-          </Typography>
-        </UIFlexWrapBox>
-      );
-    });
-  };
+  // const getSpecTableCell = (specifications: any) => {
+  //   return Object.keys(specifications).map((key, index) => {
+  //     return (
+  //       <UIFlexWrapBox key={index}>
+  //         <Typography
+  //           sx={{
+  //             color: 'rgba(0, 0, 0, 0.3)',
+  //             fontSize: 12,
+  //             fontWeight: 500,
+  //             textTransform: 'capitalize',
+  //           }}
+  //         >
+  //           {key}:
+  //         </Typography>
+  //         <Typography sx={{ color: '#06251F', fontSize: 14, fontWeight: 500 }}>
+  //           {specifications[key]}
+  //         </Typography>
+  //       </UIFlexWrapBox>
+  //     );
+  //   });
+  // };
   return (
     <StyledLocationCardBox sx={{ marginTop: '30px' }}>
       <Typography
@@ -76,9 +76,7 @@ const LocationDetailRewardTable = () => {
                   #{item.id}
                 </StyledLocationTableCell>
                 <StyledLocationTableCell>{item.name}</StyledLocationTableCell>
-                <StyledLocationTableCell>
-                  {getSpecTableCell(item.specifications)}
-                </StyledLocationTableCell>
+                <StyledLocationTableCell>{item.short}</StyledLocationTableCell>
                 <StyledLocationTableCell>{item.point}</StyledLocationTableCell>
                 <StyledLocationTableCell>
                   <UIChip label={item.status} color={getColor(item.status)} />

@@ -22,7 +22,7 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
       if (
         key === 'id' ||
         key === 'location' ||
-        key === 'specifications' ||
+        key === 'short' ||
         key === 'urls' ||
         key === 'description' ||
         key === 'createdAt'
