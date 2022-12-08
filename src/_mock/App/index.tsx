@@ -71,17 +71,18 @@ export const superSidebarItems: MenuItemObj[] = [
   {
     id: 7,
     text: 'Reports',
-    disabled: true,
+    disabled: false,
     isSelected: false,
     dropdown: [
       {
         text: 'Activity',
         route: 'activity',
         isSelected: false,
+        disabled: true,
       },
       {
         text: 'Transaction',
-        route: 'transaction',
+        route: 'transactions',
         isSelected: false,
       },
     ],

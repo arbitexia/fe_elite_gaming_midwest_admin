@@ -11,7 +11,7 @@ export type RewardItemType = {
   location: LocationType;
   point: number;
   description: string;
-  specifications: object;
+  short: string;
   status: string;
   amount: number;
   createdAt: string;
