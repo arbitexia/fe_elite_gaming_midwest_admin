@@ -3,14 +3,52 @@ import { Box, Typography, Stack, MenuItem } from '@mui/material';
 import { UIFlexWrapBox, UIEditTextField } from '@/components/UI';
 import { StyledLocationCardBox, StyledLocationInfoTitle } from './ui';
 import { RewardsDetailProps } from '@/types';
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useFormik } from 'formik';
 import { locationsData } from '@/_mock/locations';
+import dynamic from 'next/dynamic';
+// const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+const ReactQuill: any = dynamic(
+  () => {
+    return import('react-quill');
+  },
+  { loading: () => null, ssr: false }
+);
 
 const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [value, setValue] = useState('');
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      [{ font: [] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [
+        { list: 'ordered' },
+        { list: 'bullet' },
+        { indent: '-1' },
+        { indent: '+1' },
+      ],
+      ['link', 'image'],
+      ['clean'],
+    ],
+  };
+
+  const formats = [
+    'header',
+    'font',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'blockquote',
+    'list',
+    'bullet',
+    'indent',
+    'link',
+    'image',
+  ];
 
   const userFormik = useFormik({
     initialValues: rewardsItem,
@@ -50,6 +88,7 @@ const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
             <Box width={230}>
               <UIEditTextField
                 name="location"
+                defaultValue={0}
                 value={userFormik.values.location}
                 onChange={userFormik.handleChange}
                 fullWidth
@@ -88,7 +127,13 @@ const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
         }}
       >
         <StyledLocationInfoTitle>Description:</StyledLocationInfoTitle>
-        <ReactQuill theme="snow" value={value} onChange={setValue} />
+        <ReactQuill
+          theme="snow"
+          value={value}
+          onChange={setValue}
+          modules={modules}
+          formats={formats}
+        />
       </Box>
     </StyledLocationCardBox>
   );

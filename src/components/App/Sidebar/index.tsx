@@ -29,7 +29,7 @@ const Sidebar = () => {
             setSelectedDropdown(dropdown.text);
           }
         });
-      else if (item.route?.includes(path)) {
+      else if (path.includes(item.route as string)) {
         setSelectedMenu(item.id);
         setDropdownOpen(item.text);
       }
@@ -51,7 +51,7 @@ const Sidebar = () => {
                 onClick={() => {
                   setSelectedMenu(item.id);
                   setDropdownOpen(item.dropdown ? item.text : '');
-                  item.route && router.push(item.route);
+                  item.route && router.push(`/${item.route}`);
                 }}
                 key={index}
                 sx={item.id === selectedMenu ? StyledSidebarActiveButton : {}}
@@ -94,7 +94,7 @@ const Sidebar = () => {
                             setSelectedMenu(item.id);
                             setSelectedDropdown(dropdownItem.text);
                             dropdownItem.route &&
-                              router.push(dropdownItem.route);
+                              router.push(`/${dropdownItem.route}`);
                           }}
                         >
                           {dropdownItem.text}

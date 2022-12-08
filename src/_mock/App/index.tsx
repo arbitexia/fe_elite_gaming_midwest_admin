@@ -10,7 +10,7 @@ export const superSidebarItems: MenuItemObj[] = [
     id: 1,
     text: 'Analytics',
     isSelected: false,
-    route: '/analytics',
+    route: 'analytics',
     disabled: true,
   },
   {
@@ -21,22 +21,22 @@ export const superSidebarItems: MenuItemObj[] = [
     dropdown: [
       {
         text: 'Customers',
-        route: '/users/customers',
+        route: 'users/customers',
         isSelected: false,
       },
       {
         text: 'Tablets',
-        route: '/users/tablets',
+        route: 'users/tablets',
         isSelected: false,
       },
       {
         text: 'Admins',
-        route: '/users/admins',
+        route: 'users/admins',
         isSelected: false,
       },
       {
         text: 'Invitations',
-        route: '/users/invitations',
+        route: 'users/invitations',
         isSelected: false,
       },
     ],
@@ -44,27 +44,27 @@ export const superSidebarItems: MenuItemObj[] = [
   {
     id: 3,
     text: 'Locations',
-    route: '/locations',
+    route: 'locations',
     isSelected: false,
   },
   {
     id: 4,
     text: 'Rewards',
-    route: '/rewards',
+    route: 'rewards',
     isSelected: false,
     disabled: false,
   },
   {
     id: 5,
     text: 'Request',
-    route: '/requests',
+    route: 'requests',
     isSelected: false,
     disabled: false,
   },
   {
     id: 6,
     text: 'Comments',
-    route: '/comments',
+    route: 'comments',
     isSelected: false,
     disabled: true,
   },
@@ -76,12 +76,12 @@ export const superSidebarItems: MenuItemObj[] = [
     dropdown: [
       {
         text: 'Activity',
-        route: '/activity',
+        route: 'activity',
         isSelected: false,
       },
       {
         text: 'Transaction',
-        route: '/transaction',
+        route: 'transaction',
         isSelected: false,
       },
     ],
@@ -89,7 +89,7 @@ export const superSidebarItems: MenuItemObj[] = [
   {
     id: 8,
     text: 'Site Settings',
-    route: '/settings',
+    route: 'settings',
     disabled: true,
     isSelected: false,
   },
