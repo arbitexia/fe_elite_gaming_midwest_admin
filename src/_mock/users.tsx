@@ -28,6 +28,27 @@ export const initUserData: UserType = {
   createdAt: '',
 };
 
+export const profileData: UserType = {
+  id: 1,
+  firstName: 'Esthera',
+  lastName: 'Jackson',
+  email: 'alecthompson@mail.com',
+  phonenumber: '+14898903328',
+  birthday: '14/06/1991',
+  role: 2,
+  status: 1,
+  createdAt: '17/09/2021',
+  asset: '',
+  location: {
+    address1: '96607 Claire Square Suite',
+    address2: 'St. Louis Park, HI',
+    city: 'New York',
+    state: '',
+    country: 'USA',
+    zipcode: '48021',
+  },
+};
+
 export const usersTableData: UserType[] = [
   {
     id: 1,
