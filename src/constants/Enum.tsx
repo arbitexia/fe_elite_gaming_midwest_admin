@@ -15,3 +15,21 @@ export enum MenuAction {
   EDIT = `edit`,
   DELETE = `delete`,
 }
+
+export enum ActivityModel {
+  USER = 'USER',
+  REWARD = 'REWARD',
+  POINT = 'POINT',
+  ASSET = 'ASSET',
+  REQUEST = 'REQUEST',
+  LOCATION = 'LOCATION',
+}
+
+export enum ActivityType {
+  CHECKIN = 'CHECKIN',
+  GET = 'GET',
+  VIEW = 'VIEW',
+  CREATE = 'CREATE',
+  UPDATE = 'UPDATE',
+  DELETE = 'DELETE',
+}
