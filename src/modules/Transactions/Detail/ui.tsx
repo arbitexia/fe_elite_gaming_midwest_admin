@@ -18,9 +18,27 @@ export const StyledOrderModalHeading = styled(Typography)({
 export const StyledDetailBox = styled(Box)({
   background: '#ffffff',
   borderRadius: '15px',
-  marginTop: '30px',
   boxShadow: '0px 15px 30px -23px #192A5933',
   padding: '20px 25px',
+});
+
+export const StyledTooltipBox = styled(Box)({
+  display: 'flex',
+  flexFlow: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingRight: '20px',
+  cursor: 'pointer',
+
+  '&:last-child': {
+    paddingRight: 0,
+  },
+});
+
+export const StyledDetailHeader = styled(Box)({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
 });
 
 export const StyledDetailBoxHeader = styled(Box)(({ theme }) => ({
@@ -86,31 +104,6 @@ export const StyledGridBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyledDetailBoxFooter = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-
-  padding: theme.spacing(2.5, 0, 1),
-}));
-
-export const StyledQuestionCol = styled(Box)({
-  '> p': {
-    '&:nth-of-type(1)': {
-      color: '#222B35',
-      fontSize: '14px',
-      letterSpacing: '0.1px',
-      fontWeight: 700,
-    },
-
-    '&:nth-of-type(2)': {
-      color: '#667180',
-      fontSize: '14px',
-      letterSpacing: '0.1px',
-    },
-  },
-});
-
 export const StyledTable = styled(Table)(({ theme }) => ({
   margin: theme.spacing(4, 0),
 }));
@@ -120,31 +113,6 @@ export const TableHeadCell = styled(TableCell)({
   fontSize: '14px',
   letterSpacing: '0.1px',
   fontWeight: 700,
-});
-
-export const StyledDescription = styled(TableCell)({
-  '&.MuiTableCell-root': {
-    borderBottom: 'none',
-  },
-
-  '> p': {
-    padding: 0,
-
-    '&:nth-of-type(1)': {
-      color: '#222B35',
-      fontSize: '14px',
-      letterSpacing: '0.25px',
-      fontWeight: 700,
-      marginBottom: '5px',
-    },
-
-    '&:nth-of-type(2)': {
-      color: '#667180',
-      fontSize: '14px',
-      letterSpacing: '0.1px',
-      width: '70%',
-    },
-  },
 });
 
 export const StyledTableRow = styled(TableRow)({

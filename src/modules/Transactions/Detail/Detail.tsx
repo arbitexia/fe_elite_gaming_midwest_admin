@@ -1,4 +1,5 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Tooltip, Typography, IconButton } from '@mui/material';
+import { Print } from '@mui/icons-material';
 import { UIContainer, UIImage } from '@/components/UI';
 import {
   StyledDetailBox,
@@ -8,6 +9,8 @@ import {
   StyledLabel,
   StyledStatusCol,
   StyledOrderModalHeading,
+  StyledDetailHeader,
+  StyledTooltipBox,
 } from './ui';
 import { TransactionsProps } from '@/types';
 import DetailTable from './DetailTable';
@@ -19,6 +22,26 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
       <StyledOrderModalHeading>
         Transactions #{transactionItem.id} Details
       </StyledOrderModalHeading>
+
+      <StyledDetailHeader
+        component="div"
+        sx={{ py: 2, justifyContent: 'flex-end' }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <StyledTooltipBox component="div">
+            <Tooltip title={'Print'}>
+              <IconButton disableRipple>
+                <Print sx={{ color: '#667180', fontSize: '13px' }} />
+              </IconButton>
+            </Tooltip>
+            <Typography
+              sx={{ color: '#667180', fontSize: '13px', fontWeight: 700 }}
+            >
+              Print
+            </Typography>
+          </StyledTooltipBox>
+        </Box>
+      </StyledDetailHeader>
 
       <StyledDetailBox component="div">
         <StyledDetailBoxHeader component="div">

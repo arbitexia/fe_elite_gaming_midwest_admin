@@ -7,21 +7,21 @@ import {
   UIFlexCenterBox,
 } from '@/components/UI';
 import { StyledSelectMenuItem } from './ui';
-import { transactionsType } from '@/_mock/transactions';
+import { ActivityModel } from '@/constants/Enum';
 
-interface TransactionsListHeaderProps {
+interface ActivityListHeaderProps {
   searchValue: string;
-  searchType: number;
+  searchType: string;
   onValueChange: (value: string) => void;
-  onTypeChange: (value: number) => void;
+  onTypeChange: (value: string) => void;
 }
 
-const TransactionsListHeader = ({
+const ActivityListHeader = ({
   searchValue,
   searchType,
   onValueChange,
   onTypeChange,
-}: TransactionsListHeaderProps) => {
+}: ActivityListHeaderProps) => {
   return (
     <UIFlexSpaceBox>
       <Typography
@@ -33,7 +33,7 @@ const TransactionsListHeader = ({
           color: '#89C8C6',
         }}
       >
-        Transactions List
+        Activities List
       </Typography>
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
         <UIFlexCenterBox>
@@ -45,7 +45,7 @@ const TransactionsListHeader = ({
             select
             value={searchType}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              onTypeChange(parseInt(e.target.value))
+              onTypeChange(e.target.value)
             }
             sx={{
               width: '160px',
@@ -57,12 +57,15 @@ const TransactionsListHeader = ({
               },
             }}
           >
-            <StyledSelectMenuItem value={0}>All</StyledSelectMenuItem>
-            {transactionsType.map((option) => (
-              <StyledSelectMenuItem key={option.id} value={option.id}>
-                {option.value}
-              </StyledSelectMenuItem>
-            ))}
+            <StyledSelectMenuItem value={'ALL'}>All</StyledSelectMenuItem>
+            {Object.keys(ActivityModel).map((option) => {
+              console.log(option);
+              return (
+                <StyledSelectMenuItem key={option} value={option}>
+                  {option}
+                </StyledSelectMenuItem>
+              );
+            })}
           </UIDefaultTextField>
         </UIFlexCenterBox>
         <UIDefaultTextField
@@ -84,4 +87,4 @@ const TransactionsListHeader = ({
   );
 };
 
-export default TransactionsListHeader;
+export default ActivityListHeader;
