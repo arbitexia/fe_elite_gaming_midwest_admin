@@ -1,21 +1,19 @@
-import { Typography, InputAdornment, Divider } from '@mui/material';
+import { Typography, InputAdornment } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import {
   UIFlexSpaceBox,
   UIFlexWrapBox,
   UIDefaultTextField,
   UIFlexCenterBox,
-  UIDefaultButton,
 } from '@/components/UI';
 import { StyledSelectMenuItem } from './ui';
-import { useRouter } from 'next/router';
 import { ActivityModel } from '@/constants/Enum';
 
 interface ActivityListHeaderProps {
   searchValue: string;
-  searchType: number;
+  searchType: string;
   onValueChange: (value: string) => void;
-  onTypeChange: (value: number) => void;
+  onTypeChange: (value: string) => void;
 }
 
 const ActivityListHeader = ({
@@ -24,11 +22,6 @@ const ActivityListHeader = ({
   onValueChange,
   onTypeChange,
 }: ActivityListHeaderProps) => {
-  const router = useRouter();
-  const handleCreate = () => {
-    router.push(`${router.asPath}/create`);
-  };
-
   return (
     <UIFlexSpaceBox>
       <Typography
@@ -40,7 +33,7 @@ const ActivityListHeader = ({
           color: '#89C8C6',
         }}
       >
-        Activity List
+        Activities List
       </Typography>
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
         <UIFlexCenterBox>
@@ -52,7 +45,7 @@ const ActivityListHeader = ({
             select
             value={searchType}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              onTypeChange(parseInt(e.target.value))
+              onTypeChange(e.target.value)
             }
             sx={{
               width: '160px',
@@ -64,12 +57,15 @@ const ActivityListHeader = ({
               },
             }}
           >
-            <StyledSelectMenuItem value={0}>All</StyledSelectMenuItem>
-            {Object.keys(ActivityModel).map((option) => (
-              <StyledSelectMenuItem key={option} value={option}>
-                {option}
-              </StyledSelectMenuItem>
-            ))}
+            <StyledSelectMenuItem value={'ALL'}>All</StyledSelectMenuItem>
+            {Object.keys(ActivityModel).map((option) => {
+              console.log(option);
+              return (
+                <StyledSelectMenuItem key={option} value={option}>
+                  {option}
+                </StyledSelectMenuItem>
+              );
+            })}
           </UIDefaultTextField>
         </UIFlexCenterBox>
         <UIDefaultTextField
@@ -86,13 +82,6 @@ const ActivityListHeader = ({
             ),
           }}
         />
-        <Divider orientation="vertical" sx={{ height: '40px' }} />
-        <UIDefaultButton
-          sx={{ minWidth: '110px', borderRadius: '8px' }}
-          onClick={handleCreate}
-        >
-          + Create
-        </UIDefaultButton>
       </UIFlexWrapBox>
     </UIFlexSpaceBox>
   );

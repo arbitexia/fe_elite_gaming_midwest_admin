@@ -6,7 +6,52 @@ import {
   MenuProps,
   Menu,
   MenuItem,
+  Box,
+  InputBase,
+  Typography,
 } from '@mui/material';
+import { intervalToDuration, formatDuration } from 'date-fns';
+import { NotificationMenuItemProps } from '@/types';
+
+export const Search = styled(Box)({
+  position: 'relative',
+  borderRadius: '4px',
+  backgroundColor: 'transparent',
+  width: '100%',
+  color: '#667180',
+  '&:hover': {
+    backgroundColor: 'rgba(255,255,255, 0.25)',
+  },
+});
+
+export const SearchIconWrapper = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+export const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    fontSize: '14px',
+    color: '#667180',
+    '&::placeholder': {
+      fontSize: '14px',
+    },
+    [theme.breakpoints.down('md')]: {
+      width: '20ch',
+      display: 'none',
+    },
+  },
+}));
 
 export type StyledNavButtonProp = {
   btnType: string;
@@ -101,3 +146,82 @@ export const StyledProfileMenuItem = styled(MenuItem)(() => ({
     fontWeight: 500,
   },
 }));
+
+export const NotificationCategoryItem = styled(MenuItem)({
+  margin: '0px 20px',
+  padding: '0px 0px 5px 0px',
+  p: {
+    fontWeight: 500,
+    // color: '#667180',
+    fontSize: 12,
+  },
+  '&:hover': {
+    backgroundColor: 'transparent',
+  },
+});
+
+const Notification = styled(MenuItem)(() => ({
+  padding: '8px 20px 8px 20px',
+  display: 'flex',
+  alignItems: 'baseline',
+  span: {
+    fontWeight: 700,
+  },
+}));
+
+export const NotificationMenuItem = ({
+  notification,
+}: NotificationMenuItemProps) => {
+  const duration =
+    new Date().valueOf() - new Date(notification.createdAt).valueOf();
+  const isNew = duration < 24 * 3600 * 1000;
+  const durationText = formatDuration(
+    intervalToDuration({ start: 0, end: duration })
+  );
+  let detail = '';
+  let title = '';
+  switch (notification.model) {
+    case 'USER':
+      title = 'New user is resistered';
+      detail = `New user name is ${notification.data?.firstName} ${notification.data?.lastName}\nPhonenumber is ${notification.data?.phonenumber}`;
+      break;
+    case 'REWARD':
+      title = 'New product is created';
+      detail = `New product name is ${notification.data?.name}`;
+      break;
+    case 'REQUEST':
+      title = 'New request is created';
+      detail = `${notification.data?.user.firstName} ${notification.data?.user.lastName} make ${notification.data?.item.name} request`;
+  }
+  return (
+    <Notification disableRipple disableTouchRipple key={notification.id}>
+      <Box
+        component="img"
+        src={isNew ? 'images/icons/green-dot.svg' : 'images/icons/grey-dot.svg'}
+        alt={'dot'}
+        sx={{
+          marginRight: '5px',
+          marginLeft: '0px',
+        }}
+      />
+      <Box>
+        <Typography sx={{ fontSize: 14 }}>
+          <Box component="span">{title}</Box>
+          <pre>{detail}</pre>
+        </Typography>
+        <Box
+          component="div"
+          sx={{ fontSize: 12, display: 'flex', marginTop: '5px' }}
+        >
+          <Box
+            component="img"
+            src={'images/icons/clock.svg'}
+            alt={'clock'}
+            sx={{ marginRight: '10px' }}
+          />
+          {durationText}
+        </Box>
+      </Box>
+    </Notification>
+  );
+};

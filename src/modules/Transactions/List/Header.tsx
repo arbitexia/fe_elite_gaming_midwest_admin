@@ -1,14 +1,12 @@
-import { Typography, InputAdornment, Divider } from '@mui/material';
+import { Typography, InputAdornment } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import {
   UIFlexSpaceBox,
   UIFlexWrapBox,
   UIDefaultTextField,
   UIFlexCenterBox,
-  UIDefaultButton,
 } from '@/components/UI';
 import { StyledSelectMenuItem } from './ui';
-import { useRouter } from 'next/router';
 import { transactionsType } from '@/_mock/transactions';
 
 interface TransactionsListHeaderProps {
@@ -24,11 +22,6 @@ const TransactionsListHeader = ({
   onValueChange,
   onTypeChange,
 }: TransactionsListHeaderProps) => {
-  const router = useRouter();
-  const handleCreate = () => {
-    router.push(`${router.asPath}/create`);
-  };
-
   return (
     <UIFlexSpaceBox>
       <Typography
@@ -86,13 +79,6 @@ const TransactionsListHeader = ({
             ),
           }}
         />
-        <Divider orientation="vertical" sx={{ height: '40px' }} />
-        <UIDefaultButton
-          sx={{ minWidth: '110px', borderRadius: '8px' }}
-          onClick={handleCreate}
-        >
-          + Create
-        </UIDefaultButton>
       </UIFlexWrapBox>
     </UIFlexSpaceBox>
   );
