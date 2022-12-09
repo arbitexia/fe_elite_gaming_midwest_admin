@@ -4,4 +4,4 @@ export type { RewardItemType, RewardsDetailProps } from './Rewards';
 export type { LocationType, LocationsDetailProps } from './Location';
 export type { RequestItemType } from './Requests';
 export type { TransactionType, TransactionsProps } from './Transactions';
-export type { AcitivityItemType } from './Activity';
+export type { ActivityItemType } from './Activity';

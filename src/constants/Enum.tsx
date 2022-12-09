@@ -27,6 +27,8 @@ export enum ActivityModel {
 
 export enum ActivityType {
   CHECKIN = 'CHECKIN',
+  SIGNUP = 'SIGNUP',
+  LOGIN = 'LOGIN',
   GET = 'GET',
   VIEW = 'VIEW',
   CREATE = 'CREATE',

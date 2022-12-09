@@ -6,11 +6,12 @@ import {
 } from '@/types';
 import { ActivityModel, ActivityType } from '@/constants/Enum';
 
-export type AcitivityItemType = {
+export type ActivityItemType = {
   id: number;
   user: UserType;
   model: ActivityModel;
   victim: LocationType | RewardItemType | RequestItemType;
   action: ActivityType;
   status: string;
+  createdAt: string;
 };

@@ -1,7 +1,7 @@
-import { AcitivityItemType } from '@/types';
+import { ActivityItemType } from '@/types';
 import { ActivityModel, ActivityType } from '@/constants/Enum';
 
-export const acitivityData: AcitivityItemType[] = [
+export const activityData: ActivityItemType[] = [
   {
     id: 1,
     user: {
@@ -45,9 +45,10 @@ export const acitivityData: AcitivityItemType[] = [
         '/images/roulette.png',
       ],
     },
-    model: ActivityModel.LOCATION,
+    model: ActivityModel.USER,
     action: ActivityType.CHECKIN,
     status: '1000 Point',
+    createdAt: '2022/11/22',
   },
   {
     id: 2,
@@ -152,6 +153,7 @@ export const acitivityData: AcitivityItemType[] = [
     model: ActivityModel.REQUEST,
     action: ActivityType.CREATE,
     status: 'Waiting',
+    createdAt: '2022/11/22',
   },
   {
     id: 3,
@@ -256,5 +258,6 @@ export const acitivityData: AcitivityItemType[] = [
     model: ActivityModel.REQUEST,
     action: ActivityType.UPDATE,
     status: 'Accepted',
+    createdAt: '2022/11/22',
   },
 ];

@@ -78,7 +78,7 @@ export const superSidebarItems: MenuItemObj[] = [
         text: 'Activity',
         route: 'activity',
         isSelected: false,
-        disabled: true,
+        disabled: false,
       },
       {
         text: 'Transaction',
