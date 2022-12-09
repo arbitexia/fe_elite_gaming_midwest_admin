@@ -59,7 +59,6 @@ const ActivityListHeader = ({
           >
             <StyledSelectMenuItem value={'ALL'}>All</StyledSelectMenuItem>
             {Object.keys(ActivityModel).map((option) => {
-              console.log(option);
               return (
                 <StyledSelectMenuItem key={option} value={option}>
                   {option}

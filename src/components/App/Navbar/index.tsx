@@ -57,7 +57,6 @@ export default function AppNavbar(props: Props) {
   const isSettingsMenuOpen = Boolean(anchorElSettingsMenu);
 
   const handleDrawerToggle = () => {
-    console.log(isNotificationMenuOpen);
     setMobileOpen(!mobileOpen);
   };
 
@@ -239,7 +238,7 @@ export default function AppNavbar(props: Props) {
           />
         </NotificationCategoryItem>
         {notificationData.length > 0 && (
-          <>
+          <div>
             <Divider sx={{ my: 0.5 }} />
             {notificationData.map((notification, index) => (
               <NotificationMenuItem notification={notification} key={index} />
@@ -259,7 +258,7 @@ export default function AppNavbar(props: Props) {
               View All
             </Typography>
           </NotificationMenuContainer> */}
-          </>
+          </div>
         )}
       </StyledNavbarMenu>
     </Box>
