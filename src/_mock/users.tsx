@@ -364,6 +364,13 @@ export const userRole = [
   { id: 3, value: 'Tablet' },
   { id: 4, value: 'Customer' },
 ];
+
+export const slugIndex = {
+  admins: 2,
+  tablets: 3,
+  customers: 4,
+};
+
 export const userStatus = [
   { id: 0, value: 'All' },
   { id: 1, value: 'Activated' },

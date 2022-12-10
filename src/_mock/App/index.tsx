@@ -37,6 +37,7 @@ export const superSidebarItems: MenuItemObj[] = [
       {
         text: 'Invitations',
         route: 'users/invitations',
+        disabled: true,
         isSelected: false,
       },
     ],

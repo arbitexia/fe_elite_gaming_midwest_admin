@@ -30,7 +30,7 @@ const RewardsListHeader = ({
   };
 
   return (
-    <UIFlexSpaceBox>
+    <UIFlexSpaceBox sx={{ mt: '35px' }}>
       <Typography
         sx={{
           ml: '30px',

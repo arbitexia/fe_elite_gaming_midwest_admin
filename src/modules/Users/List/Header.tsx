@@ -25,12 +25,15 @@ const UsersListHeader = ({
   onStatusChange,
 }: UsersListHeaderProps) => {
   const router = useRouter();
+  const { slug } = router.query;
+  const title = slug as string;
+
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);
   };
 
   return (
-    <UIFlexSpaceBox>
+    <UIFlexSpaceBox sx={{ mt: '35px' }}>
       <Typography
         sx={{
           ml: '30px',
@@ -40,7 +43,7 @@ const UsersListHeader = ({
           color: '#89C8C6',
         }}
       >
-        Users List
+        All {title.charAt(0).toUpperCase() + title.slice(1)}
       </Typography>
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
         <UIFlexCenterBox>

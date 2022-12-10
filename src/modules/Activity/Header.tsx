@@ -23,7 +23,7 @@ const ActivityListHeader = ({
   onTypeChange,
 }: ActivityListHeaderProps) => {
   return (
-    <UIFlexSpaceBox>
+    <UIFlexSpaceBox sx={{ mt: '35px' }}>
       <Typography
         sx={{
           ml: '30px',
@@ -33,7 +33,7 @@ const ActivityListHeader = ({
           color: '#89C8C6',
         }}
       >
-        Activities List
+        Activities
       </Typography>
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
         <UIFlexCenterBox>

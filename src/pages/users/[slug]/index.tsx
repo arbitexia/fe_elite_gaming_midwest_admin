@@ -6,10 +6,13 @@ import {
   UsersListTable,
 } from '@/modules/Users';
 import { DashboardLayout } from '@/layouts';
-import { usersTableData } from '@/_mock/users';
+import { usersTableData, slugIndex } from '@/_mock/users';
 import { UserType } from '@/types';
+import { useRouter } from 'next/router';
 
 const UsersListPage = () => {
+  const router = useRouter();
+  const { slug } = router.query;
   const [userList, setUserList] = useState<UserType[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [searchStatus, setSearchStatus] = useState(0);
@@ -22,11 +25,12 @@ const UsersListPage = () => {
           (name.toLowerCase().includes(searchValue.toLowerCase()) ||
             item.phonenumber.includes(searchValue) ||
             item.email.toLowerCase().includes(searchValue.toLowerCase())) &&
-          (searchStatus === 0 || item.status === searchStatus)
+          (searchStatus === 0 || item.status === searchStatus) &&
+          item.role === slugIndex[slug as keyof typeof slugIndex]
         );
       });
     });
-  }, [searchValue, searchStatus]);
+  }, [searchValue, searchStatus, slug]);
   return (
     <DashboardLayout title="Users">
       <UsersListHeader

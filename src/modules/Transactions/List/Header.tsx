@@ -23,7 +23,7 @@ const TransactionsListHeader = ({
   onTypeChange,
 }: TransactionsListHeaderProps) => {
   return (
-    <UIFlexSpaceBox>
+    <UIFlexSpaceBox sx={{ mt: '35px' }}>
       <Typography
         sx={{
           ml: '30px',
@@ -33,7 +33,7 @@ const TransactionsListHeader = ({
           color: '#89C8C6',
         }}
       >
-        Transactions List
+        Transactions
       </Typography>
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
         <UIFlexCenterBox>
