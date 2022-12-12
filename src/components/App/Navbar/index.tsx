@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks';
 import {
-  AppBar,
   Avatar,
   Box,
   Divider,
@@ -16,16 +15,23 @@ import {
   Typography,
 } from '@mui/material';
 import {
+  Search as SearchIcon,
   Menu as MenuIcon,
   ExpandMoreOutlined as ExpandMoreOutlinedIcon,
-  Notifications as NotificationsIcon,
 } from '@mui/icons-material';
 import {
+  StyledAppBar,
   StyledIconButton,
   StyledNavbarMenu,
   StyledProfileMenuItem,
+  Search,
+  SearchIconWrapper,
+  StyledInputBase,
+  NotificationCategoryItem,
+  NotificationMenuItem,
 } from './ui';
-
+import { UIImage } from '@/components/UI';
+import { notificationData } from '@/_mock/App/index';
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
@@ -51,7 +57,6 @@ export default function AppNavbar(props: Props) {
   const isSettingsMenuOpen = Boolean(anchorElSettingsMenu);
 
   const handleDrawerToggle = () => {
-    console.log(isNotificationMenuOpen);
     setMobileOpen(!mobileOpen);
   };
 
@@ -86,17 +91,7 @@ export default function AppNavbar(props: Props) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar
-        component="nav"
-        sx={{
-          position: 'relative',
-          height: '70px',
-          width: '100%',
-          background: '#FFFFFFD5',
-          border: '2px solid rgba(54, 70, 70, 0.05)',
-          boxShadow: '0px 3px 20px rgba(0, 0, 0, 0.05)',
-        }}
-      >
+      <StyledAppBar>
         <Toolbar sx={{ height: '70px' }}>
           <IconButton
             aria-label="open drawer"
@@ -106,6 +101,15 @@ export default function AppNavbar(props: Props) {
           >
             <MenuIcon />
           </IconButton>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Quick search"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', sm: 'flex', gap: '15px' } }}>
             {isAuthenticated && (
@@ -117,9 +121,19 @@ export default function AppNavbar(props: Props) {
                   size="small"
                   disableRipple
                 >
-                  <NotificationsIcon
-                    sx={{ fontSize: '30px', color: '#83A9A8' }}
-                  />
+                  {notificationData?.length > 0 ? (
+                    <UIImage
+                      src={'images/icons/notifications-icon.svg'}
+                      width={30}
+                      height={30}
+                    />
+                  ) : (
+                    <UIImage
+                      src={'images/icons/notification-without-reddot.svg'}
+                      width={30}
+                      height={30}
+                    />
+                  )}
                 </StyledIconButton>
                 <StyledIconButton
                   onClick={(event: React.MouseEvent<HTMLElement>) => {
@@ -150,7 +164,7 @@ export default function AppNavbar(props: Props) {
             )}
           </Box>
         </Toolbar>
-      </AppBar>
+      </StyledAppBar>
       <Box component="nav">
         <Drawer
           container={container}
@@ -193,6 +207,59 @@ export default function AppNavbar(props: Props) {
             </StyledProfileMenuItem>
           </div>
         ))}
+      </StyledNavbarMenu>
+      <StyledNavbarMenu
+        anchorEl={anchorElNotifications}
+        open={isNotificationMenuOpen}
+        onClose={() => {
+          setAnchorElNotifications(null);
+        }}
+        onClick={() => {
+          setAnchorElNotifications(null);
+        }}
+      >
+        <NotificationCategoryItem disableRipple disableTouchRipple>
+          <Box>
+            <Typography
+              sx={{ color: '#222B35', fontSize: 16, fontWeight: 600 }}
+            >
+              Notifications
+            </Typography>
+            <Typography sx={{ fontSize: 12 }}>
+              {notificationData?.length > 0
+                ? `You have ${notificationData?.length} unread messages`
+                : 'No notification'}
+            </Typography>
+          </Box>
+          <Box
+            component="img"
+            src={'images/icons/double-tick.svg'}
+            alt={'double'}
+          />
+        </NotificationCategoryItem>
+        {notificationData.length > 0 && (
+          <div>
+            <Divider sx={{ my: 0.5 }} />
+            {notificationData.map((notification, index) => (
+              <NotificationMenuItem notification={notification} key={index} />
+            ))}
+            {/* <Divider sx={{ my: 0.5 }} />
+          <NotificationMenuContainer disableRipple disableTouchRipple>
+            <Typography
+              sx={{
+                width: '100%',
+                textAlign: 'center',
+                color: '#FB0202',
+                fontSize: 14,
+                fontWeight: 500,
+              }}
+              onClick={() => navigate('/notifications')}
+            >
+              View All
+            </Typography>
+          </NotificationMenuContainer> */}
+          </div>
+        )}
       </StyledNavbarMenu>
     </Box>
   );

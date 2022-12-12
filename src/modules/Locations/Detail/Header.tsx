@@ -1,4 +1,4 @@
-import { UIFlexSpaceBox, UIAuthButton } from '@/components/UI';
+import { UIFlexSpaceBox, UIDefaultButton } from '@/components/UI';
 import { Typography } from '@mui/material';
 
 export type LocationDetailHeaderProps = {
@@ -24,7 +24,7 @@ const LocationDetailHeader = ({
         >
           {name}
         </Typography>
-        {isEditable && <UIAuthButton>Save</UIAuthButton>}
+        {isEditable && <UIDefaultButton>Save</UIDefaultButton>}
       </UIFlexSpaceBox>
     </>
   );

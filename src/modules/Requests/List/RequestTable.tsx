@@ -1,26 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import {
-  TableHead,
-  TableBody,
-  TableRow,
-  Typography,
-  Button,
-} from '@mui/material';
+import { Table, TableHead, TableBody, Typography, Button } from '@mui/material';
 import { UIChip, UIFlexColumnBox, UIFlexWrapBox } from '@/components/UI';
-import {
-  StyledRequestCardBox,
-  StyledRequestTable,
-  StyledRequestTableRow,
-  StyledRequestTableCell,
-} from './ui';
+import { StyledRequestTableRow, StyledRequestTableCell } from './ui';
 import { getColor } from '@/libs/data-helper';
-import { requestsData } from '@/_mock/requests';
 import RequestsPagination from './Pagination';
 import { useAppToast } from '@/providers';
-import { RewardItemType } from '@/types';
+import { RequestItemType } from '@/types';
 
-const RequestTable = () => {
+interface RequestTableProps {
+  requestsData: RequestItemType[];
+}
+
+const RequestTable = ({ requestsData }: RequestTableProps) => {
   const router = useRouter();
   const showToast = useAppToast();
   const [isActions, setActions] = useState<'accept' | 'decline'>();
@@ -30,8 +22,9 @@ const RequestTable = () => {
       if (
         key === 'id' ||
         key === 'location' ||
-        key === 'specifications' ||
-        key === 'url' ||
+        key === 'short' ||
+        key === 'urls' ||
+        key === 'description' ||
         key === 'createdAt'
       )
         return;
@@ -92,20 +85,10 @@ const RequestTable = () => {
   }, [isActions]);
 
   return (
-    <StyledRequestCardBox sx={{ marginTop: '30px' }}>
-      <Typography
-        sx={{
-          fontWeight: '600',
-          fontSize: '18px',
-          lineHeight: '17px',
-          color: '#222B35',
-        }}
-      >
-        Requests
-      </Typography>
-      <StyledRequestTable size="small">
+    <>
+      <Table>
         <TableHead>
-          <TableRow>
+          <StyledRequestTableRow>
             <StyledRequestTableCell>ID</StyledRequestTableCell>
             <StyledRequestTableCell>Info</StyledRequestTableCell>
             <StyledRequestTableCell>Requested at</StyledRequestTableCell>
@@ -113,7 +96,7 @@ const RequestTable = () => {
             <StyledRequestTableCell>Location</StyledRequestTableCell>
             <StyledRequestTableCell>Statue</StyledRequestTableCell>
             <StyledRequestTableCell></StyledRequestTableCell>
-          </TableRow>
+          </StyledRequestTableRow>
         </TableHead>
         <TableBody>
           {requestsData &&
@@ -121,25 +104,26 @@ const RequestTable = () => {
             requestsData.map((request, index) => {
               return (
                 <StyledRequestTableRow key={`request-${index}`}>
-                  <StyledRequestTableCell>{request.id}</StyledRequestTableCell>
+                  <StyledRequestTableCell>#{request.id}</StyledRequestTableCell>
                   <StyledRequestTableCell>
                     {renderItem(request.item)}
                   </StyledRequestTableCell>
-                  <StyledRequestTableCell>
+                  <StyledRequestTableCell sx={{ color: '#ABACAC !important' }}>
                     {request.requestedAt}
                   </StyledRequestTableCell>
                   <StyledRequestTableCell>
                     <Button
+                      sx={{ color: '#000000B2 !important' }}
                       onClick={() => {
-                        router.push(`/users/${request.user.id}`);
+                        router.push(`/users/customers/${request.user.id}`);
                       }}
                     >
-                      {request.user.name}
+                      {`${request.user.firstName} ${request.user.lastName}`}
                     </Button>
                   </StyledRequestTableCell>
                   <StyledRequestTableCell>
                     <Button
-                      sx={{ color: '#B3B3B3 !important' }}
+                      sx={{ color: '#ABACAC !important' }}
                       onClick={() => {
                         router.push(`locations/${request.location.id}`);
                       }}
@@ -157,8 +141,8 @@ const RequestTable = () => {
                     <UIFlexWrapBox>
                       <Button
                         variant="contained"
-                        color="success"
                         size="small"
+                        sx={{ color: '#FFFFFF', background: '#11918D' }}
                         onClick={() => {
                           setActions('accept');
                         }}
@@ -167,8 +151,11 @@ const RequestTable = () => {
                       </Button>
                       <Button
                         variant="outlined"
-                        color="error"
                         size="small"
+                        sx={{
+                          border: '1px solid rgba(137, 200, 198, 0.5)',
+                          color: '#11918D',
+                        }}
                         onClick={() => {
                           setActions('decline');
                         }}
@@ -181,7 +168,7 @@ const RequestTable = () => {
               );
             })}
         </TableBody>
-      </StyledRequestTable>
+      </Table>
       {requestsData && requestsData.length <= 0 && (
         <UIFlexColumnBox sx={{ height: '200px' }}>
           <Typography
@@ -198,7 +185,7 @@ const RequestTable = () => {
         </UIFlexColumnBox>
       )}
       <RequestsPagination />
-    </StyledRequestCardBox>
+    </>
   );
 };
 

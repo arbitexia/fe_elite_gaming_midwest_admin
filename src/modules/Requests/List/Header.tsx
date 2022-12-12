@@ -5,13 +5,16 @@ import {
 } from '@/components/UI';
 import { Typography, InputAdornment } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
-import { useRouter } from 'next/router';
 
-export const RequestsHeader = () => {
-  const router = useRouter();
-  const handleCreate = () => {
-    // router.push('/locations/create');
-  };
+interface RequestsHeaderProps {
+  searchValue: string;
+  onValueChange: (value: string) => void;
+}
+
+export const RequestsHeader = ({
+  searchValue,
+  onValueChange,
+}: RequestsHeaderProps) => {
   return (
     <>
       <UIFlexSpaceBox sx={{ mt: '35px' }}>
@@ -33,6 +36,8 @@ export const RequestsHeader = () => {
             placeholder="Search"
             size="small"
             sx={{ width: '160px', input: { color: '#b7b7b7' } }}
+            value={searchValue}
+            onChange={(e) => onValueChange(e.target.value)}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

@@ -14,7 +14,7 @@ import {
   Delete as DeleteIcon,
   Replay as ReplayIcon,
 } from '@mui/icons-material';
-import { UIActionButton, UIAuthButton } from '@/components/UI';
+import { UIActionButton, UIDefaultButton } from '@/components/UI';
 import { UserType } from '@/types';
 import { useRouter } from 'next/router';
 
@@ -33,7 +33,7 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
     setOpenDeleteModal(false);
   };
   return (
-    <Box>
+    <Box sx={{ mt: '35px', mb: '20px' }}>
       {user && (
         <>
           <Typography
@@ -44,7 +44,9 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
               color: '#06251F',
             }}
           >
-            {user.id === 0 ? 'Create User' : `${user.name}'s Information`}
+            {user.id === 0
+              ? 'Create User'
+              : `${user.firstName} ${user.lastName}'s Information`}
           </Typography>
           <Stack direction="row" spacing={2} justifyContent="flex-end">
             <Box
@@ -62,7 +64,9 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
                 />
               )}
               {router.asPath.includes('edit') || user.id === 0 ? (
-                <UIAuthButton sx={{ marginLeft: '8px' }}>Save</UIAuthButton>
+                <UIDefaultButton sx={{ marginLeft: '8px' }} type="submit">
+                  Save
+                </UIDefaultButton>
               ) : (
                 <>
                   <UIActionButton

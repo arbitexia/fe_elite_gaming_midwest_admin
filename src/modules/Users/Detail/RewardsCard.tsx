@@ -62,7 +62,7 @@ const UserDetailRewardsCard = () => {
                   </Box>
                 </StyledRewardsTableCell>
                 <StyledRewardsTableCell sx={{ fontWeight: 400 }}>
-                  {data.location}
+                  {data.location.name}
                 </StyledRewardsTableCell>
                 <StyledRewardsTableCell>
                   <IconButton>

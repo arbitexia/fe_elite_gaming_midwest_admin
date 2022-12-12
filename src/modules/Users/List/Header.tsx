@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Typography, InputAdornment, Divider } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import {
@@ -6,20 +5,35 @@ import {
   UIFlexWrapBox,
   UIDefaultTextField,
   UIFlexCenterBox,
-  UIAuthButton,
+  UIDefaultButton,
 } from '@/components/UI';
 import { userStatus } from '@/_mock/users';
 import { StyledSelectMenuItem } from './ui';
 import { useRouter } from 'next/router';
 
-const UsersListHeader = () => {
+interface UsersListHeaderProps {
+  searchValue: string;
+  searchStatus: number;
+  onValueChange: (value: string) => void;
+  onStatusChange: (value: number) => void;
+}
+
+const UsersListHeader = ({
+  searchValue,
+  searchStatus,
+  onValueChange,
+  onStatusChange,
+}: UsersListHeaderProps) => {
   const router = useRouter();
-  const [searchStatus, setSearchStatus] = useState(1);
+  const { slug } = router.query;
+  const title = slug as string;
+
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);
   };
+
   return (
-    <UIFlexSpaceBox>
+    <UIFlexSpaceBox sx={{ mt: '35px' }}>
       <Typography
         sx={{
           ml: '30px',
@@ -29,7 +43,7 @@ const UsersListHeader = () => {
           color: '#89C8C6',
         }}
       >
-        Users List
+        All {title.charAt(0).toUpperCase() + title.slice(1)}
       </Typography>
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
         <UIFlexCenterBox>
@@ -41,7 +55,7 @@ const UsersListHeader = () => {
             select
             value={searchStatus}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setSearchStatus(parseInt(e.target.value))
+              onStatusChange(parseInt(e.target.value))
             }
             sx={{
               width: '160px',
@@ -64,6 +78,8 @@ const UsersListHeader = () => {
           placeholder="Search"
           size="small"
           sx={{ width: '160px', input: { color: '#b7b7b7' } }}
+          value={searchValue}
+          onChange={(e) => onValueChange(e.target.value)}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -73,12 +89,12 @@ const UsersListHeader = () => {
           }}
         />
         <Divider orientation="vertical" sx={{ height: '40px' }} />
-        <UIAuthButton
+        <UIDefaultButton
           sx={{ minWidth: '110px', borderRadius: '8px' }}
           onClick={handleCreate}
         >
           + Create
-        </UIAuthButton>
+        </UIDefaultButton>
       </UIFlexWrapBox>
     </UIFlexSpaceBox>
   );

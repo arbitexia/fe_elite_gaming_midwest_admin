@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import Link from 'next/link';
 import {
   Box,
   Typography,
@@ -12,7 +10,7 @@ import {
   UIAuthCardWrapper,
   UIImage,
   UIAuthTextField,
-  UIAuthButton,
+  UIDefaultButton,
 } from '@/components/UI';
 import { AuthLayout } from '@/layouts';
 import { useFormik } from 'formik';
@@ -37,6 +35,7 @@ const ForgotPassword = () => {
     },
     validationSchema: ForgotPasswordSchema,
     onSubmit: async (values: LoginValue) => {
+      console.log(values);
       onLogin('token');
       // await authorize({ variables: { ...values } });
     },
@@ -124,13 +123,13 @@ const ForgotPassword = () => {
               width: 170,
             }}
           >
-            <UIAuthButton type="submit" disabled={loading}>
+            <UIDefaultButton type="submit" disabled={loading}>
               {loading ? (
                 <CircularProgress color="inherit" size={24} />
               ) : (
                 'Reset'
               )}
-            </UIAuthButton>
+            </UIDefaultButton>
           </Box>
           <Typography
             sx={{

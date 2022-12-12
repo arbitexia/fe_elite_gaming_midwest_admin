@@ -1,12 +1,12 @@
 import {
   styled,
   Box,
-  Button,
   Typography,
   Table,
   TableRow,
   TableCell,
   tableCellClasses,
+  tableRowClasses,
 } from '@mui/material';
 
 export const StyledRequestCardBox = styled(Box)({
@@ -43,16 +43,21 @@ export const StyledRequestTable = styled(Table)({
 });
 
 export const StyledRequestTableRow = styled(TableRow)({
-  boxShadow: '0px 7px 20px rgba(25, 42, 89, 0.05)',
-  '&:hover': {
-    border: '1px solid rgba(137, 200, 198, 0.25)',
-    backdropFilter: 'blur(2px)',
-    filter: 'drop-shadow(0px 4px 50px rgba(0, 0, 0, 0.1))',
+  '&:nth-of-type(odd)': {
+    background: 'rgba(194, 239, 238, 0.2)',
   },
+  '&:nth-of-type(even)': {
+    background: 'rgba(242, 255, 253, 0.5)',
+  },
+  [`&.${tableRowClasses.head}`]: {
+    background: 'transparent',
+  },
+
+  border: 0,
 });
 
 export const StyledRequestTableCell = styled(TableCell)({
-  padding: '12px',
+  border: 0,
   [`&.${tableCellClasses.head}`]: {
     fontWeight: 600,
     fontSize: 12,
@@ -60,25 +65,11 @@ export const StyledRequestTableCell = styled(TableCell)({
     letterSpacing: '0.1px',
     textTransform: 'uppercase',
     color: 'rgba(0, 0, 0, 0.3)',
-    border: 0,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     height: '80px',
     fontWeight: 500,
-    color: '#222B35',
-    background: '#FFFFFF',
-    border: '1px solid #F3F3F3',
-    borderRight: 0,
-    borderLeft: 0,
-    '&:first-of-type': {
-      borderRadius: '7px 0 0 7px',
-      color: '#718096',
-      fontWeight: 400,
-    },
-    '&:last-of-type': {
-      borderRadius: '0 7px 7px 0',
-      color: '',
-    },
+    color: 'rgba(0, 0, 0, 0.3)',
   },
 });

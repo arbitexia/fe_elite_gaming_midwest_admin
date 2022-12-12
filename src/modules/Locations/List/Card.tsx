@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
-import { UIImage, UIFlexSpaceBox } from '@/components/UI';
-import { Box, Typography } from '@mui/material';
+import { UIImage, UIFlexSpaceBox, UIItemCard } from '@/components/UI';
+import { Typography } from '@mui/material';
 import { LocationType } from '@/types';
 import {
-  StyledCardBox,
   StyledLocationViewButton,
   StyledLocationEditButton,
+  StyledImageBox,
 } from './ui';
 
 export type LocationsCardProps = {
@@ -15,17 +15,10 @@ export type LocationsCardProps = {
 export const LocationsCard = ({ item }: LocationsCardProps) => {
   const router = useRouter();
   return (
-    <StyledCardBox>
-      <Box
-        sx={{
-          padding: 0,
-          borderRadius: '6px',
-          height: '150px',
-          overflow: 'hidden',
-        }}
-      >
+    <UIItemCard sx={{ width: 254, height: 360 }}>
+      <StyledImageBox>
         <UIImage src={item.urls[0]} width={220} height={160} />
-      </Box>
+      </StyledImageBox>
       <Typography
         sx={{
           mt: '30px',
@@ -56,7 +49,7 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
           color: 'rgba(0, 0, 0, 0.3)',
         }}
       >
-        {item.location}
+        {`${item.location.address1} ${item.location.address2} ${item.location.city} ${item.location.state} ${item.location.zipcode} ${item.location.country}`}
       </Typography>
       <UIFlexSpaceBox sx={{ marginTop: '30px' }}>
         <StyledLocationViewButton
@@ -70,6 +63,6 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
           Edit
         </StyledLocationEditButton>
       </UIFlexSpaceBox>
-    </StyledCardBox>
+    </UIItemCard>
   );
 };

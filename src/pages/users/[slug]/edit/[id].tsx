@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Stack } from '@mui/material';
-import { UsersDetailHeader, UserDetailInfoEditCard } from '@/modules/Users';
+import { UserDetailInfoEditCard } from '@/modules/Users';
 import { DashboardLayout } from '@/layouts';
 import { UserType } from '@/types';
 import { usersTableData } from '@/_mock/users';
@@ -18,10 +18,9 @@ const UsersDetailPage = () => {
   }, [userData, id]);
 
   return (
-    <DashboardLayout bg="#F8F8F8" title="Users">
+    <DashboardLayout title="Users">
       {userData && (
         <Stack direction="column" spacing={2.5} paddingTop={4}>
-          <UsersDetailHeader user={userData} />
           <UserDetailInfoEditCard user={userData} />
         </Stack>
       )}

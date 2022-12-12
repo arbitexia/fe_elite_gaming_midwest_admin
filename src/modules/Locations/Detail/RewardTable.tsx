@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import {
   TableHead,
   TableBody,
@@ -6,7 +7,7 @@ import {
   IconButton,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
-import { UIChip, UIFlexWrapBox } from '@/components/UI';
+import { UIChip } from '@/components/UI';
 import {
   StyledLocationCardBox,
   StyledLocationTable,
@@ -18,31 +19,28 @@ import { rewardsData } from '@/_mock/rewards';
 import RewardsPagination from './Pagination';
 
 const LocationDetailRewardTable = () => {
-  const getSpecTableCell = (specifications: any) => {
-    return Object.keys(specifications).map((key, index) => {
-      return (
-        <>
-          <Typography
-            sx={{
-              color: 'rgba(0, 0, 0, 0.3)',
-              fontSize: 12,
-              fontWeight: 500,
-              textTransform: 'capitalize',
-            }}
-            key={index}
-          >
-            {key}:
-          </Typography>
-          <Typography
-            sx={{ color: '#06251F', fontSize: 14, fontWeight: 500 }}
-            key={index}
-          >
-            {specifications[key]}
-          </Typography>
-        </>
-      );
-    });
-  };
+  const router = useRouter();
+  // const getSpecTableCell = (specifications: any) => {
+  //   return Object.keys(specifications).map((key, index) => {
+  //     return (
+  //       <UIFlexWrapBox key={index}>
+  //         <Typography
+  //           sx={{
+  //             color: 'rgba(0, 0, 0, 0.3)',
+  //             fontSize: 12,
+  //             fontWeight: 500,
+  //             textTransform: 'capitalize',
+  //           }}
+  //         >
+  //           {key}:
+  //         </Typography>
+  //         <Typography sx={{ color: '#06251F', fontSize: 14, fontWeight: 500 }}>
+  //           {specifications[key]}
+  //         </Typography>
+  //       </UIFlexWrapBox>
+  //     );
+  //   });
+  // };
   return (
     <StyledLocationCardBox sx={{ marginTop: '30px' }}>
       <Typography
@@ -71,13 +69,14 @@ const LocationDetailRewardTable = () => {
           {rewardsData.map((item) => {
             return (
               <StyledLocationTableRow key={item.id}>
-                <StyledLocationTableCell>{item.id}</StyledLocationTableCell>
-                <StyledLocationTableCell>{item.name}</StyledLocationTableCell>
-                <StyledLocationTableCell>
-                  <UIFlexWrapBox>
-                    {getSpecTableCell(item.specifications)}
-                  </UIFlexWrapBox>
+                <StyledLocationTableCell
+                  onClick={() => router.push(`locations/${item.id}`)}
+                  sx={{ cursor: 'pointer' }}
+                >
+                  #{item.id}
                 </StyledLocationTableCell>
+                <StyledLocationTableCell>{item.name}</StyledLocationTableCell>
+                <StyledLocationTableCell>{item.short}</StyledLocationTableCell>
                 <StyledLocationTableCell>{item.point}</StyledLocationTableCell>
                 <StyledLocationTableCell>
                   <UIChip label={item.status} color={getColor(item.status)} />

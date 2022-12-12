@@ -43,7 +43,6 @@ export const UIDefaultTextField = styled(TextField)({
       outline: 'none',
     },
   },
-
   '.MuiOutlinedInput-root': {
     borderRadius: '8px',
     background: 'rgba(137, 200, 198, 0.1)',
@@ -55,10 +54,8 @@ export const UIDefaultTextField = styled(TextField)({
       border: 'none',
     },
   },
-
   '.MuiInputLabel-root': {
     color: '#83A9A8',
-
     '&.Mui-focused': {
       color: '#83A9A8',
     },
@@ -71,23 +68,26 @@ export const UIDefaultTextField = styled(TextField)({
   },
 });
 
+export const UISearchTextField = styled(UIDefaultTextField)({
+  width: '250px',
+  height: '40px',
+  '.MuiOutlinedInput-input': {
+    fontWeight: '500',
+    fontSize: '14px',
+    lineHeight: '21px',
+    color: '#B7B7B7',
+  },
+});
+
 export const UIEditTextField = styled(TextField)({
   '.MuiTextField-root': {
     '&:focus-visible': {
       outline: 'none',
     },
   },
-  textArea: {
+  'textArea,input,.MuiSelect-select': {
     padding: 0,
   },
-  input: {
-    padding: 0,
-  },
-
-  '.MuiSelect-select': {
-    padding: 0,
-  },
-
   '.MuiOutlinedInput-root': {
     padding: '8px 14px',
     borderRadius: '8px',
@@ -99,10 +99,8 @@ export const UIEditTextField = styled(TextField)({
       border: 'none',
     },
   },
-
   '.MuiInputLabel-root': {
     color: '#222B35',
-
     '&.Mui-focused': {
       color: '#222B35',
     },

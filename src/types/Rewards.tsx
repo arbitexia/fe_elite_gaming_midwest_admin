@@ -1,10 +1,18 @@
+import { LocationType } from './Location';
+
+export interface RewardsDetailProps {
+  rewardsItem: RewardItemType;
+}
+
 export type RewardItemType = {
   id: number;
   name: string;
-  url: string[];
-  location: string;
+  urls: string[];
+  location: LocationType;
   point: number;
-  specifications: object;
+  description: string;
+  short: string;
   status: string;
+  amount: number;
   createdAt: string;
 };

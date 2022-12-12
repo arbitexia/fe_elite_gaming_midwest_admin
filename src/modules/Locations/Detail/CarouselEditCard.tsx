@@ -47,7 +47,7 @@ const LocationsDetailCarouselEditCard = ({
   };
 
   return (
-    <StyledLocationCardBox>
+    <StyledLocationCardBox alignSelf="flex-start">
       <UIFlexCenterBox sx={{ gap: '20px' }}>
         <Box
           sx={{
@@ -66,12 +66,10 @@ const LocationsDetailCarouselEditCard = ({
                 <Box
                   component="img"
                   sx={{
-                    display: 'block',
-                    overflow: 'hidden',
                     width: '100%',
                     height: '350px',
                   }}
-                  src={`/${url}`}
+                  src={`${url}`}
                   alt="image"
                 />
               ) : null;
