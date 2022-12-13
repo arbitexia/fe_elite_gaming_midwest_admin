@@ -41,7 +41,11 @@ export const LocationsHeader = ({
           <UIDefaultTextField
             placeholder="Search"
             size="small"
-            sx={{ width: '160px', input: { color: '#b7b7b7' } }}
+            sx={{
+              '.MuiOutlinedInput-root': { width: '160px' },
+              '.Mui-focused': { width: '250px' },
+              input: { color: '#b7b7b7' },
+            }}
             value={searchValue}
             onChange={(e) => onValueChange(e.target.value)}
             InputProps={{

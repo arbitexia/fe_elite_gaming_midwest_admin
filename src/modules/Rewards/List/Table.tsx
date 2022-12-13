@@ -8,7 +8,6 @@ import {
   Checkbox,
   IconButton,
   Divider,
-  Typography,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import { UIChip } from '@/components/UI';
@@ -128,11 +127,11 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
                 #{rewardItem.id}
               </StyledTableCell>
               <StyledTableCell>
-                <Typography
+                <Box
                   sx={{
                     cursor: 'pointer',
                     div: { display: 'none' },
-                    ':hover>div': { display: 'block' },
+                    ':hover>div': { display: 'flex' },
                     position: 'relative',
                   }}
                 >
@@ -143,6 +142,12 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
                       zIndex: 1,
                       left: 150,
                       top: -150,
+                      border: '2px solid rgba(137, 200, 198, 0.25)',
+                      borderRadius: '15px',
+                      overflow: 'hidden',
+                      filter: 'drop-shadow(0px 4px 50px rgba(0, 0, 0, 0.25))',
+                      backdropFilter: 'blur(10px)',
+                      padding: '2px',
                     }}
                   >
                     <Box
@@ -151,9 +156,12 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
                       alt="Image"
                       width={300}
                       height={300}
+                      sx={{
+                        borderRadius: '10px',
+                      }}
                     />
                   </Box>
-                </Typography>
+                </Box>
               </StyledTableCell>
               <StyledTableCell>{rewardItem.short}</StyledTableCell>
               <StyledTableCell>{rewardItem.point}</StyledTableCell>

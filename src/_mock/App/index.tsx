@@ -37,6 +37,7 @@ export const superSidebarItems: MenuItemObj[] = [
       {
         text: 'Invitations',
         route: 'users/invitations',
+        disabled: true,
         isSelected: false,
       },
     ],
@@ -121,8 +122,8 @@ export const notificationData = [
         zipcode: '48021',
       },
     },
-    createdAt: '2022/11/12',
-    updatedAt: '2022/11/13',
+    createdAt: '2022/12/13',
+    updatedAt: '2022/12/13',
   },
   {
     id: 2,
@@ -206,7 +207,7 @@ export const notificationData = [
       status: 'Waiting',
       requestedAt: '14/06/2022',
     },
-    createdAt: '2022/11/12',
-    updatedAt: '2022/11/13',
+    createdAt: '2022/12/12',
+    updatedAt: '2022/12/13',
   },
 ];

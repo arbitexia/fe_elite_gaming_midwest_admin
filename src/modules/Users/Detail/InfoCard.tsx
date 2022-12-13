@@ -22,7 +22,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
   return (
     <Box>
       <UsersDetailHeader user={user} />
-      <StyledUserInfoCard sx={{ height: '360px' }}>
+      <StyledUserInfoCard>
         <StyledUserInfoCardHeader />
         <StyledUserInfoCardContent>
           <StyledUserInfoCardStatus>
@@ -57,31 +57,31 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
             <Divider />
             <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>
-                <UIFlexWrapBox>
+                <Stack direction="row">
                   <StyledUserInfoTitle>Phonenumber:</StyledUserInfoTitle>
                   <StyledUserInfoValue>{user.phonenumber}</StyledUserInfoValue>
-                </UIFlexWrapBox>
-                <UIFlexWrapBox>
+                </Stack>
+                <Stack direction="row">
                   <StyledUserInfoTitle>Email:</StyledUserInfoTitle>
                   <StyledUserInfoValue>{user.email}</StyledUserInfoValue>
-                </UIFlexWrapBox>
-                <UIFlexWrapBox>
+                </Stack>
+                <Stack direction="row">
                   <StyledUserInfoTitle>Location:</StyledUserInfoTitle>
                   <StyledUserInfoValue>{`${user.location.address1} ${user.location.address2} ${user.location.city} ${user.location.state} ${user.location.zipcode} ${user.location.country}`}</StyledUserInfoValue>
-                </UIFlexWrapBox>
+                </Stack>
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>
-                <UIFlexWrapBox>
+                <Stack direction="row">
                   <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
                   <StyledUserInfoValue>{user.birthday}</StyledUserInfoValue>
-                </UIFlexWrapBox>
-                <UIFlexWrapBox>
+                </Stack>
+                <Stack direction="row">
                   <StyledUserInfoTitle>User role:</StyledUserInfoTitle>
                   <StyledUserInfoValue>
                     {userRole[user.role - 1].value}
                   </StyledUserInfoValue>
-                </UIFlexWrapBox>
-                <UIFlexWrapBox>
+                </Stack>
+                <Stack direction="row">
                   <StyledUserInfoTitle sx={{ alignItems: 'flex-end' }}>
                     Coupon:
                   </StyledUserInfoTitle>
@@ -90,7 +90,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                   >
                     $11231
                   </StyledUserInfoValue>
-                </UIFlexWrapBox>
+                </Stack>
               </Stack>
             </UIFlexWrapBox>
           </Box>

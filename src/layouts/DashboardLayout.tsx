@@ -26,8 +26,9 @@ const AppLayout = (props: Props) => {
           <Box
             sx={(theme) => ({
               gap: 0,
-              width: `calc(100% - 220px)`,
-              height: '100vh',
+              minWidth: `calc(100% - 220px)`,
+              minHeight: '100vh',
+              overflow: 'hidden',
               overflowY: 'auto',
               [theme.breakpoints.down('md')]: {
                 width: '100%',

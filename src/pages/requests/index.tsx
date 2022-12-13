@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Divider } from '@mui/material';
-import { UIContainer } from '@/components/UI';
 import { RequestsHeader, RequestTable } from '@/modules/Requests';
 import { DashboardLayout } from '@/layouts';
 import { requestsData } from '@/_mock/requests';
@@ -26,14 +25,12 @@ const Requests = () => {
   }, [searchValue]);
   return (
     <DashboardLayout title="Locations">
-      <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
-        <RequestsHeader
-          searchValue={searchValue}
-          onValueChange={(value) => setSearchValue(value)}
-        />
-        <Divider sx={{ my: '20px' }} />
-        <RequestTable requestsData={requestList} />
-      </UIContainer>
+      <RequestsHeader
+        searchValue={searchValue}
+        onValueChange={(value) => setSearchValue(value)}
+      />
+      <Divider sx={{ my: '30px' }} />
+      <RequestTable requestsData={requestList} />
     </DashboardLayout>
   );
 };

@@ -25,12 +25,16 @@ const UsersListHeader = ({
   onStatusChange,
 }: UsersListHeaderProps) => {
   const router = useRouter();
+  const { slug } = router.query;
+  const title = slug as string;
+  console.log(title);
+
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);
   };
 
   return (
-    <UIFlexSpaceBox>
+    <UIFlexSpaceBox sx={{ mt: '35px' }}>
       <Typography
         sx={{
           ml: '30px',
@@ -40,7 +44,7 @@ const UsersListHeader = ({
           color: '#89C8C6',
         }}
       >
-        Users List
+        {title && `All ${title.charAt(0).toUpperCase() + title.slice(1)}`}
       </Typography>
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
         <UIFlexCenterBox>
@@ -74,7 +78,11 @@ const UsersListHeader = ({
         <UIDefaultTextField
           placeholder="Search"
           size="small"
-          sx={{ width: '160px', input: { color: '#b7b7b7' } }}
+          sx={{
+            input: { color: '#b7b7b7' },
+            '.MuiOutlinedInput-root': { width: '160px' },
+            '.Mui-focused': { width: '250px' },
+          }}
           value={searchValue}
           onChange={(e) => onValueChange(e.target.value)}
           InputProps={{

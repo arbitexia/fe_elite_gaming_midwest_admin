@@ -147,22 +147,10 @@ export const StyledProfileMenuItem = styled(MenuItem)(() => ({
   },
 }));
 
-export const NotificationCategoryItem = styled(MenuItem)({
-  margin: '0px 20px',
-  padding: '0px 0px 5px 0px',
-  p: {
-    fontWeight: 500,
-    // color: '#667180',
-    fontSize: 12,
-  },
-  '&:hover': {
-    backgroundColor: 'transparent',
-  },
-});
-
 const Notification = styled(MenuItem)(() => ({
   padding: '8px 20px 8px 20px',
   display: 'flex',
+  width: '300px',
   alignItems: 'baseline',
   span: {
     fontWeight: 700,
@@ -194,20 +182,23 @@ export const NotificationMenuItem = ({
       detail = `${notification.data?.user.firstName} ${notification.data?.user.lastName} make ${notification.data?.item.name} request`;
   }
   return (
-    <Notification disableRipple disableTouchRipple key={notification.id}>
+    <Notification disableRipple disableTouchRipple>
       <Box
         component="img"
-        src={isNew ? 'images/icons/green-dot.svg' : 'images/icons/grey-dot.svg'}
-        alt={'dot'}
+        src={
+          isNew ? '/images/icons/green-dot.svg' : '/images/icons/grey-dot.svg'
+        }
+        alt={isNew ? 'greenDot' : 'greyDot'}
         sx={{
-          marginRight: '5px',
-          marginLeft: '0px',
+          marginRight: '30px',
+          marginLeft: '10px',
         }}
       />
       <Box>
         <Typography sx={{ fontSize: 14 }}>
           <Box component="span">{title}</Box>
-          <pre>{detail}</pre>
+          <br />
+          {detail}
         </Typography>
         <Box
           component="div"
@@ -215,7 +206,7 @@ export const NotificationMenuItem = ({
         >
           <Box
             component="img"
-            src={'images/icons/clock.svg'}
+            src={'/images/icons/clock.svg'}
             alt={'clock'}
             sx={{ marginRight: '10px' }}
           />
@@ -225,3 +216,27 @@ export const NotificationMenuItem = ({
     </Notification>
   );
 };
+
+export const NotificationMenuContainer = styled(MenuItem)(() => ({
+  margin: '0px 20px',
+  borderRadius: '8px',
+  padding: '8px 0px 8px 0px',
+  width: '300px',
+  display: 'flex',
+  justifyContent: 'space-between',
+  '&:hover': {
+    backgroundColor: 'transparent',
+  },
+}));
+
+export const NotificationCategoryItem = styled(MenuItem)({
+  margin: '0px 20px',
+  padding: '0px 0px 5px 0px',
+  p: {
+    fontWeight: 500,
+    fontSize: 12,
+  },
+  '&:hover': {
+    backgroundColor: 'transparent',
+  },
+});

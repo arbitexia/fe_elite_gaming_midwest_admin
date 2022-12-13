@@ -25,7 +25,6 @@ export const StyledUserInfoValue = styled(Typography)({
 });
 
 export const StyledUserInfoCard = styled(Box)({
-  height: '300px',
   backgroundColor: '#ffffff',
   boxShadow: '5px 6px 30px -15px rgba(25, 42, 89, 0.2)',
   borderRadius: '15px',
@@ -43,7 +42,6 @@ export const StyledUserInfoCardHeader = styled(Box)({
 export const StyledUserInfoAvatar = styled(Avatar)({
   width: '197px',
   height: '197px',
-  background: '#4FD1C5',
   boxShadow: '0px 3.5px 5.5px rgba(0, 0, 0, 0.02)',
   borderRadius: '8px',
 });
@@ -56,7 +54,7 @@ export const StyledUserInfoCardContent = styled(UIFlexWrapBox)({
 
 export const StyledUserInfoCardStatus = styled(UIFlexWrapBox)({
   position: 'absolute',
-  top: '30px',
+  top: '-30px',
   right: '50px',
 });
 

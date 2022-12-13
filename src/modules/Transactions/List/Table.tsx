@@ -49,7 +49,7 @@ const TransactionsTable = ({
     <Table>
       <TableHead>
         <StyledTableRow>
-          <StyledTableCell>Id</StyledTableCell>
+          <StyledTableCell sx={{ pl: '30px' }}>Id</StyledTableCell>
           <StyledTableCell>Customer</StyledTableCell>
           <StyledTableCell>Product</StyledTableCell>
           <StyledTableCell>Amount</StyledTableCell>
@@ -73,7 +73,7 @@ const TransactionsTable = ({
                 onClick={() =>
                   router.push(`${router.asPath}/${transactionItem.id}`)
                 }
-                sx={{ cursor: 'pointer' }}
+                sx={{ cursor: 'pointer', pl: '30px' }}
               >
                 #{transactionItem.id}
               </StyledTableCell>

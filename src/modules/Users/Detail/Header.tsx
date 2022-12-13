@@ -33,7 +33,7 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
     setOpenDeleteModal(false);
   };
   return (
-    <Box sx={{ marginBottom: '20px' }}>
+    <Box sx={{ mt: '35px', mb: '20px' }}>
       {user && (
         <>
           <Typography

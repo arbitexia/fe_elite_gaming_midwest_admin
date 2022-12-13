@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import { ProfileInfo } from '@/modules/Profile';
+import { ProfileEdit } from '@/modules/Profile';
 import { DashboardLayout } from '@/layouts';
 
 import { profileData } from '@/_mock/users';
@@ -9,7 +9,7 @@ const ProfilePage = () => {
     <DashboardLayout title="Users">
       {profileData && (
         <Stack direction="column" spacing={2.5} paddingTop={4}>
-          <ProfileInfo user={profileData} />
+          <ProfileEdit user={profileData} />
         </Stack>
       )}
     </DashboardLayout>

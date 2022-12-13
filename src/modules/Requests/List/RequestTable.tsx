@@ -86,7 +86,7 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
 
   return (
     <>
-      <Table size="small">
+      <Table>
         <TableHead>
           <StyledRequestTableRow>
             <StyledRequestTableCell>ID</StyledRequestTableCell>
@@ -104,7 +104,7 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
             requestsData.map((request, index) => {
               return (
                 <StyledRequestTableRow key={`request-${index}`}>
-                  <StyledRequestTableCell>{request.id}</StyledRequestTableCell>
+                  <StyledRequestTableCell>#{request.id}</StyledRequestTableCell>
                   <StyledRequestTableCell>
                     {renderItem(request.item)}
                   </StyledRequestTableCell>

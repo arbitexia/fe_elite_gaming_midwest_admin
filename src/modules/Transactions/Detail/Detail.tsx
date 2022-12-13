@@ -19,7 +19,7 @@ import { format } from 'date-fns';
 const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
   return (
     <UIContainer maxWidth="xl">
-      <StyledOrderModalHeading>
+      <StyledOrderModalHeading sx={{ mt: '35px' }}>
         Transactions #{transactionItem.id} Details
       </StyledOrderModalHeading>
 

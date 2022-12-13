@@ -6,13 +6,14 @@ import { useRouter } from 'next/router';
 const ProfileHeader = () => {
   const router = useRouter();
   return (
-    <Box sx={{ marginBottom: '20px' }}>
+    <Box sx={{ mt: '35px', mb: '20px' }}>
       <Typography
         sx={{
-          fontWeight: 600,
-          fontSize: 24,
-          lineHeight: '17px',
-          color: '#06251F',
+          fontWeight: '600',
+          fontSize: '36px',
+          lineHeight: '54px',
+          alignItems: 'center',
+          color: '#89C8C6',
         }}
       >
         Profile
@@ -30,20 +31,9 @@ const ProfileHeader = () => {
             title="Change password"
             handleClick={() => console.log('ActionButton')}
           />
-          {router.asPath.includes('edit') ? (
-            <UIDefaultButton sx={{ marginLeft: '8px' }} type="submit">
-              Save
-            </UIDefaultButton>
-          ) : (
-            <UIActionButton
-              icon={<EditIcon />}
-              color="#28B446"
-              title="Edit"
-              handleClick={() => {
-                router.push(`/profile/edit`);
-              }}
-            />
-          )}
+          <UIDefaultButton sx={{ marginLeft: '8px' }} type="submit">
+            Save
+          </UIDefaultButton>
         </Box>
       </Stack>
     </Box>
