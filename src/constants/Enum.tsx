@@ -10,6 +10,11 @@ export enum RequestStatus {
   WAITING = 'Waiting',
 }
 
+export enum RewardStatus {
+  AVAILABLE = 'Available',
+  OUT = 'Out of Stock',
+}
+
 export enum MenuAction {
   VIEW = `view`,
   EDIT = `edit`,

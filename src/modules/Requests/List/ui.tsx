@@ -43,11 +43,11 @@ export const StyledRequestTable = styled(Table)({
 });
 
 export const StyledRequestTableRow = styled(TableRow)({
-  '&:nth-of-type(even)': {
-    background: '#F7FEFE',
-  },
   '&:nth-of-type(odd)': {
-    background: '#FDFDFD',
+    background: 'rgba(194, 239, 238, 0.2)',
+  },
+  '&:nth-of-type(even)': {
+    background: 'rgba(242, 255, 253, 0.5)',
   },
   [`&.${tableRowClasses.head}`]: {
     background: 'transparent',
@@ -70,6 +70,6 @@ export const StyledRequestTableCell = styled(TableCell)({
     fontSize: 14,
     height: '80px',
     fontWeight: 500,
-    color: '#222B35',
+    color: 'rgba(0, 0, 0, 0.3)',
   },
 });

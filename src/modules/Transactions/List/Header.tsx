@@ -48,7 +48,8 @@ const TransactionsListHeader = ({
               onTypeChange(parseInt(e.target.value))
             }
             sx={{
-              width: '160px',
+              '.MuiOutlinedInput-root': { width: '160px' },
+              '.Mui-focused': { width: '250px' },
               '.MuiInputBase-input': {
                 fontWeight: 600,
                 fontSize: 14,

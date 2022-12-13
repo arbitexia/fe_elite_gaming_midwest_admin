@@ -12,7 +12,7 @@ const ActivityTable = ({ activityTableData }: ActivityTableProps) => {
     <Table>
       <TableHead>
         <StyledTableRow>
-          <StyledTableCell>Id</StyledTableCell>
+          <StyledTableCell sx={{ pl: '30px' }}>Id</StyledTableCell>
           <StyledTableCell>User</StyledTableCell>
           <StyledTableCell>Date</StyledTableCell>
           <StyledTableCell>Model</StyledTableCell>
@@ -29,7 +29,9 @@ const ActivityTable = ({ activityTableData }: ActivityTableProps) => {
               data-key={activityItem.id}
               sx={{ position: 'relative' }}
             >
-              <StyledTableCell>#{activityItem.id}</StyledTableCell>
+              <StyledTableCell sx={{ pl: '30px' }}>
+                #{activityItem.id}
+              </StyledTableCell>
               <StyledTableCell>
                 {`${activityItem.user.firstName} ${activityItem.user.lastName}`}
               </StyledTableCell>
