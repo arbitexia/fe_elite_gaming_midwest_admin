@@ -29,6 +29,7 @@ import {
   StyledInputBase,
   NotificationCategoryItem,
   NotificationMenuItem,
+  NotificationMenuContainer,
 } from './ui';
 import { UIImage } from '@/components/UI';
 import { notificationData } from '@/_mock/App/index';
@@ -218,7 +219,7 @@ export default function AppNavbar(props: Props) {
           setAnchorElNotifications(null);
         }}
       >
-        <NotificationCategoryItem disableRipple disableTouchRipple>
+        <NotificationMenuContainer disableRipple disableTouchRipple>
           <Box>
             <Typography
               sx={{ color: '#222B35', fontSize: 16, fontWeight: 600 }}
@@ -231,33 +232,66 @@ export default function AppNavbar(props: Props) {
                 : 'No notification'}
             </Typography>
           </Box>
+
           <Box
             component="img"
-            src={'images/icons/double-tick.svg'}
-            alt={'double'}
+            src={'/images/icons/double-tick.svg'}
+            alt={'double-tick'}
           />
-        </NotificationCategoryItem>
+        </NotificationMenuContainer>
+
         {notificationData.length > 0 && (
           <div>
             <Divider sx={{ my: 0.5 }} />
-            {notificationData.map((notification, index) => (
-              <NotificationMenuItem notification={notification} key={index} />
-            ))}
-            {/* <Divider sx={{ my: 0.5 }} />
-          <NotificationMenuContainer disableRipple disableTouchRipple>
-            <Typography
-              sx={{
-                width: '100%',
-                textAlign: 'center',
-                color: '#FB0202',
-                fontSize: 14,
-                fontWeight: 500,
-              }}
-              onClick={() => navigate('/notifications')}
+            <NotificationCategoryItem disableRipple disableTouchRipple>
+              <Typography>NEW</Typography>
+            </NotificationCategoryItem>
+
+            {notificationData.map((notification, index) => {
+              const duration =
+                new Date().valueOf() -
+                new Date(notification.createdAt).valueOf();
+              const isNew = duration < 24 * 3600 * 1000;
+              return isNew ? (
+                <NotificationMenuItem notification={notification} key={index} />
+              ) : (
+                ''
+              );
+            })}
+
+            <NotificationCategoryItem
+              disableRipple
+              disableTouchRipple
+              sx={{ marginTop: '8px', marginBottom: '8px' }}
             >
-              View All
-            </Typography>
-          </NotificationMenuContainer> */}
+              <Typography>BEFORE THAT</Typography>
+            </NotificationCategoryItem>
+            {notificationData.map((notification, index) => {
+              const duration =
+                new Date().valueOf() -
+                new Date(notification.createdAt).valueOf();
+              const isNew = duration < 24 * 3600 * 1000;
+              return !isNew ? (
+                <NotificationMenuItem notification={notification} key={index} />
+              ) : (
+                ''
+              );
+            })}
+            <Divider sx={{ my: 0.5 }} />
+            <NotificationMenuContainer disableRipple disableTouchRipple>
+              <Typography
+                sx={{
+                  width: '100%',
+                  textAlign: 'center',
+                  color: '#FB0202',
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+                // onClick={() => navigate('/notifications')}
+              >
+                View All
+              </Typography>
+            </NotificationMenuContainer>
           </div>
         )}
       </StyledNavbarMenu>
