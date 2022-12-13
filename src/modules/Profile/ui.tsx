@@ -1,5 +1,13 @@
 import { UIEditTextField, UIFlexWrapBox } from '@/components/UI';
-import { styled, Avatar, Box, Button, Typography } from '@mui/material';
+import {
+  styled,
+  Avatar,
+  Box,
+  Button,
+  Typography,
+  TableRow,
+  TableCell,
+} from '@mui/material';
 
 export const StyledUserInfoTitle = styled(Typography)({
   width: '110px',
@@ -17,7 +25,6 @@ export const StyledUserInfoValue = styled(Typography)({
 });
 
 export const StyledUserInfoCard = styled(Box)({
-  height: '300px',
   backgroundColor: '#ffffff',
   boxShadow: '5px 6px 30px -15px rgba(25, 42, 89, 0.2)',
   borderRadius: '15px',
@@ -35,7 +42,6 @@ export const StyledUserInfoCardHeader = styled(Box)({
 export const StyledUserInfoAvatar = styled(Avatar)({
   width: '197px',
   height: '197px',
-  background: '#4FD1C5',
   boxShadow: '0px 3.5px 5.5px rgba(0, 0, 0, 0.02)',
   borderRadius: '8px',
 });
@@ -48,7 +54,7 @@ export const StyledUserInfoCardContent = styled(UIFlexWrapBox)({
 
 export const StyledUserInfoCardStatus = styled(UIFlexWrapBox)({
   position: 'absolute',
-  top: '30px',
+  top: '-30px',
   right: '50px',
 });
 
@@ -68,6 +74,85 @@ export const StyledUserDetailCard = styled(Box)({
   boxShadow: '5px 6px 30px -15px rgba(25, 42, 89, 0.2)',
   borderRadius: '15px',
   flex: '1 1 0',
+});
+
+export const StyledRequestTableCell = styled(TableCell)({
+  fontSize: 14,
+  height: '50px',
+  fontWeight: 400,
+  color: 'rgba(0, 0, 0, 0.3)',
+  background: '#FFFFFF',
+  border: '1px solid #F3F3F3',
+  borderLeft: 0,
+  borderRight: 0,
+  '&:first-of-type': {
+    borderRadius: '7px 0 0 7px',
+  },
+  '&:last-of-type': {
+    borderRadius: '0 7px 7px 0',
+  },
+
+  '&:nth-of-type(2)': {
+    color: '#06251F',
+    fontWeight: 600,
+  },
+  '&:nth-of-type(3)': {
+    color: '#06251F',
+  },
+  '&:nth-of-type(4)': {
+    color: '#008A83',
+    fontWeight: 500,
+  },
+  '&:nth-of-type(6)': {
+    color: 'rgba(0, 0, 0, 0.3)',
+    fontWeight: 500,
+  },
+});
+
+export const StyledRequestTableRow = styled(TableRow)({
+  boxShadow: '0px 7px 20px rgba(25, 42, 89, 0.05)',
+});
+
+export const StyledUserTableCell = styled(TableCell)({
+  fontSize: 14,
+  height: '50px',
+  fontWeight: 400,
+  color: 'rgba(0, 0, 0, 0.3)',
+  background: '#FFFFFF',
+  border: '1px solid #F3F3F3',
+  borderRight: 0,
+  borderLeft: 0,
+  '&:first-of-type': {
+    borderRadius: '7px 0 0 7px',
+  },
+  '&:last-of-type': {
+    borderRadius: '0 7px 7px 0',
+  },
+});
+
+export const StyledTransactionTableCell = styled(TableCell)({
+  fontSize: 14,
+  fontWeight: 400,
+  color: 'rgba(0, 0, 0, 0.3)',
+  border: 0,
+  height: '40px',
+});
+
+export const StyledRewardsTableCell = styled(TableCell)({
+  height: '80px',
+  fontSize: 14,
+  fontWeight: 500,
+  color: 'rgba(0, 0, 0, 0.3)',
+  background: '#FFFFFF',
+  border: '1px solid #F3F3F3',
+  borderRight: 0,
+  borderLeft: 0,
+  '&:first-of-type': {
+    borderRadius: '7px 0 0 7px',
+  },
+  '&:last-of-type': {
+    borderRadius: '0 7px 7px 0',
+  },
 });
 
 export const StyledUserEditTextField = styled(UIEditTextField)({

@@ -29,7 +29,7 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
   return (
     <Box component="form" onSubmit={userFormik.handleSubmit}>
       <ProfileHeader />
-      <StyledUserInfoCard sx={{ height: '450px' }}>
+      <StyledUserInfoCard>
         <StyledUserInfoCardHeader />
         <StyledUserInfoCardContent>
           {user.id !== 0 && (
@@ -47,31 +47,42 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
             </StyledUserInfoCardStatus>
           )}
           <Box sx={{ input: { display: 'none' } }}>
-            <label htmlFor="photo-upload">
-              <StyledUserInfoAvatar src={user.asset} alt="avatar">
+            <Box
+              sx={{
+                position: 'relative',
+                borderRadius: '8px',
+                overflow: 'hidden',
+              }}
+            >
+              <StyledUserInfoAvatar src={user.asset} alt="avatar" />
+              <label htmlFor="photo-upload">
                 <Typography
                   sx={{
-                    width: '100px',
-                    height: '22px',
+                    position: 'absolute',
+                    left: 0,
+                    bottom: 0,
+                    width: '197px',
+                    height: '55px',
                     background: 'rgba(0, 0, 0, 0.4)',
-                    borderRadius: '4px',
                     fontWeight: '500',
                     fontSize: '12px',
-                    lineHeight: '22px',
+                    lineHeight: '55px',
                     textAlign: 'center',
-                    color: '#8C8787',
+                    color: '#B0B0B0',
+                    cursor: 'pointer',
                   }}
                 >
                   Edit Photo
                 </Typography>
-              </StyledUserInfoAvatar>
-              <input
-                id="photo-upload"
-                // onChange={onAvatarChange}
-                type="file"
-                accept="image/png, image/gif, image/jpeg"
-              />
-            </label>
+                <input
+                  id="photo-upload"
+                  // onChange={onAvatarChange}
+                  type="file"
+                  accept="image/png, image/gif, image/jpeg"
+                />
+              </label>
+            </Box>
+
             <Typography
               sx={{
                 mt: '20px',
@@ -87,15 +98,13 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
             </Typography>
           </Box>
 
-          <Box flexGrow="1">
-            <UIFlexSpaceBox>
-              <UIFlexWrapBox
-                sx={{
-                  gap: '10px',
-                  alignItems: 'center',
-                  marginBottom: '25px',
-                }}
-              >
+          <Box flex="1">
+            <UIFlexSpaceBox
+              sx={{
+                alignItems: 'flex-end',
+              }}
+            >
+              <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                 <StyledUserInfoTitle sx={{ width: 'auto' }}>
                   FirstName:{' '}
                 </StyledUserInfoTitle>
@@ -104,6 +113,8 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                   value={userFormik.values.firstName}
                   onChange={userFormik.handleChange}
                 />
+              </UIFlexWrapBox>
+              <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                 <StyledUserInfoTitle sx={{ width: 'auto' }}>
                   LastName:{' '}
                 </StyledUserInfoTitle>
@@ -115,9 +126,7 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
               </UIFlexWrapBox>
               <UIFlexWrapBox
                 sx={{
-                  alignItems: 'center',
-                  marginRight: '80px',
-                  marginBottom: '25px',
+                  alignItems: 'flex-end',
                 }}
               >
                 <StyledUserEditTextField
@@ -136,10 +145,10 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                 </StyledUserEditTextField>
               </UIFlexWrapBox>
             </UIFlexSpaceBox>
-            <Divider />
+            <Divider sx={{ mt: '25px' }} />
             <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
               <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
-                <UIFlexWrapBox sx={{ alignItems: 'center', width: '370px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Phonenumber:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="phonenumber"
@@ -147,7 +156,7 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center', width: '370px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Email:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="email"
@@ -155,7 +164,7 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center', width: '370px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Address1:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="location.address1"
@@ -163,7 +172,7 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center', width: '370px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>City:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="location.city"
@@ -171,7 +180,7 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center', width: '370px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>ZipCode:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="location.zipcode"
@@ -181,7 +190,7 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                 </UIFlexWrapBox>
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
-                <UIFlexWrapBox sx={{ alignItems: 'center', width: '370px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="birthday"
@@ -189,7 +198,7 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center', width: '370px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>User role:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="role"
@@ -206,7 +215,7 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                     })}
                   </StyledUserEditTextField>
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center', width: '370px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Address2:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="location.address2"
@@ -214,7 +223,7 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center', width: '370px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>State:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="location.state"
@@ -222,7 +231,7 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center', width: '370px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Country:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="location.country"
