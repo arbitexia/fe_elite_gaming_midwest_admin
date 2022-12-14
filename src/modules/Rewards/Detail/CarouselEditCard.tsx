@@ -67,7 +67,7 @@ const RewardsDetailCarouselEditCard = ({ rewardsItem }: RewardsDetailProps) => {
                     width: '100%',
                     height: '350px',
                   }}
-                  src={`${url}`}
+                  src={`/${url}`}
                   alt="image"
                 />
               ) : null;
