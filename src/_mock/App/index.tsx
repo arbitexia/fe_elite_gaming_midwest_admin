@@ -15,6 +15,26 @@ export const superSidebarItems: MenuItemObj[] = [
   },
   {
     id: 2,
+    text: 'Locations',
+    route: 'locations',
+    isSelected: false,
+  },
+  {
+    id: 3,
+    text: 'Rewards',
+    route: 'rewards',
+    isSelected: false,
+    disabled: false,
+  },
+  {
+    id: 4,
+    text: 'Request',
+    route: 'requests',
+    isSelected: false,
+    disabled: false,
+  },
+  {
+    id: 5,
     text: 'Users',
     isSelected: false,
     disabled: false,
@@ -41,26 +61,6 @@ export const superSidebarItems: MenuItemObj[] = [
         isSelected: false,
       },
     ],
-  },
-  {
-    id: 3,
-    text: 'Locations',
-    route: 'locations',
-    isSelected: false,
-  },
-  {
-    id: 4,
-    text: 'Rewards',
-    route: 'rewards',
-    isSelected: false,
-    disabled: false,
-  },
-  {
-    id: 5,
-    text: 'Request',
-    route: 'requests',
-    isSelected: false,
-    disabled: false,
   },
   {
     id: 6,
@@ -134,7 +134,7 @@ export const notificationData = [
       item: {
         id: 6,
         name: 'Marshal V6',
-        urls: ['images/marshal.jpg'],
+        urls: ['/images/marshal.jpg'],
         location: {
           name: 'Palm Casino Resort',
           coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -150,10 +150,10 @@ export const notificationData = [
           status: true,
           type: 'Palm',
           urls: [
-            'images/palm.png',
-            'images/roulette.png',
-            'images/palm.png',
-            'images/roulette.png',
+            '/images/palm.png',
+            '/images/roulette.png',
+            '/images/palm.png',
+            '/images/roulette.png',
           ],
         },
         point: 39000,

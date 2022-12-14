@@ -159,7 +159,9 @@ export default function AppNavbar(props: Props) {
                   >
                     Administrator
                   </Typography>
-                  <ExpandMoreOutlinedIcon sx={{ color: '#83A9A8' }} />
+                  <ExpandMoreOutlinedIcon
+                    sx={{ color: '#83A9A8', marginRight: '15px' }}
+                  />
                 </StyledIconButton>
               </>
             )}

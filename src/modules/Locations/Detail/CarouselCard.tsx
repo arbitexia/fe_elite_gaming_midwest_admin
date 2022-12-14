@@ -43,6 +43,7 @@ const LocationsDetailCarouselCard = ({
             width: 'calc(100% - 120px)',
             borderRadius: '12px',
             overflow: 'hidden',
+            display: 'flex',
           }}
         >
           <AutoPlaySwipeableViews
@@ -57,7 +58,9 @@ const LocationsDetailCarouselCard = ({
                   sx={{
                     width: '100%',
                     height: '350px',
+                    display: 'flex',
                   }}
+                  display={'flex'}
                   src={`/${url}`}
                   alt="image"
                 />

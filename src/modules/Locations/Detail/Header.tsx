@@ -1,5 +1,20 @@
-import { UIFlexSpaceBox, UIDefaultButton } from '@/components/UI';
-import { Typography } from '@mui/material';
+import { useState } from 'react';
+import {
+  UIFlexSpaceBox,
+  UIDefaultButton,
+  UIActionButton,
+  UIFlexWrapBox,
+} from '@/components/UI';
+import {
+  Button,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@mui/material';
+import { Edit, Delete } from '@mui/icons-material';
+import { useRouter } from 'next/router';
 
 export type LocationDetailHeaderProps = {
   name: string;
@@ -10,6 +25,15 @@ const LocationDetailHeader = ({
   name,
   isEditable,
 }: LocationDetailHeaderProps) => {
+  const router = useRouter();
+  const { id } = router.query;
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const handleCancel = () => {
+    setOpenDeleteModal(false);
+  };
+  const handleOk = () => {
+    setOpenDeleteModal(false);
+  };
   return (
     <UIFlexSpaceBox sx={{ mb: '35px', alignItems: 'center', gap: '12px' }}>
       <Typography
@@ -22,7 +46,44 @@ const LocationDetailHeader = ({
       >
         {name}
       </Typography>
-      {isEditable && <UIDefaultButton>Save</UIDefaultButton>}
+      <UIFlexWrapBox>
+        {isEditable ? (
+          <UIDefaultButton>Save</UIDefaultButton>
+        ) : (
+          <>
+            <UIActionButton
+              icon={<Edit />}
+              color="#28B446"
+              title="Edit"
+              handleClick={() => {
+                router.push(`/locations/edit/${id}`);
+              }}
+            />
+            <UIActionButton
+              icon={<Delete />}
+              color="#F14336"
+              title="Delete"
+              handleClick={() => setOpenDeleteModal(true)}
+            />
+          </>
+        )}
+      </UIFlexWrapBox>
+      <Dialog
+        sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
+        maxWidth="xs"
+        open={openDeleteModal}
+      >
+        <DialogTitle>Delete Reward</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to delete reward?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button onClick={handleOk}>Ok</Button>
+        </DialogActions>
+      </Dialog>
     </UIFlexSpaceBox>
   );
 };
