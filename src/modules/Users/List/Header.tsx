@@ -26,18 +26,17 @@ const UsersListHeader = ({
 }: UsersListHeaderProps) => {
   const router = useRouter();
   const { slug } = router.query;
-  const title = slug as string;
-  console.log(title);
+  let title = slug as string;
+  if (title === 'Admins') title = 'Administrators';
 
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);
   };
 
   return (
-    <UIFlexSpaceBox sx={{ mt: '35px' }}>
+    <UIFlexSpaceBox>
       <Typography
         sx={{
-          ml: '30px',
           fontWeight: 600,
           fontSize: 36,
           lineHeight: '54px',
