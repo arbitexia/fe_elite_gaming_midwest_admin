@@ -134,7 +134,7 @@ export const notificationData = [
       item: {
         id: 6,
         name: 'Marshal V6',
-        urls: ['/images/marshal.jpg'],
+        urls: ['images/marshal.jpg'],
         location: {
           name: 'Palm Casino Resort',
           coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -150,10 +150,10 @@ export const notificationData = [
           status: true,
           type: 'Palm',
           urls: [
-            '/images/palm.png',
-            '/images/roulette.png',
-            '/images/palm.png',
-            '/images/roulette.png',
+            'images/palm.png',
+            'images/roulette.png',
+            'images/palm.png',
+            'images/roulette.png',
           ],
         },
         point: 39000,

@@ -23,20 +23,18 @@ export const LocationsHeader = ({
   };
   return (
     <>
-      <UIFlexSpaceBox sx={{ mt: '35px' }}>
-        <UIFlexWrapBox sx={{ alignItems: 'center', gap: '12px' }}>
-          <Typography
-            sx={{
-              fontWeight: '600',
-              fontSize: '36px',
-              lineHeight: '54px',
-              alignItems: 'center',
-              color: '#89C8C6',
-            }}
-          >
-            Locations
-          </Typography>
-        </UIFlexWrapBox>
+      <UIFlexSpaceBox>
+        <Typography
+          sx={{
+            fontWeight: '600',
+            fontSize: '36px',
+            lineHeight: '54px',
+            alignItems: 'center',
+            color: '#89C8C6',
+          }}
+        >
+          Locations
+        </Typography>
         <UIFlexWrapBox sx={{ gap: '40px' }}>
           <UIDefaultTextField
             placeholder="Search"

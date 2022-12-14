@@ -14,7 +14,11 @@ import {
   Delete as DeleteIcon,
   Replay as ReplayIcon,
 } from '@mui/icons-material';
-import { UIActionButton, UIDefaultButton } from '@/components/UI';
+import {
+  UIActionButton,
+  UIDefaultButton,
+  UIFlexSpaceBox,
+} from '@/components/UI';
 import { UserType } from '@/types';
 import { useRouter } from 'next/router';
 
@@ -33,9 +37,9 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
     setOpenDeleteModal(false);
   };
   return (
-    <Box sx={{ mt: '35px', mb: '20px' }}>
+    <Box sx={{ mb: '30px' }}>
       {user && (
-        <>
+        <UIFlexSpaceBox>
           <Typography
             sx={{
               fontWeight: 600,
@@ -103,7 +107,7 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
               <Button onClick={handleOk}>Ok</Button>
             </DialogActions>
           </Dialog>
-        </>
+        </UIFlexSpaceBox>
       )}
     </Box>
   );

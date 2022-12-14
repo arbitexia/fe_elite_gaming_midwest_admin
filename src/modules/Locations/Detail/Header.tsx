@@ -11,22 +11,19 @@ const LocationDetailHeader = ({
   isEditable,
 }: LocationDetailHeaderProps) => {
   return (
-    <>
-      <UIFlexSpaceBox sx={{ mb: '35px', alignItems: 'center', gap: '12px' }}>
-        <Typography
-          sx={{
-            fontWeight: '600',
-            fontSize: '36px',
-            lineHeight: '54px',
-            alignItems: 'center',
-            color: '#89C8C6',
-          }}
-        >
-          {name}
-        </Typography>
-        {isEditable && <UIDefaultButton>Save</UIDefaultButton>}
-      </UIFlexSpaceBox>
-    </>
+    <UIFlexSpaceBox sx={{ mb: '35px', alignItems: 'center', gap: '12px' }}>
+      <Typography
+        sx={{
+          fontWeight: 600,
+          fontSize: 24,
+          lineHeight: '17px',
+          color: '#06251F',
+        }}
+      >
+        {name}
+      </Typography>
+      {isEditable && <UIDefaultButton>Save</UIDefaultButton>}
+    </UIFlexSpaceBox>
   );
 };
 

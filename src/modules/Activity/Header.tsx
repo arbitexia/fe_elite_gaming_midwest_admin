@@ -23,10 +23,9 @@ const ActivityListHeader = ({
   onTypeChange,
 }: ActivityListHeaderProps) => {
   return (
-    <UIFlexSpaceBox sx={{ mt: '35px' }}>
+    <UIFlexSpaceBox>
       <Typography
         sx={{
-          ml: '30px',
           fontWeight: 600,
           fontSize: 36,
           lineHeight: '54px',

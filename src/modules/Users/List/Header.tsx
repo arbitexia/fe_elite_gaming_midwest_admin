@@ -44,7 +44,7 @@ const UsersListHeader = ({
           color: '#89C8C6',
         }}
       >
-        {title && `All ${title.charAt(0).toUpperCase() + title.slice(1)}`}
+        {title && `${title.charAt(0).toUpperCase() + title.slice(1)}`}
       </Typography>
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
         <UIFlexCenterBox>

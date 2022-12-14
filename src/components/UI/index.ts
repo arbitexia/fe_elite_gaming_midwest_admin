@@ -20,3 +20,6 @@ export {
   UIEditButton,
   UIViewButton,
 } from './Button';
+
+export { UIDetailHeader } from './DetailHeader';
+export { UIListHeader } from './ListHeader';
