@@ -15,7 +15,7 @@ import { userRole, userStatus } from '@/_mock/users';
 import { useFormik } from 'formik';
 
 interface ProfileHeaderProps {
-  user: UserType;
+  user: UserType.MockUser;
 }
 
 const ProfileEdit = ({ user }: ProfileHeaderProps) => {
@@ -151,8 +151,8 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Phonenumber:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="phonenumber"
-                    value={userFormik.values.phonenumber}
+                    name="phone"
+                    value={userFormik.values.phone}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
@@ -167,24 +167,24 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Address1:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="location.address1"
-                    value={userFormik.values.location.address1}
+                    name="address.address1"
+                    value={userFormik.values.address?.address1}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>City:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="location.city"
-                    value={userFormik.values.location.city}
+                    name="address.city"
+                    value={userFormik.values.address?.city}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>ZipCode:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="location.zipcode"
-                    value={userFormik.values.location.zipcode}
+                    name="address.zipcode"
+                    value={userFormik.values.address?.zipcode}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
@@ -218,24 +218,24 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Address2:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="location.address2"
-                    value={userFormik.values.location.address2}
+                    name="address.address2"
+                    value={userFormik.values.address?.address2}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>State:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="location.state"
-                    value={userFormik.values.location.state}
+                    name="address.state"
+                    value={userFormik.values.address?.state}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Country:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="location.country"
-                    value={userFormik.values.location.country}
+                    name="address.country"
+                    value={userFormik.values.address?.country}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>

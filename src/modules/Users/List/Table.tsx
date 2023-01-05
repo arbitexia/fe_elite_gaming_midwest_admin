@@ -24,7 +24,7 @@ import { MenuAction } from '@/constants/Enum';
 import { UserType } from '@/types';
 
 type UsersTableProps = {
-  usersTableData: UserType[];
+  usersTableData: UserType.MockUser[];
 };
 
 const UsersTable = ({ usersTableData }: UsersTableProps) => {
@@ -78,7 +78,7 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
 
   type Order = 'asc' | 'desc';
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof UserType>('id');
+  const [orderBy, setOrderBy] = useState<keyof UserType.MockUser>('id');
 
   function stableSort<T>(
     array: readonly T[],
@@ -95,19 +95,19 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
     return stabilizedThis.map((el) => el[0]);
   }
 
-  function getComparator<Key extends keyof UserType>(
+  function getComparator<Key extends keyof UserType.MockUser>(
     order: Order,
     orderBy: Key
-  ): (a: UserType, b: UserType) => number {
+  ): (a: UserType.MockUser, b: UserType.MockUser) => number {
     return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
 
   function descendingComparator(
-    a: UserType,
-    b: UserType,
-    orderBy: keyof UserType
+    a: UserType.MockUser,
+    b: UserType.MockUser,
+    orderBy: keyof UserType.MockUser
   ) {
     if (orderBy === 'firstName') {
       if (`${b.firstName} ${b.lastName}` < `${a.firstName} ${a.lastName}`) {
@@ -127,12 +127,13 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
   }
 
   const createSortHandler =
-    (property: keyof UserType) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof UserType.MockUser) =>
+    (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof UserType
+    property: keyof UserType.MockUser
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -184,9 +185,9 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
           </StyledTableCell>
           <StyledTableCell>
             <TableSortLabel
-              active={orderBy === 'phonenumber'}
+              active={orderBy === 'phone'}
               direction={order}
-              onClick={createSortHandler('phonenumber')}
+              onClick={createSortHandler('phone')}
             >
               Phone
             </TableSortLabel>
@@ -223,7 +224,7 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
         </StyledTableRow>
       </TableHead>
       <TableBody>
-        {stableSort<UserType>(
+        {stableSort<UserType.MockUser>(
           usersTableData,
           getComparator(order, orderBy)
         ).map((userItem) => {
@@ -251,7 +252,7 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
               </StyledTableCell>
               <StyledTableCell>{`${userItem.firstName} ${userItem.lastName}`}</StyledTableCell>
               <StyledTableCell>{userItem.email}</StyledTableCell>
-              <StyledTableCell>{userItem.phonenumber}</StyledTableCell>
+              <StyledTableCell>{userItem.phone}</StyledTableCell>
               <StyledTableCell>{userItem.birthday}</StyledTableCell>
               <StyledTableCell align="center">
                 {userRole[userItem.role - 1].value}

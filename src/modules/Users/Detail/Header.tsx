@@ -23,7 +23,7 @@ import { UserType } from '@/types';
 import { useRouter } from 'next/router';
 
 interface UsersDetailHeaderProps {
-  user: UserType;
+  user: UserType.MockUser;
 }
 
 const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {

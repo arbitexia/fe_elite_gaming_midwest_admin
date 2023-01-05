@@ -13,7 +13,7 @@ interface Props {
 
 const AppLayout = (props: Props) => {
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth({});
   useEffect(() => {
     if (!isAuthenticated) router.push('/login');
   });

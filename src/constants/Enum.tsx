@@ -1,7 +1,15 @@
 export enum UserStatus {
-  ACTIVATED = `Activated`,
-  ARCHIVED = `Archived`,
-  DISABLED = `Disabled`,
+  ACTIVATED = 'ACTIVATED',
+  DISABLED = 'DISABLED',
+  ARCHIVED = 'ARCHIVED',
+  VERIFY_PHONE = 'VERIFY_PHONE',
+  VERIFY_EMAIL = 'VERIFY_EMAIL',
+}
+
+export enum AssetType {
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+  DOCUMENT = 'DOCUMENT',
 }
 
 export enum RequestStatus {

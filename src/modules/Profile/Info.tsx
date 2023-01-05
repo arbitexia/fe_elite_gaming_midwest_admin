@@ -15,7 +15,7 @@ import { userStatus, userRole } from '@/_mock/users';
 import ProfileHeader from './Header';
 
 interface ProfileHeaderProps {
-  user: UserType;
+  user: UserType.MockUser;
 }
 
 const ProfileInfo = ({ user }: ProfileHeaderProps) => {
@@ -59,7 +59,7 @@ const ProfileInfo = ({ user }: ProfileHeaderProps) => {
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>
                 <UIFlexWrapBox>
                   <StyledUserInfoTitle>Phonenumber:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{user.phonenumber}</StyledUserInfoValue>
+                  <StyledUserInfoValue>{user.phone}</StyledUserInfoValue>
                 </UIFlexWrapBox>
                 <UIFlexWrapBox>
                   <StyledUserInfoTitle>Email:</StyledUserInfoTitle>
@@ -67,7 +67,7 @@ const ProfileInfo = ({ user }: ProfileHeaderProps) => {
                 </UIFlexWrapBox>
                 <UIFlexWrapBox>
                   <StyledUserInfoTitle>Location:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{`${user.location.address1} ${user.location.address2} ${user.location.city} ${user.location.state} ${user.location.zipcode} ${user.location.country}`}</StyledUserInfoValue>
+                  <StyledUserInfoValue>{`${user.address?.address1} ${user.address?.address2} ${user.address?.city} ${user.address?.state} ${user.address?.zipcode} ${user.address?.country}`}</StyledUserInfoValue>
                 </UIFlexWrapBox>
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>

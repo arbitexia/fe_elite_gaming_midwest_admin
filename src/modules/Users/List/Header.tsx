@@ -27,7 +27,7 @@ const UsersListHeader = ({
   const router = useRouter();
   const { slug } = router.query;
   let title = slug as string;
-  if (title === 'Admins') title = 'Administrators';
+  if (title === 'admins') title = 'Administrators';
 
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);

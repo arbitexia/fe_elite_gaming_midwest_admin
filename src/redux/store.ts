@@ -14,7 +14,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import { createWrapper } from 'next-redux-wrapper';
-import storage from 'redux-persist/lib/storage';
+import storage from './storage';
 import { authReducer, appReducer } from './slices';
 
 const combinedReducer = combineReducers({ auth: authReducer, app: appReducer });

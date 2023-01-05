@@ -6,10 +6,10 @@ export interface TransactionsProps {
 
 export type TransactionType = {
   id: number;
-  user: UserType;
+  user: UserType.MockUser;
   location: LocationType;
   reward: RewardItemType;
-  assignee: UserType;
+  assignee: UserType.MockUser;
   type: string;
   amount: number;
   status: string;

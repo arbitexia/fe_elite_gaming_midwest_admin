@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 import {
   Box,
   Typography,
@@ -10,15 +8,13 @@ import {
   CircularProgress,
 } from '@mui/material';
 import {
-  PersonOutline as PersonOutlineIcon,
   LockOutlined as LockOutlinedIcon,
-  VisibilityOffOutlined as VisibilityOffOutlinedIcon,
   VisibilityOutlined as VisibilityOutlinedIcon,
+  VisibilityOffOutlined as VisibilityOffOutlinedIcon,
 } from '@mui/icons-material';
 import {
   UIAuthCardWrapper,
   UIImage,
-  UIFlexColumnBox,
   UIAuthTextField,
   UIDefaultButton,
 } from '@/components/UI';
@@ -26,38 +22,42 @@ import { AuthLayout } from '@/layouts';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useAuth } from '@/hooks';
+import { useRouter } from 'next/router';
 
-type LoginValue = {
-  identifier: string;
+type ResetPasswordValue = {
   password: string;
 };
 
-export const LoginSchema = yup.object({
-  identifier: yup.string().required('Username is required'),
+export const ResetPasswordSchema = yup.object({
   password: yup
     .string()
     .min(8, 'Password should be of minimum 8 characters length')
     .required('Password is required'),
+  confirmPassword: yup
+    .string()
+    .required('Confirm password is required')
+    .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 
-const LoginPage = () => {
+const ResetPassword = () => {
   const router = useRouter();
-
-  const { onLogin } = useAuth({
-    handleAuthUserSuccess: () => {
-      router.push('/users/customers');
+  const { onResetPassword } = useAuth({
+    handleAuthResetSuccess: () => {
+      router.push('/login');
     },
   });
-  const [showPassword, setShowPassword] = useState<boolean>(false);
   const loading = false;
+  const { token } = router.query;
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const formik = useFormik({
     initialValues: {
-      identifier: '',
       password: '',
+      confirmPassword: '',
     },
-    validationSchema: LoginSchema,
-    onSubmit: async (values: LoginValue) => {
-      onLogin(values.identifier, values.password);
+    validationSchema: ResetPasswordSchema,
+    onSubmit: async (values: ResetPasswordValue) => {
+      onResetPassword(token as string, values.password);
     },
   });
 
@@ -100,51 +100,29 @@ const LoginPage = () => {
               color: '#006F69',
             }}
           >
-            Hello Again!
+            Change password
           </Typography>
+
           <Typography
-            component="p"
-            variant="body1"
             sx={{
-              fontWeight: 400,
-              fontSize: '16px',
-              lineHeight: '168%',
               textAlign: 'center',
-              color: 'rgba(137, 200, 198, 0.8)',
+              fontSize: '14px',
+              color: '#B3B3B3',
+              marginTop: 2,
             }}
           >
-            Welcome Back
+            Input your new desired password in the input fields below to create
+            a new password.
           </Typography>
         </Box>
         <Stack spacing={2.5} component="form" onSubmit={formik.handleSubmit}>
           <UIAuthTextField
             fullWidth
             size="small"
-            placeholder="Username"
-            id="identifier"
-            name="identifier"
-            value={formik.values.identifier}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.identifier && Boolean(formik.errors.identifier)
-            }
-            helperText={formik.touched.identifier && formik.errors.identifier}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <PersonOutlineIcon sx={{ color: '#83A9A8' }} />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <UIAuthTextField
-            fullWidth
-            size="small"
-            type={showPassword ? 'text' : 'password'}
             placeholder="Password"
-            autoComplete="new-password"
             id="password"
             name="password"
+            type={showPassword ? 'text' : 'password'}
             value={formik.values.password}
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
@@ -169,24 +147,46 @@ const LoginPage = () => {
             }}
           />
 
-          <Link href="/forgot-password">
-            <Typography
-              sx={{
-                cursor: 'pointer',
-                textAlign: 'right',
-                color: '#83A9A8',
-                fontWeight: 400,
-                fontSize: 14,
-                textDecoration: 'none',
-              }}
-            >
-              Forgot password?
-            </Typography>
-          </Link>
+          <UIAuthTextField
+            fullWidth
+            size="small"
+            placeholder="Confirm Password"
+            id="confirmPassword"
+            name="confirmPassword"
+            type={showConfirmPassword ? 'text' : 'password'}
+            value={formik.values.confirmPassword}
+            onChange={formik.handleChange}
+            error={
+              formik.touched.confirmPassword &&
+              Boolean(formik.errors.confirmPassword)
+            }
+            helperText={
+              formik.touched.confirmPassword && formik.errors.confirmPassword
+            }
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockOutlinedIcon sx={{ color: '#83A9A8' }} />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? (
+                      <VisibilityOffOutlinedIcon sx={{ color: '#DCE0E4' }} />
+                    ) : (
+                      <VisibilityOutlinedIcon sx={{ color: '#DCE0E4' }} />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
 
           <Box
             sx={{
-              paddingTop: '10px',
               alignSelf: 'center',
               width: 170,
             }}
@@ -195,34 +195,14 @@ const LoginPage = () => {
               {loading ? (
                 <CircularProgress color="inherit" size={24} />
               ) : (
-                'Log in'
+                'Change Password'
               )}
             </UIDefaultButton>
           </Box>
         </Stack>
-        <UIFlexColumnBox>
-          <Box
-            component="a"
-            href="https://customer.elitegaming.rpatdev.com/"
-            sx={{ textDecoration: 'none' }}
-          >
-            <Typography
-              sx={{
-                paddingTop: '15px',
-                cursor: 'pointer',
-                textAlign: 'right',
-                color: '#83A9A8',
-                fonSize: '14px',
-                fontWeight: 500,
-              }}
-            >
-              Customer Login
-            </Typography>
-          </Box>
-        </UIFlexColumnBox>
       </UIAuthCardWrapper>
     </AuthLayout>
   );
 };
 
-export default LoginPage;
+export default ResetPassword;

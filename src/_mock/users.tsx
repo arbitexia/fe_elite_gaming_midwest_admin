@@ -7,13 +7,13 @@ export const menuActions = [
   { label: 'Delete', color: 'rgba(251, 2, 2, 0.6)', action: MenuAction.DELETE },
 ];
 
-export const initUserData: UserType = {
+export const initUserData: UserType.MockUser = {
   id: 0,
   firstName: '',
   lastName: '',
   email: '',
   asset: '',
-  location: {
+  address: {
     address1: '',
     address2: '',
     city: '',
@@ -21,25 +21,25 @@ export const initUserData: UserType = {
     zipcode: '',
     country: '',
   },
-  phonenumber: '',
+  phone: '',
   birthday: '',
   role: 1,
   status: 1,
   createdAt: '',
 };
 
-export const profileData: UserType = {
+export const profileData: UserType.MockUser = {
   id: 1,
   firstName: 'Esthera',
   lastName: 'Jackson',
   email: 'alecthompson@mail.com',
-  phonenumber: '+14898903328',
+  phone: '+14898903328',
   birthday: '14/06/1991',
   role: 2,
   status: 1,
   createdAt: '17/09/2021',
   asset: '',
-  location: {
+  address: {
     address1: '96607 Claire Square Suite',
     address2: 'St. Louis Park, HI',
     city: 'New York',
@@ -49,19 +49,19 @@ export const profileData: UserType = {
   },
 };
 
-export const usersTableData: UserType[] = [
+export const usersTableData: UserType.MockUser[] = [
   {
     id: 1,
     firstName: 'Esthera',
     lastName: 'Jackson',
     email: 'alecthompson@mail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '14/06/1991',
     role: 2,
     status: 1,
     createdAt: '17/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -75,13 +75,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Alexa',
     lastName: 'Liras',
     email: 'alexa@gmail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '12/06/1971',
     role: 4,
     status: 1,
     createdAt: '16/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -95,13 +95,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Laurent',
     lastName: 'Michael',
     email: 'laurentamachael@gmail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '11/06/1999',
     role: 4,
     status: 1,
     createdAt: '15/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -115,13 +115,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Esthera',
     lastName: 'Jackson',
     email: 'alecthompson@mail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '14/06/1991',
     role: 4,
     status: 2,
     createdAt: '17/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -135,13 +135,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Alexa',
     lastName: 'Liras',
     email: 'alexa@gmail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '12/06/1971',
     role: 4,
     status: 2,
     createdAt: '16/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -155,13 +155,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Laurent',
     lastName: 'Michael',
     email: 'laurentamachael@gmail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '11/06/1999',
     role: 4,
     status: 3,
     createdAt: '15/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -175,13 +175,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Esthera',
     lastName: 'Jackson',
     email: 'alecthompson@mail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '14/06/1991',
     role: 4,
     status: 3,
     createdAt: '17/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -195,13 +195,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Alexa',
     lastName: 'Liras',
     email: 'alexa@gmail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '12/06/1971',
     role: 4,
     status: 1,
     createdAt: '16/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -215,13 +215,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Laurent',
     lastName: 'Michael',
     email: 'laurentamachael@gmail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '11/06/1999',
     role: 4,
     status: 4,
     createdAt: '15/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',

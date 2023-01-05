@@ -8,5 +8,12 @@ export {
 export {
   default as authReducer,
   authSelector,
-  setAuthState,
+  authorize,
+  forgotPassword,
+  resetPassword,
+  getReturnMessage,
+  getMe,
+  getRole,
+  logout,
+  clearAuthMessage,
 } from './auth.slice';

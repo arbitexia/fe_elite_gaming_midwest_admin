@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 const UsersListPage = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const [userList, setUserList] = useState<UserType[]>([]);
+  const [userList, setUserList] = useState<UserType.MockUser[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [searchStatus, setSearchStatus] = useState(0);
 
@@ -23,8 +23,8 @@ const UsersListPage = () => {
         const name = `${item.firstName} ${item.lastName}`;
         return (
           (name.toLowerCase().includes(searchValue.toLowerCase()) ||
-            item.phonenumber.includes(searchValue) ||
-            item.email.toLowerCase().includes(searchValue.toLowerCase())) &&
+            item.phone.includes(searchValue) ||
+            item.email?.toLowerCase().includes(searchValue.toLowerCase())) &&
           (searchStatus === 0 || item.status === searchStatus) &&
           item.role === slugIndex[slug as keyof typeof slugIndex]
         );

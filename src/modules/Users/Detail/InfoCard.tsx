@@ -15,7 +15,7 @@ import { userStatus, userRole } from '@/_mock/users';
 import UsersDetailHeader from './Header';
 
 interface UsersDetailHeaderProps {
-  user: UserType;
+  user: UserType.MockUser;
 }
 
 const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
@@ -59,7 +59,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>
                 <Stack direction="row">
                   <StyledUserInfoTitle>Phonenumber:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{user.phonenumber}</StyledUserInfoValue>
+                  <StyledUserInfoValue>{user.phone}</StyledUserInfoValue>
                 </Stack>
                 <Stack direction="row">
                   <StyledUserInfoTitle>Email:</StyledUserInfoTitle>
@@ -67,7 +67,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                 </Stack>
                 <Stack direction="row">
                   <StyledUserInfoTitle>Location:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{`${user.location.address1} ${user.location.address2} ${user.location.city} ${user.location.state} ${user.location.zipcode} ${user.location.country}`}</StyledUserInfoValue>
+                  <StyledUserInfoValue>{`${user.address?.address1} ${user.address?.address2} ${user.address?.city} ${user.address?.state} ${user.address?.zipcode} ${user.address?.country}`}</StyledUserInfoValue>
                 </Stack>
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>

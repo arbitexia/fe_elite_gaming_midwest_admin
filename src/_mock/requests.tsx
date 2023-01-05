@@ -40,13 +40,13 @@ export const requestsData: RequestItemType[] = [
       firstName: 'Esthera',
       lastName: 'Jackson',
       email: 'alecthompson@mail.com',
-      phonenumber: '+14898903328',
+      phone: '+14898903328',
       birthday: '14/06/1991',
       role: 4,
       status: 1,
       createdAt: '17/09/2021',
       asset: '',
-      location: {
+      address: {
         address1: '96607 Claire Square Suite',
         address2: 'St. Louis Park, HI',
         city: 'New York',
@@ -118,13 +118,13 @@ export const requestsData: RequestItemType[] = [
       firstName: 'Alexa',
       lastName: 'Liras',
       email: 'alexa@gmail.com',
-      phonenumber: '+14898903328',
+      phone: '+14898903328',
       birthday: '12/06/1971',
       role: 4,
       status: 1,
       createdAt: '16/09/2021',
       asset: '',
-      location: {
+      address: {
         address1: '96607 Claire Square Suite',
         address2: 'St. Louis Park, HI',
         city: 'New York',
