@@ -117,12 +117,13 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
         return 1;
       }
     }
-    if (b[orderBy] < a[orderBy]) {
+    if ((b[orderBy] ?? '') < (a[orderBy] ?? '')) {
       return -1;
     }
-    if (b[orderBy] > a[orderBy]) {
+    if ((b[orderBy] ?? '') > (a[orderBy] ?? '')) {
       return 1;
     }
+
     return 0;
   }
 
