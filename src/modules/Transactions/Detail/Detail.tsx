@@ -54,10 +54,10 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
                 transactionItem.user.lastName ?? '-'
               }`}</Typography>
               <Typography>
-                {transactionItem?.user?.location?.address1 ?? '-'}
+                {transactionItem?.user?.address?.address1 ?? '-'}
               </Typography>
               <Typography>
-                Phone: {transactionItem?.user?.phonenumber ?? '-'}
+                Phone: {transactionItem?.user?.phone ?? '-'}
               </Typography>
 
               <Box component="div">
@@ -78,7 +78,7 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
                 transactionItem.assignee.lastName ?? '-'
               }`}</Typography>
               <Typography>
-                {transactionItem?.assignee?.location?.address1 ?? '-'}
+                {transactionItem?.assignee?.address?.address1 ?? '-'}
               </Typography>
               <Typography>
                 Email: {transactionItem?.assignee?.email ?? '-'}
