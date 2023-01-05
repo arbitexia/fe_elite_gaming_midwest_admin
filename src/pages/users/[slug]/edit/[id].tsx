@@ -8,7 +8,7 @@ import { usersTableData } from '@/_mock/users';
 
 const UsersDetailPage = () => {
   const router = useRouter();
-  const [userData, setUserData] = useState<UserType | null>(null);
+  const [userData, setUserData] = useState<UserType.MockUser | null>(null);
   const { id } = router.query;
 
   useEffect(() => {
