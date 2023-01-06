@@ -6,11 +6,11 @@ const Home: NextPage = () => {
   const router = useRouter();
   const path = router.asPath;
   console.log(path);
-  // if (!path.includes('.html')) {
-  //   router.replace(path, { query: router.query });
-  // }
-  // router.push('/users/customers');
-  return <DashboardLayout>Dashboard</DashboardLayout>;
+  if (path === '/') return <DashboardLayout>Dashboard</DashboardLayout>;
+  else {
+    router.replace(path, { query: router.query });
+    return <></>;
+  }
 };
 
 export default Home;

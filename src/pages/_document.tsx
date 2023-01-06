@@ -4,7 +4,6 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <meta content="text/html; charset=UTF-8" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

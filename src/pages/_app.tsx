@@ -1,6 +1,5 @@
 import type { AppProps } from 'next/app';
 import { useStore } from 'react-redux';
-import { useRouter } from 'next/router';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { wrapper } from '@/redux/store';
@@ -8,12 +7,6 @@ import { AppToastProvider, AppThemeProvider } from '@/providers';
 
 function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
-  const router = useRouter();
-  const path = router.asPath;
-  console.log('APP', path);
-  // if (!path.includes('.html')) {
-  //   router.replace(path, { query: router.query });
-  // }
   return (
     <AppThemeProvider>
       <AppToastProvider>
