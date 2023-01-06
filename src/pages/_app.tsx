@@ -9,11 +9,11 @@ import { AppToastProvider, AppThemeProvider } from '@/providers';
 function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
   const router = useRouter();
-  console.log(router.asPath);
-  const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
-  if (path) {
-    router.replace(path, { query: router.query });
-  }
+  const path = router.asPath;
+  console.log('APP', path);
+  // if (!path.includes('.html')) {
+  //   router.replace(path, { query: router.query });
+  // }
   return (
     <AppThemeProvider>
       <AppToastProvider>

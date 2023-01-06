@@ -4,7 +4,12 @@ import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
   const router = useRouter();
-  router.push('/users/customers');
+  const path = router.asPath;
+  console.log(path);
+  // if (!path.includes('.html')) {
+  //   router.replace(path, { query: router.query });
+  // }
+  // router.push('/users/customers');
   return <DashboardLayout>Dashboard</DashboardLayout>;
 };
 
