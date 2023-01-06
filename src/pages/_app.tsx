@@ -9,7 +9,7 @@ import { AppToastProvider, AppThemeProvider } from '@/providers';
 function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
   // const router = useRouter();
-  if (window !== undefined) {
+  if (typeof window !== undefined) {
     if (typeof window.history.pushState == 'function') {
       window.history.pushState(
         null,
