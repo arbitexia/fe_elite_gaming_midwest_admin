@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import { useStore } from 'react-redux';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { wrapper } from '@/redux/store';
@@ -8,8 +9,9 @@ import { AppToastProvider, AppThemeProvider } from '@/providers';
 
 function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
-  // const router = useRouter();
-  if (typeof window !== undefined) {
+  const router = useRouter();
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
     if (typeof window.history.pushState == 'function') {
       window.history.pushState(
         null,
@@ -19,8 +21,10 @@ function EliteApp({ Component, pageProps }: AppProps) {
     } else {
       window.location.hash = window.location.hash.substring(2);
     }
-  }
-  // const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
+  });
+
+  const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
+  console.log(path);
   // if (path) {
   //   router.replace(path, { query: router.query });
   // }
