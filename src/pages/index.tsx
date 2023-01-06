@@ -4,13 +4,11 @@ import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const path = router.asPath;
-  console.log(router);
-  if (path === '/') {
+  if (router.pathname === '/') {
     router.replace('/users/customers');
     return <DashboardLayout>Dashboard</DashboardLayout>;
   } else {
-    router.replace(path);
+    router.replace(router.asPath);
     return <></>;
   }
 };
