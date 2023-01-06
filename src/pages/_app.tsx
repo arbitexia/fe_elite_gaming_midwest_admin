@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import { useStore } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -11,7 +10,8 @@ function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
   const router = useRouter();
   // console.log('Router Path', router.asPath);
-  router.replace(router.asPath, { query: router.query });
+  const path = router.asPath;
+  if (path) router.replace(path, { query: router.query });
   // const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
   // console.log('Defined Path', path);
   // if (path) {
