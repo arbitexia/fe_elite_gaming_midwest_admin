@@ -8,7 +8,7 @@ const Home: NextPage = () => {
   console.log(path);
   if (path === '/') return <DashboardLayout>Dashboard</DashboardLayout>;
   else {
-    router.replace(path, { query: router.query });
+    router.push(path);
     return <></>;
   }
 };
