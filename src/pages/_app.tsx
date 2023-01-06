@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import { useStore } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -10,16 +9,10 @@ import { AppToastProvider, AppThemeProvider } from '@/providers';
 function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
   const router = useRouter();
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    router.replace(router.asPath, { query: router.query });
-  });
-
   const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
-  console.log('Defined Path', path);
-  // if (path) {
-  //   router.replace(path, { query: router.query });
-  // }
+  if (path) {
+    router.replace(path, { query: router.query });
+  }
   return (
     <AppThemeProvider>
       <AppToastProvider>
