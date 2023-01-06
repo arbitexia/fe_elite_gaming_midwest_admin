@@ -12,6 +12,7 @@ function EliteApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    console.log('window passed');
     if (typeof window.history.pushState == 'function') {
       window.history.pushState(
         null,
@@ -22,9 +23,9 @@ function EliteApp({ Component, pageProps }: AppProps) {
       window.location.hash = window.location.hash.substring(2);
     }
   });
-
+  console.log('Router Path', router.asPath);
   const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
-  console.log(path);
+  console.log('Defined Path', path);
   // if (path) {
   //   router.replace(path, { query: router.query });
   // }
