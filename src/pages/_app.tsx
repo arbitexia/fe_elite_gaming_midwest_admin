@@ -9,14 +9,16 @@ import { AppToastProvider, AppThemeProvider } from '@/providers';
 function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
   // const router = useRouter();
-  if (typeof window.history.pushState == 'function') {
-    window.history.pushState(
-      null,
-      'admin.elitegaming.rpatdev.com',
-      window.location.hash.substring(2)
-    );
-  } else {
-    window.location.hash = window.location.hash.substring(2);
+  if (window !== undefined) {
+    if (typeof window.history.pushState == 'function') {
+      window.history.pushState(
+        null,
+        'admin.elitegaming.rpatdev.com',
+        window.location.hash.substring(2)
+      );
+    } else {
+      window.location.hash = window.location.hash.substring(2);
+    }
   }
   // const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
   // if (path) {
