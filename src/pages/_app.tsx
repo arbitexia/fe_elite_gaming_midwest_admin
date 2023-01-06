@@ -10,22 +10,10 @@ import { AppToastProvider, AppThemeProvider } from '@/providers';
 function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
   const router = useRouter();
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    console.log('window passed');
-    if (typeof window.history.pushState == 'function') {
-      window.history.pushState(
-        null,
-        'admin.elitegaming.rpatdev.com',
-        window.location.hash.substring(2)
-      );
-    } else {
-      window.location.hash = window.location.hash.substring(2);
-    }
-  });
-  console.log('Router Path', router.asPath);
-  const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
-  console.log('Defined Path', path);
+  // console.log('Router Path', router.asPath);
+  router.replace(router.asPath, { query: router.query });
+  // const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
+  // console.log('Defined Path', path);
   // if (path) {
   //   router.replace(path, { query: router.query });
   // }
