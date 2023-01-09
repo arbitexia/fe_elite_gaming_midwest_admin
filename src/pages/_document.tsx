@@ -18,7 +18,7 @@ export default function Document() {
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/icons/logo.svg" />
       </Head>
       <body>
         <Main />
