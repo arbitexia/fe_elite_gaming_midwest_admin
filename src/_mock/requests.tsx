@@ -6,7 +6,7 @@ export const requestsData: RequestItemType[] = [
     item: {
       id: 6,
       name: 'Marshal V6',
-      urls: ['/images/marshal.jpg'],
+      urls: ['images/marshal.jpg'],
       location: {
         name: 'Palm Casino Resort',
         coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -22,10 +22,10 @@ export const requestsData: RequestItemType[] = [
         status: true,
         type: 'Palm',
         urls: [
-          '/images/palm.png',
-          '/images/roulette.png',
-          '/images/palm.png',
-          '/images/roulette.png',
+          'images/palm.png',
+          'images/roulette.png',
+          'images/palm.png',
+          'images/roulette.png',
         ],
       },
       point: 39000,
@@ -40,13 +40,13 @@ export const requestsData: RequestItemType[] = [
       firstName: 'Esthera',
       lastName: 'Jackson',
       email: 'alecthompson@mail.com',
-      phonenumber: '+14898903328',
+      phone: '+14898903328',
       birthday: '14/06/1991',
       role: 4,
       status: 1,
       createdAt: '17/09/2021',
       asset: '',
-      location: {
+      address: {
         address1: '96607 Claire Square Suite',
         address2: 'St. Louis Park, HI',
         city: 'New York',
@@ -84,7 +84,7 @@ export const requestsData: RequestItemType[] = [
     item: {
       id: 2,
       name: 'Marshal V6',
-      urls: ['/images/marshal.jpg'],
+      urls: ['images/marshal.jpg'],
       location: {
         name: 'Palm Casino Resort',
         coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -100,10 +100,10 @@ export const requestsData: RequestItemType[] = [
         status: true,
         type: 'Palm',
         urls: [
-          '/images/palm.png',
-          '/images/roulette.png',
-          '/images/palm.png',
-          '/images/roulette.png',
+          'images/palm.png',
+          'images/roulette.png',
+          'images/palm.png',
+          'images/roulette.png',
         ],
       },
       point: 19000,
@@ -118,13 +118,13 @@ export const requestsData: RequestItemType[] = [
       firstName: 'Alexa',
       lastName: 'Liras',
       email: 'alexa@gmail.com',
-      phonenumber: '+14898903328',
+      phone: '+14898903328',
       birthday: '12/06/1971',
       role: 4,
       status: 1,
       createdAt: '16/09/2021',
       asset: '',
-      location: {
+      address: {
         address1: '96607 Claire Square Suite',
         address2: 'St. Louis Park, HI',
         city: 'New York',

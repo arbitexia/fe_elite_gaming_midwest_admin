@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Table, TableHead, TableBody, Typography, Button } from '@mui/material';
+import {
+  Table,
+  TableHead,
+  TableBody,
+  Typography,
+  Button,
+  TableSortLabel,
+} from '@mui/material';
 import { UIChip, UIFlexColumnBox, UIFlexWrapBox } from '@/components/UI';
 import { StyledRequestTableRow, StyledRequestTableCell } from './ui';
 import { getColor } from '@/libs/data-helper';
@@ -16,6 +23,90 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
   const router = useRouter();
   const showToast = useAppToast();
   const [isActions, setActions] = useState<'accept' | 'decline'>();
+  type Order = 'asc' | 'desc';
+  const [order, setOrder] = useState<Order>('asc');
+  const [orderBy, setOrderBy] = useState<keyof RequestItemType>('id');
+
+  function stableSort<T>(
+    array: readonly T[],
+    comparator: (a: T, b: T) => number
+  ) {
+    const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) {
+        return order;
+      }
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+  }
+
+  function getComparator<Key extends keyof RequestItemType>(
+    order: Order,
+    orderBy: Key
+  ): (a: RequestItemType, b: RequestItemType) => number {
+    return order === 'desc'
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  }
+
+  function descendingComparator(
+    a: RequestItemType,
+    b: RequestItemType,
+    orderBy: keyof RequestItemType
+  ) {
+    if (orderBy === 'user') {
+      if (
+        `${b.user.firstName} ${b.user.lastName}` <
+        `${a.user.firstName} ${a.user.lastName}`
+      ) {
+        return -1;
+      }
+      if (
+        `${b.user.firstName} ${b.user.lastName}` >
+        `${a.user.firstName} ${a.user.lastName}`
+      ) {
+        return 1;
+      }
+    }
+    if (orderBy === 'location') {
+      if (b.location.name < a.location.name) {
+        return -1;
+      }
+      if (b.location.name > a.location.name) {
+        return 1;
+      }
+    }
+    if (orderBy === 'item') {
+      if (b.item.name < a.item.name) {
+        return -1;
+      }
+      if (b.item.name > a.item.name) {
+        return 1;
+      }
+    }
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  const createSortHandler =
+    (property: keyof RequestItemType) => (event: React.MouseEvent<unknown>) => {
+      handleRequestSort(event, property);
+    };
+  const handleRequestSort = (
+    event: React.MouseEvent<unknown>,
+    property: keyof RequestItemType
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
 
   const renderItem = (items: any) => {
     return Object.keys(items).map((key, index) => {
@@ -89,19 +180,70 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
       <Table>
         <TableHead>
           <StyledRequestTableRow>
-            <StyledRequestTableCell>ID</StyledRequestTableCell>
-            <StyledRequestTableCell>Info</StyledRequestTableCell>
-            <StyledRequestTableCell>Requested at</StyledRequestTableCell>
-            <StyledRequestTableCell>User</StyledRequestTableCell>
-            <StyledRequestTableCell>Location</StyledRequestTableCell>
-            <StyledRequestTableCell>Statue</StyledRequestTableCell>
+            <StyledRequestTableCell>
+              <TableSortLabel
+                active={orderBy === 'id'}
+                direction={order}
+                onClick={createSortHandler('id')}
+              >
+                ID
+              </TableSortLabel>
+            </StyledRequestTableCell>
+            <StyledRequestTableCell>
+              <TableSortLabel
+                active={orderBy === 'item'}
+                direction={order}
+                onClick={createSortHandler('item')}
+              >
+                Info
+              </TableSortLabel>
+            </StyledRequestTableCell>
+            <StyledRequestTableCell>
+              <TableSortLabel
+                active={orderBy === 'requestedAt'}
+                direction={order}
+                onClick={createSortHandler('requestedAt')}
+              >
+                Requested at
+              </TableSortLabel>
+            </StyledRequestTableCell>
+            <StyledRequestTableCell>
+              <TableSortLabel
+                active={orderBy === 'user'}
+                direction={order}
+                onClick={createSortHandler('user')}
+              >
+                User
+              </TableSortLabel>
+            </StyledRequestTableCell>
+            <StyledRequestTableCell>
+              <TableSortLabel
+                active={orderBy === 'location'}
+                direction={order}
+                onClick={createSortHandler('location')}
+              >
+                Location
+              </TableSortLabel>
+            </StyledRequestTableCell>
+            <StyledRequestTableCell>
+              <TableSortLabel
+                active={orderBy === 'status'}
+                direction={order}
+                onClick={createSortHandler('status')}
+              >
+                Status
+              </TableSortLabel>
+            </StyledRequestTableCell>
             <StyledRequestTableCell></StyledRequestTableCell>
           </StyledRequestTableRow>
         </TableHead>
         <TableBody>
           {requestsData &&
             requestsData.length > 0 &&
-            requestsData.map((request, index) => {
+            stableSort<RequestItemType>(
+              requestsData,
+              getComparator(order, orderBy)
+            ).map((request, index) => {
               return (
                 <StyledRequestTableRow key={`request-${index}`}>
                   <StyledRequestTableCell>#{request.id}</StyledRequestTableCell>

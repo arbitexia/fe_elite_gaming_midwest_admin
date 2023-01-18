@@ -12,38 +12,44 @@ import { StyledSelectMenuItem } from './ui';
 import { useRouter } from 'next/router';
 
 interface UsersListHeaderProps {
+  onSearch: () => void;
   searchValue: string;
-  searchStatus: number;
-  onValueChange: (value: string) => void;
-  onStatusChange: (value: number) => void;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  searchStatus: string;
+  setSearchStatus: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const UsersListHeader = ({
+  onSearch,
   searchValue,
+  setSearchValue,
   searchStatus,
-  onValueChange,
-  onStatusChange,
+  setSearchStatus,
 }: UsersListHeaderProps) => {
   const router = useRouter();
   const { slug } = router.query;
-  const title = slug as string;
+  let title = slug as string;
+  if (title === 'admins') title = 'Administrators';
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.keyCode == 13) onSearch();
+  };
 
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);
   };
 
   return (
-    <UIFlexSpaceBox sx={{ mt: '35px' }}>
+    <UIFlexSpaceBox>
       <Typography
         sx={{
-          ml: '30px',
           fontWeight: 600,
           fontSize: 36,
           lineHeight: '54px',
           color: '#89C8C6',
         }}
       >
-        All {title.charAt(0).toUpperCase() + title.slice(1)}
+        {title && `${title.charAt(0).toUpperCase() + title.slice(1)}`}
       </Typography>
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
         <UIFlexCenterBox>
@@ -54,9 +60,10 @@ const UsersListHeader = ({
             size="small"
             select
             value={searchStatus}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              onStatusChange(parseInt(e.target.value))
-            }
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setSearchStatus(e.target.value);
+              onSearch();
+            }}
             sx={{
               width: '160px',
               '.MuiInputBase-input': {
@@ -67,6 +74,9 @@ const UsersListHeader = ({
               },
             }}
           >
+            <StyledSelectMenuItem key={'ALL'} value={'ALL'}>
+              ALL
+            </StyledSelectMenuItem>
             {userStatus.map((option) => (
               <StyledSelectMenuItem key={option.id} value={option.id}>
                 {option.value}
@@ -77,9 +87,16 @@ const UsersListHeader = ({
         <UIDefaultTextField
           placeholder="Search"
           size="small"
-          sx={{ width: '160px', input: { color: '#b7b7b7' } }}
+          sx={{
+            input: { color: '#b7b7b7' },
+            '.MuiOutlinedInput-root': { width: '160px' },
+            '.Mui-focused': { width: '250px' },
+          }}
           value={searchValue}
-          onChange={(e) => onValueChange(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setSearchValue(e.target.value);
+          }}
+          onKeyDown={onKeyDown}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

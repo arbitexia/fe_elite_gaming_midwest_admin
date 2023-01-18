@@ -4,7 +4,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 1,
     name: 'AirPods 2',
-    urls: ['/images/earphone.jpg'],
+    urls: ['images/earphone.jpg'],
     location: {
       name: 'Palm Casino Resort',
       coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -20,10 +20,10 @@ export const rewardsData: RewardItemType[] = [
       status: true,
       type: 'Palm',
       urls: [
-        '/images/palm.png',
-        '/images/roulette.png',
-        '/images/palm.png',
-        '/images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
       ],
     },
     point: 12000,
@@ -36,7 +36,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 2,
     name: 'Marshal V6',
-    urls: ['/images/marshal.jpg'],
+    urls: ['images/marshal.jpg'],
     location: {
       name: 'Palm Casino Resort',
       coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -52,10 +52,10 @@ export const rewardsData: RewardItemType[] = [
       status: true,
       type: 'Palm',
       urls: [
-        '/images/palm.png',
-        '/images/roulette.png',
-        '/images/palm.png',
-        '/images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
       ],
     },
     point: 19000,
@@ -68,7 +68,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 3,
     name: 'AppleWatch 8',
-    urls: ['/images/iwatch.jpg'],
+    urls: ['images/iwatch.jpg'],
     location: {
       name: 'Palm Casino Resort',
       coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -84,10 +84,10 @@ export const rewardsData: RewardItemType[] = [
       status: true,
       type: 'Palm',
       urls: [
-        '/images/palm.png',
-        '/images/roulette.png',
-        '/images/palm.png',
-        '/images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
       ],
     },
     point: 23000,
@@ -100,7 +100,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 4,
     name: 'iPhone 14 pro',
-    urls: ['/images/iphone.jpg'],
+    urls: ['images/iphone.jpg'],
     location: {
       name: 'Palm Casino Resort',
       coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -116,10 +116,10 @@ export const rewardsData: RewardItemType[] = [
       status: true,
       type: 'Palm',
       urls: [
-        '/images/palm.png',
-        '/images/roulette.png',
-        '/images/palm.png',
-        '/images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
       ],
     },
     point: 30000,
@@ -132,7 +132,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 5,
     name: 'AirPods 2',
-    urls: ['/images/earphone.jpg'],
+    urls: ['images/earphone.jpg'],
     location: {
       name: 'Palm Casino Resort',
       coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -148,10 +148,10 @@ export const rewardsData: RewardItemType[] = [
       status: true,
       type: 'Palm',
       urls: [
-        '/images/palm.png',
-        '/images/roulette.png',
-        '/images/palm.png',
-        '/images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
       ],
     },
     point: 32000,
@@ -164,7 +164,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 6,
     name: 'Marshal V6',
-    urls: ['/images/marshal.jpg'],
+    urls: ['images/marshal.jpg'],
     location: {
       name: 'Palm Casino Resort',
       coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -180,10 +180,10 @@ export const rewardsData: RewardItemType[] = [
       status: true,
       type: 'Palm',
       urls: [
-        '/images/palm.png',
-        '/images/roulette.png',
-        '/images/palm.png',
-        '/images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
       ],
     },
     point: 39000,
@@ -196,7 +196,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 7,
     name: 'AppleWatch 8',
-    urls: ['/images/iwatch.jpg'],
+    urls: ['images/iwatch.jpg'],
     location: {
       name: 'Palm Casino Resort',
       coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -212,10 +212,10 @@ export const rewardsData: RewardItemType[] = [
       status: true,
       type: 'Palm',
       urls: [
-        '/images/palm.png',
-        '/images/roulette.png',
-        '/images/palm.png',
-        '/images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
       ],
     },
     point: 43000,
@@ -228,7 +228,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 8,
     name: 'iPhone 14 pro',
-    urls: ['/images/iphone.jpg'],
+    urls: ['images/iphone.jpg'],
     location: {
       name: 'Palm Casino Resort',
       coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -244,10 +244,10 @@ export const rewardsData: RewardItemType[] = [
       status: true,
       type: 'Palm',
       urls: [
-        '/images/palm.png',
-        '/images/roulette.png',
-        '/images/palm.png',
-        '/images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
       ],
     },
     point: 50000,
@@ -260,7 +260,7 @@ export const rewardsData: RewardItemType[] = [
   {
     id: 9,
     name: 'iPhone 14 pro',
-    urls: ['/images/iphone.jpg'],
+    urls: ['images/iphone.jpg'],
     location: {
       name: 'Palm Casino Resort',
       coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -276,10 +276,10 @@ export const rewardsData: RewardItemType[] = [
       status: true,
       type: 'Palm',
       urls: [
-        '/images/palm.png',
-        '/images/roulette.png',
-        '/images/palm.png',
-        '/images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
       ],
     },
     point: 60000,

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { UIContainer, UIFlexWrapBox } from '@/components/UI';
+import { UIFlexWrapBox } from '@/components/UI';
 import { LocationsHeader, LocationsCard } from '@/modules/Locations';
 import { DashboardLayout } from '@/layouts';
 import { locationsData } from '@/_mock/locations';
@@ -18,17 +18,15 @@ const LocationsPage = () => {
   }, [searchValue]);
   return (
     <DashboardLayout title="Locations">
-      <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
-        <LocationsHeader
-          searchValue={searchValue}
-          onValueChange={(value) => setSearchValue(value)}
-        />
-        <UIFlexWrapBox sx={{ gap: '26px', py: '60px' }}>
-          {locationList.map((item) => {
-            return <LocationsCard key={item.id} item={item} />;
-          })}
-        </UIFlexWrapBox>
-      </UIContainer>
+      <LocationsHeader
+        searchValue={searchValue}
+        onValueChange={(value) => setSearchValue(value)}
+      />
+      <UIFlexWrapBox sx={{ gap: '26px', py: '40px' }}>
+        {locationList.map((item) => {
+          return <LocationsCard key={item.id} item={item} />;
+        })}
+      </UIFlexWrapBox>
     </DashboardLayout>
   );
 };

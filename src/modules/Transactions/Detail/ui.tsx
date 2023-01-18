@@ -9,10 +9,10 @@ import {
 import { styled } from '@mui/system';
 
 export const StyledOrderModalHeading = styled(Typography)({
-  color: '#222B35',
-  fontWeight: 700,
-  fontSize: '24px',
-  letterSpacing: '0.1px',
+  fontWeight: 600,
+  fontSize: 24,
+  lineHeight: '17px',
+  color: '#06251F',
 });
 
 export const StyledDetailBox = styled(Box)({

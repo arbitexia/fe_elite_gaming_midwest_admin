@@ -1,4 +1,4 @@
-import { LocationType } from './Location';
+import { LocationType } from './location.type';
 
 export interface RewardsDetailProps {
   rewardsItem: RewardItemType;

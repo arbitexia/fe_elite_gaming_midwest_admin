@@ -1,27 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Stack } from '@mui/material';
 import { UserDetailInfoEditCard } from '@/modules/Users';
 import { DashboardLayout } from '@/layouts';
-import { UserType } from '@/types';
-import { usersTableData } from '@/_mock/users';
+import { useUser } from '@/hooks';
 
 const UsersDetailPage = () => {
   const router = useRouter();
-  const [userData, setUserData] = useState<UserType | null>(null);
+  const { currentUser, currentId, onUserSelect } = useUser();
   const { id } = router.query;
 
   useEffect(() => {
-    usersTableData.forEach((item) => {
-      if (item.id === parseInt(id as string)) setUserData(item);
-    });
-  }, [userData, id]);
+    onUserSelect(parseInt(id as string));
+  }, [id]);
 
   return (
     <DashboardLayout title="Users">
-      {userData && (
+      {currentId === parseInt(id as string) && currentUser && (
         <Stack direction="column" spacing={2.5} paddingTop={4}>
-          <UserDetailInfoEditCard user={userData} />
+          <UserDetailInfoEditCard user={currentUser} />
         </Stack>
       )}
     </DashboardLayout>

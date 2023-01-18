@@ -1,4 +1,4 @@
-import { TransactionType } from '@/types/Transactions';
+import { TransactionType } from '@/types/transactions.type';
 
 export const transactionData: TransactionType[] = [
   {
@@ -8,13 +8,13 @@ export const transactionData: TransactionType[] = [
       firstName: 'Alexa',
       lastName: 'Liras',
       email: 'alexa@gmail.com',
-      phonenumber: '+14898903328',
+      phone: '+14898903328',
       birthday: '12/06/1971',
       role: 4,
       status: 1,
       createdAt: '16/09/2021',
       asset: '',
-      location: {
+      address: {
         address1: '96607 Claire Square Suite',
         address2: 'St. Louis Park, HI',
         city: 'New York',
@@ -38,16 +38,16 @@ export const transactionData: TransactionType[] = [
       status: true,
       type: 'Palm',
       urls: [
-        '/images/palm.png',
-        '/images/roulette.png',
-        '/images/palm.png',
-        '/images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
+        'images/palm.png',
+        'images/roulette.png',
       ],
     },
     reward: {
       id: 1,
       name: 'AirPods 2',
-      urls: ['/images/earphone.jpg'],
+      urls: ['images/earphone.jpg'],
       location: {
         name: 'Palm Casino Resort',
         coordinates: { lat: 40.7127837, lng: -74.0059413 },
@@ -63,10 +63,10 @@ export const transactionData: TransactionType[] = [
         status: true,
         type: 'Palm',
         urls: [
-          '/images/palm.png',
-          '/images/roulette.png',
-          '/images/palm.png',
-          '/images/roulette.png',
+          'images/palm.png',
+          'images/roulette.png',
+          'images/palm.png',
+          'images/roulette.png',
         ],
       },
       point: 12000,
@@ -81,13 +81,13 @@ export const transactionData: TransactionType[] = [
       firstName: 'Esthera',
       lastName: 'Jackson',
       email: 'alecthompson@mail.com',
-      phonenumber: '+14898903328',
+      phone: '+14898903328',
       birthday: '14/06/1991',
       role: 2,
       status: 1,
       createdAt: '17/09/2021',
       asset: '',
-      location: {
+      address: {
         address1: '96607 Claire Square Suite',
         address2: 'St. Louis Park, HI',
         city: 'New York',

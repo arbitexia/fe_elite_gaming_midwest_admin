@@ -23,10 +23,9 @@ const TransactionsListHeader = ({
   onTypeChange,
 }: TransactionsListHeaderProps) => {
   return (
-    <UIFlexSpaceBox sx={{ mt: '35px' }}>
+    <UIFlexSpaceBox>
       <Typography
         sx={{
-          ml: '30px',
           fontWeight: 600,
           fontSize: 36,
           lineHeight: '54px',
@@ -48,7 +47,8 @@ const TransactionsListHeader = ({
               onTypeChange(parseInt(e.target.value))
             }
             sx={{
-              width: '160px',
+              '.MuiOutlinedInput-root': { width: '160px' },
+              '.Mui-focused': { width: '250px' },
               '.MuiInputBase-input': {
                 fontWeight: 600,
                 fontSize: 14,

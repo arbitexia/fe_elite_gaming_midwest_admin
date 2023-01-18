@@ -1,12 +1,10 @@
 import { Box, Typography, Stack } from '@mui/material';
-import { Edit as EditIcon, Replay as ReplayIcon } from '@mui/icons-material';
+import { Replay as ReplayIcon } from '@mui/icons-material';
 import { UIActionButton, UIDefaultButton } from '@/components/UI';
-import { useRouter } from 'next/router';
 
 const ProfileHeader = () => {
-  const router = useRouter();
   return (
-    <Box sx={{ mt: '35px', mb: '20px' }}>
+    <Box sx={{ mb: '20px' }}>
       <Typography
         sx={{
           fontWeight: '600',

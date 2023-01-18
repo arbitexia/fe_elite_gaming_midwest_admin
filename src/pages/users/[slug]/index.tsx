@@ -6,42 +6,57 @@ import {
   UsersListTable,
 } from '@/modules/Users';
 import { DashboardLayout } from '@/layouts';
-import { usersTableData, slugIndex } from '@/_mock/users';
+import { slugIndex } from '@/_mock/users';
 import { UserType } from '@/types';
 import { useRouter } from 'next/router';
+import { useUser } from '@/hooks';
 
 const UsersListPage = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const [userList, setUserList] = useState<UserType[]>([]);
+  const { users, pageInfo, onGetUsers } = useUser();
+  const [userList, setUserList] = useState<UserType.User[]>([]);
   const [searchValue, setSearchValue] = useState('');
-  const [searchStatus, setSearchStatus] = useState(0);
+  const [searchStatus, setSearchStatus] = useState('ALL');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
-    setUserList(() => {
-      return usersTableData.filter((item) => {
-        const name = `${item.firstName} ${item.lastName}`;
-        return (
-          (name.toLowerCase().includes(searchValue.toLowerCase()) ||
-            item.phonenumber.includes(searchValue) ||
-            item.email.toLowerCase().includes(searchValue.toLowerCase())) &&
-          (searchStatus === 0 || item.status === searchStatus) &&
-          item.role === slugIndex[slug as keyof typeof slugIndex]
-        );
-      });
+    setUserList(users);
+  }, [users]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchStatus, page, rowsPerPage, slug]);
+
+  const handleSearch = () => {
+    onGetUsers({
+      filterBy: {
+        type: slugIndex[slug as keyof typeof slugIndex],
+        status: searchStatus,
+        search: searchValue,
+      },
+      cursor: { page: page, size: rowsPerPage },
     });
-  }, [searchValue, searchStatus, slug]);
+  };
   return (
     <DashboardLayout title="Users">
       <UsersListHeader
+        onSearch={handleSearch}
         searchValue={searchValue}
         searchStatus={searchStatus}
-        onValueChange={(value) => setSearchValue(value)}
-        onStatusChange={(value) => setSearchStatus(value)}
+        setSearchValue={setSearchValue}
+        setSearchStatus={setSearchStatus}
       />
       <Divider sx={{ mt: '30px' }} />
       <UsersListTable usersTableData={userList} />
-      <UsersListPagination />
+      <UsersListPagination
+        page={page}
+        rowsPerPage={rowsPerPage}
+        total={pageInfo?.total ?? 0}
+        setPage={setPage}
+        setRowsPerPage={setRowsPerPage}
+      />
     </DashboardLayout>
   );
 };

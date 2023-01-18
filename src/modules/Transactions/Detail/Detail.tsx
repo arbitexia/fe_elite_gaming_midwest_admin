@@ -1,6 +1,6 @@
-import { Box, Grid, Tooltip, Typography, IconButton } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { Print } from '@mui/icons-material';
-import { UIContainer, UIImage } from '@/components/UI';
+import { UIFlexSpaceBox, UIActionButton, UIImage } from '@/components/UI';
 import {
   StyledDetailBox,
   StyledDetailBoxHeader,
@@ -9,40 +9,33 @@ import {
   StyledLabel,
   StyledStatusCol,
   StyledOrderModalHeading,
-  StyledDetailHeader,
-  StyledTooltipBox,
 } from './ui';
 import { TransactionsProps } from '@/types';
 import DetailTable from './DetailTable';
 import { format } from 'date-fns';
+import { useAppToast } from '@/providers';
 
 const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
+  const appToast = useAppToast();
   return (
-    <UIContainer maxWidth="xl">
-      <StyledOrderModalHeading sx={{ mt: '35px' }}>
-        Transactions #{transactionItem.id} Details
-      </StyledOrderModalHeading>
-
-      <StyledDetailHeader
-        component="div"
-        sx={{ py: 2, justifyContent: 'flex-end' }}
-      >
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <StyledTooltipBox component="div">
-            <Tooltip title={'Print'}>
-              <IconButton disableRipple>
-                <Print sx={{ color: '#667180', fontSize: '13px' }} />
-              </IconButton>
-            </Tooltip>
-            <Typography
-              sx={{ color: '#667180', fontSize: '13px', fontWeight: 700 }}
-            >
-              Print
-            </Typography>
-          </StyledTooltipBox>
-        </Box>
-      </StyledDetailHeader>
-
+    <Box>
+      <UIFlexSpaceBox sx={{ mb: '30px', mt: 4 }}>
+        <StyledOrderModalHeading>
+          Transactions #{transactionItem.id} Details
+        </StyledOrderModalHeading>
+        <UIActionButton
+          icon={<Print />}
+          color="#667180"
+          title="Print"
+          handleClick={() => {
+            console.log('Toast');
+            appToast({
+              severity: 'success',
+              message: 'Print',
+            });
+          }}
+        />
+      </UIFlexSpaceBox>
       <StyledDetailBox component="div">
         <StyledDetailBoxHeader component="div">
           <UIImage src={'images/icons/logo.svg'} width={150} height={150} />
@@ -61,10 +54,10 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
                 transactionItem.user.lastName ?? '-'
               }`}</Typography>
               <Typography>
-                {transactionItem?.user?.location?.address1 ?? '-'}
+                {transactionItem?.user?.address?.address1 ?? '-'}
               </Typography>
               <Typography>
-                Phone: {transactionItem?.user?.phonenumber ?? '-'}
+                Phone: {transactionItem?.user?.phone ?? '-'}
               </Typography>
 
               <Box component="div">
@@ -85,7 +78,7 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
                 transactionItem.assignee.lastName ?? '-'
               }`}</Typography>
               <Typography>
-                {transactionItem?.assignee?.location?.address1 ?? '-'}
+                {transactionItem?.assignee?.address?.address1 ?? '-'}
               </Typography>
               <Typography>
                 Email: {transactionItem?.assignee?.email ?? '-'}
@@ -107,7 +100,7 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
           </Grid>
         </StyledDetailGrid>
       </StyledDetailBox>
-    </UIContainer>
+    </Box>
   );
 };
 export default TransactionDetail;

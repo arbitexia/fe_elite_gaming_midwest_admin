@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import {
   Box,
@@ -40,7 +41,13 @@ export const LoginSchema = yup.object({
 });
 
 const LoginPage = () => {
-  const { onLogin } = useAuth();
+  const router = useRouter();
+
+  const { onLogin } = useAuth({
+    handleAuthUserSuccess: () => {
+      router.push('/users/customers');
+    },
+  });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const loading = false;
   const formik = useFormik({
@@ -50,9 +57,7 @@ const LoginPage = () => {
     },
     validationSchema: LoginSchema,
     onSubmit: async (values: LoginValue) => {
-      console.log(values);
-      onLogin('token');
-      // await authorize({ variables: { ...values } });
+      onLogin(values.identifier, values.password);
     },
   });
 

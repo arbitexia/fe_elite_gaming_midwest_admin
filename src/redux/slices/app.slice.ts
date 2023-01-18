@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '@/redux/store';
+import { ReduxJson } from '@/types';
 import { PaletteMode } from '@mui/material';
 
 export enum ThemeMode {
@@ -7,14 +8,7 @@ export enum ThemeMode {
   DARK = `dark`,
 }
 
-type AppState = {
-  theme: {
-    mode: PaletteMode;
-    loading: boolean;
-  };
-};
-
-const initialState: AppState = {
+const initialState: ReduxJson.AppState = {
   theme: {
     mode: `light`,
     loading: false,

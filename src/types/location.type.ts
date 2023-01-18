@@ -1,10 +1,10 @@
-import { AddressType } from './Users';
+import { CommonType } from './common.type';
 
 export type LocationType = {
   name: string;
   coordinates: { lat: number; lng: number };
   id: number;
-  location: AddressType;
+  location: CommonType.Address;
   status: boolean;
   type: string;
   urls: string[];

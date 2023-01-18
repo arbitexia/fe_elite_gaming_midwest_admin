@@ -8,6 +8,7 @@ import {
   Checkbox,
   IconButton,
   Divider,
+  TableSortLabel,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import { UIChip } from '@/components/UI';
@@ -76,6 +77,61 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
   };
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
+  type Order = 'asc' | 'desc';
+  const [order, setOrder] = useState<Order>('asc');
+  const [orderBy, setOrderBy] = useState<keyof RewardItemType>('id');
+
+  function stableSort<T>(
+    array: readonly T[],
+    comparator: (a: T, b: T) => number
+  ) {
+    const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) {
+        return order;
+      }
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+  }
+
+  function getComparator<Key extends keyof RewardItemType>(
+    order: Order,
+    orderBy: Key
+  ): (a: RewardItemType, b: RewardItemType) => number {
+    return order === 'desc'
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  }
+
+  function descendingComparator(
+    a: RewardItemType,
+    b: RewardItemType,
+    orderBy: keyof RewardItemType
+  ) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  const createSortHandler =
+    (property: keyof RewardItemType) => (event: React.MouseEvent<unknown>) => {
+      handleRequestSort(event, property);
+    };
+  const handleRequestSort = (
+    event: React.MouseEvent<unknown>,
+    property: keyof RewardItemType
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
   return (
     <Table>
       <TableHead>
@@ -92,17 +148,60 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
               onChange={handleSelectAllClick}
             />
           </StyledTableCell>
-          <StyledTableCell>Id</StyledTableCell>
-          <StyledTableCell>Product</StyledTableCell>
+          <StyledTableCell>
+            <TableSortLabel
+              active={orderBy === 'id'}
+              direction={order}
+              onClick={createSortHandler('id')}
+            >
+              Id
+            </TableSortLabel>
+          </StyledTableCell>
+          <StyledTableCell>
+            <TableSortLabel
+              active={orderBy === 'name'}
+              direction={order}
+              onClick={createSortHandler('name')}
+            >
+              Product
+            </TableSortLabel>
+          </StyledTableCell>
           <StyledTableCell>Detail</StyledTableCell>
-          <StyledTableCell>Points</StyledTableCell>
-          <StyledTableCell align="center">Status</StyledTableCell>
-          <StyledTableCell align="center">Due Date</StyledTableCell>
+          <StyledTableCell>
+            <TableSortLabel
+              active={orderBy === 'point'}
+              direction={order}
+              onClick={createSortHandler('point')}
+            >
+              Points
+            </TableSortLabel>
+          </StyledTableCell>
+          <StyledTableCell align="center">
+            <TableSortLabel
+              active={orderBy === 'status'}
+              direction={order}
+              onClick={createSortHandler('status')}
+            >
+              Status
+            </TableSortLabel>
+          </StyledTableCell>
+          <StyledTableCell align="center">
+            <TableSortLabel
+              active={orderBy === 'createdAt'}
+              direction={order}
+              onClick={createSortHandler('createdAt')}
+            >
+              Due Date
+            </TableSortLabel>
+          </StyledTableCell>
           <StyledTableCell />
         </StyledTableRow>
       </TableHead>
       <TableBody>
-        {rewardsTableData.map((rewardItem) => {
+        {stableSort<RewardItemType>(
+          rewardsTableData,
+          getComparator(order, orderBy)
+        ).map((rewardItem) => {
           const isItemSelected = isSelected(rewardItem.id.toString());
           // const labelId = `enhanced-table-checkbox-${index}`;
           return (

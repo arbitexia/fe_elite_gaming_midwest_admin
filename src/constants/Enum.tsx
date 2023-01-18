@@ -1,7 +1,23 @@
 export enum UserStatus {
-  ACTIVATED = `Activated`,
-  ARCHIVED = `Archived`,
-  DISABLED = `Disabled`,
+  ACTIVATED = 'ACTIVATED',
+  DISABLED = 'DISABLED',
+  ARCHIVED = 'ARCHIVED',
+  VERIFY_PHONE = 'VERIFY_PHONE',
+  VERIFY_EMAIL = 'VERIFY_EMAIL',
+}
+
+export enum UserRole {
+  GUEST = 'GUEST',
+  CUSTOMER = 'CUSTOMER',
+  TABLET = 'TABLET',
+  ADMIN = 'ADMIN',
+  SUPER = 'SUPER',
+}
+
+export enum AssetType {
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+  DOCUMENT = 'DOCUMENT',
 }
 
 export enum RequestStatus {

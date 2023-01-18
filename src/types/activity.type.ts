@@ -8,7 +8,7 @@ import { ActivityModel, ActivityType } from '@/constants/Enum';
 
 export type ActivityItemType = {
   id: number;
-  user: UserType;
+  user: UserType.MockUser;
   model: ActivityModel;
   victim: LocationType | RewardItemType | RequestItemType;
   action: ActivityType;

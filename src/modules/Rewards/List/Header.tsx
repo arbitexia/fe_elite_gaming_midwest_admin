@@ -1,11 +1,11 @@
 import { Typography, InputAdornment, Divider } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import {
-  UIFlexSpaceBox,
   UIFlexWrapBox,
   UIDefaultTextField,
   UIFlexCenterBox,
   UIDefaultButton,
+  UIListHeader,
 } from '@/components/UI';
 import { StyledSelectMenuItem } from './ui';
 import { useRouter } from 'next/router';
@@ -30,18 +30,7 @@ const RewardsListHeader = ({
   };
 
   return (
-    <UIFlexSpaceBox sx={{ mt: '35px' }}>
-      <Typography
-        sx={{
-          ml: '30px',
-          fontWeight: 600,
-          fontSize: 36,
-          lineHeight: '54px',
-          color: '#89C8C6',
-        }}
-      >
-        Rewards List
-      </Typography>
+    <UIListHeader title="Rewards">
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
         <UIFlexCenterBox>
           <Typography sx={{ fontWeight: 500, fontSize: 14, color: '#374E4E' }}>
@@ -75,7 +64,11 @@ const RewardsListHeader = ({
         <UIDefaultTextField
           placeholder="Search"
           size="small"
-          sx={{ width: '160px', input: { color: '#b7b7b7' } }}
+          sx={{
+            '.MuiOutlinedInput-root': { width: '160px' },
+            '.Mui-focused': { width: '250px' },
+            input: { color: '#b7b7b7' },
+          }}
           value={searchValue}
           onChange={(e) => onValueChange(e.target.value)}
           InputProps={{
@@ -94,7 +87,7 @@ const RewardsListHeader = ({
           + Create
         </UIDefaultButton>
       </UIFlexWrapBox>
-    </UIFlexSpaceBox>
+    </UIListHeader>
   );
 };
 

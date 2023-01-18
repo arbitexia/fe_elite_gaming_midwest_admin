@@ -7,13 +7,12 @@ export const menuActions = [
   { label: 'Delete', color: 'rgba(251, 2, 2, 0.6)', action: MenuAction.DELETE },
 ];
 
-export const initUserData: UserType = {
+export const initUserData: UserType.User = {
   id: 0,
   firstName: '',
   lastName: '',
   email: '',
-  asset: '',
-  location: {
+  address: {
     address1: '',
     address2: '',
     city: '',
@@ -21,25 +20,23 @@ export const initUserData: UserType = {
     zipcode: '',
     country: '',
   },
-  phonenumber: '',
+  phone: '',
   birthday: '',
-  role: 1,
-  status: 1,
   createdAt: '',
 };
 
-export const profileData: UserType = {
+export const profileData: UserType.MockUser = {
   id: 1,
   firstName: 'Esthera',
   lastName: 'Jackson',
   email: 'alecthompson@mail.com',
-  phonenumber: '+14898903328',
+  phone: '+14898903328',
   birthday: '14/06/1991',
   role: 2,
   status: 1,
   createdAt: '17/09/2021',
   asset: '',
-  location: {
+  address: {
     address1: '96607 Claire Square Suite',
     address2: 'St. Louis Park, HI',
     city: 'New York',
@@ -49,19 +46,19 @@ export const profileData: UserType = {
   },
 };
 
-export const usersTableData: UserType[] = [
+export const usersTableData: UserType.MockUser[] = [
   {
     id: 1,
     firstName: 'Esthera',
     lastName: 'Jackson',
     email: 'alecthompson@mail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '14/06/1991',
     role: 2,
     status: 1,
     createdAt: '17/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -75,13 +72,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Alexa',
     lastName: 'Liras',
     email: 'alexa@gmail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '12/06/1971',
     role: 4,
     status: 1,
     createdAt: '16/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -95,13 +92,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Laurent',
     lastName: 'Michael',
     email: 'laurentamachael@gmail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '11/06/1999',
     role: 4,
     status: 1,
     createdAt: '15/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -115,13 +112,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Esthera',
     lastName: 'Jackson',
     email: 'alecthompson@mail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '14/06/1991',
     role: 4,
     status: 2,
     createdAt: '17/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -135,13 +132,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Alexa',
     lastName: 'Liras',
     email: 'alexa@gmail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '12/06/1971',
     role: 4,
     status: 2,
     createdAt: '16/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -155,13 +152,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Laurent',
     lastName: 'Michael',
     email: 'laurentamachael@gmail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '11/06/1999',
     role: 4,
     status: 3,
     createdAt: '15/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -175,13 +172,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Esthera',
     lastName: 'Jackson',
     email: 'alecthompson@mail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '14/06/1991',
     role: 4,
     status: 3,
     createdAt: '17/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -195,13 +192,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Alexa',
     lastName: 'Liras',
     email: 'alexa@gmail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '12/06/1971',
     role: 4,
     status: 1,
     createdAt: '16/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -215,13 +212,13 @@ export const usersTableData: UserType[] = [
     firstName: 'Laurent',
     lastName: 'Michael',
     email: 'laurentamachael@gmail.com',
-    phonenumber: '+14898903328',
+    phone: '+14898903328',
     birthday: '11/06/1999',
     role: 4,
     status: 4,
     createdAt: '15/09/2021',
     asset: '',
-    location: {
+    address: {
       address1: '96607 Claire Square Suite',
       address2: 'St. Louis Park, HI',
       city: 'New York',
@@ -358,23 +355,16 @@ export const guestActivityData: GuestActivityDataType[] = [
   },
 ];
 
-export const userRole = [
-  { id: 1, value: 'Super Admin' },
-  { id: 2, value: 'Administrator' },
-  { id: 3, value: 'Tablet' },
-  { id: 4, value: 'Customer' },
-];
-
 export const slugIndex = {
-  admins: 2,
-  tablets: 3,
-  customers: 4,
+  admins: '2',
+  tablets: '3',
+  customers: '4',
 };
 
 export const userStatus = [
-  { id: 0, value: 'All' },
-  { id: 1, value: 'Activated' },
-  { id: 2, value: 'Archived' },
-  { id: 3, value: 'Disabled' },
-  { id: 4, value: 'Pending' },
+  { id: 'ACTIVATED', value: 'Activated' },
+  { id: 'ARCHIVED', value: 'Archived' },
+  { id: 'DISABLED', value: 'Disabled' },
+  { id: 'VERIFY_EMAIL', value: 'Verify Email' },
+  { id: 'VERIFY_PHONE', value: 'Verify Phone' },
 ];

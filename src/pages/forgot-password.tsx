@@ -5,7 +5,7 @@ import {
   InputAdornment,
   CircularProgress,
 } from '@mui/material';
-import { PersonOutline as PersonOutlineIcon } from '@mui/icons-material';
+import { Email as EmailIcon } from '@mui/icons-material';
 import {
   UIAuthCardWrapper,
   UIImage,
@@ -22,11 +22,11 @@ type LoginValue = {
 };
 
 export const ForgotPasswordSchema = yup.object({
-  identifier: yup.string().required('Username is required'),
+  identifier: yup.string().email().required('Email is required'),
 });
 
 const ForgotPassword = () => {
-  const { onLogin } = useAuth();
+  const { onForgotPassword } = useAuth();
   const loading = false;
   const formik = useFormik({
     initialValues: {
@@ -35,9 +35,7 @@ const ForgotPassword = () => {
     },
     validationSchema: ForgotPasswordSchema,
     onSubmit: async (values: LoginValue) => {
-      console.log(values);
-      onLogin('token');
-      // await authorize({ variables: { ...values } });
+      onForgotPassword(values.identifier);
     },
   });
 
@@ -99,7 +97,7 @@ const ForgotPassword = () => {
           <UIAuthTextField
             fullWidth
             size="small"
-            placeholder="Username"
+            placeholder="Email"
             id="identifier"
             name="identifier"
             value={formik.values.identifier}
@@ -111,7 +109,7 @@ const ForgotPassword = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <PersonOutlineIcon sx={{ color: '#83A9A8' }} />
+                  <EmailIcon sx={{ color: '#83A9A8' }} />
                 </InputAdornment>
               ),
             }}

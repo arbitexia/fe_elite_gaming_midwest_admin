@@ -13,7 +13,7 @@ interface Props {
 
 const AppLayout = (props: Props) => {
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth({});
   useEffect(() => {
     if (!isAuthenticated) router.push('/login');
   });
@@ -28,6 +28,7 @@ const AppLayout = (props: Props) => {
               gap: 0,
               minWidth: `calc(100% - 220px)`,
               minHeight: '100vh',
+              overflow: 'hidden',
               overflowY: 'auto',
               [theme.breakpoints.down('md')]: {
                 width: '100%',

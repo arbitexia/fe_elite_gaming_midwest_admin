@@ -11,24 +11,23 @@ import {
   StyledUserInfoCardStatus,
 } from './ui';
 import { getColor } from '@/libs/data-helper';
-import { userStatus, userRole } from '@/_mock/users';
 import UsersDetailHeader from './Header';
 
 interface UsersDetailHeaderProps {
-  user: UserType;
+  user: UserType.User;
 }
 
 const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
   return (
     <Box>
       <UsersDetailHeader user={user} />
-      <StyledUserInfoCard sx={{ height: '360px' }}>
+      <StyledUserInfoCard>
         <StyledUserInfoCardHeader />
         <StyledUserInfoCardContent>
           <StyledUserInfoCardStatus>
             <UIChip
-              label={userStatus[user.status].value}
-              color={getColor(userStatus[user.status].value)}
+              label={user.status}
+              color={getColor(user.status ?? 'Archived')}
             />
             <Typography
               sx={{
@@ -41,7 +40,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
               ID #{user.id}
             </Typography>
           </StyledUserInfoCardStatus>
-          <StyledUserInfoAvatar src={user.asset} alt="avatar" />
+          <StyledUserInfoAvatar src={user.avatar?.url} alt="avatar" />
           <Box flexGrow="1">
             <Typography
               sx={{
@@ -52,36 +51,34 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                 color: '#222B35',
               }}
             >
-              {`${user.firstName} ${user.lastName}`}
+              {user.fullName}
             </Typography>
             <Divider />
             <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>
-                <UIFlexWrapBox>
+                <Stack direction="row">
                   <StyledUserInfoTitle>Phonenumber:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{user.phonenumber}</StyledUserInfoValue>
-                </UIFlexWrapBox>
-                <UIFlexWrapBox>
+                  <StyledUserInfoValue>{user.phone}</StyledUserInfoValue>
+                </Stack>
+                <Stack direction="row">
                   <StyledUserInfoTitle>Email:</StyledUserInfoTitle>
                   <StyledUserInfoValue>{user.email}</StyledUserInfoValue>
-                </UIFlexWrapBox>
-                <UIFlexWrapBox>
+                </Stack>
+                <Stack direction="row">
                   <StyledUserInfoTitle>Location:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{`${user.location.address1} ${user.location.address2} ${user.location.city} ${user.location.state} ${user.location.zipcode} ${user.location.country}`}</StyledUserInfoValue>
-                </UIFlexWrapBox>
+                  <StyledUserInfoValue>{`${user.address?.address1} ${user.address?.address2} ${user.address?.city} ${user.address?.state} ${user.address?.zipcode} ${user.address?.country}`}</StyledUserInfoValue>
+                </Stack>
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>
-                <UIFlexWrapBox>
+                <Stack direction="row">
                   <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
                   <StyledUserInfoValue>{user.birthday}</StyledUserInfoValue>
-                </UIFlexWrapBox>
-                <UIFlexWrapBox>
+                </Stack>
+                <Stack direction="row">
                   <StyledUserInfoTitle>User role:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>
-                    {userRole[user.role - 1].value}
-                  </StyledUserInfoValue>
-                </UIFlexWrapBox>
-                <UIFlexWrapBox>
+                  <StyledUserInfoValue>{user.role?.name}</StyledUserInfoValue>
+                </Stack>
+                <Stack direction="row">
                   <StyledUserInfoTitle sx={{ alignItems: 'flex-end' }}>
                     Coupon:
                   </StyledUserInfoTitle>
@@ -90,7 +87,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                   >
                     $11231
                   </StyledUserInfoValue>
-                </UIFlexWrapBox>
+                </Stack>
               </Stack>
             </UIFlexWrapBox>
           </Box>

@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
   const router = useRouter();
-  router.push('/users/customers');
+  router.replace('/users/customers');
   return <DashboardLayout>Dashboard</DashboardLayout>;
 };
 
