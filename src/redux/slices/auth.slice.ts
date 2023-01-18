@@ -11,7 +11,6 @@ import {
   ResetPasswordParams,
   ResetPasswordType,
   ResponseStatus,
-  RefreshTokenType,
 } from '@/types';
 
 // Initial state
@@ -79,10 +78,11 @@ export const authSlice = createSlice({
     },
     refreshToken: (
       state: ReduxJson.AuthState,
-      { payload }: PayloadAction<RefreshTokenType>
+      { payload }: PayloadAction<string>
     ) => {
-      state.accessToken = payload.accessToken;
-      localStorage.setItem('accessToken', payload.accessToken);
+      state.accessToken = payload;
+      console.log(payload);
+      localStorage.setItem('accessToken', payload);
     },
     logout: (state: ReduxJson.AuthState) => {
       state.accessToken = '';

@@ -23,13 +23,14 @@ export const setupJwt = (store: Store<unknown, AnyAction>) => {
         if (err.response.status === 401 && !originalConfig._retry) {
           originalConfig._retry = true;
           try {
-            const rs = await axios.post(`${baseUrl}/api/refreshToken`, {
+            const rs = await axios.post(`${baseUrl}/api/refresh`, {
               refreshToken: localStorage.getItem('refreshToken'),
             });
 
             const { accessToken } = rs.data;
             dispatch(refreshToken(accessToken));
 
+            originalConfig.headers['Authorization'] = `Bearer ${accessToken}`;
             return jwtAxios(originalConfig);
           } catch (_error) {
             dispatch(logout());

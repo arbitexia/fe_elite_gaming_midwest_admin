@@ -30,10 +30,8 @@ export const getHeader = () => {
 
 export const getAuthorizeHeader = () => {
   return {
-    headers: {
-      'Access-Control-Allow-Origin': config.API_URL || '',
-      'Access-Control-Allow-Methods': 'GET,POST',
-      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-    },
+    'Access-Control-Allow-Origin': config.API_URL || '',
+    'Access-Control-Allow-Methods': 'GET,POST',
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
 };
