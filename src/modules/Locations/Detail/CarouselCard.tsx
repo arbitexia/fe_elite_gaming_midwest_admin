@@ -51,35 +51,37 @@ const LocationsDetailCarouselCard = ({
             onChangeIndex={handleStepChange}
             enableMouseEvents
           >
-            {images.map((url, index) => {
-              return Math.abs(activeStep - index) <= 2 ? (
-                <Box
-                  component="img"
-                  sx={{
-                    width: '100%',
-                    height: '350px',
-                    display: 'flex',
-                  }}
-                  display={'flex'}
-                  src={`/${url}`}
-                  alt="image"
-                />
-              ) : null;
-            })}
+            {images &&
+              images.map((url, index) => {
+                return Math.abs(activeStep - index) <= 2 ? (
+                  <Box
+                    component="img"
+                    sx={{
+                      width: '100%',
+                      height: '350px',
+                      display: 'flex',
+                    }}
+                    display={'flex'}
+                    src={`/${url}`}
+                    alt="image"
+                  />
+                ) : null;
+              })}
           </AutoPlaySwipeableViews>
         </Box>
         <UIFlexSpaceBox flexDirection="column" width="100px" height="350px">
           <Box>
-            {images.map((url, index) => {
-              return (
-                <Thumbnail
-                  key={index}
-                  index={index}
-                  url={url}
-                  activeStep={activeStep}
-                />
-              );
-            })}
+            {images &&
+              images.map((url, index) => {
+                return (
+                  <Thumbnail
+                    key={index}
+                    index={index}
+                    url={url}
+                    activeStep={activeStep}
+                  />
+                );
+              })}
           </Box>
           <UIFlexSpaceBox>
             <IconButton onClick={handleBack}>

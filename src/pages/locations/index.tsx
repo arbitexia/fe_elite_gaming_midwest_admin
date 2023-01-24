@@ -2,19 +2,16 @@ import { useState, useEffect } from 'react';
 import { UIFlexWrapBox } from '@/components/UI';
 import { LocationsHeader, LocationsCard } from '@/modules/Locations';
 import { DashboardLayout } from '@/layouts';
-import { locationsData } from '@/_mock/locations';
-import { LocationType } from '@/types';
+// import { locationsData } from '@/_mock/locations';
+// import { LocationType } from '@/types';
+import { useLocation } from '@/hooks';
 
 const LocationsPage = () => {
-  const [locationList, setLocationList] = useState<LocationType[]>([]);
+  const { locations, onGetLocations } = useLocation();
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
-    setLocationList(() => {
-      return locationsData.filter((item) => {
-        return item.name.toLowerCase().includes(searchValue.toLowerCase());
-      });
-    });
+    onGetLocations({ filterBy: { search: searchValue } });
   }, [searchValue]);
   return (
     <DashboardLayout title="Locations">
@@ -23,7 +20,7 @@ const LocationsPage = () => {
         onValueChange={(value) => setSearchValue(value)}
       />
       <UIFlexWrapBox sx={{ gap: '26px', py: '40px' }}>
-        {locationList.map((item) => {
+        {locations.map((item) => {
           return <LocationsCard key={item.id} item={item} />;
         })}
       </UIFlexWrapBox>

@@ -17,7 +17,7 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
   return (
     <UIItemCard sx={{ width: 254, height: 360 }}>
       <StyledImageBox>
-        <UIImage src={item.urls[0]} width={220} height={160} />
+        <UIImage src={item.urls ? item.urls[0] : ''} width={220} height={160} />
       </StyledImageBox>
       <Typography
         sx={{
@@ -49,7 +49,9 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
           color: 'rgba(0, 0, 0, 0.3)',
         }}
       >
-        {`${item.location.address1} ${item.location.address2} ${item.location.city} ${item.location.state} ${item.location.zipcode} ${item.location.country}`}
+        {`${item.address?.address1 ?? ''} ${item.address?.address2 ?? ''} ${
+          item.address?.city ?? ''
+        } ${item.address?.state ?? ''} ${item.address?.zipcode ?? ''}`}
       </Typography>
       <UIFlexSpaceBox sx={{ marginTop: '30px' }}>
         <StyledLocationViewButton

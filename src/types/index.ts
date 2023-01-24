@@ -8,7 +8,12 @@ export type {
   DeleteUserParam,
 } from './users.type';
 export type { RewardItemType, RewardsDetailProps } from './rewards.type';
-export type { LocationType, LocationsDetailProps } from './location.type';
+export type {
+  LocationType,
+  LocationsDetailProps,
+  GetLocationsParam,
+  GetLocationParam,
+} from './location.type';
 export type { RequestItemType } from './requests.type';
 export type { TransactionType, TransactionsProps } from './transactions.type';
 export type { ActivityItemType } from './activity.type';

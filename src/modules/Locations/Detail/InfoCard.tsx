@@ -26,7 +26,10 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
       container: node,
       accessToken: accessToken,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [locationItem.coordinates.lng, locationItem.coordinates.lat],
+      center: [
+        locationItem.coordinates?.lng ?? 0,
+        locationItem.coordinates?.lat ?? 0,
+      ],
       zoom: 15,
     });
     mapboxMap.on('load', () => {
@@ -37,8 +40,8 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
       markerIcon.style.height = '25px';
       new mapboxgl.Marker(markerIcon)
         .setLngLat({
-          lng: locationItem.coordinates.lng,
-          lat: locationItem.coordinates.lat,
+          lng: locationItem.coordinates?.lng ?? 0,
+          lat: locationItem.coordinates?.lat ?? 0,
         })
         .addTo(mapboxMap);
     });
@@ -71,7 +74,11 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
           <UIFlexWrapBox>
             <StyledLocationInfoTitle>Location:</StyledLocationInfoTitle>
             <StyledLocationInfoValue>
-              {`${locationItem.location.address1} ${locationItem.location.address2} ${locationItem.location.city} ${locationItem.location.state} ${locationItem.location.zipcode} ${locationItem.location.country}`}
+              {`${locationItem.address?.address1 ?? ''} ${
+                locationItem.address?.address2 ?? ''
+              } ${locationItem.address?.city ?? ''} ${
+                locationItem.address?.state ?? ''
+              } ${locationItem.address?.zipcode ?? ''}`}
             </StyledLocationInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
