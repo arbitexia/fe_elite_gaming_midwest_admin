@@ -29,3 +29,11 @@ export {
   deleteUser,
   resetUserMessage,
 } from './user.slice';
+
+export {
+  default as locationReducer,
+  locationSelector,
+  getLocations,
+  getLocation,
+  resetLocationMessage,
+} from './location.slice';

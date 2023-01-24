@@ -4,7 +4,7 @@ export type LocationType = {
   name: string;
   coordinates: { lat: number; lng: number };
   id: number;
-  location: CommonType.Address;
+  address: CommonType.Address;
   status: boolean;
   type: string;
   urls: string[];
@@ -13,3 +13,17 @@ export type LocationType = {
 export interface LocationsDetailProps {
   locationItem: LocationType;
 }
+
+export type GetLocationsParam = {
+  filterBy: {
+    search: string;
+  };
+  // cursor: {
+  //   page: number;
+  //   size: number;
+  // };
+};
+
+export type GetLocationParam = {
+  locationId: number;
+};
