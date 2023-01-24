@@ -8,7 +8,7 @@ export type LocationType = {
   address: CommonType.Address;
   status: boolean;
   type: string;
-  gallery: AssetType.Gallery[];
+  gallery?: AssetType.Gallery[];
 };
 
 export interface LocationsDetailProps {

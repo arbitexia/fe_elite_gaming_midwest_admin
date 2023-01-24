@@ -11,7 +11,7 @@ const LocationsById = () => {
     name: '',
     coordinates: { lat: 0, lng: 0 },
     id: 0,
-    location: {
+    address: {
       address1: '',
       address2: '',
       city: '',
@@ -21,7 +21,6 @@ const LocationsById = () => {
     },
     status: false,
     type: '',
-    urls: [],
   };
   return (
     <DashboardLayout title={locationItem ? locationItem.name : 'Locations'}>

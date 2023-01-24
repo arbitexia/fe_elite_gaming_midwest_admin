@@ -19,11 +19,12 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState<mapboxgl.Map>();
 
-  const userFormik = useFormik({
+  const locationFormik = useFormik({
     initialValues: locationItem,
     onSubmit: async (values) => {
       console.log(values);
       // await authorize({ variables: { ...values } });
+      //TODO Create Gallery
     },
   });
 
@@ -76,8 +77,8 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
           <Box width={150}>
             <UIEditTextField
               name="status"
-              value={userFormik.values.status}
-              onChange={userFormik.handleChange}
+              value={locationFormik.values.status}
+              onChange={locationFormik.handleChange}
               fullWidth
               select
             >
@@ -99,8 +100,8 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <Box>
               <UIEditTextField
                 name="name"
-                value={userFormik.values.name}
-                onChange={userFormik.handleChange}
+                value={locationFormik.values.name}
+                onChange={locationFormik.handleChange}
                 fullWidth
               />
             </Box>
@@ -112,8 +113,8 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <Box flexGrow={1}>
               <UIEditTextField
                 name="type"
-                value={userFormik.values.type}
-                onChange={userFormik.handleChange}
+                value={locationFormik.values.type}
+                onChange={locationFormik.handleChange}
                 fullWidth
               />
             </Box>
@@ -127,8 +128,8 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <Box>
               <UIEditTextField
                 name="location.address1"
-                value={userFormik.values.location.address1}
-                onChange={userFormik.handleChange}
+                value={locationFormik.values.address.address1}
+                onChange={locationFormik.handleChange}
                 fullWidth
               />
             </Box>
@@ -138,8 +139,8 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <Box>
               <UIEditTextField
                 name="location.city"
-                value={userFormik.values.location.city}
-                onChange={userFormik.handleChange}
+                value={locationFormik.values.address.city}
+                onChange={locationFormik.handleChange}
                 fullWidth
               />
             </Box>
@@ -149,8 +150,8 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <Box>
               <UIEditTextField
                 name="location.zipcode"
-                value={userFormik.values.location.zipcode}
-                onChange={userFormik.handleChange}
+                value={locationFormik.values.address.zipcode}
+                onChange={locationFormik.handleChange}
                 fullWidth
               />
             </Box>
@@ -162,8 +163,8 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <Box>
               <UIEditTextField
                 name="location.address1"
-                value={userFormik.values.location.address2}
-                onChange={userFormik.handleChange}
+                value={locationFormik.values.address.address2}
+                onChange={locationFormik.handleChange}
                 fullWidth
               />
             </Box>
@@ -173,8 +174,8 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <Box>
               <UIEditTextField
                 name="location.state"
-                value={userFormik.values.location.state}
-                onChange={userFormik.handleChange}
+                value={locationFormik.values.address.state}
+                onChange={locationFormik.handleChange}
                 fullWidth
               />
             </Box>
@@ -184,8 +185,8 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <Box>
               <UIEditTextField
                 name="location.country"
-                value={userFormik.values.location.country}
-                onChange={userFormik.handleChange}
+                value={locationFormik.values.address.country}
+                onChange={locationFormik.handleChange}
                 fullWidth
               />
             </Box>

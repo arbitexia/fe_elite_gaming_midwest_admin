@@ -16,7 +16,7 @@ const LocationsDetailCarouselCard = ({
   const [activeStep, setActiveStep] = useState(0);
   const [images, setImages] = useState<AssetType.Gallery[]>([]);
   useEffect(() => {
-    setImages(locationItem.gallery);
+    setImages(locationItem.gallery ?? []);
   }, [locationItem]);
 
   const handleNext = () => {

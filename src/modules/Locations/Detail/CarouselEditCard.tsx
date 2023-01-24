@@ -22,7 +22,7 @@ const LocationsDetailCarouselEditCard = ({
   const { onCreateAsset } = useAsset();
   const appToast = useAppToast();
   useEffect(() => {
-    setImages(locationItem.gallery);
+    setImages(locationItem.gallery ?? []);
   }, [locationItem]);
 
   const handleNext = () => {
