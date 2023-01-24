@@ -28,6 +28,8 @@ export const getHeader = () => {
   };
 };
 
+export const convertMBtoBytes = (mbValue: number) => mbValue * 1048576;
+
 export const getAuthorizeHeader = () => {
   return {
     'Access-Control-Allow-Origin': config.API_URL || '',

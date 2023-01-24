@@ -6,6 +6,18 @@ export {
 } from './app.slice';
 
 export {
+  default as assetReducer,
+  assetSelector,
+  clearAssetMessage,
+  createAsset,
+  createGallery,
+  deleteGallery,
+  setGalleries,
+  removeGalleryItem,
+  addGalleryItem,
+} from './asset.slice';
+
+export {
   default as authReducer,
   authSelector,
   authorize,

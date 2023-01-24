@@ -16,6 +16,7 @@ import {
 import { createWrapper } from 'next-redux-wrapper';
 import storage from './storage';
 import {
+  assetReducer,
   authReducer,
   appReducer,
   userReducer,
@@ -27,6 +28,7 @@ const combinedReducer = combineReducers({
   app: appReducer,
   user: userReducer,
   location: locationReducer,
+  asset: assetReducer,
 });
 
 const createStore = () => {
@@ -34,7 +36,7 @@ const createStore = () => {
     key: 'root',
     version: 1,
     storage,
-    whitelist: ['auth', 'app', 'user'],
+    whitelist: ['auth', 'app', 'user', 'asset', 'location'],
   };
 
   const persistedReducer = persistReducer(persistConfig, combinedReducer);

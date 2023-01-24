@@ -38,7 +38,8 @@ export const useAuth = (callbackFunc?: useAuthProps) => {
   }, [loading]);
 
   const onLogin = async (identifier: string, password: string) => {
-    await dispatch(authorize({ identifier, password }));
+    const pp = await dispatch(authorize({ identifier, password }));
+    console.log(pp);
   };
 
   const onForgotPassword = async (email: string) => {

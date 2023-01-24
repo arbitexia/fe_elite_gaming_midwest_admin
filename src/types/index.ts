@@ -34,4 +34,12 @@ export type {
   RefreshTokenType,
 } from './auth.type';
 export type { CommonType } from './common.type';
+export { AssetType } from './asset.type';
+export type {
+  CreateUploadFormParams,
+  CreateAssetParams,
+  CreateGalleryParams,
+  DeleteGalleryParams,
+  PresignedPostType,
+} from './asset.type';
 export { ResponseStatus, AuthCallbackStatus } from './common.type';

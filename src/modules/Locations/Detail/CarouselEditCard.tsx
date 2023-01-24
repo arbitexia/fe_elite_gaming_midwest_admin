@@ -5,22 +5,24 @@ import {
   StyledLocationEditPhotoButton,
   StyledLocationAddPhotoButton,
 } from './ui';
-import { LocationsDetailProps } from '@/types';
+import { AssetType, LocationsDetailProps } from '@/types';
 import SwipeableViews from 'react-swipeable-views';
-import { autoPlay } from 'react-swipeable-views-utils';
 import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import { ArrowBackIos, ArrowForwardIos, AddAPhoto } from '@mui/icons-material';
 import Thumbnail from './Thumbnail';
-
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+import { convertMBtoBytes } from '@/libs/data-helper';
+import { useAppToast } from '@/providers';
+import { useAsset } from '@/hooks/asset';
 
 const LocationsDetailCarouselEditCard = ({
   locationItem,
 }: LocationsDetailProps) => {
   const [activeStep, setActiveStep] = useState(0);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<AssetType.Gallery[]>([]);
+  const { onCreateAsset } = useAsset();
+  const appToast = useAppToast();
   useEffect(() => {
-    setImages(locationItem.urls);
+    setImages(locationItem.gallery);
   }, [locationItem]);
 
   const handleNext = () => {
@@ -35,15 +37,30 @@ const LocationsDetailCarouselEditCard = ({
     );
   };
 
-  const handleStepChange = (step: number) => {
-    setActiveStep(step);
-  };
-
   const handleRemove = (index: number) => {
     setImages((prev) => {
       prev.splice(index, 1);
       return prev;
     });
+  };
+
+  const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    // setShowImageError(false);
+    const reader = new FileReader();
+    const file = e.target.files ? e.target.files[0] : null;
+    if (!file) return;
+
+    // Restrict user to upload file less than 3.1MB
+    if (file.size > convertMBtoBytes(3.1)) {
+      appToast('error', 'File size is too large');
+      return;
+    }
+    reader.onloadend = async () => {
+      await onCreateAsset(file);
+    };
+
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -52,16 +69,14 @@ const LocationsDetailCarouselEditCard = ({
         <Box
           sx={{
             width: 'calc(100% - 120px)',
-            borderRadius: '12px',
+            display: 'block',
             overflow: 'hidden',
+            borderRadius: '12px',
+            height: '350px',
           }}
         >
-          <AutoPlaySwipeableViews
-            index={activeStep}
-            onChangeIndex={handleStepChange}
-            enableMouseEvents
-          >
-            {images.map((url, index) => {
+          <SwipeableViews index={activeStep} enableMouseEvents>
+            {images.map((gallery, index) => {
               return Math.abs(activeStep - index) <= 2 ? (
                 <Box
                   component="img"
@@ -69,24 +84,24 @@ const LocationsDetailCarouselEditCard = ({
                     width: '100%',
                     height: '350px',
                   }}
-                  src={`/${url}`}
+                  src={`/${gallery.asset?.url}`}
                   alt="image"
                 />
               ) : null;
             })}
-          </AutoPlaySwipeableViews>
+          </SwipeableViews>
         </Box>
         <UIFlexSpaceBox
           flexDirection="column"
           sx={{ width: '100px', height: 350 }}
         >
           <Box>
-            {images.map((url, index) => {
+            {images.map((gallery, index) => {
               return (
                 <Thumbnail
                   key={index}
                   index={index}
-                  url={url}
+                  url={gallery.asset?.url ?? ''}
                   handleRemove={handleRemove}
                   activeStep={activeStep}
                 />
@@ -125,12 +140,27 @@ const LocationsDetailCarouselEditCard = ({
       </Typography>
       <UIFlexCenterBox sx={{ gap: '15px', marginTop: '31px' }}>
         <StyledLocationEditPhotoButton>
-          Edit Photo
+          <label htmlFor="photo-edit">Edit Photo</label>
+          <input
+            id="photo-edit"
+            type="file"
+            onChange={onImageChange}
+            accept="image/png, image/gif, image/jpeg"
+            hidden
+          />
         </StyledLocationEditPhotoButton>
+
         <StyledLocationAddPhotoButton
           startIcon={<AddAPhoto sx={{ color: 'rgba(255, 255, 255, 0.54)' }} />}
         >
-          Add Photo
+          <label htmlFor="photo-create">Add Photo</label>
+          <input
+            id="photo-create"
+            type="file"
+            onChange={onImageChange}
+            accept="image/png, image/gif, image/jpeg"
+            hidden
+          />
         </StyledLocationAddPhotoButton>
       </UIFlexCenterBox>
     </StyledLocationCardBox>

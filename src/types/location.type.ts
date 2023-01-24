@@ -1,13 +1,14 @@
+import { AssetType } from './asset.type';
 import { CommonType } from './common.type';
 
 export type LocationType = {
+  id: number;
   name: string;
   coordinates: { lat: number; lng: number };
-  id: number;
   address: CommonType.Address;
   status: boolean;
   type: string;
-  urls: string[];
+  gallery: AssetType.Gallery[];
 };
 
 export interface LocationsDetailProps {
