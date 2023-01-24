@@ -17,7 +17,11 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
   return (
     <UIItemCard sx={{ width: 254, height: 360 }}>
       <StyledImageBox>
-        <UIImage src={item.urls ? item.urls[0] : ''} width={220} height={160} />
+        <UIImage
+          src={item.gallery ? item.gallery[0].asset?.url ?? '' : ''}
+          width={220}
+          height={160}
+        />
       </StyledImageBox>
       <Typography
         sx={{
