@@ -9,7 +9,7 @@ import { StyledLocationCardBox, StyledLocationInfoTitle } from './ui';
 import { LocationType } from '@/types';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { locationStatus } from '@/_mock/locations';
+import { locationStatus, locationType } from '@/_mock/locations';
 import { FormikProps } from 'formik';
 
 const accessToken =
@@ -33,8 +33,8 @@ const LocationsDetailInfoCard = ({
       accessToken: accessToken,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [
-        locationFormik.values.coordinates.lng,
-        locationFormik.values.coordinates.lat,
+        locationFormik.values.coords.lng,
+        locationFormik.values.coords.lat,
       ],
       zoom: 15,
     });
@@ -46,8 +46,8 @@ const LocationsDetailInfoCard = ({
       markerIcon.style.height = '25px';
       new mapboxgl.Marker(markerIcon)
         .setLngLat({
-          lng: locationFormik.values.coordinates.lng,
-          lat: locationFormik.values.coordinates.lat,
+          lng: locationFormik.values.coords.lng,
+          lat: locationFormik.values.coords.lat,
         })
         .addTo(mapboxMap);
     });
@@ -83,7 +83,7 @@ const LocationsDetailInfoCard = ({
             >
               {locationStatus.map((item) => {
                 return (
-                  <MenuItem key={item.id} value={item.value}>
+                  <MenuItem key={item.id} value={item.id}>
                     {item.value}
                   </MenuItem>
                 );
@@ -112,10 +112,20 @@ const LocationsDetailInfoCard = ({
             <Box flexGrow={1}>
               <UIEditTextField
                 name="type"
+                defaultValue={'Open'}
                 value={locationFormik.values.type}
                 onChange={locationFormik.handleChange}
                 fullWidth
-              />
+                select
+              >
+                {locationType.map((item) => {
+                  return (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.value}
+                    </MenuItem>
+                  );
+                })}
+              </UIEditTextField>
             </Box>
           </UIFlexWrapBox>
         </Stack>
@@ -161,7 +171,7 @@ const LocationsDetailInfoCard = ({
             <StyledLocationInfoTitle>Address2:</StyledLocationInfoTitle>
             <Box>
               <UIEditTextField
-                name="address.address1"
+                name="address.address2"
                 value={locationFormik.values.address.address2}
                 onChange={locationFormik.handleChange}
                 fullWidth

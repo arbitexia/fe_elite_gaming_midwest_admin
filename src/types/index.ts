@@ -13,6 +13,7 @@ export type {
   LocationsDetailProps,
   GetLocationsParam,
   GetLocationParam,
+  CreateLocationParam,
 } from './location.type';
 export type { RequestItemType } from './requests.type';
 export type { TransactionType, TransactionsProps } from './transactions.type';

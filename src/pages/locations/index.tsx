@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { UIFlexWrapBox } from '@/components/UI';
 import { LocationsHeader, LocationsCard } from '@/modules/Locations';
 import { DashboardLayout } from '@/layouts';
-// import { locationsData } from '@/_mock/locations';
-// import { LocationType } from '@/types';
 import { useLocation } from '@/hooks';
 
 const LocationsPage = () => {

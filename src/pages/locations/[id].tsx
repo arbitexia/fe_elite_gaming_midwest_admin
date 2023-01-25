@@ -8,7 +8,6 @@ import {
   LocationsDetailInfoCard,
   LocationDetailRewardTable,
 } from '@/modules/Locations';
-// import { locationsData } from '@/_mock/locations';
 import { LocationType } from '@/types';
 import { useLocation } from '@/hooks';
 import { useAsset } from '@/hooks/asset';

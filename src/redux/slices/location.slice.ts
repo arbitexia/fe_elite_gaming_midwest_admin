@@ -8,6 +8,7 @@ import {
   GetLocationParam,
   ResponseStatus,
   LocationType,
+  CreateLocationParam,
 } from '@/types';
 
 // Initial state
@@ -42,6 +43,19 @@ export const getLocation = createAsyncThunk<
 >('location/getLocation', async (params: GetLocationParam, thunkAPI) => {
   try {
     return await locationApi.getLocation(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
+export const createLocation = createAsyncThunk<
+  LocationType,
+  CreateLocationParam,
+  { dispatch: AppDispatch; state: RootState }
+>('location/createLocation', async (params: CreateLocationParam, thunkAPI) => {
+  try {
+    return await locationApi.createLocation(params);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
@@ -95,6 +109,26 @@ export const locationSlice = createSlice({
         }
       )
       .addCase(getLocation.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(createLocation.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        createLocation.fulfilled,
+        (state, { payload }: PayloadAction<LocationType>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          console.log(payload);
+        }
+      )
+      .addCase(createLocation.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;

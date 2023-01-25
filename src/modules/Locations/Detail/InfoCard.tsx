@@ -26,10 +26,7 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
       container: node,
       accessToken: accessToken,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [
-        locationItem.coordinates?.lng ?? 0,
-        locationItem.coordinates?.lat ?? 0,
-      ],
+      center: [locationItem.coords?.lng ?? 0, locationItem.coords?.lat ?? 0],
       zoom: 15,
     });
     mapboxMap.on('load', () => {
@@ -40,8 +37,8 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
       markerIcon.style.height = '25px';
       new mapboxgl.Marker(markerIcon)
         .setLngLat({
-          lng: locationItem.coordinates?.lng ?? 0,
-          lat: locationItem.coordinates?.lat ?? 0,
+          lng: locationItem.coords?.lng ?? 0,
+          lat: locationItem.coords?.lat ?? 0,
         })
         .addTo(mapboxMap);
     });
@@ -78,7 +75,9 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
                 locationItem.address?.address2 ?? ''
               } ${locationItem.address?.city ?? ''} ${
                 locationItem.address?.state ?? ''
-              } ${locationItem.address?.zipcode ?? ''}`}
+              } ${locationItem.address?.zipcode ?? ''} ${
+                locationItem.address?.country ?? ''
+              }`}
             </StyledLocationInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
