@@ -16,7 +16,18 @@ const LocationCreatePage = () => {
   const locationFormik = useFormik<LocationType>({
     initialValues: initLocationData,
     onSubmit: async (values: LocationType) => {
-      onCreateLocation({ input: values } as CreateLocationParam);
+      let params: CreateLocationParam = {
+        input: {
+          name: values.name,
+          coords: values.coords,
+          address: values.address,
+          description: values.description || '',
+          type: values.type,
+          status: values.status,
+        },
+      };
+
+      onCreateLocation(params);
     },
   });
 

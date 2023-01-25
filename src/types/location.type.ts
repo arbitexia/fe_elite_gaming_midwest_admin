@@ -30,13 +30,20 @@ export type GetLocationParam = {
   locationId: number;
 };
 
+export type LocationInputParam = {
+  name: string;
+  coords: { lat: number; lng: number };
+  address: CommonType.Address;
+  description: string;
+  status: string;
+  type: string;
+};
+
 export type CreateLocationParam = {
-  input: {
-    name: string;
-    coords: { lat: number; lng: number };
-    id: number;
-    address: CommonType.Address;
-    status: string;
-    type: string;
-  };
+  input: LocationInputParam;
+};
+
+export type UpdateLocationParam = {
+  id: number;
+  input: LocationInputParam;
 };

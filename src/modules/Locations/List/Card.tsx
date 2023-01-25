@@ -18,7 +18,11 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
     <UIItemCard sx={{ width: 254, height: 360 }}>
       <StyledImageBox>
         <UIImage
-          src={item.gallery ? item.gallery[0].asset?.url ?? '' : ''}
+          src={
+            item.gallery && item.gallery.length > 0
+              ? item.gallery[0].asset?.url ?? ''
+              : ''
+          }
           width={220}
           height={160}
         />

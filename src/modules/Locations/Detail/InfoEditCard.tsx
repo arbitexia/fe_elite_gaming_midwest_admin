@@ -22,7 +22,6 @@ const LocationsDetailInfoCard = ({
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState<mapboxgl.Map>();
-
   const mapNode = useRef(null);
 
   useEffect(() => {
