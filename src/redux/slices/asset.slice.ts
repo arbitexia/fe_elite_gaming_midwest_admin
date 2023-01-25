@@ -103,10 +103,12 @@ export const assetSlice = createSlice({
         createAsset.fulfilled,
         (state, { payload }: PayloadAction<AssetType.Asset>) => {
           state.loading = false;
+          console.log(payload);
           state.galleries = [
             ...state.galleries,
-            { id: 0, assetId: payload.id },
+            { id: 0, assetId: payload.id, asset: payload },
           ];
+          console.log(state.galleries);
           state.status = ResponseStatus.SUCCESS;
           state.message = 'Asset Created';
         }

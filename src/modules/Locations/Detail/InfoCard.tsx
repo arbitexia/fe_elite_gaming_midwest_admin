@@ -83,9 +83,9 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
           </UIFlexWrapBox>
           <UIFlexWrapBox>
             <StyledLocationInfoTitle>Description:</StyledLocationInfoTitle>
-            <StyledLocationInfoValue
-              sx={{ height: '100px' }}
-            ></StyledLocationInfoValue>
+            <StyledLocationInfoValue sx={{ height: '100px' }}>
+              {locationItem.description ?? ''}
+            </StyledLocationInfoValue>
           </UIFlexWrapBox>
         </Stack>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>

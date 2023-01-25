@@ -1,38 +1,33 @@
 import { DashboardLayout } from '@/layouts';
+import { Box } from '@mui/material';
 import { UIFlexSpaceBox } from '@/components/UI';
 import {
   LocationDetailHeader,
   LocationsDetailCarouselEditCard,
   LocationsDetailInfoEditCard,
 } from '@/modules/Locations';
+import { useFormik } from 'formik';
+import { initLocationData } from '@/_mock/locations';
+import { LocationType } from '@/types';
 
 const LocationsById = () => {
-  const locationItem = {
-    name: '',
-    coordinates: { lat: 0, lng: 0 },
-    id: 0,
-    address: {
-      address1: '',
-      address2: '',
-      city: '',
-      state: '',
-      zipcode: '',
-      country: '',
+  const locationFormik = useFormik<LocationType>({
+    initialValues: initLocationData,
+    onSubmit: async (values) => {
+      console.log(values);
+      // await authorize({ variables: { ...values } });
+      //TODO Create Gallery
     },
-    status: false,
-    type: '',
-  };
+  });
   return (
-    <DashboardLayout title={locationItem ? locationItem.name : 'Locations'}>
-      {locationItem && (
-        <>
-          <LocationDetailHeader name={locationItem.name} isEditable={true} />
-          <UIFlexSpaceBox sx={{ gap: '20px' }}>
-            <LocationsDetailCarouselEditCard locationItem={locationItem} />
-            <LocationsDetailInfoEditCard locationItem={locationItem} />
-          </UIFlexSpaceBox>
-        </>
-      )}
+    <DashboardLayout title={'Locations'}>
+      <Box component="form" onSubmit={locationFormik.handleSubmit}>
+        <LocationDetailHeader name={initLocationData.name} isEditable={true} />
+        <UIFlexSpaceBox sx={{ gap: '20px' }}>
+          <LocationsDetailCarouselEditCard />
+          <LocationsDetailInfoEditCard locationFormik={locationFormik} />
+        </UIFlexSpaceBox>
+      </Box>
     </DashboardLayout>
   );
 };

@@ -1,33 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { StyledLocationCardBox } from './ui';
-import { AssetType, LocationsDetailProps } from '@/types';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import Thumbnail from './Thumbnail';
+import { useAsset } from '@/hooks/asset';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const LocationsDetailCarouselCard = ({
-  locationItem,
-}: LocationsDetailProps) => {
+const LocationsDetailCarouselCard = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [images, setImages] = useState<AssetType.Gallery[]>([]);
-  useEffect(() => {
-    setImages(locationItem.gallery ?? []);
-  }, [locationItem]);
+  const { galleries } = useAsset();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) =>
-      prevActiveStep + 2 > images.length ? 0 : prevActiveStep + 1
+      prevActiveStep + 2 > galleries.length ? 0 : prevActiveStep + 1
     );
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) =>
-      prevActiveStep - 1 >= 0 ? prevActiveStep - 1 : images.length - 1
+      prevActiveStep - 1 >= 0 ? prevActiveStep - 1 : galleries.length - 1
     );
   };
 
@@ -51,8 +46,8 @@ const LocationsDetailCarouselCard = ({
             onChangeIndex={handleStepChange}
             enableMouseEvents
           >
-            {images &&
-              images.map((gallery, index) => {
+            {galleries &&
+              galleries.map((gallery, index) => {
                 return Math.abs(activeStep - index) <= 2 ? (
                   <Box
                     component="img"
@@ -71,8 +66,8 @@ const LocationsDetailCarouselCard = ({
         </Box>
         <UIFlexSpaceBox flexDirection="column" width="100px" height="350px">
           <Box>
-            {images &&
-              images.map((gallery, index) => {
+            {galleries &&
+              galleries.map((gallery, index) => {
                 return (
                   <Thumbnail
                     key={index}

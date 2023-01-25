@@ -6,27 +6,22 @@ import {
   UIEditTextField,
 } from '@/components/UI';
 import { StyledLocationCardBox, StyledLocationInfoTitle } from './ui';
-import { LocationsDetailProps } from '@/types';
+import { LocationType } from '@/types';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { locationStatus } from '@/_mock/locations';
-import { useFormik } from 'formik';
+import { FormikProps } from 'formik';
 
 const accessToken =
   'pk.eyJ1Ijoic2FoaWx0aGFrYXJlNTIxIiwiYSI6ImNrbjVvMTkzNDA2MXQydnM2OHJ6aHJvbXEifQ.z5aEqRBTtDMWoxVzf3aGsg';
 
-const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
+const LocationsDetailInfoCard = ({
+  locationFormik,
+}: {
+  locationFormik: FormikProps<LocationType>;
+}) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState<mapboxgl.Map>();
-
-  const locationFormik = useFormik({
-    initialValues: locationItem,
-    onSubmit: async (values) => {
-      console.log(values);
-      // await authorize({ variables: { ...values } });
-      //TODO Create Gallery
-    },
-  });
 
   const mapNode = useRef(null);
 
@@ -37,7 +32,10 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
       container: node,
       accessToken: accessToken,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [locationItem.coordinates.lng, locationItem.coordinates.lat],
+      center: [
+        locationFormik.values.coordinates.lng,
+        locationFormik.values.coordinates.lat,
+      ],
       zoom: 15,
     });
     mapboxMap.on('load', () => {
@@ -48,8 +46,8 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
       markerIcon.style.height = '25px';
       new mapboxgl.Marker(markerIcon)
         .setLngLat({
-          lng: locationItem.coordinates.lng,
-          lat: locationItem.coordinates.lat,
+          lng: locationFormik.values.coordinates.lng,
+          lat: locationFormik.values.coordinates.lat,
         })
         .addTo(mapboxMap);
     });
@@ -77,6 +75,7 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
           <Box width={150}>
             <UIEditTextField
               name="status"
+              defaultValue={'Open'}
               value={locationFormik.values.status}
               onChange={locationFormik.handleChange}
               fullWidth
@@ -127,7 +126,7 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <StyledLocationInfoTitle>Address1:</StyledLocationInfoTitle>
             <Box>
               <UIEditTextField
-                name="location.address1"
+                name="address.address1"
                 value={locationFormik.values.address.address1}
                 onChange={locationFormik.handleChange}
                 fullWidth
@@ -138,7 +137,7 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <StyledLocationInfoTitle>City:</StyledLocationInfoTitle>
             <Box>
               <UIEditTextField
-                name="location.city"
+                name="address.city"
                 value={locationFormik.values.address.city}
                 onChange={locationFormik.handleChange}
                 fullWidth
@@ -149,7 +148,7 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <StyledLocationInfoTitle>ZipCode:</StyledLocationInfoTitle>
             <Box>
               <UIEditTextField
-                name="location.zipcode"
+                name="address.zipcode"
                 value={locationFormik.values.address.zipcode}
                 onChange={locationFormik.handleChange}
                 fullWidth
@@ -162,7 +161,7 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <StyledLocationInfoTitle>Address2:</StyledLocationInfoTitle>
             <Box>
               <UIEditTextField
-                name="location.address1"
+                name="address.address1"
                 value={locationFormik.values.address.address2}
                 onChange={locationFormik.handleChange}
                 fullWidth
@@ -173,7 +172,7 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <StyledLocationInfoTitle>State:</StyledLocationInfoTitle>
             <Box>
               <UIEditTextField
-                name="location.state"
+                name="address.state"
                 value={locationFormik.values.address.state}
                 onChange={locationFormik.handleChange}
                 fullWidth
@@ -184,7 +183,7 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             <StyledLocationInfoTitle>Country:</StyledLocationInfoTitle>
             <Box>
               <UIEditTextField
-                name="location.country"
+                name="address.country"
                 value={locationFormik.values.address.country}
                 onChange={locationFormik.handleChange}
                 fullWidth
@@ -203,6 +202,9 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
             maxRows={2}
             sx={{ '.MuiInputBase-root': { height: '62px' } }}
             fullWidth
+            name="description"
+            value={locationFormik.values.description}
+            onChange={locationFormik.handleChange}
           />
         </Box>
       </UIFlexWrapBox>

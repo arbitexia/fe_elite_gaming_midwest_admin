@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
 import { useAppToast } from '@/providers';
 import { useAppDispatch, useAppSelector } from './redux';
-import { AssetType, PresignedPostType, ResponseStatus } from '@/types';
+import {
+  AssetItemType,
+  AssetType,
+  PresignedPostType,
+  ResponseStatus,
+} from '@/types';
 import { assetApi } from '@/redux/apis';
 import {
   assetSelector,
@@ -29,6 +34,10 @@ export const useAsset = () => {
     }
   }, [loading]);
 
+  const onSetGalleries = (galleries: AssetType.Gallery[]) => {
+    dispatch(setGalleries(galleries));
+  };
+
   const onDeleteImage = async (index: number) => {
     if (galleries[index].id !== 0) {
       await dispatch(deleteGallery({ galleryId: galleries[index].id }));
@@ -48,13 +57,13 @@ export const useAsset = () => {
     });
 
     formData.append('file', file);
-    assetApi.uploadForm(url, formData);
+    assetApi.uploadForm(presignedPostData.url, formData);
     dispatch(
       createAsset({
         input: {
           desc: '',
           name: file.name,
-          type: AssetType.AssetType.IMAGE,
+          type: AssetItemType.IMAGE,
           url,
         },
       })
@@ -77,7 +86,8 @@ export const useAsset = () => {
   };
 
   return {
-    setGalleries,
+    galleries,
+    onSetGalleries,
     onCreateAsset,
     onCreateGallery,
     onDeleteImage,

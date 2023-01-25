@@ -48,7 +48,7 @@ const LocationDetailHeader = ({
       </Typography>
       <UIFlexWrapBox>
         {isEditable ? (
-          <UIDefaultButton>Save</UIDefaultButton>
+          <UIDefaultButton type="submit">Save</UIDefaultButton>
         ) : (
           <>
             <UIActionButton

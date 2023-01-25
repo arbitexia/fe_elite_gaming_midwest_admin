@@ -8,6 +8,7 @@ export type LocationType = {
   address: CommonType.Address;
   status: boolean;
   type: string;
+  description?: string;
   gallery?: AssetType.Gallery[];
 };
 

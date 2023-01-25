@@ -1,3 +1,9 @@
+export enum AssetItemType {
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+  DOCUMENT = 'DOCUMENT',
+}
+
 export type CreateUploadFormParams = {
   fileName: string;
 };
@@ -14,7 +20,7 @@ export type CreateAssetParams = {
   input: {
     desc: string;
     name: string;
-    type: AssetType.AssetType;
+    type: AssetItemType;
     url: string;
   };
 };
@@ -32,12 +38,6 @@ export type DeleteGalleryParams = {
 };
 
 export declare namespace AssetType {
-  enum AssetType {
-    IMAGE = 'IMAGE',
-    VIDEO = 'VIDEO',
-    DOCUMENT = 'DOCUMENT',
-  }
-
   type Asset = {
     id: number;
     name: string;

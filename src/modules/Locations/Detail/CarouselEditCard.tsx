@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Box, IconButton, Typography } from '@mui/material';
 import {
   StyledLocationCardBox,
   StyledLocationEditPhotoButton,
   StyledLocationAddPhotoButton,
 } from './ui';
-import { AssetType, LocationsDetailProps } from '@/types';
 import SwipeableViews from 'react-swipeable-views';
 import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import { ArrowBackIos, ArrowForwardIos, AddAPhoto } from '@mui/icons-material';
@@ -14,34 +13,25 @@ import { convertMBtoBytes } from '@/libs/data-helper';
 import { useAppToast } from '@/providers';
 import { useAsset } from '@/hooks/asset';
 
-const LocationsDetailCarouselEditCard = ({
-  locationItem,
-}: LocationsDetailProps) => {
+const LocationsDetailCarouselEditCard = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [images, setImages] = useState<AssetType.Gallery[]>([]);
-  const { onCreateAsset } = useAsset();
+  const { galleries, onCreateAsset, onDeleteImage } = useAsset();
   const appToast = useAppToast();
-  useEffect(() => {
-    setImages(locationItem.gallery ?? []);
-  }, [locationItem]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) =>
-      prevActiveStep + 2 > images.length ? 0 : prevActiveStep + 1
+      prevActiveStep + 2 > galleries.length ? 0 : prevActiveStep + 1
     );
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) =>
-      prevActiveStep - 1 >= 0 ? prevActiveStep - 1 : images.length - 1
+      prevActiveStep - 1 >= 0 ? prevActiveStep - 1 : galleries.length - 1
     );
   };
 
   const handleRemove = (index: number) => {
-    setImages((prev) => {
-      prev.splice(index, 1);
-      return prev;
-    });
+    onDeleteImage(index);
   };
 
   const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +66,7 @@ const LocationsDetailCarouselEditCard = ({
           }}
         >
           <SwipeableViews index={activeStep} enableMouseEvents>
-            {images.map((gallery, index) => {
+            {galleries.map((gallery, index) => {
               return Math.abs(activeStep - index) <= 2 ? (
                 <Box
                   component="img"
@@ -96,7 +86,7 @@ const LocationsDetailCarouselEditCard = ({
           sx={{ width: '100px', height: 350 }}
         >
           <Box>
-            {images.map((gallery, index) => {
+            {galleries.map((gallery, index) => {
               return (
                 <Thumbnail
                   key={index}

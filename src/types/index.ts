@@ -34,8 +34,9 @@ export type {
   RefreshTokenType,
 } from './auth.type';
 export type { CommonType } from './common.type';
-export { AssetType } from './asset.type';
+export { AssetItemType } from './asset.type';
 export type {
+  AssetType,
   CreateUploadFormParams,
   CreateAssetParams,
   CreateGalleryParams,
