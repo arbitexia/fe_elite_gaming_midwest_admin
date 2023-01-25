@@ -20,7 +20,6 @@ import {
 
 export const useAsset = () => {
   const appToast = useAppToast();
-  // const router = useRouter();
   const { message, error, loading, galleries, status } =
     useAppSelector(assetSelector);
   const dispatch = useAppDispatch();

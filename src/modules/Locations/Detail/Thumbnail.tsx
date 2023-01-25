@@ -32,7 +32,7 @@ const LocationsDetailThumbnail = ({
           borderRadius: '4px',
           opacity: index === activeStep ? '100%' : '60%',
         }}
-        src={`/${url}`}
+        src={`${url}`}
         alt="image"
       />
       <IconButton

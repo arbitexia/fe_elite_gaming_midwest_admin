@@ -57,7 +57,7 @@ const LocationsDetailCarouselCard = () => {
                       display: 'flex',
                     }}
                     display={'flex'}
-                    src={`/${gallery.asset?.url}`}
+                    src={`${gallery.asset?.url}`}
                     alt="image"
                   />
                 ) : null;

@@ -14,6 +14,7 @@ import {
   CreateLocationParam,
   UpdateLocationParam,
 } from '@/types';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from './redux';
 
@@ -42,8 +43,13 @@ export const useLocation = () => {
     await dispatch(getLocations(param));
   };
 
-  const onCreateLocation = async (param: CreateLocationParam) => {
-    await dispatch(createLocation(param));
+  const onCreateLocation = async (
+    param: CreateLocationParam
+  ): Promise<LocationType> => {
+    const { payload }: PayloadAction<unknown> = await dispatch(
+      createLocation(param)
+    );
+    return payload as LocationType;
   };
 
   const onUpdateLocation = async (param: UpdateLocationParam) => {

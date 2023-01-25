@@ -74,7 +74,7 @@ const LocationsDetailCarouselEditCard = () => {
                     width: '100%',
                     height: '350px',
                   }}
-                  src={`/${gallery.asset?.url}`}
+                  src={`${gallery.asset?.url}`}
                   alt="image"
                 />
               ) : null;

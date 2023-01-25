@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import { UIImage, UIFlexSpaceBox, UIItemCard } from '@/components/UI';
-import { Typography } from '@mui/material';
+import { UIFlexSpaceBox, UIItemCard } from '@/components/UI';
+import { Box, Typography } from '@mui/material';
 import { LocationType } from '@/types';
 import {
   StyledLocationViewButton,
@@ -17,7 +17,8 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
   return (
     <UIItemCard sx={{ width: 254, height: 360 }}>
       <StyledImageBox>
-        <UIImage
+        <Box
+          component="img"
           src={
             item.gallery && item.gallery.length > 0
               ? item.gallery[0].asset?.url ?? ''

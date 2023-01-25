@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { DashboardLayout } from '@/layouts';
 import { Box } from '@mui/material';
 import { UIFlexSpaceBox } from '@/components/UI';
@@ -8,11 +9,18 @@ import {
 } from '@/modules/Locations';
 import { useFormik } from 'formik';
 import { LocationType, CreateLocationParam } from '@/types';
-import { useLocation } from '@/hooks';
+import { useLocation, useAsset } from '@/hooks';
 import { initLocationData } from '@/_mock/locations';
 
 const LocationCreatePage = () => {
   const { onCreateLocation } = useLocation();
+  const { onSetGalleries, onCreateGallery } = useAsset();
+  const [isReady, setIsReady] = useState(true);
+  useEffect(() => {
+    if (!isReady) return;
+    onSetGalleries([]);
+    setIsReady(false);
+  }, [isReady]);
   const locationFormik = useFormik<LocationType>({
     initialValues: initLocationData,
     onSubmit: async (values: LocationType) => {
@@ -26,8 +34,8 @@ const LocationCreatePage = () => {
           status: values.status,
         },
       };
-
-      onCreateLocation(params);
+      const location = await onCreateLocation(params);
+      onCreateGallery(location.id, 'LOCATION');
     },
   });
 
