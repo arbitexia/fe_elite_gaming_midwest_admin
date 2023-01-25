@@ -10,6 +10,7 @@ import {
   LocationType,
   CreateLocationParam,
   UpdateLocationParam,
+  DeleteLocationParam,
 } from '@/types';
 
 // Initial state
@@ -70,6 +71,19 @@ export const updateLocation = createAsyncThunk<
 >('location/updateLocation', async (params: UpdateLocationParam, thunkAPI) => {
   try {
     return await locationApi.updateLocation(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
+export const deleteLocation = createAsyncThunk<
+  LocationType,
+  DeleteLocationParam,
+  { dispatch: AppDispatch; state: RootState }
+>('location/deleteLocation', async (params: DeleteLocationParam, thunkAPI) => {
+  try {
+    return await locationApi.deleteLocation(params);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
@@ -163,6 +177,26 @@ export const locationSlice = createSlice({
         }
       )
       .addCase(updateLocation.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(deleteLocation.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        deleteLocation.fulfilled,
+        (state, { payload }: PayloadAction<LocationType>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          console.log(payload);
+        }
+      )
+      .addCase(deleteLocation.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;

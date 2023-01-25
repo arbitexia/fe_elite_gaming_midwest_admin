@@ -47,3 +47,7 @@ export type UpdateLocationParam = {
   id: number;
   input: LocationInputParam;
 };
+
+export type DeleteLocationParam = {
+  locationId: number;
+};

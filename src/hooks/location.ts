@@ -4,6 +4,7 @@ import {
   getLocations,
   createLocation,
   updateLocation,
+  deleteLocation,
   resetLocationMessage,
   locationSelector,
 } from '@/redux/slices';
@@ -56,6 +57,10 @@ export const useLocation = () => {
     await dispatch(updateLocation(param));
   };
 
+  const onDeleteLocation = async (id: number) => {
+    await dispatch(deleteLocation({ locationId: id }));
+  };
+
   return {
     locations,
     pageInfo,
@@ -64,5 +69,6 @@ export const useLocation = () => {
     onGetLocations,
     onCreateLocation,
     onUpdateLocation,
+    onDeleteLocation,
   };
 };
