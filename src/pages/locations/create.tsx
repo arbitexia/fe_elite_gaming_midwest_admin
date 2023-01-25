@@ -7,22 +7,26 @@ import {
   LocationsDetailInfoEditCard,
 } from '@/modules/Locations';
 import { useFormik } from 'formik';
+import { LocationType, CreateLocationParam } from '@/types';
+import { useLocation } from '@/hooks';
 import { initLocationData } from '@/_mock/locations';
-import { LocationType } from '@/types';
 
-const LocationsById = () => {
+const LocationCreatePage = () => {
+  const { onCreateLocation } = useLocation();
   const locationFormik = useFormik<LocationType>({
     initialValues: initLocationData,
-    onSubmit: async (values) => {
-      console.log(values);
-      // await authorize({ variables: { ...values } });
-      //TODO Create Gallery
+    onSubmit: async (values: LocationType) => {
+      onCreateLocation({ input: values } as CreateLocationParam);
     },
   });
+
   return (
     <DashboardLayout title={'Locations'}>
       <Box component="form" onSubmit={locationFormik.handleSubmit}>
-        <LocationDetailHeader name={initLocationData.name} isEditable={true} />
+        <LocationDetailHeader
+          name={locationFormik.values.name}
+          isEditable={true}
+        />
         <UIFlexSpaceBox sx={{ gap: '20px' }}>
           <LocationsDetailCarouselEditCard />
           <LocationsDetailInfoEditCard locationFormik={locationFormik} />
@@ -32,4 +36,4 @@ const LocationsById = () => {
   );
 };
 
-export default LocationsById;
+export default LocationCreatePage;

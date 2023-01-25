@@ -2,11 +2,12 @@ import { useAppToast } from '@/providers';
 import {
   getLocation,
   getLocations,
+  createLocation,
   resetLocationMessage,
   locationSelector,
 } from '@/redux/slices';
 
-import { GetLocationsParam, LocationType } from '@/types';
+import { GetLocationsParam, LocationType, CreateLocationParam } from '@/types';
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from './redux';
 
@@ -35,11 +36,16 @@ export const useLocation = () => {
     await dispatch(getLocations(param));
   };
 
+  const onCreateLocation = async (param: CreateLocationParam) => {
+    await dispatch(createLocation(param));
+  };
+
   return {
     locations,
     pageInfo,
     onGetLocationById,
     onLocationSelect,
     onGetLocations,
+    onCreateLocation,
   };
 };

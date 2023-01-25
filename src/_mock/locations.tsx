@@ -2,7 +2,7 @@ import { LocationType } from '@/types';
 
 export const initLocationData: LocationType = {
   name: '',
-  coordinates: { lat: 0, lng: 0 },
+  coords: { lat: 0, lng: 0 },
   id: 0,
   address: {
     address1: '',
@@ -12,135 +12,17 @@ export const initLocationData: LocationType = {
     zipcode: '',
     country: '',
   },
-  status: false,
+  status: '',
   type: '',
   description: '',
 };
 
-export const locationsData: LocationType[] = [
-  {
-    name: 'Palm Casino Resort',
-    coordinates: { lat: 40.7127837, lng: -74.0059413 },
-    id: 1,
-    address: {
-      address1: '',
-      address2: '',
-      city: '',
-      state: 'New York',
-      zipcode: '',
-      country: 'USA',
-    },
-    status: true,
-    type: 'Palm',
-  },
-  {
-    name: 'Roulette Casino Resort',
-    coordinates: { lat: 34.0522342, lng: -118.2436849 },
-    id: 2,
-    address: {
-      address1: '',
-      address2: '',
-      city: '',
-      state: 'California',
-      zipcode: '',
-      country: 'USA',
-    },
-    status: true,
-    type: 'Roulette',
-  },
-  {
-    name: 'Palm Casino Resort',
-    coordinates: { lat: 41.8781136, lng: -87.6297982 },
-    id: 3,
-    address: {
-      address1: '',
-      address2: '',
-      city: '',
-      state: 'Illinois',
-      zipcode: '',
-      country: 'USA',
-    },
-    status: true,
-    type: 'Palm',
-  },
-  {
-    name: 'Roulette Casino Resort',
-    coordinates: { lat: 29.7604267, lng: -95.3698028 },
-    id: 4,
-    address: {
-      address1: '',
-      address2: '',
-      city: '',
-      state: 'Texas',
-      zipcode: '',
-      country: 'USA',
-    },
-    status: true,
-    type: 'Roulette',
-  },
-  {
-    name: 'Palm Casino Resort',
-    coordinates: { lat: 39.9525839, lng: -75.1652215 },
-    id: 5,
-    address: {
-      address1: '',
-      address2: '',
-      city: '',
-      state: 'Pennsylvania',
-      zipcode: '',
-      country: 'USA',
-    },
-    status: true,
-    type: 'Palm',
-  },
-  {
-    name: 'Roulette Casino Resort',
-    coordinates: { lat: 33.4483771, lng: -112.0740373 },
-    id: 6,
-    address: {
-      address1: '',
-      address2: '',
-      city: '',
-      state: 'Arizona',
-      zipcode: '',
-      country: 'USA',
-    },
-    status: true,
-    type: 'Roulette',
-  },
-  {
-    name: 'Palm Casino Resort',
-    coordinates: { lat: 29.4241219, lng: -98.49362819999999 },
-    id: 7,
-    address: {
-      address1: '',
-      address2: '',
-      city: '',
-      state: 'Texas',
-      zipcode: '',
-      country: 'USA',
-    },
-    status: true,
-    type: 'Palm',
-  },
-  {
-    name: 'Roulette Casino Resort',
-    coordinates: { lat: 32.715738, lng: -117.1610838 },
-    id: 8,
-    address: {
-      address1: '',
-      address2: '',
-      city: '',
-      state: 'California',
-      zipcode: '',
-      country: 'USA',
-    },
-    status: true,
-    type: 'Roulette',
-  },
+export const locationStatus = [
+  { id: 'OPEN', value: 'Open' },
+  { id: 'CLOSED', value: 'Close' },
 ];
 
-export const locationStatus = [
-  { id: 1, value: 'Open' },
-  { id: 2, value: 'Close' },
+export const locationType = [
+  { id: 'PALM', value: 'PALM' },
+  { id: 'ROULETTE', value: 'ROULETTE' },
 ];

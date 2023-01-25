@@ -55,7 +55,9 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
       >
         {`${item.address?.address1 ?? ''} ${item.address?.address2 ?? ''} ${
           item.address?.city ?? ''
-        } ${item.address?.state ?? ''} ${item.address?.zipcode ?? ''}`}
+        } ${item.address?.state ?? ''} ${item.address?.zipcode ?? ''} ${
+          item.address?.country ?? ''
+        }`}
       </Typography>
       <UIFlexSpaceBox sx={{ marginTop: '30px' }}>
         <StyledLocationViewButton
