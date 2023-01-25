@@ -9,7 +9,7 @@ import {
   LocationsDetailInfoEditCard,
 } from '@/modules/Locations';
 import { initLocationData } from '@/_mock/locations';
-import { LocationType } from '@/types';
+import { LocationType, UpdateLocationParam } from '@/types';
 import { useFormik } from 'formik';
 import { useLocation } from '@/hooks';
 
@@ -19,18 +19,33 @@ const LocationsById = () => {
   const [locationItem, setLocationItem] = useState<LocationType | undefined>(
     undefined
   );
-  const { onGetLocationById } = useLocation();
+  const { onGetLocationById, onUpdateLocation } = useLocation();
   const locationFormik = useFormik<LocationType>({
     initialValues: locationItem ?? initLocationData,
     onSubmit: async (values) => {
       console.log(values);
+      let params: UpdateLocationParam = {
+        id: values.id,
+        input: {
+          name: values.name,
+          coords: values.coords,
+          address: values.address,
+          description: values.description || '',
+          type: values.type,
+          status: values.status,
+        },
+      };
+
+      onUpdateLocation(params);
       // await authorize({ variables: { ...values } });
       //TODO Create Gallery
     },
   });
 
   useEffect(() => {
-    setLocationItem(onGetLocationById(parseInt(id as string)));
+    const location = onGetLocationById(parseInt(id as string));
+    setLocationItem(location);
+    locationFormik.setValues(location ?? initLocationData);
   }, [id]);
   return (
     <DashboardLayout title={locationItem ? locationItem.name : 'Locations'}>

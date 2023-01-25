@@ -48,5 +48,6 @@ export {
   getLocations,
   getLocation,
   createLocation,
+  updateLocation,
   resetLocationMessage,
 } from './location.slice';

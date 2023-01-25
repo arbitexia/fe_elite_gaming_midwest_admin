@@ -3,11 +3,17 @@ import {
   getLocation,
   getLocations,
   createLocation,
+  updateLocation,
   resetLocationMessage,
   locationSelector,
 } from '@/redux/slices';
 
-import { GetLocationsParam, LocationType, CreateLocationParam } from '@/types';
+import {
+  GetLocationsParam,
+  LocationType,
+  CreateLocationParam,
+  UpdateLocationParam,
+} from '@/types';
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from './redux';
 
@@ -40,6 +46,10 @@ export const useLocation = () => {
     await dispatch(createLocation(param));
   };
 
+  const onUpdateLocation = async (param: UpdateLocationParam) => {
+    await dispatch(updateLocation(param));
+  };
+
   return {
     locations,
     pageInfo,
@@ -47,5 +57,6 @@ export const useLocation = () => {
     onLocationSelect,
     onGetLocations,
     onCreateLocation,
+    onUpdateLocation,
   };
 };
