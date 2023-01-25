@@ -15,6 +15,7 @@ export type {
   GetLocationParam,
   CreateLocationParam,
   UpdateLocationParam,
+  DeleteLocationParam,
 } from './location.type';
 export type { RequestItemType } from './requests.type';
 export type { TransactionType, TransactionsProps } from './transactions.type';

@@ -13,6 +13,7 @@ import {
   GetLocationParam,
   CreateLocationParam,
   UpdateLocationParam,
+  DeleteLocationParam,
 } from '@/types';
 
 export const getLocations = async (params: GetLocationsParam) => {
@@ -39,6 +40,13 @@ export const createLocation = async (params: CreateLocationParam) => {
 
 export const updateLocation = async (params: UpdateLocationParam) => {
   const response = await jwtAxios.put(`/location/${params.id}`, params, {
+    headers: getAuthorizeHeader(),
+  });
+  return response.data;
+};
+
+export const deleteLocation = async (params: DeleteLocationParam) => {
+  const response = await jwtAxios.delete(`/location/${params.locationId}`, {
     headers: getAuthorizeHeader(),
   });
   return response.data;
