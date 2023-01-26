@@ -7,24 +7,6 @@ export const menuActions = [
   { label: 'Delete', color: 'rgba(251, 2, 2, 0.6)', action: MenuAction.DELETE },
 ];
 
-export const initUserData: UserType.User = {
-  id: 0,
-  firstName: '',
-  lastName: '',
-  email: '',
-  address: {
-    address1: '',
-    address2: '',
-    city: '',
-    state: '',
-    zipcode: '',
-    country: '',
-  },
-  phone: '',
-  birthday: '',
-  createdAt: '',
-};
-
 export const profileData: UserType.User = {
   id: 1,
   firstName: 'Esthera',

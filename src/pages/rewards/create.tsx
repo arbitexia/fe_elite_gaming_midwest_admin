@@ -5,17 +5,18 @@ import {
   RewardsDetailCarouselEditCard,
   RewardsDetailInfoEditCard,
 } from '@/modules/Rewards';
+import { RewardItemType } from '@/types';
 
 const RewardsCreate = () => {
-  const rewardsItem = {
+  const initRewardsItem: RewardItemType = {
     id: 0,
     name: '',
     urls: [],
     location: {
       name: '',
-      coordinates: { lat: 0, lng: 0 },
+      coords: { lat: 0, lng: 0 },
       id: 0,
-      location: {
+      address: {
         address1: '',
         address2: '',
         city: '',
@@ -23,9 +24,8 @@ const RewardsCreate = () => {
         zipcode: '',
         country: '',
       },
-      status: true,
+      status: 'OPEN',
       type: '',
-      urls: [],
     },
     point: 0,
     short: '',
@@ -35,13 +35,13 @@ const RewardsCreate = () => {
     createdAt: '',
   };
   return (
-    <DashboardLayout title={rewardsItem ? rewardsItem.name : 'Rewards'}>
-      {rewardsItem && (
+    <DashboardLayout title={initRewardsItem ? initRewardsItem.name : 'Rewards'}>
+      {initRewardsItem && (
         <>
-          <RewardsDetailHeader name={rewardsItem.name} isEditable={true} />
+          <RewardsDetailHeader name={initRewardsItem.name} isEditable={true} />
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
-            <RewardsDetailCarouselEditCard rewardsItem={rewardsItem} />
-            <RewardsDetailInfoEditCard rewardsItem={rewardsItem} />
+            <RewardsDetailCarouselEditCard rewardsItem={initRewardsItem} />
+            <RewardsDetailInfoEditCard rewardsItem={initRewardsItem} />
           </UIFlexSpaceBox>
         </>
       )}

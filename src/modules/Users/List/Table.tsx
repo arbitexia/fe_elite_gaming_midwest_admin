@@ -263,12 +263,12 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
                   {format(new Date(userItem.birthday), 'yyyy-MM-dd')}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {userItem.role.name}
+                  {userItem.role?.name}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   <UIChip
                     label={userItem.status}
-                    color={getColor(userItem.status)}
+                    color={getColor(userItem.status ?? 'ACTIVATED')}
                   />
                 </StyledTableCell>
                 <StyledTableCell>
