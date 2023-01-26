@@ -11,6 +11,7 @@ import {
   CreateGalleryParams,
   CreateUploadFormParams,
   DeleteGalleryParams,
+  UpdateGalleryParams,
 } from '@/types';
 import { jwtAxios } from './axios.api';
 import { getAuthorizeHeader } from '@/libs/data-helper';
@@ -35,9 +36,8 @@ export const createAsset = async (params: CreateAssetParams) => {
 };
 
 export const deleteGallery = async (params: DeleteGalleryParams) => {
-  const response = await jwtAxios.delete(`/gallery`, {
+  const response = await jwtAxios.delete(`/gallery/${params.galleryId}`, {
     headers: getAuthorizeHeader(),
-    params,
   });
   return response.data;
 };
@@ -46,5 +46,16 @@ export const createGallery = async (params: CreateGalleryParams) => {
   const response = await jwtAxios.post(`/gallery`, params, {
     headers: getAuthorizeHeader(),
   });
+  return response.data;
+};
+
+export const updateGallery = async (params: UpdateGalleryParams) => {
+  const response = await jwtAxios.put(
+    `/gallery/${params.id}`,
+    { assetId: params.assetId },
+    {
+      headers: getAuthorizeHeader(),
+    }
+  );
   return response.data;
 };

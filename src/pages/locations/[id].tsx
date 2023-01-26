@@ -10,20 +10,16 @@ import {
 } from '@/modules/Locations';
 import { LocationType } from '@/types';
 import { useLocation } from '@/hooks';
-import { useAsset } from '@/hooks/asset';
 
 const LocationsById = () => {
   const router = useRouter();
   const { id } = router.query;
   const { onGetLocationById } = useLocation();
-  const { onSetGalleries } = useAsset();
   const [locationItem, setLocationItem] = useState<LocationType | undefined>(
     undefined
   );
   useEffect(() => {
-    const locationById = onGetLocationById(parseInt(id as string));
-    setLocationItem(locationById);
-    onSetGalleries(locationById?.gallery ?? []);
+    setLocationItem(onGetLocationById(parseInt(id as string)));
   }, [id]);
   return (
     <DashboardLayout title={locationItem ? locationItem.name : 'Locations'}>

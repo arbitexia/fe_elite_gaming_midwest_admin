@@ -8,9 +8,12 @@ import {
   CreateAssetParams,
   CreateGalleryParams,
   DeleteGalleryParams,
+  UpdateGalleryParams,
   ReduxJson,
   ResponseStatus,
+  LocationType,
 } from '@/types';
+import { getLocation } from './location.slice';
 
 // Initial state
 const initialState: ReduxJson.AssetState = {
@@ -41,6 +44,19 @@ export const createGallery = createAsyncThunk<
 >('asset/createGallery', async (params: CreateGalleryParams, thunkAPI) => {
   try {
     return await assetApi.createGallery(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
+export const updateGallery = createAsyncThunk<
+  AssetType.Gallery,
+  UpdateGalleryParams,
+  { dispatch: AppDispatch; state: RootState }
+>('asset/updateGallery', async (params: UpdateGalleryParams, thunkAPI) => {
+  try {
+    return await assetApi.updateGallery(params);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
@@ -93,6 +109,27 @@ export const assetSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getLocation.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        getLocation.fulfilled,
+        (state, { payload }: PayloadAction<LocationType>) => {
+          state.loading = false;
+          state.galleries = payload.gallery ?? [];
+          state.status = ResponseStatus.SUCCESS;
+          state.message = 'Asset Created';
+        }
+      )
+      .addCase(getLocation.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
       .addCase(createAsset.pending, (state) => {
         state.loading = true;
         state.status = ResponseStatus.PENDING;
@@ -101,14 +138,8 @@ export const assetSlice = createSlice({
       })
       .addCase(
         createAsset.fulfilled,
-        (state, { payload }: PayloadAction<AssetType.Asset>) => {
+        (state, _payload: PayloadAction<AssetType.Asset>) => {
           state.loading = false;
-          console.log(payload);
-          state.galleries = [
-            ...state.galleries,
-            { id: 0, assetId: payload.id, asset: payload },
-          ];
-          console.log(state.galleries);
           state.status = ResponseStatus.SUCCESS;
           state.message = 'Asset Created';
         }
@@ -127,8 +158,9 @@ export const assetSlice = createSlice({
       })
       .addCase(
         createGallery.fulfilled,
-        (state, _payload: PayloadAction<AssetType.Gallery>) => {
+        (state, { payload }: PayloadAction<AssetType.Gallery>) => {
           state.loading = false;
+          state.galleries.push(payload);
           state.status = ResponseStatus.SUCCESS;
         }
       )

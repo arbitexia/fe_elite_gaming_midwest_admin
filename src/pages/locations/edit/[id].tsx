@@ -11,7 +11,7 @@ import {
 import { initLocationData } from '@/_mock/locations';
 import { LocationType, UpdateLocationParam } from '@/types';
 import { useFormik } from 'formik';
-import { useLocation } from '@/hooks';
+import { useAsset, useLocation } from '@/hooks';
 
 const LocationsById = () => {
   const router = useRouter();
@@ -20,10 +20,11 @@ const LocationsById = () => {
     undefined
   );
   const { onGetLocationById, onUpdateLocation } = useLocation();
+  const { onSaveGallery } = useAsset();
+
   const locationFormik = useFormik<LocationType>({
     initialValues: locationItem ?? initLocationData,
     onSubmit: async (values) => {
-      console.log(values);
       let params: UpdateLocationParam = {
         id: values.id,
         input: {
@@ -37,8 +38,7 @@ const LocationsById = () => {
       };
 
       onUpdateLocation(params);
-      // await authorize({ variables: { ...values } });
-      //TODO Create Gallery
+      onSaveGallery(values.id, 'LOCATION');
     },
   });
 

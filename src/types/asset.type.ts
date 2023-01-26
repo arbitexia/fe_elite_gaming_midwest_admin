@@ -27,10 +27,19 @@ export type CreateAssetParams = {
 
 export type CreateGalleryParams = {
   input: {
-    assetId: number;
+    desc?: string;
+    name?: string;
+    type?: AssetItemType;
+    assetId?: number;
+    url?: string;
     victimId: number;
     model: string;
   };
+};
+
+export type UpdateGalleryParams = {
+  id: number;
+  assetId: number;
 };
 
 export type DeleteGalleryParams = {

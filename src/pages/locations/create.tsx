@@ -14,7 +14,7 @@ import { initLocationData } from '@/_mock/locations';
 
 const LocationCreatePage = () => {
   const { onCreateLocation } = useLocation();
-  const { onSetGalleries, onCreateGallery } = useAsset();
+  const { onSetGalleries, onSaveGallery } = useAsset();
   const [isReady, setIsReady] = useState(true);
   useEffect(() => {
     if (!isReady) return;
@@ -35,7 +35,7 @@ const LocationCreatePage = () => {
         },
       };
       const location = await onCreateLocation(params);
-      onCreateGallery(location.id, 'LOCATION');
+      onSaveGallery(location.id, 'LOCATION');
     },
   });
 

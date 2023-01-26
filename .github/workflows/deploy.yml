@@ -1,0 +1,42 @@
+name: Deploy Frontend - Elite Gaming Admin
+
+on:
+  push:
+    branches:
+     - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: 'production'
+      API_URL: ${{ secrets.APP_API_URL }}
+      HOSTING_URL: ${{ secrets.APP_HOSTING_URL }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Dependencies
+        run: CI=false && yarn install
+      
+      - name: Generate prod env file
+        run: yarn gen:env
+
+      - name: Build
+        run: yarn build
+
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          echo "AWS s3 sync"
+          aws s3 sync --region us-east-1 ./out s3://${{ secrets.AWS_S3_BUCKET }} --delete
+          echo "AWS CF reset"
+          aws cloudfront create-invalidation --region us-east-1 --distribution-id ${{ secrets.AWS_CF_ID }} --paths "/*"

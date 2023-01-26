@@ -21,8 +21,8 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
           component="img"
           src={
             item.gallery && item.gallery.length > 0
-              ? item.gallery[0].asset?.url ?? ''
-              : ''
+              ? item.gallery[0].asset?.url ?? '/images/noImage.jpg'
+              : '/images/noImage.jpg'
           }
           width={220}
           height={160}
@@ -34,6 +34,7 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
           fontWeight: '600',
           fontSize: '18px',
           lineHeight: '22px',
+          minHeight: '22px',
           color: 'gba(5, 34, 33, 0.8)',
         }}
       >
@@ -55,6 +56,8 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
           fontWeight: '600',
           fontSize: '12px',
           lineHeight: '16px',
+          height: '16px',
+          overflow: 'hidden',
           color: 'rgba(0, 0, 0, 0.3)',
         }}
       >

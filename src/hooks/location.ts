@@ -7,6 +7,7 @@ import {
   deleteLocation,
   resetLocationMessage,
   locationSelector,
+  setGalleries,
 } from '@/redux/slices';
 
 import {
@@ -33,7 +34,11 @@ export const useLocation = () => {
   }, [loading]);
 
   const onGetLocationById = (id: number) => {
-    return locations.find((location: LocationType) => location.id === id);
+    const location = locations.find(
+      (location: LocationType) => location.id === id
+    );
+    dispatch(setGalleries(location?.gallery ?? []));
+    return location;
   };
 
   const onLocationSelect = async (id: number) => {

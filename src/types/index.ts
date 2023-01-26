@@ -45,5 +45,6 @@ export type {
   CreateGalleryParams,
   DeleteGalleryParams,
   PresignedPostType,
+  UpdateGalleryParams,
 } from './asset.type';
 export { ResponseStatus, AuthCallbackStatus } from './common.type';

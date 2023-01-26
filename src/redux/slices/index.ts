@@ -11,6 +11,7 @@ export {
   clearAssetMessage,
   createAsset,
   createGallery,
+  updateGallery,
   deleteGallery,
   setGalleries,
   removeGalleryItem,
