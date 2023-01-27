@@ -153,9 +153,9 @@ export const guestActivityData: GuestActivityDataType[] = [
 ];
 
 export const slugIndex = {
-  admins: '2',
-  tablets: '3',
-  customers: '4',
+  admins: 'ADMIN',
+  tablets: 'TABLET',
+  customers: 'CUSTOMER',
 };
 
 export const userStatus = [
