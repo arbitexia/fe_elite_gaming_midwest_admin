@@ -105,7 +105,7 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
       <Box
         ref={mapNode}
         width="100%"
-        height="170px"
+        height="250px"
         borderRadius="8px"
         overflow="hiddend"
       />
