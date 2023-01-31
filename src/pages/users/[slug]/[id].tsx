@@ -11,16 +11,25 @@ import {
   UserDetailActivityCard,
 } from '@/modules/Users';
 import { DashboardLayout } from '@/layouts';
-import { useUser } from '@/hooks';
+import { useUser, usePoint } from '@/hooks';
+import { GetPointParam } from '@/types';
 
 const UsersDetailPage = () => {
   const router = useRouter();
   const { currentUser, currentId, onUserSelect } = useUser();
+  const { points, onGetPoints } = usePoint();
   const { id } = router.query;
 
   useEffect(() => {
     onUserSelect(parseInt(id as string));
   }, [id]);
+
+  useEffect(() => {
+    let param: GetPointParam = {
+      userId: parseInt(id as string),
+    };
+    onGetPoints(param);
+  }, [currentId]);
 
   return (
     <DashboardLayout title="Users">
@@ -29,7 +38,7 @@ const UsersDetailPage = () => {
           <UserDetailInfoCard user={currentUser} />
           <UserDetailRequestCard />
           <UIFlexWrapBox sx={{ gap: '20px' }}>
-            <UserDetailPointsCard />
+            <UserDetailPointsCard points={points} />
             <UserDetailTransactionCard />
           </UIFlexWrapBox>
           <UIFlexWrapBox sx={{ gap: '20px' }}>

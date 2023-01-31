@@ -6,9 +6,13 @@ import {
   StyledUserTableCell,
   StyledRequestTableRow,
 } from './ui';
-import { userPointsData } from '@/_mock/users';
+import { PointType } from '@/types';
 
-const UserDetailPointsCard = () => {
+interface UserDetailPointsCardProps {
+  points: PointType[];
+}
+
+const UserDetailPointsCard = ({ points }: UserDetailPointsCardProps) => {
   return (
     <StyledUserDetailCard>
       <UIFlexSpaceBox>
@@ -34,7 +38,7 @@ const UserDetailPointsCard = () => {
         }}
       >
         <TableBody>
-          {userPointsData.map((data) => {
+          {points.map((data) => {
             return (
               <StyledRequestTableRow key={data.id}>
                 <StyledUserTableCell>#{data.id}</StyledUserTableCell>
@@ -42,7 +46,7 @@ const UserDetailPointsCard = () => {
                   {data.point} points
                 </StyledUserTableCell>
                 <StyledUserTableCell sx={{ color: '#06251F' }}>
-                  {data.location}
+                  {data.userLocation?.location?.name ?? ''}
                 </StyledUserTableCell>
                 <StyledUserTableCell sx={{ fontWeight: 500 }}>
                   {data.updatedAt}

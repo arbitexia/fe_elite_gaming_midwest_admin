@@ -21,6 +21,7 @@ import {
   appReducer,
   userReducer,
   locationReducer,
+  pointReducer,
 } from './slices';
 
 const combinedReducer = combineReducers({
@@ -29,6 +30,7 @@ const combinedReducer = combineReducers({
   user: userReducer,
   location: locationReducer,
   asset: assetReducer,
+  point: pointReducer,
 });
 
 const createStore = () => {
@@ -36,7 +38,7 @@ const createStore = () => {
     key: 'root',
     version: 1,
     storage,
-    whitelist: ['auth', 'app', 'user', 'asset', 'location'],
+    whitelist: ['auth', 'app', 'user', 'asset', 'location', 'point'],
   };
 
   const persistedReducer = persistReducer(persistConfig, combinedReducer);

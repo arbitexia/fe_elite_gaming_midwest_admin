@@ -48,3 +48,4 @@ export type {
   UpdateGalleryParams,
 } from './asset.type';
 export { ResponseStatus, AuthCallbackStatus } from './common.type';
+export type { UserLocation, PointType, GetPointParam } from './point.type';
