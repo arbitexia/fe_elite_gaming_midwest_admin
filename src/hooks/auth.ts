@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppToast } from '@/providers';
 import {
   authorize,
@@ -10,61 +10,47 @@ import {
 } from '@/redux/slices';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from './redux';
-import { ResponseStatus, AuthCallbackStatus } from '@/types';
+import { ResponseStatus } from '@/types';
 
 export interface useAuthProps {
   handleAuthResetSuccess?: () => void;
   handleAuthUserSuccess?: () => void;
-  handleAuthForgotSuccess?: () => void;
 }
 
-export const useAuth = ({
-  handleAuthResetSuccess,
-  handleAuthUserSuccess,
-  handleAuthForgotSuccess,
-}: useAuthProps) => {
+export const useAuth = (callbackFunc?: useAuthProps) => {
   const appToast = useAppToast();
   const router = useRouter();
-  const authState = useAppSelector(authSelector);
+  const { message, error, loading, accessToken, status } =
+    useAppSelector(authSelector);
   const dispatch = useAppDispatch();
-  const [callbackNo, setCallbackNo] = useState<AuthCallbackStatus>(
-    AuthCallbackStatus.LOGIN
-  );
 
   useEffect(() => {
-    if (authState.status === ResponseStatus.FAILED && authState.errorMessage) {
-      appToast({ severity: 'error', message: authState.errorMessage });
+    if (loading) return;
+    error && appToast({ severity: 'error', message: error });
+    if (status === ResponseStatus.SUCCESS && message) {
+      appToast({ severity: 'success', message: message });
       dispatch(clearAuthMessage(''));
+      callbackFunc?.handleAuthUserSuccess &&
+        callbackFunc?.handleAuthUserSuccess();
+      callbackFunc?.handleAuthResetSuccess &&
+        callbackFunc?.handleAuthResetSuccess();
     }
-    if (authState.status === ResponseStatus.SUCCESS && authState.message) {
-      appToast({ severity: 'success', message: authState.message });
-      dispatch(clearAuthMessage(''));
-      if (callbackNo == AuthCallbackStatus.LOGIN && handleAuthUserSuccess)
-        handleAuthUserSuccess();
-      if (callbackNo == AuthCallbackStatus.RESET && handleAuthResetSuccess)
-        handleAuthResetSuccess();
-      if (callbackNo == AuthCallbackStatus.FORGOT && handleAuthForgotSuccess)
-        handleAuthForgotSuccess();
-    }
-  }, [authState]);
+  }, [loading]);
 
-  const onLogin = (identifier: string, password: string) => {
-    setCallbackNo(AuthCallbackStatus.LOGIN);
-    dispatch(authorize({ identifier, password }));
+  const onLogin = async (identifier: string, password: string) => {
+    await dispatch(authorize({ identifier, password }));
   };
 
-  const onForgotPassword = (email: string) => {
-    setCallbackNo(AuthCallbackStatus.FORGOT);
-    dispatch(forgotPassword({ email }));
+  const onForgotPassword = async (email: string) => {
+    await dispatch(forgotPassword({ email }));
   };
 
-  const onResetPassword = (token: string, password: string) => {
-    setCallbackNo(AuthCallbackStatus.RESET);
-    dispatch(resetPassword({ token, password }));
+  const onResetPassword = async (token: string, password: string) => {
+    await dispatch(resetPassword({ token, password }));
   };
   return {
-    isAuthenticated: authState.accessToken ? true : false,
-    accessToken: authState.accessToken,
+    isAuthenticated: accessToken ? true : false,
+    accessToken: accessToken,
     onLogin,
     onForgotPassword,
     onResetPassword,

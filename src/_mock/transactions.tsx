@@ -25,9 +25,9 @@ export const transactionData: TransactionType[] = [
     },
     location: {
       name: 'Palm Casino Resort',
-      coordinates: { lat: 40.7127837, lng: -74.0059413 },
+      coords: { lat: 40.7127837, lng: -74.0059413 },
       id: 1,
-      location: {
+      address: {
         address1: '',
         address2: '',
         city: '',
@@ -35,14 +35,8 @@ export const transactionData: TransactionType[] = [
         zipcode: '',
         country: 'USA',
       },
-      status: true,
+      status: 'OPEN',
       type: 'Palm',
-      urls: [
-        'images/palm.png',
-        'images/roulette.png',
-        'images/palm.png',
-        'images/roulette.png',
-      ],
     },
     reward: {
       id: 1,
@@ -50,9 +44,9 @@ export const transactionData: TransactionType[] = [
       urls: ['images/earphone.jpg'],
       location: {
         name: 'Palm Casino Resort',
-        coordinates: { lat: 40.7127837, lng: -74.0059413 },
+        coords: { lat: 40.7127837, lng: -74.0059413 },
         id: 1,
-        location: {
+        address: {
           address1: '',
           address2: '',
           city: '',
@@ -60,14 +54,8 @@ export const transactionData: TransactionType[] = [
           zipcode: '',
           country: 'USA',
         },
-        status: true,
+        status: 'OPEN',
         type: 'Palm',
-        urls: [
-          'images/palm.png',
-          'images/roulette.png',
-          'images/palm.png',
-          'images/roulette.png',
-        ],
       },
       point: 12000,
       short: '128gb RAM $600',

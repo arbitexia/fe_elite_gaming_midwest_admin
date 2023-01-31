@@ -11,14 +11,15 @@ import {
   StyledUserEditTextField,
 } from './ui';
 import ProfileHeader from './Header';
-import { userRole, userStatus } from '@/_mock/users';
+import { userStatus } from '@/_mock/users';
 import { useFormik } from 'formik';
+import { UserRole } from '@/constants/Enum';
 
-interface ProfileHeaderProps {
-  user: UserType.MockUser;
+interface ProfileEditProps {
+  user: UserType.User;
 }
 
-const ProfileEdit = ({ user }: ProfileHeaderProps) => {
+const ProfileEdit = ({ user }: ProfileEditProps) => {
   const userFormik = useFormik({
     initialValues: user,
     onSubmit: async (values) => {
@@ -54,7 +55,7 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                 overflow: 'hidden',
               }}
             >
-              <StyledUserInfoAvatar src={user.asset} alt="avatar" />
+              <StyledUserInfoAvatar src={user.avatar?.url} alt="avatar" />
               <label htmlFor="photo-upload">
                 <Typography
                   sx={{
@@ -202,14 +203,14 @@ const ProfileEdit = ({ user }: ProfileHeaderProps) => {
                   <StyledUserInfoTitle>User role:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="role"
-                    value={userFormik.values.role}
+                    value={userFormik.values.roleId}
                     onChange={userFormik.handleChange}
                     select
                   >
-                    {userRole.map((item) => {
+                    {Object.values(UserRole).map((item, index) => {
                       return (
-                        <MenuItem key={item.id} value={item.id}>
-                          {item.value}
+                        <MenuItem key={item} value={index + 1}>
+                          {item}
                         </MenuItem>
                       );
                     })}

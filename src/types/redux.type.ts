@@ -1,6 +1,8 @@
 import { PaletteMode } from '@mui/material';
-import { ResponseStatus } from './common.type';
-
+import { AssetType } from './asset.type';
+import { ResponseStatus, CommonType } from './common.type';
+import { UserType } from './users.type';
+import { LocationType } from './location.type';
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
     loading: boolean;
@@ -15,6 +17,14 @@ export declare namespace ReduxJson {
     };
   };
 
+  export type AssetState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    message: string | null;
+    error: string | null;
+    galleries: AssetType.Gallery[];
+  };
+
   export type AuthState = {
     loading: boolean;
     status: ResponseStatus | null;
@@ -22,7 +32,27 @@ export declare namespace ReduxJson {
     refreshToken: string;
     user: object | null;
     role: object;
-    message: string;
-    errorMessage: string | null;
+    message: string | null;
+    error: string | null;
+  };
+
+  export type UserState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    users: UserType.User[];
+    pageInfo: CommonType.PageInfo | null;
+    currentId: number;
+    currentUser: UserType.User | null;
+    message: string | null;
+    error: string | null;
+  };
+
+  export type LocationState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    locations: LocationType[];
+    pageInfo: CommonType.PageInfo | null;
+    message: string | null;
+    error: string | null;
   };
 }

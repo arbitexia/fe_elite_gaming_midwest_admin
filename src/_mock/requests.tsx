@@ -9,9 +9,9 @@ export const requestsData: RequestItemType[] = [
       urls: ['images/marshal.jpg'],
       location: {
         name: 'Palm Casino Resort',
-        coordinates: { lat: 40.7127837, lng: -74.0059413 },
+        coords: { lat: 40.7127837, lng: -74.0059413 },
         id: 1,
-        location: {
+        address: {
           address1: '',
           address2: '',
           city: '',
@@ -19,14 +19,8 @@ export const requestsData: RequestItemType[] = [
           zipcode: '',
           country: 'USA',
         },
-        status: true,
+        status: 'OPEN',
         type: 'Palm',
-        urls: [
-          'images/palm.png',
-          'images/roulette.png',
-          'images/palm.png',
-          'images/roulette.png',
-        ],
       },
       point: 39000,
       short: '128gb RAM $600',
@@ -57,9 +51,9 @@ export const requestsData: RequestItemType[] = [
     },
     location: {
       name: 'Palm Casino Resort',
-      coordinates: { lat: 40.7127837, lng: -74.0059413 },
+      coords: { lat: 40.7127837, lng: -74.0059413 },
       id: 1,
-      location: {
+      address: {
         address1: '',
         address2: '',
         city: 'New York',
@@ -67,14 +61,8 @@ export const requestsData: RequestItemType[] = [
         country: 'USA',
         zipcode: '',
       },
-      status: true,
+      status: 'OPEN',
       type: 'Palm',
-      urls: [
-        'images/palm.png',
-        'images/roulette.png',
-        'images/palm.png',
-        'images/roulette.png',
-      ],
     },
     status: 'Waiting',
     requestedAt: '14/06/2022',
@@ -87,9 +75,9 @@ export const requestsData: RequestItemType[] = [
       urls: ['images/marshal.jpg'],
       location: {
         name: 'Palm Casino Resort',
-        coordinates: { lat: 40.7127837, lng: -74.0059413 },
+        coords: { lat: 40.7127837, lng: -74.0059413 },
         id: 1,
-        location: {
+        address: {
           address1: '',
           address2: '',
           city: '',
@@ -97,14 +85,8 @@ export const requestsData: RequestItemType[] = [
           zipcode: '',
           country: 'USA',
         },
-        status: true,
+        status: 'OPEN',
         type: 'Palm',
-        urls: [
-          'images/palm.png',
-          'images/roulette.png',
-          'images/palm.png',
-          'images/roulette.png',
-        ],
       },
       point: 19000,
       short: '128gb RAM $600',
@@ -135,9 +117,9 @@ export const requestsData: RequestItemType[] = [
     },
     location: {
       name: 'Roulette Casino Resort',
-      coordinates: { lat: 34.0522342, lng: -118.2436849 },
+      coords: { lat: 34.0522342, lng: -118.2436849 },
       id: 2,
-      location: {
+      address: {
         address1: '',
         address2: '',
         city: '',
@@ -145,9 +127,8 @@ export const requestsData: RequestItemType[] = [
         zipcode: '',
         country: 'USA',
       },
-      status: true,
+      status: 'OPEN',
       type: 'Roulette',
-      urls: ['images/roulette.png'],
     },
     status: 'Accepted',
     requestedAt: '14/06/2022',

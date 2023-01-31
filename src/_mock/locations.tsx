@@ -1,11 +1,28 @@
 import { LocationType } from '@/types';
 
+export const initLocationData: LocationType = {
+  name: '',
+  coords: { lat: 0, lng: 0 },
+  id: 0,
+  address: {
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    zipcode: '',
+    country: '',
+  },
+  status: '',
+  type: '',
+  description: '',
+};
+
 export const locationsData: LocationType[] = [
   {
     name: 'Palm Casino Resort',
-    coordinates: { lat: 40.7127837, lng: -74.0059413 },
+    coords: { lat: 40.7127837, lng: -74.0059413 },
     id: 1,
-    location: {
+    address: {
       address1: '',
       address2: '',
       city: '',
@@ -13,20 +30,14 @@ export const locationsData: LocationType[] = [
       zipcode: '',
       country: 'USA',
     },
-    status: true,
+    status: 'OPEN',
     type: 'Palm',
-    urls: [
-      'images/palm.png',
-      'images/roulette.png',
-      'images/palm.png',
-      'images/roulette.png',
-    ],
   },
   {
     name: 'Roulette Casino Resort',
-    coordinates: { lat: 34.0522342, lng: -118.2436849 },
+    coords: { lat: 34.0522342, lng: -118.2436849 },
     id: 2,
-    location: {
+    address: {
       address1: '',
       address2: '',
       city: '',
@@ -34,15 +45,14 @@ export const locationsData: LocationType[] = [
       zipcode: '',
       country: 'USA',
     },
-    status: true,
+    status: 'OPEN',
     type: 'Roulette',
-    urls: ['images/roulette.png'],
   },
   {
     name: 'Palm Casino Resort',
-    coordinates: { lat: 41.8781136, lng: -87.6297982 },
+    coords: { lat: 41.8781136, lng: -87.6297982 },
     id: 3,
-    location: {
+    address: {
       address1: '',
       address2: '',
       city: '',
@@ -50,15 +60,14 @@ export const locationsData: LocationType[] = [
       zipcode: '',
       country: 'USA',
     },
-    status: true,
+    status: 'OPEN',
     type: 'Palm',
-    urls: ['images/palm.png'],
   },
   {
     name: 'Roulette Casino Resort',
-    coordinates: { lat: 29.7604267, lng: -95.3698028 },
+    coords: { lat: 29.7604267, lng: -95.3698028 },
     id: 4,
-    location: {
+    address: {
       address1: '',
       address2: '',
       city: '',
@@ -66,15 +75,14 @@ export const locationsData: LocationType[] = [
       zipcode: '',
       country: 'USA',
     },
-    status: true,
+    status: 'OPEN',
     type: 'Roulette',
-    urls: ['images/roulette.png'],
   },
   {
     name: 'Palm Casino Resort',
-    coordinates: { lat: 39.9525839, lng: -75.1652215 },
+    coords: { lat: 39.9525839, lng: -75.1652215 },
     id: 5,
-    location: {
+    address: {
       address1: '',
       address2: '',
       city: '',
@@ -82,15 +90,14 @@ export const locationsData: LocationType[] = [
       zipcode: '',
       country: 'USA',
     },
-    status: true,
+    status: 'OPEN',
     type: 'Palm',
-    urls: ['images/palm.png'],
   },
   {
     name: 'Roulette Casino Resort',
-    coordinates: { lat: 33.4483771, lng: -112.0740373 },
+    coords: { lat: 33.4483771, lng: -112.0740373 },
     id: 6,
-    location: {
+    address: {
       address1: '',
       address2: '',
       city: '',
@@ -98,15 +105,14 @@ export const locationsData: LocationType[] = [
       zipcode: '',
       country: 'USA',
     },
-    status: true,
+    status: 'OPEN',
     type: 'Roulette',
-    urls: ['images/roulette.png'],
   },
   {
     name: 'Palm Casino Resort',
-    coordinates: { lat: 29.4241219, lng: -98.49362819999999 },
+    coords: { lat: 29.4241219, lng: -98.49362819999999 },
     id: 7,
-    location: {
+    address: {
       address1: '',
       address2: '',
       city: '',
@@ -114,15 +120,14 @@ export const locationsData: LocationType[] = [
       zipcode: '',
       country: 'USA',
     },
-    status: true,
+    status: 'OPEN',
     type: 'Palm',
-    urls: ['images/palm.png'],
   },
   {
     name: 'Roulette Casino Resort',
-    coordinates: { lat: 32.715738, lng: -117.1610838 },
+    coords: { lat: 32.715738, lng: -117.1610838 },
     id: 8,
-    location: {
+    address: {
       address1: '',
       address2: '',
       city: '',
@@ -130,13 +135,17 @@ export const locationsData: LocationType[] = [
       zipcode: '',
       country: 'USA',
     },
-    status: true,
+    status: 'OPEN',
     type: 'Roulette',
-    urls: ['images/roulette.png'],
   },
 ];
 
 export const locationStatus = [
-  { id: 1, value: 'Open' },
-  { id: 2, value: 'Close' },
+  { id: 'OPEN', value: 'Open' },
+  { id: 'CLOSED', value: 'Close' },
+];
+
+export const locationType = [
+  { id: 'PALM', value: 'PALM' },
+  { id: 'ROULETTE', value: 'ROULETTE' },
 ];

@@ -18,26 +18,31 @@ import {
   StyledOptionMenu,
   StyledOptionMenuItem,
 } from './ui';
-import { menuActions, userRole, userStatus } from '@/_mock/users';
+import { menuActions } from '@/_mock/users';
 import { getColor } from '@/libs/data-helper';
 import { MenuAction } from '@/constants/Enum';
 import { UserType } from '@/types';
+import { format } from 'date-fns';
+import { useUser } from '@/hooks';
 
 type UsersTableProps = {
-  usersTableData: UserType.MockUser[];
+  usersTableData: UserType.User[];
 };
 
 const UsersTable = ({ usersTableData }: UsersTableProps) => {
   const router = useRouter();
+  const { onDeleteUser } = useUser();
   const [selected, setSelected] = useState<readonly string[]>([]);
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
 
   const handleNavBtnClick = (key: string) => {
-    console.log(anchorElOptionsMenu?.getAttribute('data-key'));
     if (key === MenuAction.DELETE) {
       //TODO Delete Action
+      onDeleteUser(
+        parseInt(anchorElOptionsMenu?.getAttribute('data-key') ?? '0')
+      );
     } else
       router.push(
         `${router.asPath}${
@@ -78,7 +83,7 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
 
   type Order = 'asc' | 'desc';
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof UserType.MockUser>('id');
+  const [orderBy, setOrderBy] = useState<keyof UserType.User>('id');
 
   function stableSort<T>(
     array: readonly T[],
@@ -95,19 +100,19 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
     return stabilizedThis.map((el) => el[0]);
   }
 
-  function getComparator<Key extends keyof UserType.MockUser>(
+  function getComparator<Key extends keyof UserType.User>(
     order: Order,
     orderBy: Key
-  ): (a: UserType.MockUser, b: UserType.MockUser) => number {
+  ): (a: UserType.User, b: UserType.User) => number {
     return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
 
   function descendingComparator(
-    a: UserType.MockUser,
-    b: UserType.MockUser,
-    orderBy: keyof UserType.MockUser
+    a: UserType.User,
+    b: UserType.User,
+    orderBy: keyof UserType.User
   ) {
     if (orderBy === 'firstName') {
       if (`${b.firstName} ${b.lastName}` < `${a.firstName} ${a.lastName}`) {
@@ -128,13 +133,12 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
   }
 
   const createSortHandler =
-    (property: keyof UserType.MockUser) =>
-    (event: React.MouseEvent<unknown>) => {
+    (property: keyof UserType.User) => (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof UserType.MockUser
+    property: keyof UserType.User
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -225,59 +229,67 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
         </StyledTableRow>
       </TableHead>
       <TableBody>
-        {stableSort<UserType.MockUser>(
-          usersTableData,
-          getComparator(order, orderBy)
-        ).map((userItem) => {
-          const isItemSelected = isSelected(userItem.id.toString());
-          // const labelId = `enhanced-table-checkbox-${index}`;
-          return (
-            <StyledTableRow
-              key={userItem.id}
-              data-key={userItem.id}
-              role="checkbox"
-            >
-              <StyledTableCell>
-                <Checkbox
-                  checked={isItemSelected}
-                  onClick={(event) =>
-                    handleClick(event, userItem.id.toString())
-                  }
-                />
-              </StyledTableCell>
-              <StyledTableCell
-                onClick={() => router.push(`${router.asPath}/${userItem.id}`)}
-                sx={{ cursor: 'pointer' }}
+        {usersTableData.length > 0 &&
+          stableSort<UserType.User>(
+            usersTableData,
+            getComparator(order, orderBy)
+          ).map((userItem) => {
+            const isItemSelected = isSelected(userItem.id.toString());
+            // const labelId = `enhanced-table-checkbox-${index}`;
+            return (
+              <StyledTableRow
+                key={userItem.id}
+                data-key={userItem.id}
+                role="checkbox"
               >
-                #{userItem.id}
-              </StyledTableCell>
-              <StyledTableCell>{`${userItem.firstName} ${userItem.lastName}`}</StyledTableCell>
-              <StyledTableCell>{userItem.email}</StyledTableCell>
-              <StyledTableCell>{userItem.phone}</StyledTableCell>
-              <StyledTableCell>{userItem.birthday}</StyledTableCell>
-              <StyledTableCell align="center">
-                {userRole[userItem.role - 1].value}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <UIChip
-                  label={userStatus[userItem.status].value}
-                  color={getColor(userStatus[userItem.status].value)}
-                />
-              </StyledTableCell>
-              <StyledTableCell>{userItem.createdAt}</StyledTableCell>
-              <StyledTableCell>
-                <IconButton
-                  data-key={userItem.id}
-                  onClick={(event: React.MouseEvent<HTMLElement>) => {
-                    setAnchorElOptionsMenu(event.currentTarget);
-                  }}
+                <StyledTableCell>
+                  <Checkbox
+                    checked={isItemSelected}
+                    onClick={(event) =>
+                      handleClick(event, userItem.id.toString())
+                    }
+                  />
+                </StyledTableCell>
+                <StyledTableCell
+                  onClick={() => router.push(`${router.asPath}/${userItem.id}`)}
+                  sx={{ cursor: 'pointer' }}
                 >
-                  <MoreHorizIcon sx={{ color: '#83A9A8' }} />
-                </IconButton>
-              </StyledTableCell>
-            </StyledTableRow>
-          );
-        })}
+                  #{userItem.id}
+                </StyledTableCell>
+                <StyledTableCell>{userItem.fullName}</StyledTableCell>
+                <StyledTableCell>{userItem.email}</StyledTableCell>
+                <StyledTableCell>{userItem.phone}</StyledTableCell>
+                <StyledTableCell>
+                  {format(new Date(userItem.birthday), 'yyyy-MM-dd')}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {userItem.role?.name}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <UIChip
+                    label={userItem.status}
+                    color={getColor(userItem.status ?? 'ACTIVATED')}
+                  />
+                </StyledTableCell>
+                <StyledTableCell>
+                  {format(
+                    new Date(userItem.createdAt as string),
+                    'yyyy-MM-dd h:m:s'
+                  )}
+                </StyledTableCell>
+                <StyledTableCell>
+                  <IconButton
+                    data-key={userItem.id}
+                    onClick={(event: React.MouseEvent<HTMLElement>) => {
+                      setAnchorElOptionsMenu(event.currentTarget);
+                    }}
+                  >
+                    <MoreHorizIcon sx={{ color: '#83A9A8' }} />
+                  </IconButton>
+                </StyledTableCell>
+              </StyledTableRow>
+            );
+          })}
       </TableBody>
       <StyledOptionMenu
         PaperProps={{

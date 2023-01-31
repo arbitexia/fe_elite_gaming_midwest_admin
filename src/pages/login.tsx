@@ -42,6 +42,9 @@ export const LoginSchema = yup.object({
 
 const LoginPage = () => {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
+
+  if (isAuthenticated) router.push('/users/customers');
 
   const { onLogin } = useAuth({
     handleAuthUserSuccess: () => {

@@ -11,11 +11,10 @@ import {
   StyledUserInfoCardStatus,
 } from './ui';
 import { getColor } from '@/libs/data-helper';
-import { userStatus, userRole } from '@/_mock/users';
 import ProfileHeader from './Header';
 
 interface ProfileHeaderProps {
-  user: UserType.MockUser;
+  user: UserType.User;
 }
 
 const ProfileInfo = ({ user }: ProfileHeaderProps) => {
@@ -27,8 +26,8 @@ const ProfileInfo = ({ user }: ProfileHeaderProps) => {
         <StyledUserInfoCardContent>
           <StyledUserInfoCardStatus>
             <UIChip
-              label={userStatus[user.status].value}
-              color={getColor(userStatus[user.status].value)}
+              label={user.status}
+              color={getColor(user.status ?? 'Activated')}
             />
             <Typography
               sx={{
@@ -41,7 +40,7 @@ const ProfileInfo = ({ user }: ProfileHeaderProps) => {
               ID #{user.id}
             </Typography>
           </StyledUserInfoCardStatus>
-          <StyledUserInfoAvatar src={user.asset} alt="avatar" />
+          <StyledUserInfoAvatar src={user.avatar?.url} alt="avatar" />
           <Box flexGrow="1">
             <Typography
               sx={{
@@ -52,7 +51,7 @@ const ProfileInfo = ({ user }: ProfileHeaderProps) => {
                 color: '#222B35',
               }}
             >
-              {`${user.firstName} ${user.lastName}`}
+              {user.fullName}
             </Typography>
             <Divider />
             <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
@@ -77,9 +76,7 @@ const ProfileInfo = ({ user }: ProfileHeaderProps) => {
                 </UIFlexWrapBox>
                 <UIFlexWrapBox>
                   <StyledUserInfoTitle>User role:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>
-                    {userRole[user.role - 1].value}
-                  </StyledUserInfoValue>
+                  <StyledUserInfoValue>{user.role?.name}</StyledUserInfoValue>
                 </UIFlexWrapBox>
               </Stack>
             </UIFlexWrapBox>

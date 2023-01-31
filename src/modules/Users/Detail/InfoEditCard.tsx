@@ -11,33 +11,13 @@ import {
   StyledUserEditTextField,
 } from './ui';
 import UsersDetailHeader from './Header';
-import { userRole, userStatus } from '@/_mock/users';
+import { userStatus } from '@/_mock/users';
 import { useFormik } from 'formik';
+import { UserRole } from '@/constants/Enum';
 
 interface UsersDetailHeaderProps {
-  user: UserType.MockUser;
+  user: UserType.User;
 }
-
-export const initialFormData: UserType.MockUser = {
-  id: 0,
-  asset: '',
-  birthday: '',
-  role: 1,
-  status: 1,
-  createdAt: '',
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  address: {
-    country: '',
-    state: '',
-    city: '',
-    zipcode: '',
-    address1: '',
-    address2: '',
-  },
-};
 
 const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
   const userFormik = useFormik({
@@ -75,7 +55,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                 overflow: 'hidden',
               }}
             >
-              <StyledUserInfoAvatar src={user.asset} alt="avatar" />
+              <StyledUserInfoAvatar src={user.avatar?.url} alt="avatar" />
               <label htmlFor="photo-upload">
                 <Typography
                   sx={{
@@ -222,15 +202,15 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>User role:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="role"
-                    value={userFormik.values.role}
+                    name="roleId"
+                    value={userFormik.values.roleId}
                     onChange={userFormik.handleChange}
                     select
                   >
-                    {userRole.map((item) => {
+                    {Object.values(UserRole).map((item, index) => {
                       return (
-                        <MenuItem key={item.id} value={item.id}>
-                          {item.value}
+                        <MenuItem key={item} value={index + 1}>
+                          {item}
                         </MenuItem>
                       );
                     })}

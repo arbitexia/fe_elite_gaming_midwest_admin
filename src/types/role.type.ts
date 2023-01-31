@@ -1,15 +1,9 @@
+import { UserRole } from '@/constants/Enum';
 export declare namespace RoleType {
-  enum UserRoleType {
-    SUPER = 'SUPER',
-    ADMIN = 'ADMIN',
-    TABLET = 'TABLET',
-    USER = 'USER',
-    GUEST = 'GUEST',
-  }
-
   type Role = {
+    id: number;
     name: string;
     permissions: null;
-    shortCode: UserRoleType;
+    shortCode: UserRole;
   };
 }

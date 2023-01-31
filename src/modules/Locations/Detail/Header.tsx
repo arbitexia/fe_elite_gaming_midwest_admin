@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import { useRouter } from 'next/router';
+import { useLocation } from '@/hooks';
 
 export type LocationDetailHeaderProps = {
   name: string;
@@ -28,11 +29,13 @@ const LocationDetailHeader = ({
   const router = useRouter();
   const { id } = router.query;
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const { onDeleteLocation } = useLocation();
   const handleCancel = () => {
     setOpenDeleteModal(false);
   };
   const handleOk = () => {
     setOpenDeleteModal(false);
+    onDeleteLocation(parseInt(id as string));
   };
   return (
     <UIFlexSpaceBox sx={{ mb: '35px', alignItems: 'center', gap: '12px' }}>
@@ -48,7 +51,7 @@ const LocationDetailHeader = ({
       </Typography>
       <UIFlexWrapBox>
         {isEditable ? (
-          <UIDefaultButton>Save</UIDefaultButton>
+          <UIDefaultButton type="submit">Save</UIDefaultButton>
         ) : (
           <>
             <UIActionButton

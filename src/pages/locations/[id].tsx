@@ -8,19 +8,18 @@ import {
   LocationsDetailInfoCard,
   LocationDetailRewardTable,
 } from '@/modules/Locations';
-import { locationsData } from '@/_mock/locations';
 import { LocationType } from '@/types';
+import { useLocation } from '@/hooks';
 
 const LocationsById = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [locationItem, setLocationItem] = useState<
-    LocationType | undefined | null
-  >(null);
+  const { onGetLocationById } = useLocation();
+  const [locationItem, setLocationItem] = useState<LocationType | undefined>(
+    undefined
+  );
   useEffect(() => {
-    setLocationItem(
-      locationsData.find((item) => item.id === parseInt(id as string))
-    );
+    setLocationItem(onGetLocationById(parseInt(id as string)));
   }, [id]);
   return (
     <DashboardLayout title={locationItem ? locationItem.name : 'Locations'}>
@@ -28,7 +27,7 @@ const LocationsById = () => {
         <>
           <LocationDetailHeader name={locationItem.name} isEditable={false} />
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
-            <LocationsDetailCarouselCard locationItem={locationItem} />
+            <LocationsDetailCarouselCard />
             <LocationsDetailInfoCard locationItem={locationItem} />
           </UIFlexSpaceBox>
           <LocationDetailRewardTable />

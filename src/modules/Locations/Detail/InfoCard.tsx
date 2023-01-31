@@ -26,7 +26,7 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
       container: node,
       accessToken: accessToken,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [locationItem.coordinates.lng, locationItem.coordinates.lat],
+      center: [locationItem.coords?.lng ?? 0, locationItem.coords?.lat ?? 0],
       zoom: 15,
     });
     mapboxMap.on('load', () => {
@@ -37,8 +37,8 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
       markerIcon.style.height = '25px';
       new mapboxgl.Marker(markerIcon)
         .setLngLat({
-          lng: locationItem.coordinates.lng,
-          lat: locationItem.coordinates.lat,
+          lng: locationItem.coords?.lng ?? 0,
+          lat: locationItem.coords?.lat ?? 0,
         })
         .addTo(mapboxMap);
     });
@@ -71,14 +71,20 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
           <UIFlexWrapBox>
             <StyledLocationInfoTitle>Location:</StyledLocationInfoTitle>
             <StyledLocationInfoValue>
-              {`${locationItem.location.address1} ${locationItem.location.address2} ${locationItem.location.city} ${locationItem.location.state} ${locationItem.location.zipcode} ${locationItem.location.country}`}
+              {`${locationItem.address?.address1 ?? ''} ${
+                locationItem.address?.address2 ?? ''
+              } ${locationItem.address?.city ?? ''} ${
+                locationItem.address?.state ?? ''
+              } ${locationItem.address?.zipcode ?? ''} ${
+                locationItem.address?.country ?? ''
+              }`}
             </StyledLocationInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
             <StyledLocationInfoTitle>Description:</StyledLocationInfoTitle>
-            <StyledLocationInfoValue
-              sx={{ height: '100px' }}
-            ></StyledLocationInfoValue>
+            <StyledLocationInfoValue sx={{ height: '100px' }}>
+              {locationItem.description ?? ''}
+            </StyledLocationInfoValue>
           </UIFlexWrapBox>
         </Stack>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>

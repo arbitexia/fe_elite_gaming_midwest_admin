@@ -48,7 +48,7 @@ const dropdownMenuItems = ['Profile', 'Logout'];
 export default function AppNavbar(props: Props) {
   const { window } = props;
   const router = useRouter();
-  const { isAuthenticated, onLogout } = useAuth({});
+  const { isAuthenticated, onLogout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorElNotifications, setAnchorElNotifications] =
     useState<null | HTMLElement>(null);

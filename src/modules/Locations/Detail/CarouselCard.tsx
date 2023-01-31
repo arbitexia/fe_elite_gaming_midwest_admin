@@ -1,33 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { StyledLocationCardBox } from './ui';
-import { LocationsDetailProps } from '@/types';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import Thumbnail from './Thumbnail';
+import { useAsset } from '@/hooks/asset';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const LocationsDetailCarouselCard = ({
-  locationItem,
-}: LocationsDetailProps) => {
+const LocationsDetailCarouselCard = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [images, setImages] = useState<string[]>([]);
-  useEffect(() => {
-    setImages(locationItem.urls);
-  }, [locationItem]);
+  const { galleries } = useAsset();
 
   const handleNext = () => {
+    if (galleries.length <= 1) return;
     setActiveStep((prevActiveStep) =>
-      prevActiveStep + 2 > images.length ? 0 : prevActiveStep + 1
+      prevActiveStep + 2 > galleries.length ? 0 : prevActiveStep + 1
     );
   };
 
   const handleBack = () => {
+    if (galleries.length <= 1) return;
     setActiveStep((prevActiveStep) =>
-      prevActiveStep - 1 >= 0 ? prevActiveStep - 1 : images.length - 1
+      prevActiveStep - 1 >= 0 ? prevActiveStep - 1 : galleries.length - 1
     );
   };
 
@@ -41,9 +38,10 @@ const LocationsDetailCarouselCard = ({
         <Box
           sx={{
             width: 'calc(100% - 120px)',
-            borderRadius: '12px',
+            display: 'block',
             overflow: 'hidden',
-            display: 'flex',
+            borderRadius: '12px',
+            height: '350px',
           }}
         >
           <AutoPlaySwipeableViews
@@ -51,35 +49,47 @@ const LocationsDetailCarouselCard = ({
             onChangeIndex={handleStepChange}
             enableMouseEvents
           >
-            {images.map((url, index) => {
-              return Math.abs(activeStep - index) <= 2 ? (
-                <Box
-                  component="img"
-                  sx={{
-                    width: '100%',
-                    height: '350px',
-                    display: 'flex',
-                  }}
-                  display={'flex'}
-                  src={`/${url}`}
-                  alt="image"
-                />
-              ) : null;
-            })}
+            {galleries.length > 0 ? (
+              galleries.map((gallery, index) => {
+                return Math.abs(activeStep - index) <= 2 ? (
+                  <Box
+                    key={index}
+                    component="img"
+                    sx={{
+                      width: '100%',
+                      height: '350px',
+                    }}
+                    src={`${gallery.asset?.url ?? '/images/noImage.jpg'}`}
+                    alt="image"
+                  />
+                ) : null;
+              })
+            ) : (
+              <Box
+                component="img"
+                sx={{
+                  width: '100%',
+                  height: '350px',
+                }}
+                src={'/images/noImage.jpg'}
+                alt="image"
+              />
+            )}
           </AutoPlaySwipeableViews>
         </Box>
         <UIFlexSpaceBox flexDirection="column" width="100px" height="350px">
           <Box>
-            {images.map((url, index) => {
-              return (
-                <Thumbnail
-                  key={index}
-                  index={index}
-                  url={url}
-                  activeStep={activeStep}
-                />
-              );
-            })}
+            {galleries &&
+              galleries.map((gallery, index) => {
+                return (
+                  <Thumbnail
+                    key={index}
+                    index={index}
+                    url={gallery.asset?.url ?? '/images/noImage.jpg'}
+                    activeStep={activeStep}
+                  />
+                );
+              })}
           </Box>
           <UIFlexSpaceBox>
             <IconButton onClick={handleBack}>

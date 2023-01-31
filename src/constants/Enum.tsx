@@ -6,6 +6,14 @@ export enum UserStatus {
   VERIFY_EMAIL = 'VERIFY_EMAIL',
 }
 
+export enum UserRole {
+  GUEST = 'GUEST',
+  CUSTOMER = 'CUSTOMER',
+  TABLET = 'TABLET',
+  ADMIN = 'ADMIN',
+  SUPER = 'SUPER',
+}
+
 export enum AssetType {
   IMAGE = 'IMAGE',
   VIDEO = 'VIDEO',

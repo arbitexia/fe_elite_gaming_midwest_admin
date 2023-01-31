@@ -26,7 +26,7 @@ export const ForgotPasswordSchema = yup.object({
 });
 
 const ForgotPassword = () => {
-  const { onForgotPassword } = useAuth({});
+  const { onForgotPassword } = useAuth();
   const loading = false;
   const formik = useFormik({
     initialValues: {

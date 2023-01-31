@@ -20,7 +20,7 @@ const initialState: ReduxJson.AuthState = {
   accessToken: '',
   refreshToken: '',
   message: '',
-  errorMessage: null,
+  error: null,
   user: null,
   role: {},
 };
@@ -71,16 +71,26 @@ export const authSlice = createSlice({
   reducers: {
     clearAuthMessage: (
       state: ReduxJson.AuthState,
+      _payload: PayloadAction<string>
+    ) => {
+      state.error = null;
+      state.message = null;
+    },
+    refreshToken: (
+      state: ReduxJson.AuthState,
       { payload }: PayloadAction<string>
     ) => {
-      state.errorMessage = payload;
-      state.message = payload;
+      state.accessToken = payload;
+      console.log(payload);
+      localStorage.setItem('accessToken', payload);
     },
     logout: (state: ReduxJson.AuthState) => {
       state.accessToken = '';
       state.refreshToken = '';
-      localStorage.setItem('accessToken', '');
-      localStorage.setItem('refreshToken', '');
+      state.user = null;
+      state.role = {};
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
     },
   },
   extraReducers: (builder) => {
@@ -88,7 +98,8 @@ export const authSlice = createSlice({
       .addCase(authorize.pending, (state) => {
         state.loading = true;
         state.status = ResponseStatus.PENDING;
-        state.errorMessage = null;
+        state.error = null;
+        state.message = null;
       })
       .addCase(
         authorize.fulfilled,
@@ -107,13 +118,15 @@ export const authSlice = createSlice({
       .addCase(authorize.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
-        state.errorMessage = payload as string;
+        state.error = payload as string;
+        state.message = null;
         state.accessToken = '';
       })
       .addCase(resetPassword.pending, (state) => {
         state.loading = true;
         state.status = ResponseStatus.PENDING;
-        state.errorMessage = null;
+        state.error = null;
+        state.message = null;
       })
       .addCase(
         resetPassword.fulfilled,
@@ -126,12 +139,14 @@ export const authSlice = createSlice({
       .addCase(resetPassword.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
-        state.errorMessage = payload as string;
+        state.error = payload as string;
+        state.message = null;
       })
       .addCase(forgotPassword.pending, (state) => {
         state.loading = true;
         state.status = ResponseStatus.PENDING;
-        state.errorMessage = null;
+        state.error = null;
+        state.message = null;
       })
       .addCase(
         forgotPassword.fulfilled,
@@ -144,12 +159,13 @@ export const authSlice = createSlice({
       .addCase(forgotPassword.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
-        state.errorMessage = payload as string;
+        state.error = payload as string;
+        state.message = null;
       });
   },
 });
 
-export const { clearAuthMessage, logout } = authSlice.actions;
+export const { clearAuthMessage, logout, refreshToken } = authSlice.actions;
 
 export const getReturnMessage = (state: RootState) => state.auth?.message;
 export const getMe = (state: RootState) => state.auth?.user;
