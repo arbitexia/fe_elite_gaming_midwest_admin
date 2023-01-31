@@ -9,7 +9,7 @@ import {
 import { PointType } from '@/types';
 
 interface UserDetailPointsCardProps {
-  points: PointType[] | PointType | null;
+  points: PointType[];
 }
 
 const UserDetailPointsCard = ({ points }: UserDetailPointsCardProps) => {
@@ -38,34 +38,22 @@ const UserDetailPointsCard = ({ points }: UserDetailPointsCardProps) => {
         }}
       >
         <TableBody>
-          {points &&
-            Array.isArray(points) &&
-            points.map((data) => {
-              return (
-                <StyledRequestTableRow key={data.id}>
-                  <StyledUserTableCell>#{data.id}</StyledUserTableCell>
-                  <StyledUserTableCell
-                    sx={{ color: '#008A83', fontWeight: 500 }}
-                  >
-                    {data.point} points
-                  </StyledUserTableCell>
-                  <StyledUserTableCell sx={{ color: '#06251F' }}>
-                    {data.userLocation?.location?.address
-                      ? `${data.userLocation.location.address.address1 ?? ''} ${
-                          data.userLocation.location.address.address2 ?? ''
-                        } ${data.userLocation.location.address.city ?? ''} ${
-                          data.userLocation.location.address.state ?? ''
-                        } ${data.userLocation.location.address.zipcode ?? ''} ${
-                          data.userLocation.location.address.country ?? ''
-                        }`
-                      : ''}
-                  </StyledUserTableCell>
-                  <StyledUserTableCell sx={{ fontWeight: 500 }}>
-                    {data.updatedAt}
-                  </StyledUserTableCell>
-                </StyledRequestTableRow>
-              );
-            })}
+          {points.map((data) => {
+            return (
+              <StyledRequestTableRow key={data.id}>
+                <StyledUserTableCell>#{data.id}</StyledUserTableCell>
+                <StyledUserTableCell sx={{ color: '#008A83', fontWeight: 500 }}>
+                  {data.point} points
+                </StyledUserTableCell>
+                <StyledUserTableCell sx={{ color: '#06251F' }}>
+                  {data.userLocation?.location?.name ?? ''}
+                </StyledUserTableCell>
+                <StyledUserTableCell sx={{ fontWeight: 500 }}>
+                  {data.updatedAt}
+                </StyledUserTableCell>
+              </StyledRequestTableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </StyledUserDetailCard>

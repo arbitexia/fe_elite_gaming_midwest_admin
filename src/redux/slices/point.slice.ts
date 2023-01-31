@@ -14,7 +14,7 @@ const initialState: ReduxJson.PointState = {
 };
 
 export const getPoints = createAsyncThunk<
-  PointType,
+  PointType[],
   GetPointParam,
   { dispatch: AppDispatch; state: RootState }
 >('points', async (params: GetPointParam, thunkAPI) => {
@@ -46,7 +46,7 @@ export const pointSlice = createSlice({
       })
       .addCase(
         getPoints.fulfilled,
-        (state, { payload }: PayloadAction<PointType[] | PointType | null>) => {
+        (state, { payload }: PayloadAction<PointType[]>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.points = payload;

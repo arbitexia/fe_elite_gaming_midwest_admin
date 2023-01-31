@@ -60,7 +60,7 @@ export declare namespace ReduxJson {
   export type PointState = {
     loading: boolean;
     status: ResponseStatus | null;
-    points: PointType[] | PointType | null;
+    points: PointType[];
     message: string | null;
     error: string | null;
   };
