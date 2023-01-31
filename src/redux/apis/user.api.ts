@@ -25,7 +25,7 @@ export const getUsers = async (params: GetUsersParam) => {
 };
 
 export const getUser = async (params: GetUserParam) => {
-  const response = await jwtAxios.get(`/user/${params.userId}`, {
+  const response = await jwtAxios.get(`/users/${params.userId}`, {
     headers: getAuthorizeHeader(),
   });
   return response.data;
@@ -39,14 +39,14 @@ export const changePassword = async (params: ChangePasswordParam) => {
 };
 
 export const updateUser = async (params: UpdateUserParam) => {
-  const response = await jwtAxios.put(`/user}`, params, {
+  const response = await jwtAxios.put(`/users}`, params, {
     headers: getAuthorizeHeader(),
   });
   return response.data;
 };
 
 export const deleteUser = async (params: DeleteUserParam) => {
-  const response = await jwtAxios.delete(`/user/${params.userId}`, {
+  const response = await jwtAxios.delete(`/users/${params.userId}`, {
     headers: getAuthorizeHeader(),
   });
   return response.data;

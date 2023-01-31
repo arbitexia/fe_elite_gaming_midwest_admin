@@ -11,8 +11,8 @@ import { jwtAxios } from './axios.api';
 import { getAuthorizeHeader } from '@/libs/data-helper';
 
 export const getPoints = async (params: GetPointParam) => {
-  const response = await jwtAxios.get(`/points/${params.userId}`, {
-    // params,
+  const response = await jwtAxios.get(`/points`, {
+    params,
     headers: getAuthorizeHeader(),
   });
   return response.data;

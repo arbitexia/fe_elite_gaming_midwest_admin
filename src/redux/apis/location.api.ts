@@ -25,28 +25,28 @@ export const getLocations = async (params: GetLocationsParam) => {
 };
 
 export const getLocation = async (params: GetLocationParam) => {
-  const response = await jwtAxios.get(`/location/${params.locationId}`, {
+  const response = await jwtAxios.get(`/locations/${params.locationId}`, {
     headers: getAuthorizeHeader(),
   });
   return response.data;
 };
 
 export const createLocation = async (params: CreateLocationParam) => {
-  const response = await jwtAxios.post(`/location`, params, {
+  const response = await jwtAxios.post(`/locations`, params, {
     headers: getAuthorizeHeader(),
   });
   return response.data;
 };
 
 export const updateLocation = async (params: UpdateLocationParam) => {
-  const response = await jwtAxios.put(`/location/${params.id}`, params, {
+  const response = await jwtAxios.put(`/locations/${params.id}`, params, {
     headers: getAuthorizeHeader(),
   });
   return response.data;
 };
 
 export const deleteLocation = async (params: DeleteLocationParam) => {
-  const response = await jwtAxios.delete(`/location/${params.locationId}`, {
+  const response = await jwtAxios.delete(`/locations/${params.locationId}`, {
     headers: getAuthorizeHeader(),
   });
   return response.data;
