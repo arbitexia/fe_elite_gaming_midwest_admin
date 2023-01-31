@@ -53,3 +53,10 @@ export {
   deleteLocation,
   resetLocationMessage,
 } from './location.slice';
+
+export {
+  default as pointReducer,
+  pointSelector,
+  getPoints,
+  resetPointMessage,
+} from './point.slice';

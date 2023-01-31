@@ -6,9 +6,13 @@ import {
   StyledUserTableCell,
   StyledRequestTableRow,
 } from './ui';
-import { userPointsData } from '@/_mock/users';
+import { PointType } from '@/types';
 
-const UserDetailPointsCard = () => {
+interface UserDetailPointsCardProps {
+  points: PointType[] | PointType | null;
+}
+
+const UserDetailPointsCard = ({ points }: UserDetailPointsCardProps) => {
   return (
     <StyledUserDetailCard>
       <UIFlexSpaceBox>
@@ -34,22 +38,34 @@ const UserDetailPointsCard = () => {
         }}
       >
         <TableBody>
-          {userPointsData.map((data) => {
-            return (
-              <StyledRequestTableRow key={data.id}>
-                <StyledUserTableCell>#{data.id}</StyledUserTableCell>
-                <StyledUserTableCell sx={{ color: '#008A83', fontWeight: 500 }}>
-                  {data.point} points
-                </StyledUserTableCell>
-                <StyledUserTableCell sx={{ color: '#06251F' }}>
-                  {data.location}
-                </StyledUserTableCell>
-                <StyledUserTableCell sx={{ fontWeight: 500 }}>
-                  {data.updatedAt}
-                </StyledUserTableCell>
-              </StyledRequestTableRow>
-            );
-          })}
+          {points &&
+            Array.isArray(points) &&
+            points.map((data) => {
+              return (
+                <StyledRequestTableRow key={data.id}>
+                  <StyledUserTableCell>#{data.id}</StyledUserTableCell>
+                  <StyledUserTableCell
+                    sx={{ color: '#008A83', fontWeight: 500 }}
+                  >
+                    {data.point} points
+                  </StyledUserTableCell>
+                  <StyledUserTableCell sx={{ color: '#06251F' }}>
+                    {data.userLocation?.location?.address
+                      ? `${data.userLocation.location.address.address1 ?? ''} ${
+                          data.userLocation.location.address.address2 ?? ''
+                        } ${data.userLocation.location.address.city ?? ''} ${
+                          data.userLocation.location.address.state ?? ''
+                        } ${data.userLocation.location.address.zipcode ?? ''} ${
+                          data.userLocation.location.address.country ?? ''
+                        }`
+                      : ''}
+                  </StyledUserTableCell>
+                  <StyledUserTableCell sx={{ fontWeight: 500 }}>
+                    {data.updatedAt}
+                  </StyledUserTableCell>
+                </StyledRequestTableRow>
+              );
+            })}
         </TableBody>
       </Table>
     </StyledUserDetailCard>
