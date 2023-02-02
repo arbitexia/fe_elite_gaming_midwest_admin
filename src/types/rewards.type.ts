@@ -1,7 +1,8 @@
 import { LocationType } from './location.type';
+import { ProductType } from './product.type';
 
 export interface RewardsDetailProps {
-  rewardsItem: RewardItemType;
+  rewardsItem: ProductType;
 }
 
 export type RewardItemType = {

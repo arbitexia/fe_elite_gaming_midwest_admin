@@ -7,19 +7,18 @@ import {
   RewardsDetailCarouselCard,
   RewardsDetailInfoCard,
 } from '@/modules/Rewards';
-import { rewardsData } from '@/_mock/rewards';
-import { RewardItemType } from '@/types';
+import { ProductType } from '@/types';
+import { useProduct } from '@/hooks';
 
 const RewardsById = () => {
   const router = useRouter();
   const { id } = router.query;
+  const { onGetProductById } = useProduct();
   const [rewardsItem, setRewardsItem] = useState<
-    RewardItemType | undefined | null
+    ProductType | undefined | null
   >(null);
   useEffect(() => {
-    setRewardsItem(
-      rewardsData.find((item) => item.id === parseInt(id as string))
-    );
+    setRewardsItem(onGetProductById(parseInt(id as string)));
   }, [id]);
   return (
     <DashboardLayout title={rewardsItem ? rewardsItem.name : 'Rewards'}>
@@ -27,7 +26,7 @@ const RewardsById = () => {
         <>
           <RewardsDetailHeader name={rewardsItem.name} isEditable={false} />
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
-            <RewardsDetailCarouselCard rewardsItem={rewardsItem} />
+            <RewardsDetailCarouselCard />
             <RewardsDetailInfoCard rewardsItem={rewardsItem} />
           </UIFlexSpaceBox>{' '}
         </>

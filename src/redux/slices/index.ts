@@ -5,7 +5,7 @@ export {
   setUILoading,
 } from './app.slice';
 
-export {} from './award.slice';
+export { default as awardReducer, awardSelector } from './award.slice';
 
 export {
   default as assetReducer,
@@ -62,3 +62,11 @@ export {
   getPoints,
   resetPointMessage,
 } from './point.slice';
+
+export {
+  default as productReducer,
+  productSelector,
+  getProducts,
+  getProduct,
+  resetProductMessage,
+} from './product.slice';

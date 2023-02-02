@@ -50,3 +50,9 @@ export type {
 export { ResponseStatus, AuthCallbackStatus } from './common.type';
 export type { UserLocation, PointType, GetPointParam } from './point.type';
 export type { AwardType, CreateAwardParam, GetAwardsParam } from './award.type';
+export type {
+  ProductStatus,
+  ProductType,
+  GetProductsParam,
+  GetProductParam,
+} from './product.type';

@@ -23,6 +23,7 @@ import {
   locationReducer,
   pointReducer,
   awardReducer,
+  productReducer,
 } from './slices';
 
 const combinedReducer = combineReducers({
@@ -33,6 +34,7 @@ const combinedReducer = combineReducers({
   asset: assetReducer,
   point: pointReducer,
   award: awardReducer,
+  product: productReducer,
 });
 
 const createStore = () => {
@@ -40,7 +42,16 @@ const createStore = () => {
     key: 'root',
     version: 1,
     storage,
-    whitelist: ['auth', 'app', 'user', 'asset', 'location', 'point', 'award'],
+    whitelist: [
+      'auth',
+      'app',
+      'user',
+      'asset',
+      'location',
+      'point',
+      'award',
+      'product',
+    ],
   };
 
   const persistedReducer = persistReducer(persistConfig, combinedReducer);
