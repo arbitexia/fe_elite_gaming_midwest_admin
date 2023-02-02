@@ -33,7 +33,7 @@ const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
           <UIFlexWrapBox>
             <StyledLocationInfoTitle>Location:</StyledLocationInfoTitle>
             <StyledLocationInfoValue>
-              {rewardsItem.location.name}
+              {rewardsItem.location?.name}
             </StyledLocationInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>

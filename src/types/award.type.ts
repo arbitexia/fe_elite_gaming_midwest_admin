@@ -1,3 +1,4 @@
+import { ProductType } from './product.type';
 import { UserType } from './users.type';
 
 export type CreateAwardParam = {
@@ -13,10 +14,6 @@ export type GetAwardsParam = {
     page: number;
     size: number;
   };
-};
-
-export type ProductType = {
-  id: number;
 };
 
 export enum AwardStatus {

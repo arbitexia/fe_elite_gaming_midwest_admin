@@ -5,25 +5,37 @@ import {
   RewardsPagination,
 } from '@/modules/Rewards';
 import { DashboardLayout } from '@/layouts';
-import { rewardsData } from '@/_mock/rewards';
-import { RewardItemType } from '@/types';
+import { ProductType } from '@/types';
 import { Divider } from '@mui/material';
+import { useProduct } from '@/hooks';
 
 const RewardsPage = () => {
-  const [rewardList, setRewardList] = useState<RewardItemType[]>([]);
+  const { products, pageInfo, onGetProducts } = useProduct();
+  const [rewardList, setRewardList] = useState<ProductType[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [searchLocation, setSearchLocation] = useState(0);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
-    setRewardList(() => {
-      return rewardsData.filter((item) => {
-        return (
-          item.name.toLowerCase().includes(searchValue.toLowerCase()) &&
-          (searchLocation === 0 || item.location.id === searchLocation)
-        );
-      });
+    setRewardList(products);
+  }, [products]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchValue, searchLocation, page, rowsPerPage]);
+
+  const handleSearch = () => {
+    onGetProducts({
+      filterBy: {
+        location: searchLocation,
+        search: searchValue,
+        pointFrom: 0,
+        pointTo: 1000000,
+      },
+      cursor: { page: page, size: rowsPerPage },
     });
-  }, [searchValue, searchLocation]);
+  };
   return (
     <DashboardLayout title="Rewards">
       <RewardsHeader
@@ -34,7 +46,13 @@ const RewardsPage = () => {
       />
       <Divider sx={{ mt: '30px' }} />
       <RewardsTable rewardsTableData={rewardList} />
-      <RewardsPagination />
+      <RewardsPagination
+        page={page}
+        rowsPerPage={rowsPerPage}
+        total={pageInfo?.total ?? 0}
+        setPage={setPage}
+        setRowsPerPage={setRowsPerPage}
+      />
     </DashboardLayout>
   );
 };

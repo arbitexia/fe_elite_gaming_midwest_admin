@@ -22,10 +22,11 @@ import {
 import { menuActions } from '@/_mock/users';
 import { getColor } from '@/libs/data-helper';
 import { MenuAction } from '@/constants/Enum';
-import { RewardItemType } from '@/types';
+import { ProductType } from '@/types';
+import { format } from 'date-fns';
 
 type RewardsTableProps = {
-  rewardsTableData: RewardItemType[];
+  rewardsTableData: ProductType[];
 };
 
 const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
@@ -79,7 +80,7 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
 
   type Order = 'asc' | 'desc';
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof RewardItemType>('id');
+  const [orderBy, setOrderBy] = useState<keyof ProductType>('id');
 
   function stableSort<T>(
     array: readonly T[],
@@ -96,19 +97,19 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
     return stabilizedThis.map((el) => el[0]);
   }
 
-  function getComparator<Key extends keyof RewardItemType>(
+  function getComparator<Key extends keyof ProductType>(
     order: Order,
     orderBy: Key
-  ): (a: RewardItemType, b: RewardItemType) => number {
+  ): (a: ProductType, b: ProductType) => number {
     return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
 
   function descendingComparator(
-    a: RewardItemType,
-    b: RewardItemType,
-    orderBy: keyof RewardItemType
+    a: ProductType,
+    b: ProductType,
+    orderBy: keyof ProductType
   ) {
     if (b[orderBy] < a[orderBy]) {
       return -1;
@@ -120,12 +121,12 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
   }
 
   const createSortHandler =
-    (property: keyof RewardItemType) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof ProductType) => (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof RewardItemType
+    property: keyof ProductType
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -198,7 +199,7 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
         </StyledTableRow>
       </TableHead>
       <TableBody>
-        {stableSort<RewardItemType>(
+        {stableSort<ProductType>(
           rewardsTableData,
           getComparator(order, orderBy)
         ).map((rewardItem) => {
@@ -251,7 +252,12 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
                   >
                     <Box
                       component="img"
-                      src={rewardItem.urls[0]}
+                      src={
+                        rewardItem.gallery && rewardItem.gallery.length
+                          ? rewardItem.gallery[0].asset?.url ??
+                            '/images/noImage.jpg'
+                          : '/images/noImage.jpg'
+                      }
                       alt="Image"
                       width={300}
                       height={300}
@@ -271,7 +277,9 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
                 />
               </StyledTableCell>
               <StyledTableCell align="center">
-                {rewardItem.createdAt}
+                {rewardItem.createdAt
+                  ? format(new Date(rewardItem.createdAt), 'yyyy-MM-dd')
+                  : ''}
               </StyledTableCell>
               <StyledTableCell>
                 <IconButton

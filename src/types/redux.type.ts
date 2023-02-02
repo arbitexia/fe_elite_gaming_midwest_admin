@@ -5,6 +5,7 @@ import { UserType } from './users.type';
 import { LocationType } from './location.type';
 import { PointType } from './point.type';
 import { AwardType } from './award.type';
+import { ProductType } from './product.type';
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
     loading: boolean;
@@ -71,6 +72,17 @@ export declare namespace ReduxJson {
     loading: boolean;
     status: ResponseStatus | null;
     points: PointType[];
+    message: string | null;
+    error: string | null;
+  };
+
+  export type ProductState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    products: ProductType[];
+    pageInfo: CommonType.PageInfo | null;
+    currentId: number;
+    currentProduct: ProductType | null;
     message: string | null;
     error: string | null;
   };
