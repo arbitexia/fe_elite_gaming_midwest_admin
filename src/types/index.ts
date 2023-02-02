@@ -49,3 +49,4 @@ export type {
 } from './asset.type';
 export { ResponseStatus, AuthCallbackStatus } from './common.type';
 export type { UserLocation, PointType, GetPointParam } from './point.type';
+export type { AwardType, CreateAwardParam, GetAwardsParam } from './award.type';

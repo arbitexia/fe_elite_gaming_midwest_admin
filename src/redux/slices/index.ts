@@ -5,6 +5,8 @@ export {
   setUILoading,
 } from './app.slice';
 
+export {} from './award.slice';
+
 export {
   default as assetReducer,
   assetSelector,

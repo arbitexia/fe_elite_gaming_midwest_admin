@@ -4,6 +4,7 @@ import { ResponseStatus, CommonType } from './common.type';
 import { UserType } from './users.type';
 import { LocationType } from './location.type';
 import { PointType } from './point.type';
+import { AwardType } from './award.type';
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
     loading: boolean;
@@ -16,6 +17,15 @@ export declare namespace ReduxJson {
       mode: PaletteMode;
       loading: boolean;
     };
+  };
+
+  export type AwardState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    message: string | null;
+    error: string | null;
+    awards: AwardType[];
+    pageInfo: CommonType.PageInfo | null;
   };
 
   export type AssetState = {

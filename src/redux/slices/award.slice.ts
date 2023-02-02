@@ -87,7 +87,7 @@ export const declineAward = createAsyncThunk<
 });
 
 // Actual Slice
-export const AwardSlice = createSlice({
+export const awardSlice = createSlice({
   name: 'Award',
   initialState,
   reducers: {
@@ -201,8 +201,8 @@ export const AwardSlice = createSlice({
   },
 });
 
-export const { resetAwardMessage } = AwardSlice.actions;
+export const { resetAwardMessage } = awardSlice.actions;
 
 export const awardSelector = (state: RootState) => state.award;
 
-export default AwardSlice.reducer;
+export default awardSlice.reducer;
