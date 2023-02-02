@@ -5,7 +5,16 @@ export {
   setUILoading,
 } from './app.slice';
 
-export { default as awardReducer, awardSelector } from './award.slice';
+export {
+  default as awardReducer,
+  awardSelector,
+  resetAwardMessage,
+  createAward,
+  acceptAward,
+  declineAward,
+  getAward,
+  getAwards,
+} from './award.slice';
 
 export {
   default as assetReducer,
