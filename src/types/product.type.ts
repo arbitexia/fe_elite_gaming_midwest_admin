@@ -34,7 +34,3 @@ export type GetProductsParam = {
     size: number;
   };
 };
-
-export type GetProductParam = {
-  id: number;
-};

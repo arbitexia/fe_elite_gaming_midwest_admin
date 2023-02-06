@@ -1,4 +1,4 @@
-import { RewardItemType } from '@/types';
+import { ProductStatus, ProductType, RewardItemType } from '@/types';
 
 export const rewardsData: RewardItemType[] = [
   {
@@ -236,3 +236,14 @@ export const rewardsData: RewardItemType[] = [
     createdAt: '14/06/2022',
   },
 ];
+
+export const initProductData: ProductType = {
+  id: 0,
+  name: '',
+  locationId: 0,
+  status: ProductStatus.AVAILABLE,
+  amount: 0,
+  point: 0,
+  short: '',
+  description: '',
+};

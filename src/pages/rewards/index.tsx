@@ -10,7 +10,7 @@ import { Divider } from '@mui/material';
 import { useProduct } from '@/hooks';
 
 const RewardsPage = () => {
-  const { products, pageInfo, onGetProducts } = useProduct();
+  const { products, pageInfo, onGetProducts, onDeleteProduct } = useProduct();
   const [rewardList, setRewardList] = useState<ProductType[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [searchLocation, setSearchLocation] = useState(0);
@@ -25,6 +25,10 @@ const RewardsPage = () => {
     handleSearch();
   }, [searchValue, searchLocation, page, rowsPerPage]);
 
+  const handleDeleteProduct = async (id: number) => {
+    await onDeleteProduct(id);
+    handleSearch();
+  };
   const handleSearch = () => {
     onGetProducts({
       filterBy: {
@@ -45,7 +49,10 @@ const RewardsPage = () => {
         onLocationChange={(value: number) => setSearchLocation(value)}
       />
       <Divider sx={{ mt: '30px' }} />
-      <RewardsTable rewardsTableData={rewardList} />
+      <RewardsTable
+        rewardsTableData={rewardList}
+        onDeleteProduct={handleDeleteProduct}
+      />
       <RewardsPagination
         page={page}
         rowsPerPage={rowsPerPage}

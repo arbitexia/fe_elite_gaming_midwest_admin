@@ -5,46 +5,65 @@ import {
   RewardsDetailCarouselEditCard,
   RewardsDetailInfoEditCard,
 } from '@/modules/Rewards';
-import { RewardItemType } from '@/types';
+import { ProductType } from '@/types';
+import { useAsset, useProduct } from '@/hooks';
+import { useFormik } from 'formik';
+import { useEffect, useState } from 'react';
+import { Box } from '@mui/material';
+import { useRouter } from 'next/router';
+import { initProductData } from '@/_mock/rewards';
 
 const RewardsCreate = () => {
-  const initRewardsItem: RewardItemType = {
-    id: 0,
-    name: '',
-    urls: [],
-    location: {
-      name: '',
-      coords: { lat: 0, lng: 0 },
-      id: 0,
-      address: {
-        address1: '',
-        address2: '',
-        city: '',
-        state: '',
-        zipcode: '',
-        country: '',
-      },
-      status: 'OPEN',
-      type: '',
+  const router = useRouter();
+  const { onCreateProduct } = useProduct();
+  const { onSetGalleries, onSaveGallery } = useAsset();
+  const [isReady, setIsReady] = useState(true);
+
+  useEffect(() => {
+    if (!isReady) return;
+    onSetGalleries([]);
+    setIsReady(false);
+  }, [isReady]);
+
+  const productFormik = useFormik<ProductType>({
+    initialValues: initProductData,
+    onSubmit: async (values: ProductType) => {
+      let params: ProductType = {
+        id: 0,
+        name: values.name,
+        locationId: values.locationId,
+        amount:
+          typeof values.amount == 'string'
+            ? parseInt(values.amount as string)
+            : values.amount,
+        point:
+          typeof values.point == 'string'
+            ? parseInt(values.point as string)
+            : values.point,
+        status: values.status,
+        short: values.short,
+        description: values.description,
+      };
+      const product = await onCreateProduct(params);
+      if (product.id) {
+        await onSaveGallery(product.id, 'PRODUCT');
+        router.push(`/rewards`);
+      }
     },
-    point: 0,
-    short: '',
-    description: '',
-    amount: 0,
-    status: '',
-    createdAt: '',
-  };
+  });
+
   return (
-    <DashboardLayout title={initRewardsItem ? initRewardsItem.name : 'Rewards'}>
-      {initRewardsItem && (
-        <>
-          <RewardsDetailHeader name={initRewardsItem.name} isEditable={true} />
-          <UIFlexSpaceBox sx={{ gap: '20px' }}>
-            <RewardsDetailCarouselEditCard rewardsItem={initRewardsItem} />
-            <RewardsDetailInfoEditCard rewardsItem={initRewardsItem} />
-          </UIFlexSpaceBox>
-        </>
-      )}
+    <DashboardLayout title={'Rewards'}>
+      <Box component="form" onSubmit={productFormik.handleSubmit}>
+        <RewardsDetailHeader
+          name={productFormik.values.name}
+          isEditable={true}
+        />
+        <UIFlexSpaceBox sx={{ gap: '20px' }}>
+          <RewardsDetailCarouselEditCard />
+          <RewardsDetailInfoEditCard productFormik={productFormik} />
+        </UIFlexSpaceBox>
+      </Box>
     </DashboardLayout>
   );
 };

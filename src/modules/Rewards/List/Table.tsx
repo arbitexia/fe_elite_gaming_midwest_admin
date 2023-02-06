@@ -9,6 +9,12 @@ import {
   IconButton,
   Divider,
   TableSortLabel,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import { UIChip } from '@/components/UI';
@@ -27,19 +33,35 @@ import { format } from 'date-fns';
 
 type RewardsTableProps = {
   rewardsTableData: ProductType[];
+  onDeleteProduct: (id: number) => void;
 };
 
-const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
+const RewardsTable = ({
+  rewardsTableData,
+  onDeleteProduct,
+}: RewardsTableProps) => {
   const router = useRouter();
   const [selected, setSelected] = useState<readonly string[]>([]);
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [id, setId] = useState(0);
+
+  const handleCancel = () => {
+    setOpenDeleteModal(false);
+  };
+  const handleOk = async () => {
+    setOpenDeleteModal(false);
+    onDeleteProduct(id);
+    //router.push(`/rewards`);
+  };
 
   const handleNavBtnClick = (key: string) => {
     console.log(anchorElOptionsMenu?.getAttribute('data-key'));
     if (key === MenuAction.DELETE) {
-      //TODO Delete Action
+      setId(parseInt(anchorElOptionsMenu?.getAttribute('data-key') as string));
+      setOpenDeleteModal(true);
     } else
       router.push(
         `${router.asPath}${
@@ -334,6 +356,22 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
           );
         })}
       </StyledOptionMenu>
+      <Dialog
+        sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
+        maxWidth="xs"
+        open={openDeleteModal}
+      >
+        <DialogTitle>Delete Reward</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to delete reward?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button onClick={handleOk}>Ok</Button>
+        </DialogActions>
+      </Dialog>
     </Table>
   );
 };
