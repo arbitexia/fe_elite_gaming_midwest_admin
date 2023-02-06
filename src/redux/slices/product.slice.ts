@@ -4,11 +4,7 @@ import { AxiosError } from 'axios';
 import { RootState, AppDispatch } from '@/redux/store';
 import {
   ReduxJson,
-  // GetProductParam,
   GetProductsParam,
-  // CreateProductParam,
-  // UpdateProductParam,
-  // DeleteProductParam,
   ResponseStatus,
   ProductType,
   CommonType,
@@ -52,18 +48,18 @@ export const getProduct = createAsyncThunk<
   }
 });
 
-// export const createProduct = createAsyncThunk<
-//   ProductType,
-//   CreateProductParam,
-//   { dispatch: AppDispatch; state: RootState }
-// >('product/createProduct', async (params: CreateProductParam, thunkAPI) => {
-//   try {
-//     return await productApi.createProduct(params);
-//   } catch (error) {
-//     const err = error as AxiosError;
-//     return thunkAPI.rejectWithValue(err.response?.data);
-//   }
-// });
+export const createProduct = createAsyncThunk<
+  ProductType,
+  ProductType,
+  { dispatch: AppDispatch; state: RootState }
+>('product/createProduct', async (params: ProductType, thunkAPI) => {
+  try {
+    return await productApi.createProduct(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
 
 // export const updateProduct = createAsyncThunk<
 //   ProductType.Product,
@@ -147,28 +143,28 @@ export const productSlice = createSlice({
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;
         state.message = null;
+      })
+      .addCase(createProduct.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        createProduct.fulfilled,
+        (state, { payload }: PayloadAction<ProductType>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.currentProduct = payload;
+          state.currentId = payload.id;
+        }
+      )
+      .addCase(createProduct.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
       });
-    // .addCase(createProduct.pending, (state) => {
-    //   state.loading = true;
-    //   state.status = ResponseStatus.PENDING;
-    //   state.error = null;
-    //   state.message = null;
-    // })
-    // .addCase(
-    //   createProduct.fulfilled,
-    //   (state, { payload }: PayloadAction<ProductType>) => {
-    //     state.loading = false;
-    //     state.status = ResponseStatus.SUCCESS;
-    //     state.currentProduct = payload;
-    //     state.currentId = payload.id;
-    //   }
-    // )
-    // .addCase(createProduct.rejected, (state, { payload }) => {
-    //   state.loading = false;
-    //   state.status = ResponseStatus.FAILED;
-    //   state.error = payload as string;
-    //   state.message = null;
-    // })
     // .addCase(updateProduct.pending, (state) => {
     //   state.loading = true;
     //   state.status = ResponseStatus.PENDING;

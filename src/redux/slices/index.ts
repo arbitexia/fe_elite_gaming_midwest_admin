@@ -68,5 +68,6 @@ export {
   productSelector,
   getProducts,
   getProduct,
+  createProduct,
   resetProductMessage,
 } from './product.slice';

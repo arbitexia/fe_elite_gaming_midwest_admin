@@ -47,7 +47,7 @@ const RewardDetailHeader = ({ name, isEditable }: RewardDetailHeaderProps) => {
       </Typography>
       <UIFlexWrapBox>
         {isEditable ? (
-          <UIDefaultButton>Save</UIDefaultButton>
+          <UIDefaultButton type="submit">Save</UIDefaultButton>
         ) : (
           <>
             <UIActionButton
