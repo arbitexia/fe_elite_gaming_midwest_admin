@@ -8,11 +8,7 @@
  */
 import { jwtAxios } from './axios.api';
 import { getAuthorizeHeader } from '@/libs/data-helper';
-import {
-  GetProductsParam,
-  ProductType,
-  // UpdateProductParam,
-} from '@/types';
+import { GetProductsParam, ProductType } from '@/types';
 
 export const getProducts = async (params: GetProductsParam) => {
   const response = await jwtAxios.get(`/products`, {
@@ -40,16 +36,20 @@ export const createProduct = async (params: ProductType) => {
   return response.data;
 };
 
-// export const updateProduct = async (params: UpdateProductParam) => {
-//   const response = await jwtAxios.put(`/products/${params.id}`, params, {
-//     headers: getAuthorizeHeader(),
-//   });
-//   return response.data;
-// };
+export const updateProduct = async (params: ProductType) => {
+  const response = await jwtAxios.put(
+    `/products/${params.id}`,
+    { input: params },
+    {
+      headers: getAuthorizeHeader(),
+    }
+  );
+  return response.data;
+};
 
-// export const deleteProduct = async (params: number) => {
-//   const response = await jwtAxios.delete(`/products/${params}`, {
-//     headers: getAuthorizeHeader(),
-//   });
-//   return response.data;
-// };
+export const deleteProduct = async (params: number) => {
+  const response = await jwtAxios.delete(`/products/${params}`, {
+    headers: getAuthorizeHeader(),
+  });
+  return response.data;
+};

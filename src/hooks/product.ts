@@ -3,8 +3,8 @@ import {
   getProduct,
   getProducts,
   createProduct,
-  // deleteProduct,
-  // updateProduct,
+  deleteProduct,
+  updateProduct,
   productSelector,
   resetProductMessage,
   setGalleries,
@@ -56,13 +56,16 @@ export const useProduct = () => {
     return payload as ProductType;
   };
 
-  // const onUpdateProduct = async (param: UpdateProductParam) => {
-  //   await dispatch(updateProduct(param));
-  // };
+  const onUpdateProduct = async (param: ProductType): Promise<ProductType> => {
+    const { payload }: PayloadAction<unknown> = await dispatch(
+      updateProduct(param)
+    );
+    return payload as ProductType;
+  };
 
-  // const onDeleteProduct = async (id: number) => {
-  //   await dispatch(deleteProduct({ productId: id }));
-  // };
+  const onDeleteProduct = async (id: number) => {
+    await dispatch(deleteProduct(id));
+  };
 
   return {
     products,
@@ -73,7 +76,7 @@ export const useProduct = () => {
     onProductSelect,
     onGetProducts,
     onCreateProduct,
-    // onUpdateProduct,
-    // onDeleteProduct,
+    onUpdateProduct,
+    onDeleteProduct,
   };
 };

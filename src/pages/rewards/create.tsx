@@ -5,23 +5,13 @@ import {
   RewardsDetailCarouselEditCard,
   RewardsDetailInfoEditCard,
 } from '@/modules/Rewards';
-import { ProductStatus, ProductType } from '@/types';
+import { ProductType } from '@/types';
 import { useAsset, useProduct } from '@/hooks';
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { useRouter } from 'next/router';
-
-const initProductData: ProductType = {
-  id: 0,
-  name: '',
-  locationId: 0,
-  status: ProductStatus.AVAILABLE,
-  amount: 0,
-  point: 0,
-  short: '',
-  description: '',
-};
+import { initProductData } from '@/_mock/rewards';
 
 const RewardsCreate = () => {
   const router = useRouter();

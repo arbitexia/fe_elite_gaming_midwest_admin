@@ -1,4 +1,4 @@
-import { Typography, Stack } from '@mui/material';
+import { Typography, Stack, Box } from '@mui/material';
 import { UIFlexWrapBox } from '@/components/UI';
 import {
   StyledLocationCardBox,
@@ -27,19 +27,13 @@ const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
           <UIFlexWrapBox>
             <StyledLocationInfoTitle>Points:</StyledLocationInfoTitle>
             <StyledLocationInfoValue>
-              {rewardsItem.name}
+              {rewardsItem.point}
             </StyledLocationInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
             <StyledLocationInfoTitle>Location:</StyledLocationInfoTitle>
             <StyledLocationInfoValue>
               {rewardsItem.location?.name}
-            </StyledLocationInfoValue>
-          </UIFlexWrapBox>
-          <UIFlexWrapBox>
-            <StyledLocationInfoTitle>Description:</StyledLocationInfoTitle>
-            <StyledLocationInfoValue>
-              {rewardsItem.description}
             </StyledLocationInfoValue>
           </UIFlexWrapBox>
         </Stack>
@@ -51,6 +45,32 @@ const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
             </StyledLocationInfoValue>
           </UIFlexWrapBox>
         </Stack>
+        <Box
+          sx={{
+            width: '100%',
+            paddingTop: '20px',
+          }}
+        >
+          <StyledLocationInfoTitle>Short:</StyledLocationInfoTitle>
+          <Box>
+            <StyledLocationInfoValue>
+              {rewardsItem.short}
+            </StyledLocationInfoValue>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            width: '100%',
+            paddingTop: '20px',
+          }}
+        >
+          <StyledLocationInfoTitle>Description:</StyledLocationInfoTitle>
+          <Box>
+            <div
+              dangerouslySetInnerHTML={{ __html: rewardsItem.description }}
+            ></div>
+          </Box>
+        </Box>
       </UIFlexWrapBox>
     </StyledLocationCardBox>
   );
