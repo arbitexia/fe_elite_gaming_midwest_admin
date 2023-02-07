@@ -1,3 +1,5 @@
+import { AwardStatus } from '@/constants/Enum';
+import { UserLocation } from './point.type';
 import { ProductType } from './product.type';
 import { UserType } from './users.type';
 
@@ -7,8 +9,10 @@ export type CreateAwardParam = {
 
 export type GetAwardsParam = {
   filterBy: {
-    location: number;
-    search: string;
+    userId?: number;
+    location?: number;
+    status?: AwardStatus;
+    search?: string;
   };
   cursor: {
     page: number;
@@ -16,16 +20,10 @@ export type GetAwardsParam = {
   };
 };
 
-export enum AwardStatus {
-  ACCEPTED = 'ACCEPTED',
-  DECLINED = 'DECLINED',
-  WAITING = 'WAITING',
-}
-
 export type AwardType = {
   id: number;
   userLocationId: number;
-  userLocation?: Location;
+  userLocation?: UserLocation;
   productId: number;
   product?: ProductType;
   assigneeId: number;

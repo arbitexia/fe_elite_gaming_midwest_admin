@@ -36,7 +36,7 @@ export type {
   RefreshTokenPrams,
   RefreshTokenType,
 } from './auth.type';
-export type { CommonType } from './common.type';
+export type { CommonType, PaginationProps } from './common.type';
 export { AssetItemType } from './asset.type';
 export type {
   AssetType,

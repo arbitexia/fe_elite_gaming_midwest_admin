@@ -20,10 +20,10 @@ import {
 import { menuActions } from '@/_mock/users';
 import { getColor } from '@/libs/data-helper';
 import { MenuAction } from '@/constants/Enum';
-import { TransactionType } from '@/types';
+import { AwardType } from '@/types';
 
 type TransactionsTableProps = {
-  transactionTableData: TransactionType[];
+  transactionTableData: AwardType[];
 };
 
 const TransactionsTable = ({
@@ -47,7 +47,7 @@ const TransactionsTable = ({
   };
   type Order = 'asc' | 'desc';
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof TransactionType>('id');
+  const [orderBy, setOrderBy] = useState<string>('id');
 
   function stableSort<T>(
     array: readonly T[],
@@ -64,30 +64,26 @@ const TransactionsTable = ({
     return stabilizedThis.map((el) => el[0]);
   }
 
-  function getComparator<Key extends keyof TransactionType>(
+  function getComparator(
     order: Order,
-    orderBy: Key
-  ): (a: TransactionType, b: TransactionType) => number {
+    orderBy: string
+  ): (a: AwardType, b: AwardType) => number {
     return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
 
-  function descendingComparator(
-    a: TransactionType,
-    b: TransactionType,
-    orderBy: keyof TransactionType
-  ) {
-    if (orderBy === 'user') {
+  function descendingComparator(a: any, b: any, orderBy: string) {
+    if (orderBy === 'userLocation') {
       if (
-        `${b.user.firstName} ${b.user.lastName}` <
-        `${a.user.firstName} ${a.user.lastName}`
+        `${b.userLocation.user.firstName} ${b.userLocation.user.lastName}` <
+        `${a.userLocation.user.firstName} ${a.userLocation.user.lastName}`
       ) {
         return -1;
       }
       if (
-        `${b.user.firstName} ${b.user.lastName}` >
-        `${a.user.firstName} ${a.user.lastName}`
+        `${b.userLocation.user.firstName} ${b.userLocation.user.lastName}` >
+        `${a.userLocation.user.firstName} ${a.userLocation.user.lastName}`
       ) {
         return 1;
       }
@@ -106,9 +102,9 @@ const TransactionsTable = ({
         return 1;
       }
     }
-    if (orderBy === 'reward') {
-      if (b.reward.name < a.reward.name) return -1;
-      if (b.reward.name > a.reward.name) return 1;
+    if (orderBy === 'product') {
+      if (b.product.name < a.product.name) return -1;
+      if (b.product.name > a.product.name) return 1;
     }
     if (b[orderBy] < a[orderBy]) {
       return -1;
@@ -120,12 +116,12 @@ const TransactionsTable = ({
   }
 
   const createSortHandler =
-    (property: keyof TransactionType) => (event: React.MouseEvent<unknown>) => {
+    (property: string) => (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof TransactionType
+    property: string
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -147,18 +143,18 @@ const TransactionsTable = ({
           </StyledTableCell>
           <StyledTableCell>
             <TableSortLabel
-              active={orderBy === 'user'}
+              active={orderBy === 'userLocation'}
               direction={order}
-              onClick={createSortHandler('user')}
+              onClick={createSortHandler('userLocation')}
             >
               Customer
             </TableSortLabel>
           </StyledTableCell>
           <StyledTableCell>
             <TableSortLabel
-              active={orderBy === 'reward'}
+              active={orderBy === 'product'}
               direction={order}
-              onClick={createSortHandler('reward')}
+              onClick={createSortHandler('product')}
             >
               Product
             </TableSortLabel>
@@ -212,7 +208,7 @@ const TransactionsTable = ({
         </StyledTableRow>
       </TableHead>
       <TableBody>
-        {stableSort<TransactionType>(
+        {stableSort<AwardType>(
           transactionTableData,
           getComparator(order, orderBy)
         ).map((transactionItem) => {
@@ -232,13 +228,17 @@ const TransactionsTable = ({
                 #{transactionItem.id}
               </StyledTableCell>
               <StyledTableCell>
-                {`${transactionItem.user.firstName} ${transactionItem.user.lastName}`}
+                {transactionItem.userLocation?.user?.fullName ?? ''}
               </StyledTableCell>
 
-              <StyledTableCell>{transactionItem.reward.name}</StyledTableCell>
-              <StyledTableCell>{transactionItem.amount}</StyledTableCell>
-              <StyledTableCell>{transactionItem.type}</StyledTableCell>
-              <StyledTableCell>{`${transactionItem.assignee.firstName} ${transactionItem.assignee.lastName}`}</StyledTableCell>
+              <StyledTableCell>{transactionItem.product?.name}</StyledTableCell>
+              <StyledTableCell>
+                {transactionItem.product?.amount}
+              </StyledTableCell>
+              <StyledTableCell>{'REWARD'}</StyledTableCell>
+              <StyledTableCell>
+                {transactionItem.assignee?.fullName ?? ''}
+              </StyledTableCell>
               <StyledTableCell align="center">
                 <UIChip
                   label={transactionItem.status}

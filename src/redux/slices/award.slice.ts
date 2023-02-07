@@ -22,10 +22,10 @@ const initialState: ReduxJson.AwardState = {
 };
 
 export const getAwards = createAsyncThunk<
-  AwardType[],
+  CommonType.Pagination<AwardType>,
   GetAwardsParam,
   { dispatch: AppDispatch; state: RootState }
->('Award/getAwards', async (params: GetAwardsParam, thunkAPI) => {
+>('award/getAwards', async (params: GetAwardsParam, thunkAPI) => {
   try {
     return await awardApi.getAwards(params);
   } catch (error) {
@@ -61,7 +61,7 @@ export const createAward = createAsyncThunk<
 });
 
 export const acceptAward = createAsyncThunk<
-  CommonType.Message,
+  AwardType,
   number,
   { dispatch: AppDispatch; state: RootState }
 >('award/acceptAward', async (params: number, thunkAPI) => {
@@ -74,7 +74,7 @@ export const acceptAward = createAsyncThunk<
 });
 
 export const declineAward = createAsyncThunk<
-  CommonType.Message,
+  AwardType,
   number,
   { dispatch: AppDispatch; state: RootState }
 >('award/declineAward', async (params: number, thunkAPI) => {
@@ -88,7 +88,7 @@ export const declineAward = createAsyncThunk<
 
 // Actual Slice
 export const awardSlice = createSlice({
-  name: 'Award',
+  name: 'award',
   initialState,
   reducers: {
     resetAwardMessage: (state: ReduxJson.AwardState, _payload) => {
@@ -106,10 +106,14 @@ export const awardSlice = createSlice({
       })
       .addCase(
         getAwards.fulfilled,
-        (state, { payload }: PayloadAction<AwardType[]>) => {
+        (
+          state,
+          { payload }: PayloadAction<CommonType.Pagination<AwardType>>
+        ) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          state.awards = payload;
+          state.pageInfo = payload.pageInfo;
+          state.awards = payload.data;
         }
       )
       .addCase(getAwards.rejected, (state, { payload }) => {
@@ -166,10 +170,10 @@ export const awardSlice = createSlice({
       })
       .addCase(
         acceptAward.fulfilled,
-        (state, { payload }: PayloadAction<CommonType.Message>) => {
+        (state, { payload }: PayloadAction<AwardType>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          state.message = payload.message;
+          state.awards.filter((e) => e.id != payload.id);
         }
       )
       .addCase(acceptAward.rejected, (state, { payload }) => {
@@ -186,10 +190,10 @@ export const awardSlice = createSlice({
       })
       .addCase(
         declineAward.fulfilled,
-        (state, { payload }: PayloadAction<CommonType.Message>) => {
+        (state, { payload }: PayloadAction<AwardType>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          state.message = payload.message;
+          state.awards.filter((e) => e.id != payload.id);
         }
       )
       .addCase(declineAward.rejected, (state, { payload }) => {

@@ -1,12 +1,15 @@
 import { TablePagination } from '@mui/material';
-import { useState } from 'react';
+import { PaginationProps } from '@/types';
 
-export default function UsersPagination() {
-  const [page, setPage] = useState(2);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
+const TransactionssPagination = ({
+  page,
+  rowsPerPage,
+  total,
+  setPage,
+  setRowsPerPage,
+}: PaginationProps) => {
   const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
+    _event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
@@ -38,11 +41,13 @@ export default function UsersPagination() {
         },
       }}
       component="div"
-      count={100}
+      count={total}
       page={page}
       onPageChange={handleChangePage}
       rowsPerPage={rowsPerPage}
       onRowsPerPageChange={handleChangeRowsPerPage}
     />
   );
-}
+};
+
+export default TransactionssPagination;

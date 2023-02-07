@@ -56,3 +56,9 @@ export enum ActivityType {
   UPDATE = 'UPDATE',
   DELETE = 'DELETE',
 }
+
+export enum AwardStatus {
+  ACCEPTED = 'ACCEPTED',
+  DECLINED = 'DECLINED',
+  WAITING = 'WAITING',
+}

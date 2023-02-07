@@ -129,8 +129,8 @@ const RewardsTable = ({
   }
 
   function descendingComparator(
-    a: ProductType,
-    b: ProductType,
+    a: any,
+    b: any,
     orderBy: keyof ProductType
   ) {
     if (b[orderBy] < a[orderBy]) {

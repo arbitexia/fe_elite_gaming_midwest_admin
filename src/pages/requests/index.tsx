@@ -1,36 +1,56 @@
 import { useState, useEffect } from 'react';
 import { Divider } from '@mui/material';
-import { RequestsHeader, RequestTable } from '@/modules/Requests';
+import {
+  RequestsHeader,
+  RequestTable,
+  RequestsPagination,
+} from '@/modules/Requests';
 import { DashboardLayout } from '@/layouts';
-import { requestsData } from '@/_mock/requests';
-import { RequestItemType } from '@/types';
+import { AwardStatus } from '@/constants/Enum';
+import { AwardType } from '@/types';
+import { useAward } from '@/hooks';
 
 const Requests = () => {
-  const [requestList, setRequestList] = useState<RequestItemType[]>([]);
+  const [requestList, setRequestList] = useState<AwardType[]>([]);
   const [searchValue, setSearchValue] = useState('');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const { awards, pageInfo, onGetAwards } = useAward();
 
   useEffect(() => {
-    setRequestList(() => {
-      return requestsData.filter((item) => {
-        const userName = `${item.user.firstName} ${item.user.lastName}`;
-        return (
-          item.location.name
-            .toLowerCase()
-            .includes(searchValue.toLowerCase()) ||
-          userName.toLowerCase().includes(searchValue.toLowerCase()) ||
-          item.item.name.toLowerCase().includes(searchValue.toLowerCase())
-        );
-      });
+    console.log(awards);
+    setRequestList(awards);
+  }, [awards]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [page, rowsPerPage]);
+
+  const handleSearch = () => {
+    onGetAwards({
+      filterBy: {
+        status: AwardStatus.WAITING,
+        search: searchValue,
+      },
+      cursor: { page: page, size: rowsPerPage },
     });
-  }, [searchValue]);
+  };
+
   return (
-    <DashboardLayout title="Locations">
+    <DashboardLayout title="Requests">
       <RequestsHeader
         searchValue={searchValue}
         onValueChange={(value) => setSearchValue(value)}
       />
       <Divider sx={{ my: '30px' }} />
       <RequestTable requestsData={requestList} />
+      <RequestsPagination
+        page={page}
+        rowsPerPage={rowsPerPage}
+        total={pageInfo?.total ?? 0}
+        setPage={setPage}
+        setRowsPerPage={setRowsPerPage}
+      />
     </DashboardLayout>
   );
 };

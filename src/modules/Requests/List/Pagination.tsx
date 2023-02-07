@@ -1,12 +1,15 @@
 import { TablePagination } from '@mui/material';
-import { useState } from 'react';
+import { PaginationProps } from '@/types';
 
-export default function RequestsPagination() {
-  const [page, setPage] = useState(2);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
+const RequestsPagination = ({
+  page,
+  rowsPerPage,
+  total,
+  setPage,
+  setRowsPerPage,
+}: PaginationProps) => {
   const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
+    _event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
@@ -18,7 +21,6 @@ export default function RequestsPagination() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
   return (
     <TablePagination
       sx={{
@@ -38,11 +40,13 @@ export default function RequestsPagination() {
         },
       }}
       component="div"
-      count={100}
+      count={total}
       page={page}
       onPageChange={handleChangePage}
       rowsPerPage={rowsPerPage}
       onRowsPerPageChange={handleChangeRowsPerPage}
     />
   );
-}
+};
+
+export default RequestsPagination;

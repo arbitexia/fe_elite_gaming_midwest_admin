@@ -5,35 +5,38 @@ import {
   TransactionsPagination,
 } from '@/modules/Transactions';
 import { DashboardLayout } from '@/layouts';
-import { transactionData, transactionsType } from '@/_mock/transactions';
-import { TransactionType } from '@/types';
+import { AwardType } from '@/types';
 import { Divider } from '@mui/material';
+import { useAward } from '@/hooks';
 
 const TransactionsPage = () => {
-  const [transactionList, setTransactionList] = useState<TransactionType[]>([]);
   const [searchValue, setSearchValue] = useState('');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const { awards, pageInfo, onGetAwards } = useAward();
+  const [transactionList, setTransactionList] = useState<AwardType[]>([]);
   const [searchType, setSearchType] = useState(0);
 
   useEffect(() => {
-    setTransactionList(() => {
-      return transactionData.filter((item) => {
-        const customer = `${item.user.firstName} ${item.user.lastName}`;
-        const assignee = `${item.assignee.firstName} ${item.assignee.lastName}`;
+    console.log(awards);
+    setTransactionList(awards);
+  }, [awards]);
 
-        return (
-          (customer.toLowerCase().includes(searchValue.toLowerCase()) ||
-            assignee.toLowerCase().includes(searchValue.toLowerCase()) ||
-            item.reward.name
-              .toLowerCase()
-              .includes(searchValue.toLowerCase())) &&
-          (searchType === 0 ||
-            item.type === transactionsType[searchType - 1].value)
-        );
-      });
+  useEffect(() => {
+    handleSearch();
+  }, [page, rowsPerPage]);
+
+  const handleSearch = () => {
+    onGetAwards({
+      filterBy: {
+        search: searchValue,
+      },
+      cursor: { page: page, size: rowsPerPage },
     });
-  }, [searchValue, searchType]);
+  };
+
   return (
-    <DashboardLayout title="Rewards">
+    <DashboardLayout title="Transactions">
       <TransactionsHeader
         searchValue={searchValue}
         searchType={searchType}
@@ -42,7 +45,13 @@ const TransactionsPage = () => {
       />
       <Divider sx={{ mt: '30px' }} />
       <TransactionsTable transactionTableData={transactionList} />
-      <TransactionsPagination />
+      <TransactionsPagination
+        page={page}
+        rowsPerPage={rowsPerPage}
+        total={pageInfo?.total ?? 0}
+        setPage={setPage}
+        setRowsPerPage={setRowsPerPage}
+      />
     </DashboardLayout>
   );
 };
