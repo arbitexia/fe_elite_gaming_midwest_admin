@@ -14,19 +14,60 @@ import UsersDetailHeader from './Header';
 import { userStatus } from '@/_mock/users';
 import { useFormik } from 'formik';
 import { UserRole } from '@/constants/Enum';
+import { useAsset, useUser } from '@/hooks';
+import { convertMBtoBytes } from '@/libs/data-helper';
+import { useAppToast } from '@/providers';
+import { useState } from 'react';
 
 interface UsersDetailHeaderProps {
   user: UserType.User;
 }
 
 const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
+  const [imageUrl, setImageUrl] = useState(user.avatar?.url);
+  const appToast = useAppToast();
+  const { onUpdateUser } = useUser();
+  const { onCreateAsset } = useAsset();
   const userFormik = useFormik({
     initialValues: user,
     onSubmit: async (values) => {
       console.log(values);
-      // await authorize({ variables: { ...values } });
+      await onUpdateUser({
+        userId: user.id,
+        input: {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          userName: values.userName,
+          assetId: values.assetId ?? 1,
+          email: values.email,
+          phone: values.phone,
+          address: values.address,
+          birthday: values.birthday,
+          status: values.status,
+          roleId: values.roleId ?? 1,
+        },
+      });
     },
   });
+  const onAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const reader = new FileReader();
+    const file = e.target.files ? e.target.files[0] : null;
+    if (!file) return;
+
+    // Restrict user to upload file less than 3.1MB
+    if (file.size > convertMBtoBytes(3.1)) {
+      appToast('error', 'File size is too large');
+      return;
+    }
+    reader.onloadend = async () => {
+      const asset = await onCreateAsset(file);
+      userFormik.setFieldValue('assetId', asset.id);
+      setImageUrl(asset.url);
+    };
+
+    reader.readAsDataURL(file);
+  };
   return (
     <Box component="form" onSubmit={userFormik.handleSubmit}>
       <UsersDetailHeader user={user} />
@@ -55,7 +96,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                 overflow: 'hidden',
               }}
             >
-              <StyledUserInfoAvatar src={user.avatar?.url} alt="avatar" />
+              <StyledUserInfoAvatar src={imageUrl} alt="avatar" />
               <label htmlFor="photo-upload">
                 <Typography
                   sx={{
@@ -77,7 +118,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                 </Typography>
                 <input
                   id="photo-upload"
-                  // onChange={onAvatarChange}
+                  onChange={onAvatarChange}
                   type="file"
                   accept="image/png, image/gif, image/jpeg"
                 />
