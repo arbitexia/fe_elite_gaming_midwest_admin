@@ -18,6 +18,7 @@ import { useAsset, useUser } from '@/hooks';
 import { convertMBtoBytes } from '@/libs/data-helper';
 import { useAppToast } from '@/providers';
 import { useState } from 'react';
+import { format } from 'date-fns';
 
 interface UsersDetailHeaderProps {
   user: UserType.User;
@@ -236,7 +237,10 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                   <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="birthday"
-                    value={userFormik.values.birthday}
+                    value={format(
+                      new Date(userFormik.values.birthday),
+                      'yyyy-MM-dd'
+                    )}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
