@@ -1,12 +1,7 @@
 import { useEffect } from 'react';
 import { useAppToast } from '@/providers';
 import { useAppDispatch, useAppSelector } from './redux';
-import {
-  AssetItemType,
-  AssetType,
-  PresignedPostType,
-  ResponseStatus,
-} from '@/types';
+import { AssetItemType, AssetType, PresignedPostType } from '@/types';
 import { assetApi } from '@/redux/apis';
 import {
   assetSelector,
@@ -23,17 +18,14 @@ import { PayloadAction } from '@reduxjs/toolkit';
 
 export const useAsset = () => {
   const appToast = useAppToast();
-  const { message, error, loading, galleries, status } =
-    useAppSelector(assetSelector);
+  const { message, error, loading, galleries } = useAppSelector(assetSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (loading) return;
-    error && appToast({ severity: 'error', message: error });
-    if (status === ResponseStatus.SUCCESS && message) {
-      appToast({ severity: 'success', message: message });
-      dispatch(clearAssetMessage(''));
-    }
+    if (message) appToast({ severity: 'success', message: message });
+    if (error) appToast({ severity: 'error', message: error });
+    dispatch(clearAssetMessage(''));
   }, [loading]);
 
   const onSetGalleries = (galleries: AssetType.Gallery[]) => {

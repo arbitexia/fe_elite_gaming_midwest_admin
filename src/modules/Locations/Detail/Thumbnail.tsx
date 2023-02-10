@@ -35,23 +35,25 @@ const LocationsDetailThumbnail = ({
         src={`${url}`}
         alt="image"
       />
-      <IconButton
-        sx={{
-          display: isHover ? 'flex' : 'none',
-          position: 'absolute',
-          width: '16px',
-          height: '16px',
-          top: -8,
-          right: -8,
-          border: '1px solid #89C8C6',
-          background: 'rgba(255, 255, 255, 1)',
-        }}
-        onClick={() => {
-          if (handleRemove) handleRemove(index);
-        }}
-      >
-        <Close sx={{ fontSize: 14 }} />
-      </IconButton>
+      {handleRemove && (
+        <IconButton
+          sx={{
+            display: isHover ? 'flex' : 'none',
+            position: 'absolute',
+            width: '16px',
+            height: '16px',
+            top: -8,
+            right: -8,
+            border: '1px solid #89C8C6',
+            background: 'rgba(255, 255, 255, 1)',
+          }}
+          onClick={() => {
+            if (handleRemove) handleRemove(index);
+          }}
+        >
+          <Close sx={{ fontSize: 14 }} />
+        </IconButton>
+      )}
     </Box>
   );
 };
