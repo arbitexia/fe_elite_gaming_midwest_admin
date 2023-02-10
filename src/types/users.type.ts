@@ -10,6 +10,8 @@ export declare namespace UserType {
     lastName?: string;
     fullName?: string;
     userName?: string;
+    password?: string;
+    confirmPassword?: string;
     avatar?: AssetType.Asset;
     assetId?: number;
     email?: string;

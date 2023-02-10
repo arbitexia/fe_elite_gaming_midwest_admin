@@ -1,5 +1,10 @@
 import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
-import { UIFlexWrapBox, UIFlexSpaceBox } from '@/components/UI';
+import { UIFlexWrapBox } from '@/components/UI';
+import { InputAdornment, IconButton } from '@mui/material';
+import {
+  VisibilityOffOutlined as VisibilityOffOutlinedIcon,
+  VisibilityOutlined as VisibilityOutlinedIcon,
+} from '@mui/icons-material';
 import { UserType } from '@/types';
 import {
   StyledUserInfoTitle,
@@ -17,7 +22,7 @@ import { UserRole } from '@/constants/Enum';
 import { useAsset, useUser } from '@/hooks';
 import { convertMBtoBytes } from '@/libs/data-helper';
 import { useAppToast } from '@/providers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { Moment } from 'moment';
@@ -29,44 +34,85 @@ interface UsersDetailHeaderProps {
   user: UserType.User;
 }
 
-export const UserInfoSchema = yup.object({
+export const UserInfoCustomerSchema = yup.object({
   firstName: yup.string().required('FirstName is required'),
   lastName: yup.string().required('LastName is required'),
   userName: yup.string().required('UserName is required'),
   birthday: yup.string().required('Birthday is required'),
+  phone: yup
+    .string()
+    .matches(/^\([0-9]{3}\) [0-9]{3} [0-9]{4}$/i, 'Phone number is not valid')
+    .required('Phone number is required'),
+  roleId: yup.number().required('User Role is required'),
+  status: yup.string().required('Status is required'),
+});
+
+export const UserInfoCreateSchema = yup.object({
+  firstName: yup.string().required('FirstName is required'),
+  lastName: yup.string().required('LastName is required'),
+  userName: yup.string().required('UserName is required'),
+  birthday: yup.string().required('Birthday is required'),
+  roleId: yup.number().required('User Role is required'),
+  status: yup.string().required('Status is required'),
+  password: yup
+    .string()
+    .min(8, 'Password should be of minimum 8 characters length')
+    .required('Password is required'),
+  confirmPassword: yup
+    .string()
+    .required('Confirm password is required')
+    .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 
 const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { slug } = router.query;
   const [imageUrl, setImageUrl] = useState(user.avatar?.url);
   const appToast = useAppToast();
+
   const { onUpdateUser } = useUser();
   const { onCreateAsset } = useAsset();
   const userFormik = useFormik({
     initialValues: user,
-    validationSchema: UserInfoSchema,
+    validationSchema:
+      user.id === 0 && slug != 'customers'
+        ? UserInfoCreateSchema
+        : UserInfoCustomerSchema,
+    validateOnChange: false,
     onSubmit: async (values) => {
       const input: any = {
         firstName: values.firstName,
         lastName: values.lastName,
         userName: values.userName,
         birthday: values.birthday,
-        status: values.status,
+        status: values.status ?? 'ACTIVATED',
         roleId: values.roleId,
       };
       if (values.assetId) input.assetId = values.assetId;
       if (values.email) input.email = values.email;
       if (values.phone) input.phone = values.phone.replace(/\D/g, '');
       if (values.location) input.location = values.location;
-
-      await onUpdateUser({
-        userId: user.id,
-        input,
-      });
-      router.push(`/users/${slug}`);
+      if (values.password) input.password = values.password;
+      try {
+        await onUpdateUser({
+          userId: user.id,
+          input,
+        });
+        router.push(`/users/${slug}`);
+      } catch (e) {
+        console.log(e);
+      }
     },
   });
+  useEffect(() => {
+    let error = '';
+    Object.values(userFormik.errors).forEach((value) => {
+      error = value;
+    });
+    if (error) appToast({ severity: 'error', message: error });
+  }, [userFormik.errors]);
   const onAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const reader = new FileReader();
@@ -75,7 +121,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
 
     // Restrict user to upload file less than 3.1MB
     if (file.size > convertMBtoBytes(3.1)) {
-      appToast('error', 'File size is too large');
+      appToast({ serverity: 'error', message: 'File size is too large' });
       return;
     }
     reader.onloadend = async () => {
@@ -159,72 +205,132 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
           </Box>
 
           <Box flex="1">
-            <UIFlexSpaceBox
-              sx={{
-                alignItems: 'flex-end',
-              }}
-            >
-              <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                <StyledUserInfoTitle sx={{ width: 'auto' }}>
-                  FirstName:{' '}
-                </StyledUserInfoTitle>
-                <StyledUserEditTextField
-                  name="firstName"
-                  value={userFormik.values.firstName}
-                  onChange={userFormik.handleChange}
-                />
-              </UIFlexWrapBox>
-              <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                <StyledUserInfoTitle sx={{ width: 'auto' }}>
-                  LastName:{' '}
-                </StyledUserInfoTitle>
-                <StyledUserEditTextField
-                  name="lastName"
-                  value={userFormik.values.lastName}
-                  onChange={userFormik.handleChange}
-                />
-              </UIFlexWrapBox>
-            </UIFlexSpaceBox>
-            <UIFlexSpaceBox
-              sx={{
-                alignItems: 'center',
-                mt: '10px',
-              }}
-            >
-              <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                <StyledUserInfoTitle sx={{ width: 'auto' }}>
-                  UserName:{' '}
-                </StyledUserInfoTitle>
-                <StyledUserEditTextField
-                  name="userName"
-                  value={userFormik.values.userName}
-                  onChange={userFormik.handleChange}
-                />
-              </UIFlexWrapBox>
-              <UIFlexWrapBox
-                sx={{
-                  alignItems: 'center',
-                }}
-              >
-                <StyledUserInfoTitle sx={{ width: 'auto' }}>
-                  Status:
-                </StyledUserInfoTitle>
-                <StyledUserEditTextField
-                  name="status"
-                  onChange={userFormik.handleChange}
-                  value={userFormik.values.status}
-                  select
+            <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
+              <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                  <StyledUserInfoTitle>FirstName: </StyledUserInfoTitle>
+                  <StyledUserEditTextField
+                    name="firstName"
+                    value={userFormik.values.firstName}
+                    onChange={userFormik.handleChange}
+                  />
+                </UIFlexWrapBox>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                  <StyledUserInfoTitle>LastName: </StyledUserInfoTitle>
+                  <StyledUserEditTextField
+                    name="lastName"
+                    value={userFormik.values.lastName}
+                    onChange={userFormik.handleChange}
+                  />
+                </UIFlexWrapBox>
+              </Stack>
+              <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                  <StyledUserInfoTitle>UserName: </StyledUserInfoTitle>
+                  <StyledUserEditTextField
+                    name="userName"
+                    value={userFormik.values.userName}
+                    onChange={userFormik.handleChange}
+                  />
+                </UIFlexWrapBox>
+                <UIFlexWrapBox
+                  sx={{
+                    alignItems: 'center',
+                  }}
                 >
-                  {userStatus.map((item) => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.value}
-                      </MenuItem>
-                    );
-                  })}
-                </StyledUserEditTextField>
+                  <StyledUserInfoTitle>Status:</StyledUserInfoTitle>
+                  <StyledUserEditTextField
+                    name="status"
+                    onChange={userFormik.handleChange}
+                    defaultValue="ACTIVATED"
+                    value={userFormik.values.status}
+                    select
+                  >
+                    {userStatus.map((item) => {
+                      return (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.value}
+                        </MenuItem>
+                      );
+                    })}
+                  </StyledUserEditTextField>
+                </UIFlexWrapBox>
+              </Stack>
+            </UIFlexWrapBox>
+            {user.id === 0 && slug != 'customers' && (
+              <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
+                <Stack sx={{ width: '49%', gap: '10px' }}>
+                  <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                    <StyledUserInfoTitle>Password:</StyledUserInfoTitle>
+                    <StyledUserEditTextField
+                      fullWidth
+                      size="small"
+                      type={showPassword ? 'text' : 'password'}
+                      autoComplete="new-password"
+                      id="password"
+                      name="password"
+                      value={userFormik.values.password}
+                      onChange={userFormik.handleChange}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              onClick={() => setShowPassword(!showPassword)}
+                            >
+                              {showPassword ? (
+                                <VisibilityOffOutlinedIcon
+                                  sx={{ color: '#DCE0E4' }}
+                                />
+                              ) : (
+                                <VisibilityOutlinedIcon
+                                  sx={{ color: '#DCE0E4' }}
+                                />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </UIFlexWrapBox>
+                </Stack>
+                <Stack sx={{ width: '49%', gap: '10px' }}>
+                  <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                    <StyledUserInfoTitle>Confirm Password:</StyledUserInfoTitle>
+                    <StyledUserEditTextField
+                      fullWidth
+                      size="small"
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      autoComplete="new-password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      value={userFormik.values.confirmPassword}
+                      onChange={userFormik.handleChange}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              onClick={() =>
+                                setShowConfirmPassword(!showConfirmPassword)
+                              }
+                            >
+                              {showConfirmPassword ? (
+                                <VisibilityOffOutlinedIcon
+                                  sx={{ color: '#DCE0E4' }}
+                                />
+                              ) : (
+                                <VisibilityOutlinedIcon
+                                  sx={{ color: '#DCE0E4' }}
+                                />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </UIFlexWrapBox>
+                </Stack>
               </UIFlexWrapBox>
-            </UIFlexSpaceBox>
+            )}
             <Divider sx={{ mt: '25px' }} />
             <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
               <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
@@ -286,12 +392,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                         );
                       }}
                       renderInput={(params) => {
-                        return (
-                          <StyledUserEditTextField
-                            {...params}
-                            placeholder="Birthday"
-                          />
-                        );
+                        return <StyledUserEditTextField {...params} />;
                       }}
                     />
                   </LocalizationProvider>
@@ -300,6 +401,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                   <StyledUserInfoTitle>User role:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="roleId"
+                    defaultValue={1}
                     value={userFormik.values.roleId}
                     onChange={userFormik.handleChange}
                     select

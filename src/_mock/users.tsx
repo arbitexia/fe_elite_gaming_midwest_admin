@@ -16,7 +16,7 @@ export const profileData: UserType.User = {
   birthday: '14/06/1991',
   createdAt: '17/09/2021',
   assetId: 1,
-  address: {
+  location: {
     address1: '96607 Claire Square Suite',
     address2: 'St. Louis Park, HI',
     city: 'New York',
