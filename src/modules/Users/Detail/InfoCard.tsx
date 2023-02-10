@@ -10,7 +10,7 @@ import {
   StyledUserInfoCardContent,
   StyledUserInfoCardStatus,
 } from './ui';
-import { getColor } from '@/libs/data-helper';
+import { formatPhoneNumber, getColor } from '@/libs/data-helper';
 import UsersDetailHeader from './Header';
 
 interface UsersDetailHeaderProps {
@@ -58,7 +58,9 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>
                 <Stack direction="row">
                   <StyledUserInfoTitle>Phonenumber:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{user.phone}</StyledUserInfoValue>
+                  <StyledUserInfoValue>
+                    {user.phone ? formatPhoneNumber(user.phone) : ''}
+                  </StyledUserInfoValue>
                 </Stack>
                 <Stack direction="row">
                   <StyledUserInfoTitle>Email:</StyledUserInfoTitle>
@@ -66,7 +68,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                 </Stack>
                 <Stack direction="row">
                   <StyledUserInfoTitle>Location:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{`${user.address?.address1} ${user.address?.address2} ${user.address?.city} ${user.address?.state} ${user.address?.zipcode} ${user.address?.country}`}</StyledUserInfoValue>
+                  <StyledUserInfoValue>{`${user.location?.address1} ${user.location?.address2} ${user.location?.city} ${user.location?.state} ${user.location?.zipcode} ${user.location?.country}`}</StyledUserInfoValue>
                 </Stack>
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>

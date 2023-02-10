@@ -14,7 +14,7 @@ export declare namespace UserType {
     assetId?: number;
     email?: string;
     phone: string;
-    address?: CommonType.Address;
+    location?: CommonType.Address;
     birthday: string;
     status?: UserStatus;
     role?: RoleType.Role;
@@ -68,13 +68,13 @@ export type UpdateUserParam = {
     firstName?: string;
     lastName?: string;
     userName?: string;
-    assetId: number;
+    assetId?: number;
     email?: string;
     phone?: string;
-    address?: CommonType.Address;
+    location?: CommonType.Address;
     birthday?: string;
     status?: UserStatus;
-    roleId: number;
+    roleId?: number;
   };
 };
 

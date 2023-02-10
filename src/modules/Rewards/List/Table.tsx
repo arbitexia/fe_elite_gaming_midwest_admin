@@ -128,11 +128,7 @@ const RewardsTable = ({
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
 
-  function descendingComparator(
-    a: any,
-    b: any,
-    orderBy: keyof ProductType
-  ) {
+  function descendingComparator(a: any, b: any, orderBy: keyof ProductType) {
     if (b[orderBy] < a[orderBy]) {
       return -1;
     }
@@ -300,7 +296,7 @@ const RewardsTable = ({
               </StyledTableCell>
               <StyledTableCell align="center">
                 {rewardItem.createdAt
-                  ? format(new Date(rewardItem.createdAt), 'yyyy-MM-dd')
+                  ? format(new Date(rewardItem.createdAt), 'MM/dd/yyyy')
                   : ''}
               </StyledTableCell>
               <StyledTableCell>

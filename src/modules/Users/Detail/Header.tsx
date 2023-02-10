@@ -48,9 +48,7 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
               color: '#06251F',
             }}
           >
-            {user.id === 0
-              ? 'Create User'
-              : `${user.firstName} ${user.lastName}'s Information`}
+            {user.id === 0 ? 'Create User' : `${user.userName}'s Information`}
           </Typography>
           <Stack direction="row" spacing={2} justifyContent="flex-end">
             <Box

@@ -19,7 +19,7 @@ import {
   StyledOptionMenuItem,
 } from './ui';
 import { menuActions } from '@/_mock/users';
-import { getColor } from '@/libs/data-helper';
+import { formatPhoneNumber, getColor } from '@/libs/data-helper';
 import { MenuAction } from '@/constants/Enum';
 import { UserType } from '@/types';
 import { format } from 'date-fns';
@@ -258,9 +258,11 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
                 </StyledTableCell>
                 <StyledTableCell>{userItem.fullName}</StyledTableCell>
                 <StyledTableCell>{userItem.email}</StyledTableCell>
-                <StyledTableCell>{userItem.phone}</StyledTableCell>
                 <StyledTableCell>
-                  {format(new Date(userItem.birthday), 'yyyy-MM-dd')}
+                  {userItem.phone ? formatPhoneNumber(userItem.phone) : ''}
+                </StyledTableCell>
+                <StyledTableCell>
+                  {format(new Date(userItem.birthday), 'MM/dd/yyyy')}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {userItem.role?.name}
@@ -274,7 +276,7 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
                 <StyledTableCell>
                   {format(
                     new Date(userItem.createdAt as string),
-                    'yyyy-MM-dd h:m:s'
+                    'MM/dd/yyyy hh:mm:ss'
                   )}
                 </StyledTableCell>
                 <StyledTableCell>

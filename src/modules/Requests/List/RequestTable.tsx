@@ -253,7 +253,7 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
                   <StyledRequestTableCell sx={{ color: '#ABACAC !important' }}>
                     {format(
                       new Date(request.createdAt ?? ''),
-                      'yyyy-MM-dd hh:mm:ss'
+                      'MM/dd/yyyy hh:mm:ss'
                     )}
                   </StyledRequestTableCell>
                   <StyledRequestTableCell>

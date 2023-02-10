@@ -64,7 +64,7 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
                 <Typography variant="h5">Date Create</Typography>
                 <Typography>
                   {transactionItem.createdAt
-                    ? format(new Date(transactionItem.createdAt), 'yyyy-MM-dd')
+                    ? format(new Date(transactionItem.createdAt), 'MM/dd/yyyy')
                     : '-'}
                 </Typography>
               </Box>
@@ -88,7 +88,7 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
                 <Typography variant="h5">Date Accepted</Typography>
                 <Typography>
                   {transactionItem.updatedAt
-                    ? format(new Date(transactionItem.updatedAt), 'yyyy-MM-dd')
+                    ? format(new Date(transactionItem.updatedAt), 'MM/dd/yyyy')
                     : '-'}
                 </Typography>
               </Box>
