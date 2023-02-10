@@ -1,5 +1,5 @@
 import React from 'react';
-import * as InputMask from 'react-input-mask';
+import InputMask from 'react-input-mask';
 
 interface CustomProps {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
