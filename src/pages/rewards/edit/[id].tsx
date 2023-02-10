@@ -48,8 +48,8 @@ const RewardsById = () => {
             ? parseInt(values.point as string)
             : values.point,
         status: values.status,
-        short: values.short,
-        description: values.description,
+        short: values.short ?? '',
+        description: values.description ?? '',
       };
 
       const product = await onUpdateProduct(params);

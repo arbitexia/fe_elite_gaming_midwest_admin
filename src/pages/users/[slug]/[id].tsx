@@ -19,7 +19,7 @@ const UsersDetailPage = () => {
   const { currentUser, currentId, onUserSelect } = useUser();
   const { points, onGetPoints } = usePoint();
   const { id } = router.query;
-
+  console.log(id);
   useEffect(() => {
     onUserSelect(parseInt(id as string));
   }, [id]);

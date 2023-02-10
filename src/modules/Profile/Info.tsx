@@ -66,7 +66,9 @@ const ProfileInfo = ({ user }: ProfileHeaderProps) => {
                 </UIFlexWrapBox>
                 <UIFlexWrapBox>
                   <StyledUserInfoTitle>Location:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{`${user.location?.address1} ${user.location?.address2} ${user.location?.city} ${user.location?.state} ${user.location?.zipcode} ${user.location?.country}`}</StyledUserInfoValue>
+                  <StyledUserInfoValue>{`${
+                    user.fullAddress ?? ''
+                  }`}</StyledUserInfoValue>
                 </UIFlexWrapBox>
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>

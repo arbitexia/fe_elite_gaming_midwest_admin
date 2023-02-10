@@ -6,6 +6,7 @@ export type LocationType = {
   name: string;
   coords: { lat: number; lng: number };
   address: CommonType.Address;
+  fullAddress?: string;
   status: string;
   type: string;
   description?: string;

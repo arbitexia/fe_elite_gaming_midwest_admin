@@ -54,7 +54,7 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
                 {transactionItem.userLocation?.user?.fullName ?? ''}
               </Typography>
               <Typography>
-                {transactionItem.userLocation?.user?.address?.address1 ?? '-'}
+                {transactionItem.userLocation?.user?.fullAddress}
               </Typography>
               <Typography>
                 Phone: {transactionItem.userLocation?.user?.phone ?? '-'}
@@ -78,7 +78,7 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
                 {transactionItem.assignee?.fullName ?? ''}
               </Typography>
               <Typography>
-                {transactionItem.assignee?.address?.address1 ?? '-'}
+                {transactionItem.assignee?.fullAddress ?? '-'}
               </Typography>
               <Typography>
                 Email: {transactionItem.assignee?.email ?? '-'}

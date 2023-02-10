@@ -12,6 +12,7 @@ import {
 } from './ui';
 import { formatPhoneNumber, getColor } from '@/libs/data-helper';
 import UsersDetailHeader from './Header';
+import { format } from 'date-fns';
 
 interface UsersDetailHeaderProps {
   user: UserType.User;
@@ -68,13 +69,15 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                 </Stack>
                 <Stack direction="row">
                   <StyledUserInfoTitle>Location:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{`${user.location?.address1} ${user.location?.address2} ${user.location?.city} ${user.location?.state} ${user.location?.zipcode} ${user.location?.country}`}</StyledUserInfoValue>
+                  <StyledUserInfoValue>{`${user.fullAddress}`}</StyledUserInfoValue>
                 </Stack>
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>
                 <Stack direction="row">
                   <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{user.birthday}</StyledUserInfoValue>
+                  <StyledUserInfoValue>
+                    {format(new Date(user.birthday), 'MM/dd/yyyy')}
+                  </StyledUserInfoValue>
                 </Stack>
                 <Stack direction="row">
                   <StyledUserInfoTitle>User role:</StyledUserInfoTitle>

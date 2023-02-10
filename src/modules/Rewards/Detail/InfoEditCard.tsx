@@ -19,8 +19,8 @@ const RewardsDetailInfoCard = ({
 }: {
   productFormik: FormikProps<ProductType>;
 }) => {
-  const { locations } = useLocation();
-
+  const { locations, onGetLocations } = useLocation();
+  if (locations.length < 1) onGetLocations({ filterBy: { search: '' } });
   const modules = {
     toolbar: [
       [{ header: [1, 2, false] }],
@@ -101,7 +101,6 @@ const RewardsDetailInfoCard = ({
                 fullWidth
                 select
               >
-                <MenuItem value={0}>All</MenuItem>
                 {locations.map((option: LocationType) => (
                   <MenuItem key={option.id} value={option.id}>
                     {option.name}

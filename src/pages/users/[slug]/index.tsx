@@ -7,23 +7,17 @@ import {
 } from '@/modules/Users';
 import { DashboardLayout } from '@/layouts';
 import { slugIndex } from '@/_mock/users';
-import { UserType } from '@/types';
 import { useRouter } from 'next/router';
 import { useUser } from '@/hooks';
 
 const UsersListPage = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const { users, pageInfo, onGetUsers } = useUser();
-  const [userList, setUserList] = useState<UserType.User[]>([]);
+  const { loading, users, pageInfo, onGetUsers } = useUser();
   const [searchValue, setSearchValue] = useState('');
   const [searchStatus, setSearchStatus] = useState('ALL');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  useEffect(() => {
-    setUserList(users);
-  }, [users]);
 
   useEffect(() => {
     handleSearch();
@@ -49,7 +43,7 @@ const UsersListPage = () => {
         setSearchStatus={setSearchStatus}
       />
       <Divider sx={{ mt: '30px' }} />
-      <UsersListTable usersTableData={userList} />
+      {!loading && <UsersListTable usersTableData={users} />}
       <UsersListPagination
         page={page}
         rowsPerPage={rowsPerPage}

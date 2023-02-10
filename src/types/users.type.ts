@@ -17,6 +17,7 @@ export declare namespace UserType {
     email?: string;
     phone: string;
     location?: CommonType.Address;
+    fullAddress?: string;
     birthday: string;
     status?: UserStatus;
     role?: RoleType.Role;
