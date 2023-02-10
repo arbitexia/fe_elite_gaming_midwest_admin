@@ -23,7 +23,7 @@ jobs:
           node-version: '16'
 
       - name: Install Dependencies
-        run: CI=false && npm install
+        run: CI=false && yarn install
       
       - name: Generate prod env file
         run: yarn gen:env
