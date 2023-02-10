@@ -168,24 +168,24 @@ const ProfileEdit = ({ user }: ProfileEditProps) => {
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Address1:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="address.address1"
-                    value={userFormik.values.address?.address1}
+                    name="location.address1"
+                    value={userFormik.values.location?.address1}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>City:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="address.city"
-                    value={userFormik.values.address?.city}
+                    name="location.city"
+                    value={userFormik.values.location?.city}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>ZipCode:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="address.zipcode"
-                    value={userFormik.values.address?.zipcode}
+                    name="location.zipcode"
+                    value={userFormik.values.location?.zipcode}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
@@ -219,24 +219,24 @@ const ProfileEdit = ({ user }: ProfileEditProps) => {
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Address2:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="address.address2"
-                    value={userFormik.values.address?.address2}
+                    name="location.address2"
+                    value={userFormik.values.location?.address2}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>State:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="address.state"
-                    value={userFormik.values.address?.state}
+                    name="location.state"
+                    value={userFormik.values.location?.state}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Country:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="address.country"
-                    value={userFormik.values.address?.country}
+                    name="location.country"
+                    value={userFormik.values.location?.country}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
