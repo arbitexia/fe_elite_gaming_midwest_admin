@@ -11,10 +11,12 @@ import { useFormik } from 'formik';
 import { LocationType, CreateLocationParam } from '@/types';
 import { useLocation, useAsset } from '@/hooks';
 import { initLocationData } from '@/_mock/locations';
+import { useRouter } from 'next/router';
 
 const LocationCreatePage = () => {
   const { onCreateLocation } = useLocation();
   const { onSetGalleries, onSaveGallery } = useAsset();
+  const router = useRouter();
   const [isReady, setIsReady] = useState(true);
   useEffect(() => {
     if (!isReady) return;
@@ -35,7 +37,10 @@ const LocationCreatePage = () => {
         },
       };
       const location = await onCreateLocation(params);
-      onSaveGallery(location.id, 'LOCATION');
+      if (location.id) {
+        onSaveGallery(location.id, 'LOCATION');
+        router.push('/locations');
+      }
     },
   });
 

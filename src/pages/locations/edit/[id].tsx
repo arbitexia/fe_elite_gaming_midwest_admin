@@ -39,6 +39,7 @@ const LocationsById = () => {
 
       onUpdateLocation(params);
       onSaveGallery(values.id, 'LOCATION');
+      router.push('/locations');
     },
   });
 
