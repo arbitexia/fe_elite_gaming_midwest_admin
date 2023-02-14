@@ -41,8 +41,7 @@ export const UserInfoCustomerSchema = yup.object({
   birthday: yup.string().required('Birthday is required'),
   phone: yup
     .string()
-    .length(10, 'Phone number is not valid')
-    .required('Phone number is required'),
+    .matches(/^\([0-9]{3}\) [0-9]{3} [0-9]{4}$/i, 'Phone number is not valid'),
   roleId: yup.number().required('User Role is required'),
   status: yup.string().required('Status is required'),
 });
