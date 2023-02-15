@@ -6,7 +6,7 @@ import {
   UsersListTable,
 } from '@/modules/Users';
 import { DashboardLayout } from '@/layouts';
-import { slugIndex } from '@/_mock/users';
+import { roleShortCodes } from '@/_mock/users';
 import { useRouter } from 'next/router';
 import { useUser } from '@/hooks';
 
@@ -26,7 +26,7 @@ const UsersListPage = () => {
   const handleSearch = () => {
     onGetUsers({
       filterBy: {
-        type: slugIndex[slug as keyof typeof slugIndex],
+        type: roleShortCodes[slug as keyof typeof roleShortCodes],
         status: searchStatus,
         search: searchValue,
       },

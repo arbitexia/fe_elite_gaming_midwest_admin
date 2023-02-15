@@ -46,7 +46,7 @@ export const UserInfoCustomerSchema = yup.object({
   phone: yup
     .string()
     .required('Phone number is required')
-    .matches(/^\([0-9]{3}\) [0-9]{3} [0-9]{4}$/i, 'Phone number is not valid'),
+    .matches(/^[0-9]{3}[0-9]{3}[0-9]{4}$/i, 'Phone number is not valid'),
   roleId: yup.number().required('User Role is required'),
   status: yup.string().required('Status is required'),
 });
@@ -62,6 +62,10 @@ export const UserInfoCreateSchema = yup.object({
     .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i, 'Invalid Email'),
   roleId: yup.number().required('User Role is required'),
   status: yup.string().required('Status is required'),
+  phone: yup
+    .string()
+    .required('Phone number is required')
+    .matches(/^[0-9]{3}[0-9]{3}[0-9]{4}$/i, 'Phone number is not valid'),
   password: yup
     .string()
     .min(8, 'Password should be of minimum 8 characters length')
@@ -112,7 +116,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
       };
       if (values.assetId) input.assetId = values.assetId;
       if (values.email) input.email = values.email;
-      if (values.phone) input.phone = values.phone.replace(/\D/g, '');
+      if (values.phone) input.phone = values.phone;
       if (values.location) input.location = values.location;
       if (values.password) input.password = values.password;
       await onUpdateUser({
@@ -348,7 +352,12 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                   <StyledUserEditTextField
                     name="phone"
                     value={userFormik.values.phone}
-                    onChange={userFormik.handleChange}
+                    onChange={(e) => {
+                      userFormik.setFieldValue(
+                        'phone',
+                        e.currentTarget.value.replace(/\D/g, '')
+                      );
+                    }}
                     InputProps={{
                       inputComponent: TextMaskCustom as any,
                     }}

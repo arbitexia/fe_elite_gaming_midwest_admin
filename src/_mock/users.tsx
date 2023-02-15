@@ -152,7 +152,7 @@ export const guestActivityData: GuestActivityDataType[] = [
   },
 ];
 
-export const slugIndex = {
+export const roleShortCodes = {
   admins: 'ADMIN',
   tablets: 'TABLET',
   customers: 'CUSTOMER',
@@ -162,6 +162,4 @@ export const userStatus = [
   { id: 'ACTIVATED', value: 'Activated' },
   { id: 'ARCHIVED', value: 'Archived' },
   { id: 'DISABLED', value: 'Disabled' },
-  { id: 'VERIFY_EMAIL', value: 'Verify Email' },
-  { id: 'VERIFY_PHONE', value: 'Verify Phone' },
 ];
