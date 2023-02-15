@@ -22,7 +22,7 @@ import { UserRole } from '@/constants/Enum';
 import { useAsset, useUser } from '@/hooks';
 import { convertMBtoBytes } from '@/libs/data-helper';
 import { useAppToast } from '@/providers';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { Moment } from 'moment';
@@ -39,8 +39,13 @@ export const UserInfoCustomerSchema = yup.object({
   lastName: yup.string().required('LastName is required'),
   userName: yup.string().required('UserName is required'),
   birthday: yup.string().required('Birthday is required'),
+  email: yup
+    .string()
+    .required('Email is required')
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i, 'Invalid Email'),
   phone: yup
     .string()
+    .required('Phone number is required')
     .matches(/^\([0-9]{3}\) [0-9]{3} [0-9]{4}$/i, 'Phone number is not valid'),
   roleId: yup.number().required('User Role is required'),
   status: yup.string().required('Status is required'),
@@ -51,6 +56,10 @@ export const UserInfoCreateSchema = yup.object({
   lastName: yup.string().required('LastName is required'),
   userName: yup.string().required('UserName is required'),
   birthday: yup.string().required('Birthday is required'),
+  email: yup
+    .string()
+    .required('Email is required')
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i, 'Invalid Email'),
   roleId: yup.number().required('User Role is required'),
   status: yup.string().required('Status is required'),
   password: yup
@@ -75,12 +84,24 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
   const { onCreateAsset } = useAsset();
   const userFormik = useFormik({
     initialValues: user,
-    validationSchema:
-      user.id === 0 && slug != 'customers'
-        ? UserInfoCreateSchema
-        : UserInfoCustomerSchema,
     validateOnChange: false,
+    validateOnBlur: false,
     onSubmit: async (values) => {
+      let error = '';
+      const validationSchema =
+        user.id === 0 && slug != 'customers'
+          ? UserInfoCreateSchema
+          : UserInfoCustomerSchema;
+      await validationSchema.validate(values).catch((e) => {
+        error = e.message;
+      });
+      if (error) {
+        appToast({
+          severity: 'error',
+          message: error,
+        });
+        return;
+      }
       const input: any = {
         firstName: values.firstName,
         lastName: values.lastName,
@@ -94,24 +115,13 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
       if (values.phone) input.phone = values.phone.replace(/\D/g, '');
       if (values.location) input.location = values.location;
       if (values.password) input.password = values.password;
-      try {
-        await onUpdateUser({
-          userId: user.id,
-          input,
-        });
-        router.push(`/users/${slug}`);
-      } catch (e) {
-        console.log(e);
-      }
+      await onUpdateUser({
+        userId: user.id,
+        input,
+      });
+      router.push(`/users/${slug}`);
     },
   });
-  useEffect(() => {
-    let error = '';
-    Object.values(userFormik.errors).forEach((value) => {
-      error = value;
-    });
-    if (error) appToast({ severity: 'error', message: error });
-  }, [userFormik.errors]);
   const onAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const reader = new FileReader();
