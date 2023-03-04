@@ -1,86 +1,47 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, IconButton, Typography } from '@mui/material';
 import {
   StyledLocationCardBox,
   StyledLocationEditPhotoButton,
   StyledLocationAddPhotoButton,
 } from './ui';
-import { AssetType } from '@/types';
+import { RewardsDetailProps } from '@/types';
 import SwipeableViews from 'react-swipeable-views';
+import { autoPlay } from 'react-swipeable-views-utils';
 import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import { ArrowBackIos, ArrowForwardIos, AddAPhoto } from '@mui/icons-material';
 import Thumbnail from './Thumbnail';
-import { useAsset } from '@/hooks';
-import { useAppToast } from '@/providers';
-import { convertMBtoBytes } from '@/libs/data-helper';
 
-const RewardsDetailCarouselEditCard = () => {
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+
+const RewardsDetailCarouselEditCard = ({ rewardsItem }: RewardsDetailProps) => {
   const [activeStep, setActiveStep] = useState(0);
-  const {
-    galleries,
-    onAddGallery,
-    onUpdateGallery,
-    onCreateAsset,
-    onDeleteImage,
-  } = useAsset();
-  const appToast = useAppToast();
+  const [images, setImages] = useState<string[]>([]);
+  useEffect(() => {
+    setImages(rewardsItem.urls);
+  }, [rewardsItem]);
 
   const handleNext = () => {
-    if (galleries.length <= 1) return;
     setActiveStep((prevActiveStep) =>
-      prevActiveStep + 2 > galleries.length ? 0 : prevActiveStep + 1
+      prevActiveStep + 2 > images.length ? 0 : prevActiveStep + 1
     );
   };
 
   const handleBack = () => {
-    if (galleries.length <= 1) return;
     setActiveStep((prevActiveStep) =>
-      prevActiveStep - 1 >= 0 ? prevActiveStep - 1 : galleries.length - 1
+      prevActiveStep - 1 >= 0 ? prevActiveStep - 1 : images.length - 1
     );
   };
 
+  const handleStepChange = (step: number) => {
+    setActiveStep(step);
+  };
+
   const handleRemove = (index: number) => {
-    onDeleteImage(index);
-  };
-
-  const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    // setShowImageError(false);
-    const reader = new FileReader();
-    const file = e.target.files ? e.target.files[0] : null;
-    if (!file) return;
-
-    // Restrict user to upload file less than 3.1MB
-    if (file.size > convertMBtoBytes(3.1)) {
-      appToast('error', 'File size is too large');
-      return;
-    }
-    reader.onloadend = async () => {
-      const asset: AssetType.Asset = await onCreateAsset(file);
-      onUpdateGallery(activeStep, asset);
-    };
-
-    reader.readAsDataURL(file);
-  };
-
-  const onImageAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    // setShowImageError(false);
-    const reader = new FileReader();
-    const file = e.target.files ? e.target.files[0] : null;
-    if (!file) return;
-
-    // Restrict user to upload file less than 3.1MB
-    if (file.size > convertMBtoBytes(3.1)) {
-      appToast('error', 'File size is too large');
-      return;
-    }
-    reader.onloadend = async () => {
-      const asset: AssetType.Asset = await onCreateAsset(file);
-      onAddGallery({ id: 0, assetId: asset.id, asset: asset });
-    };
-
-    reader.readAsDataURL(file);
+    setImages((prev) => {
+      prev.splice(index, 1);
+      return prev;
+    });
   };
 
   return (
@@ -89,52 +50,41 @@ const RewardsDetailCarouselEditCard = () => {
         <Box
           sx={{
             width: 'calc(100% - 120px)',
-            display: 'block',
-            overflow: 'hidden',
             borderRadius: '12px',
-            height: '350px',
+            overflow: 'hidden',
           }}
         >
-          <SwipeableViews index={activeStep} enableMouseEvents>
-            {galleries.length > 0 ? (
-              galleries.map((gallery, index) => {
-                return Math.abs(activeStep - index) <= 2 ? (
-                  <Box
-                    key={index}
-                    component="img"
-                    sx={{
-                      width: '100%',
-                      height: '350px',
-                    }}
-                    src={`${gallery.asset?.url ?? '/images/noImage.jpg'}`}
-                    alt="image"
-                  />
-                ) : null;
-              })
-            ) : (
-              <Box
-                component="img"
-                sx={{
-                  width: '100%',
-                  height: '350px',
-                }}
-                src={'/images/noImage.jpg'}
-                alt="image"
-              />
-            )}
-          </SwipeableViews>
+          <AutoPlaySwipeableViews
+            index={activeStep}
+            onChangeIndex={handleStepChange}
+            enableMouseEvents
+          >
+            {images.map((url, index) => {
+              return Math.abs(activeStep - index) <= 2 ? (
+                <Box
+                  component="img"
+                  sx={{
+                    width: '100%',
+                    height: '350px',
+                  }}
+                  src={`/${url}`}
+                  alt="image"
+                />
+              ) : null;
+            })}
+          </AutoPlaySwipeableViews>
         </Box>
         <UIFlexSpaceBox
           flexDirection="column"
           sx={{ width: '100px', height: 350 }}
         >
           <Box>
-            {galleries.map((gallery, index) => {
+            {images.map((url, index) => {
               return (
                 <Thumbnail
                   key={index}
                   index={index}
-                  url={gallery.asset?.url ?? '/images/noImage.jpg'}
+                  url={url}
                   handleRemove={handleRemove}
                   activeStep={activeStep}
                 />
@@ -173,27 +123,12 @@ const RewardsDetailCarouselEditCard = () => {
       </Typography>
       <UIFlexCenterBox sx={{ gap: '15px', marginTop: '31px' }}>
         <StyledLocationEditPhotoButton>
-          <label htmlFor="photo-edit">Edit Photo</label>
-          <input
-            id="photo-edit"
-            type="file"
-            onChange={onImageChange}
-            accept="image/png, image/gif, image/jpeg"
-            hidden
-          />
+          Edit Photo
         </StyledLocationEditPhotoButton>
-
         <StyledLocationAddPhotoButton
           startIcon={<AddAPhoto sx={{ color: 'rgba(255, 255, 255, 0.54)' }} />}
         >
-          <label htmlFor="photo-create">Add Photo</label>
-          <input
-            id="photo-create"
-            type="file"
-            onChange={onImageAdd}
-            accept="image/png, image/gif, image/jpeg"
-            hidden
-          />
+          Add Photo
         </StyledLocationAddPhotoButton>
       </UIFlexCenterBox>
     </StyledLocationCardBox>

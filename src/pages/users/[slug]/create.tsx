@@ -2,7 +2,6 @@ import { Stack } from '@mui/material';
 import { UserDetailInfoEditCard } from '@/modules/Users';
 import { DashboardLayout } from '@/layouts';
 import { UserType } from '@/types';
-import { UserStatus } from '@/constants/Enum';
 
 const UsersDetailPage = () => {
   const initUserData: UserType.User = {
@@ -10,11 +9,7 @@ const UsersDetailPage = () => {
     firstName: '',
     lastName: '',
     email: '',
-    password: '',
-    status: UserStatus.ACTIVATED,
-    roleId: 1,
-    confirmPassword: '',
-    location: {
+    address: {
       address1: '',
       address2: '',
       city: '',

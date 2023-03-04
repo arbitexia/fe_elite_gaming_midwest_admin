@@ -11,8 +11,8 @@ import {
   StyledUserInfoCardStatus,
 } from './ui';
 import { formatPhoneNumber, getColor } from '@/libs/data-helper';
-import UsersDetailHeader from './Header';
 import { format } from 'date-fns';
+import UsersDetailHeader from './Header';
 
 interface UsersDetailHeaderProps {
   user: UserType.User;
@@ -58,9 +58,9 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
             <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>
                 <Stack direction="row">
-                  <StyledUserInfoTitle>Phonenumber:</StyledUserInfoTitle>
+                  <StyledUserInfoTitle>Phone:</StyledUserInfoTitle>
                   <StyledUserInfoValue>
-                    {user.phone ? formatPhoneNumber(user.phone) : ''}
+                    {formatPhoneNumber(user.phone)}
                   </StyledUserInfoValue>
                 </Stack>
                 <Stack direction="row">
@@ -68,15 +68,18 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                   <StyledUserInfoValue>{user.email}</StyledUserInfoValue>
                 </Stack>
                 <Stack direction="row">
-                  <StyledUserInfoTitle>Location:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{`${user.fullAddress}`}</StyledUserInfoValue>
+                  <StyledUserInfoTitle>Address:</StyledUserInfoTitle>
+                  <StyledUserInfoValue>
+                    {user.address &&
+                      `${user.address?.address1} ${user.address?.address2} ${user.address?.city} ${user.address?.state} ${user.address?.zipcode} ${user.address?.country}`}
+                  </StyledUserInfoValue>
                 </Stack>
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>
                 <Stack direction="row">
                   <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
                   <StyledUserInfoValue>
-                    {format(new Date(user.birthday), 'MM/dd/yyyy')}
+                    {format(new Date(user.birthday), 'yyyy-MM-dd')}
                   </StyledUserInfoValue>
                 </Stack>
                 <Stack direction="row">

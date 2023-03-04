@@ -29,12 +29,12 @@ export const useAuth = (callbackFunc?: useAuthProps) => {
     error && appToast({ severity: 'error', message: error });
     if (status === ResponseStatus.SUCCESS && message) {
       appToast({ severity: 'success', message: message });
+      dispatch(clearAuthMessage(''));
       callbackFunc?.handleAuthUserSuccess &&
         callbackFunc?.handleAuthUserSuccess();
       callbackFunc?.handleAuthResetSuccess &&
         callbackFunc?.handleAuthResetSuccess();
     }
-    dispatch(clearAuthMessage(''));
   }, [loading]);
 
   const onLogin = async (identifier: string, password: string) => {

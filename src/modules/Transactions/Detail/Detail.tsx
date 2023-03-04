@@ -28,7 +28,6 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
           color="#667180"
           title="Print"
           handleClick={() => {
-            console.log('Toast');
             appToast({
               severity: 'success',
               message: 'Print',
@@ -50,21 +49,21 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
           <Grid item xs={6}>
             <StyledGridBox component="div">
               <Typography variant="h5">Customer</Typography>
+              <Typography>{`${transactionItem.user.firstName ?? '-'} ${
+                transactionItem.user.lastName ?? '-'
+              }`}</Typography>
               <Typography>
-                {transactionItem.userLocation?.user?.fullName ?? ''}
+                {transactionItem?.user?.address?.address1 ?? '-'}
               </Typography>
               <Typography>
-                {transactionItem.userLocation?.user?.fullAddress}
-              </Typography>
-              <Typography>
-                Phone: {transactionItem.userLocation?.user?.phone ?? '-'}
+                Phone: {transactionItem?.user?.phone ?? '-'}
               </Typography>
 
               <Box component="div">
                 <Typography variant="h5">Date Create</Typography>
                 <Typography>
-                  {transactionItem.createdAt
-                    ? format(new Date(transactionItem.createdAt), 'MM/dd/yyyy')
+                  {transactionItem?.createdAt
+                    ? format(new Date(transactionItem.createdAt), 'yyyy-MM-dd')
                     : '-'}
                 </Typography>
               </Box>
@@ -74,21 +73,21 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
           <Grid item xs={6}>
             <StyledGridBox component="div">
               <Typography variant="h5">Assignee</Typography>
+              <Typography>{`${transactionItem.assignee.firstName ?? '-'} ${
+                transactionItem.assignee.lastName ?? '-'
+              }`}</Typography>
               <Typography>
-                {transactionItem.assignee?.fullName ?? ''}
+                {transactionItem?.assignee?.address?.address1 ?? '-'}
               </Typography>
               <Typography>
-                {transactionItem.assignee?.fullAddress ?? '-'}
-              </Typography>
-              <Typography>
-                Email: {transactionItem.assignee?.email ?? '-'}
+                Email: {transactionItem?.assignee?.email ?? '-'}
               </Typography>
 
               <Box component="div">
                 <Typography variant="h5">Date Accepted</Typography>
                 <Typography>
-                  {transactionItem.updatedAt
-                    ? format(new Date(transactionItem.updatedAt), 'MM/dd/yyyy')
+                  {transactionItem?.updatedAt
+                    ? format(new Date(transactionItem.updatedAt), 'yyyy-MM-dd')
                     : '-'}
                 </Typography>
               </Box>

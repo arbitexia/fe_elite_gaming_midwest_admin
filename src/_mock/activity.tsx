@@ -1,4 +1,4 @@
-import { ActivityItemType } from '@/types';
+import { ActivityItemType, ProductStatus } from '@/types';
 import { ActivityModel, ActivityType } from '@/constants/Enum';
 
 export const activityData: ActivityItemType[] = [
@@ -78,6 +78,7 @@ export const activityData: ActivityItemType[] = [
         id: 6,
         name: 'Marshal V6',
         urls: ['images/marshal.jpg'],
+        locationId: 0,
         location: {
           name: 'Palm Casino Resort',
           coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -97,7 +98,7 @@ export const activityData: ActivityItemType[] = [
         short: '128gb RAM $600',
         description: '',
         amount: 3,
-        status: 'Available',
+        status: ProductStatus.AVAILABLE,
         createdAt: '14/06/2022',
       },
       user: {
@@ -171,6 +172,7 @@ export const activityData: ActivityItemType[] = [
         id: 6,
         name: 'Marshal V6',
         urls: ['images/marshal.jpg'],
+        locationId: 0,
         location: {
           name: 'Palm Casino Resort',
           coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -190,7 +192,7 @@ export const activityData: ActivityItemType[] = [
         short: '128gb RAM $600',
         description: '',
         amount: 3,
-        status: 'Available',
+        status: ProductStatus.AVAILABLE,
         createdAt: '14/06/2022',
       },
       user: {

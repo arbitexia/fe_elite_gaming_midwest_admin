@@ -6,6 +6,6 @@ export const createAppTheme = (mode: PaletteMode) =>
       mode,
     },
     typography: {
-      fontFamily: `Poppins`,
+      fontFamily: `Roboto`,
     },
   });

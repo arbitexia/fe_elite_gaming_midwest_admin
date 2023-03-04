@@ -17,6 +17,7 @@ export type ProductType = {
   amount: number;
   point: number;
   short: string;
+  urls: string[];
   description: string;
   createdAt?: string;
   updatedAt?: string;
@@ -33,4 +34,8 @@ export type GetProductsParam = {
     page: number;
     size: number;
   };
+};
+
+export type GetProductParam = {
+  id: number;
 };

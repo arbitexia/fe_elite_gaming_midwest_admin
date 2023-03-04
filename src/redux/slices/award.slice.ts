@@ -22,10 +22,10 @@ const initialState: ReduxJson.AwardState = {
 };
 
 export const getAwards = createAsyncThunk<
-  CommonType.Pagination<AwardType>,
+  AwardType[],
   GetAwardsParam,
   { dispatch: AppDispatch; state: RootState }
->('award/getAwards', async (params: GetAwardsParam, thunkAPI) => {
+>('Award/getAwards', async (params: GetAwardsParam, thunkAPI) => {
   try {
     return await awardApi.getAwards(params);
   } catch (error) {
@@ -61,7 +61,7 @@ export const createAward = createAsyncThunk<
 });
 
 export const acceptAward = createAsyncThunk<
-  AwardType,
+  CommonType.Message,
   number,
   { dispatch: AppDispatch; state: RootState }
 >('award/acceptAward', async (params: number, thunkAPI) => {
@@ -74,7 +74,7 @@ export const acceptAward = createAsyncThunk<
 });
 
 export const declineAward = createAsyncThunk<
-  AwardType,
+  CommonType.Message,
   number,
   { dispatch: AppDispatch; state: RootState }
 >('award/declineAward', async (params: number, thunkAPI) => {
@@ -88,7 +88,7 @@ export const declineAward = createAsyncThunk<
 
 // Actual Slice
 export const awardSlice = createSlice({
-  name: 'award',
+  name: 'Award',
   initialState,
   reducers: {
     resetAwardMessage: (state: ReduxJson.AwardState, _payload) => {
@@ -106,14 +106,10 @@ export const awardSlice = createSlice({
       })
       .addCase(
         getAwards.fulfilled,
-        (
-          state,
-          { payload }: PayloadAction<CommonType.Pagination<AwardType>>
-        ) => {
+        (state, { payload }: PayloadAction<AwardType[]>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          state.pageInfo = payload.pageInfo;
-          state.awards = payload.data;
+          state.awards = payload;
         }
       )
       .addCase(getAwards.rejected, (state, { payload }) => {
@@ -128,14 +124,10 @@ export const awardSlice = createSlice({
         state.error = null;
         state.message = null;
       })
-      .addCase(
-        getAward.fulfilled,
-        (state, { payload }: PayloadAction<AwardType>) => {
-          state.loading = false;
-          state.status = ResponseStatus.SUCCESS;
-          console.log(payload);
-        }
-      )
+      .addCase(getAward.fulfilled, (state) => {
+        state.loading = false;
+        state.status = ResponseStatus.SUCCESS;
+      })
       .addCase(getAward.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
@@ -148,14 +140,10 @@ export const awardSlice = createSlice({
         state.error = null;
         state.message = null;
       })
-      .addCase(
-        createAward.fulfilled,
-        (state, { payload }: PayloadAction<AwardType>) => {
-          state.loading = false;
-          state.status = ResponseStatus.SUCCESS;
-          console.log(payload);
-        }
-      )
+      .addCase(createAward.fulfilled, (state) => {
+        state.loading = false;
+        state.status = ResponseStatus.SUCCESS;
+      })
       .addCase(createAward.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
@@ -170,10 +158,10 @@ export const awardSlice = createSlice({
       })
       .addCase(
         acceptAward.fulfilled,
-        (state, { payload }: PayloadAction<AwardType>) => {
+        (state, { payload }: PayloadAction<CommonType.Message>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          state.awards.filter((e) => e.id != payload.id);
+          state.message = payload.message;
         }
       )
       .addCase(acceptAward.rejected, (state, { payload }) => {
@@ -190,10 +178,10 @@ export const awardSlice = createSlice({
       })
       .addCase(
         declineAward.fulfilled,
-        (state, { payload }: PayloadAction<AwardType>) => {
+        (state, { payload }: PayloadAction<CommonType.Message>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          state.awards.filter((e) => e.id != payload.id);
+          state.message = payload.message;
         }
       )
       .addCase(declineAward.rejected, (state, { payload }) => {

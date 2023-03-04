@@ -1,4 +1,4 @@
-import { TransactionType } from '@/types/transactions.type';
+import { TransactionType, ProductStatus } from '@/types';
 
 export const transactionData: TransactionType[] = [
   {
@@ -42,6 +42,7 @@ export const transactionData: TransactionType[] = [
       id: 1,
       name: 'AirPods 2',
       urls: ['images/earphone.jpg'],
+      locationId: 0,
       location: {
         name: 'Palm Casino Resort',
         coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -61,7 +62,7 @@ export const transactionData: TransactionType[] = [
       short: '128gb RAM $600',
       description: '',
       amount: 3,
-      status: 'Available',
+      status: ProductStatus.AVAILABLE,
       createdAt: '14/06/2022',
     },
     assignee: {

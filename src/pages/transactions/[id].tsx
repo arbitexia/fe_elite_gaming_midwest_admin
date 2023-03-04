@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { DashboardLayout } from '@/layouts';
-import { AwardType } from '@/types';
+import { TransactionType } from '@/types';
+import { transactionData } from '@/_mock/transactions';
 import { TransactionDetail } from '@/modules/Transactions';
-import { useAward } from '@/hooks';
 
 const TransactionsById = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { onGetAwardById } = useAward();
   const [transactionItem, setTransactionItem] = useState<
-    AwardType | undefined | null
+    TransactionType | undefined | null
   >(null);
   useEffect(() => {
-    setTransactionItem(onGetAwardById(parseInt(id as string)));
+    setTransactionItem(
+      transactionData.find((item) => item.id === parseInt(id as string))
+    );
   }, [id]);
   return (
     <DashboardLayout title={'Transaction'}>

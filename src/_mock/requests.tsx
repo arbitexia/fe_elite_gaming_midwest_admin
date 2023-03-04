@@ -1,4 +1,4 @@
-import { RequestItemType } from '@/types';
+import { RequestItemType, ProductStatus } from '@/types';
 
 export const requestsData: RequestItemType[] = [
   {
@@ -7,6 +7,7 @@ export const requestsData: RequestItemType[] = [
       id: 6,
       name: 'Marshal V6',
       urls: ['images/marshal.jpg'],
+      locationId: 0,
       location: {
         name: 'Palm Casino Resort',
         coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -26,7 +27,7 @@ export const requestsData: RequestItemType[] = [
       short: '128gb RAM $600',
       description: '',
       amount: 3,
-      status: 'Available',
+      status: ProductStatus.AVAILABLE,
       createdAt: '14/06/2022',
     },
     user: {
@@ -73,6 +74,7 @@ export const requestsData: RequestItemType[] = [
       id: 2,
       name: 'Marshal V6',
       urls: ['images/marshal.jpg'],
+      locationId: 0,
       location: {
         name: 'Palm Casino Resort',
         coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -92,7 +94,7 @@ export const requestsData: RequestItemType[] = [
       short: '128gb RAM $600',
       description: '',
       amount: 3,
-      status: 'Available',
+      status: ProductStatus.AVAILABLE,
       createdAt: '14/06/2022',
     },
     user: {

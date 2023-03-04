@@ -81,7 +81,6 @@ export const authSlice = createSlice({
       { payload }: PayloadAction<string>
     ) => {
       state.accessToken = payload;
-      console.log(payload);
       localStorage.setItem('accessToken', payload);
     },
     logout: (state: ReduxJson.AuthState) => {

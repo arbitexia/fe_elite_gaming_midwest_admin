@@ -1,5 +1,12 @@
 import { TablePagination } from '@mui/material';
-import { PaginationProps } from '@/types';
+
+interface UsersPaginationProps {
+  page: number;
+  rowsPerPage: number;
+  total: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setRowsPerPage: React.Dispatch<React.SetStateAction<number>>;
+}
 
 const UsersPagination = ({
   page,
@@ -7,7 +14,7 @@ const UsersPagination = ({
   total,
   setPage,
   setRowsPerPage,
-}: PaginationProps) => {
+}: UsersPaginationProps) => {
   const handleChangePage = (
     _event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number

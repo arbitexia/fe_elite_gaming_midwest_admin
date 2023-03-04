@@ -9,8 +9,8 @@ import {
 } from '@/components/UI';
 import { StyledSelectMenuItem } from './ui';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useLocation } from '@/hooks';
+import { locationsData } from '@/_mock/locations';
+
 interface RewardsListHeaderProps {
   searchValue: string;
   searchLocation: number;
@@ -28,18 +28,6 @@ const RewardsListHeader = ({
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);
   };
-  const { locations } = useLocation();
-  const [locationsData, setLocationData] = useState<
-    { id: string; name: string }[]
-  >([]);
-
-  useEffect(() => {
-    setLocationData(
-      locations.map((x) => {
-        return { id: `${x.id}`, name: x.name };
-      })
-    );
-  }, [locations]);
 
   return (
     <UIListHeader title="Rewards">

@@ -10,7 +10,7 @@ import {
   StyledUserInfoCardContent,
   StyledUserInfoCardStatus,
 } from './ui';
-import { getColor } from '@/libs/data-helper';
+import { formatPhoneNumber, getColor } from '@/libs/data-helper';
 import ProfileHeader from './Header';
 
 interface ProfileHeaderProps {
@@ -57,8 +57,10 @@ const ProfileInfo = ({ user }: ProfileHeaderProps) => {
             <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>
                 <UIFlexWrapBox>
-                  <StyledUserInfoTitle>Phonenumber:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{user.phone}</StyledUserInfoValue>
+                  <StyledUserInfoTitle>Phone:</StyledUserInfoTitle>
+                  <StyledUserInfoValue>
+                    {formatPhoneNumber(user.phone)}
+                  </StyledUserInfoValue>
                 </UIFlexWrapBox>
                 <UIFlexWrapBox>
                   <StyledUserInfoTitle>Email:</StyledUserInfoTitle>
@@ -66,9 +68,7 @@ const ProfileInfo = ({ user }: ProfileHeaderProps) => {
                 </UIFlexWrapBox>
                 <UIFlexWrapBox>
                   <StyledUserInfoTitle>Location:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>{`${
-                    user.fullAddress ?? ''
-                  }`}</StyledUserInfoValue>
+                  <StyledUserInfoValue>{`${user.address?.address1} ${user.address?.address2} ${user.address?.city} ${user.address?.state} ${user.address?.zipcode} ${user.address?.country}`}</StyledUserInfoValue>
                 </UIFlexWrapBox>
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>

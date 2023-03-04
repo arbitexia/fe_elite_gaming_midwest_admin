@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Table,
   TableHead,
   TableBody,
@@ -15,32 +11,21 @@ import {
 import { UIChip, UIFlexColumnBox, UIFlexWrapBox } from '@/components/UI';
 import { StyledRequestTableRow, StyledRequestTableCell } from './ui';
 import { getColor } from '@/libs/data-helper';
-import { AwardType } from '@/types';
-import { format } from 'date-fns';
-import { useAward } from '@/hooks';
+import RequestsPagination from './Pagination';
+import { useAppToast } from '@/providers';
+import { RequestItemType } from '@/types';
 
 interface RequestTableProps {
-  requestsData: AwardType[];
+  requestsData: RequestItemType[];
 }
 
 const RequestTable = ({ requestsData }: RequestTableProps) => {
   const router = useRouter();
-  const { onAcceptAward, onDeclineAward } = useAward();
+  const showToast = useAppToast();
+  const [isActions, setActions] = useState<'accept' | 'decline'>();
   type Order = 'asc' | 'desc';
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<string>('id');
-  const [confirmAction, setConfirmAction] = useState({
-    action: '',
-    id: 0,
-    open: false,
-  });
-
-  const handleOk = () => {
-    if (confirmAction.id === 0) return;
-    if (confirmAction.action === 'accept') onAcceptAward(confirmAction.id);
-    else onDeclineAward(confirmAction.id);
-    setConfirmAction({ ...confirmAction, open: false });
-  };
+  const [orderBy, setOrderBy] = useState<keyof RequestItemType>('id');
 
   function stableSort<T>(
     array: readonly T[],
@@ -57,64 +42,66 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
     return stabilizedThis.map((el) => el[0]);
   }
 
-  function getComparator(
+  function getComparator<Key extends keyof RequestItemType>(
     order: Order,
-    orderBy: string
-  ): (a: AwardType, b: AwardType) => number {
+    orderBy: Key
+  ): (a: RequestItemType, b: RequestItemType) => number {
     return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
 
-  function descendingComparator(a: any, b: any, orderBy: string) {
-    if (
-      orderBy === 'userLocation.user' &&
-      b.userLocation?.user?.fullName &&
-      a.userLocation?.user?.fullName
-    ) {
-      if (b.userLocation?.user?.fullName < a.userLocation?.user?.fullName) {
+  function descendingComparator(
+    a: RequestItemType,
+    b: RequestItemType,
+    orderBy: keyof RequestItemType
+  ) {
+    if (orderBy === 'user') {
+      if (
+        `${b.user.firstName} ${b.user.lastName}` <
+        `${a.user.firstName} ${a.user.lastName}`
+      ) {
         return -1;
       }
-      if (b.userLocation?.user?.fullName > a.userLocation?.user?.fullName) {
-        return 1;
-      }
-    } else if (
-      orderBy === 'userLocation.location' &&
-      b.userLocation?.location &&
-      a.userLocation?.location
-    ) {
-      if (b.userLocation?.location?.name < a.userLocation?.location?.name) {
-        return -1;
-      }
-      if (b.userLocation?.location?.name > a.userLocation?.location?.name) {
-        return 1;
-      }
-    } else if (orderBy === 'product' && b.product && a.product) {
-      if (b.product.name < a.product.name) {
-        return -1;
-      }
-      if (b.product?.name > a.product?.name) {
-        return 1;
-      }
-    } else {
-      if (b[orderBy] < a[orderBy]) {
-        return -1;
-      }
-      if (b[orderBy] > a[orderBy]) {
+      if (
+        `${b.user.firstName} ${b.user.lastName}` >
+        `${a.user.firstName} ${a.user.lastName}`
+      ) {
         return 1;
       }
     }
-
+    if (orderBy === 'location') {
+      if (b.location.name < a.location.name) {
+        return -1;
+      }
+      if (b.location.name > a.location.name) {
+        return 1;
+      }
+    }
+    if (orderBy === 'item') {
+      if (b.item.name < a.item.name) {
+        return -1;
+      }
+      if (b.item.name > a.item.name) {
+        return 1;
+      }
+    }
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
     return 0;
   }
 
   const createSortHandler =
-    (property: string) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof RequestItemType) => (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: string
+    property: keyof RequestItemType
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -125,19 +112,19 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
     return Object.keys(items).map((key, index) => {
       if (
         key === 'id' ||
+        key === 'location' ||
         key === 'locationId' ||
         key === 'short' ||
-        key === 'gallery' ||
+        key === 'urls' ||
         key === 'description' ||
-        key === 'createdAt' ||
-        key === 'updatedAt'
+        key === 'createdAt'
       )
         return;
       return (
         <UIFlexWrapBox key={`item-${index}`} sx={{ alignItems: 'center' }}>
           <Typography
             sx={{
-              color: 'rgba(0, 0, 0, 0.3)',
+              color: '#0000004d',
               fontSize: 12,
               fontWeight: 500,
               textTransform: 'capitalize',
@@ -175,6 +162,20 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
     });
   };
 
+  useEffect(() => {
+    if (isActions === 'accept') {
+      showToast({
+        severity: 'success',
+        message: 'Accepted',
+      });
+    } else if (isActions === 'decline') {
+      showToast({
+        severity: 'info',
+        message: 'Declined',
+      });
+    }
+  }, [isActions]);
+
   return (
     <>
       <Table>
@@ -191,36 +192,36 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
             </StyledRequestTableCell>
             <StyledRequestTableCell>
               <TableSortLabel
-                active={orderBy === 'product'}
+                active={orderBy === 'item'}
                 direction={order}
-                onClick={createSortHandler('product')}
+                onClick={createSortHandler('item')}
               >
                 Info
               </TableSortLabel>
             </StyledRequestTableCell>
             <StyledRequestTableCell>
               <TableSortLabel
-                active={orderBy === 'createdAt'}
+                active={orderBy === 'requestedAt'}
                 direction={order}
-                onClick={createSortHandler('createdAt')}
+                onClick={createSortHandler('requestedAt')}
               >
                 Requested at
               </TableSortLabel>
             </StyledRequestTableCell>
             <StyledRequestTableCell>
               <TableSortLabel
-                active={orderBy === 'userLocation.user'}
+                active={orderBy === 'user'}
                 direction={order}
-                onClick={createSortHandler('userLocation.user')}
+                onClick={createSortHandler('user')}
               >
                 User
               </TableSortLabel>
             </StyledRequestTableCell>
             <StyledRequestTableCell>
               <TableSortLabel
-                active={orderBy === 'userLocation.location'}
+                active={orderBy === 'location'}
                 direction={order}
-                onClick={createSortHandler('userLocation.location')}
+                onClick={createSortHandler('location')}
               >
                 Location
               </TableSortLabel>
@@ -240,7 +241,7 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
         <TableBody>
           {requestsData &&
             requestsData.length > 0 &&
-            stableSort<AwardType>(
+            stableSort<RequestItemType>(
               requestsData,
               getComparator(order, orderBy)
             ).map((request, index) => {
@@ -248,36 +249,29 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
                 <StyledRequestTableRow key={`request-${index}`}>
                   <StyledRequestTableCell>#{request.id}</StyledRequestTableCell>
                   <StyledRequestTableCell>
-                    {renderItem(request.product)}
+                    {renderItem(request.item)}
                   </StyledRequestTableCell>
                   <StyledRequestTableCell sx={{ color: '#ABACAC !important' }}>
-                    {format(
-                      new Date(request.createdAt ?? ''),
-                      'MM/dd/yyyy hh:mm:ss'
-                    )}
+                    {request.requestedAt}
                   </StyledRequestTableCell>
                   <StyledRequestTableCell>
                     <Button
                       sx={{ color: '#000000B2 !important' }}
                       onClick={() => {
-                        router.push(
-                          `/users/customers/${request.userLocation?.user?.id}`
-                        );
+                        router.push(`/users/customers/${request.user.id}`);
                       }}
                     >
-                      {`${request.userLocation?.user?.firstName} ${request.userLocation?.user?.lastName}`}
+                      {`${request.user.firstName} ${request.user.lastName}`}
                     </Button>
                   </StyledRequestTableCell>
                   <StyledRequestTableCell>
                     <Button
                       sx={{ color: '#ABACAC !important' }}
                       onClick={() => {
-                        router.push(
-                          `locations/${request.userLocation?.location?.id}`
-                        );
+                        router.push(`locations/${request.location.id}`);
                       }}
                     >
-                      {request.userLocation?.location?.name}
+                      {request.location.name}
                     </Button>
                   </StyledRequestTableCell>
                   <StyledRequestTableCell>
@@ -293,11 +287,7 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
                         size="small"
                         sx={{ color: '#FFFFFF', background: '#11918D' }}
                         onClick={() => {
-                          setConfirmAction({
-                            action: 'accept',
-                            id: request.id,
-                            open: true,
-                          });
+                          setActions('accept');
                         }}
                       >
                         Accept
@@ -310,11 +300,7 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
                           color: '#11918D',
                         }}
                         onClick={() => {
-                          setConfirmAction({
-                            action: 'decline',
-                            id: request.id,
-                            open: true,
-                          });
+                          setActions('decline');
                         }}
                       >
                         Decline
@@ -341,27 +327,7 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
           </Typography>
         </UIFlexColumnBox>
       )}
-      <Dialog
-        sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
-        maxWidth="xs"
-        open={confirmAction.open}
-      >
-        <DialogTitle>Confirm Request</DialogTitle>
-        <DialogContent>
-          <Typography>
-            Are you sure you want to {confirmAction.action} reward?
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            autoFocus
-            onClick={() => setConfirmAction({ ...confirmAction, open: false })}
-          >
-            Cancel
-          </Button>
-          <Button onClick={handleOk}>Ok</Button>
-        </DialogActions>
-      </Dialog>
+      <RequestsPagination />
     </>
   );
 };

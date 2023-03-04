@@ -1,11 +1,12 @@
+import { useState } from 'react';
 import { Box, Typography, Stack, MenuItem } from '@mui/material';
 import { UIFlexWrapBox, UIEditTextField } from '@/components/UI';
 import { StyledLocationCardBox, StyledLocationInfoTitle } from './ui';
-import { LocationType, ProductType } from '@/types';
+import { RewardsDetailProps } from '@/types';
 import 'react-quill/dist/quill.snow.css';
-import { FormikProps } from 'formik';
+import { useFormik } from 'formik';
+import { locationsData } from '@/_mock/locations';
 import dynamic from 'next/dynamic';
-import { useLocation } from '@/hooks';
 // const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 const ReactQuill: any = dynamic(
   () => {
@@ -14,13 +15,10 @@ const ReactQuill: any = dynamic(
   { loading: () => null, ssr: false }
 );
 
-const RewardsDetailInfoCard = ({
-  productFormik,
-}: {
-  productFormik: FormikProps<ProductType>;
-}) => {
-  const { locations, onGetLocations } = useLocation();
-  if (locations.length < 1) onGetLocations({ filterBy: { search: '' } });
+const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [value, setValue] = useState('');
+
   const modules = {
     toolbar: [
       [{ header: [1, 2, false] }],
@@ -52,6 +50,14 @@ const RewardsDetailInfoCard = ({
     'image',
   ];
 
+  const userFormik = useFormik({
+    initialValues: rewardsItem,
+    onSubmit: async (values) => {
+      console.log(values);
+      // await authorize({ variables: { ...values } });
+    },
+  });
+
   return (
     <StyledLocationCardBox>
       <Typography
@@ -64,44 +70,32 @@ const RewardsDetailInfoCard = ({
       >
         Information:
       </Typography>
-      <UIFlexWrapBox sx={{ paddingTop: '20px', gap: '40px' }}>
+      <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>Name:</StyledLocationInfoTitle>
-            <Box flexGrow={1}>
+            <StyledLocationInfoTitle>Points:</StyledLocationInfoTitle>
+            <Box>
               <UIEditTextField
                 name="name"
-                value={productFormik.values.name}
-                onChange={productFormik.handleChange}
+                value={userFormik.values.name}
+                onChange={userFormik.handleChange}
                 fullWidth
               />
             </Box>
           </UIFlexWrapBox>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>Point:</StyledLocationInfoTitle>
-            <Box flexGrow={1}>
-              <UIEditTextField
-                name="point"
-                value={productFormik.values.point}
-                onChange={productFormik.handleChange}
-                fullWidth
-              />
-            </Box>
-          </UIFlexWrapBox>
-        </Stack>
-        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
             <StyledLocationInfoTitle>Location:</StyledLocationInfoTitle>
-            <Box flexGrow={1}>
+            <Box width={230}>
               <UIEditTextField
-                name="locationId"
+                name="location"
                 defaultValue={0}
-                value={productFormik.values.locationId}
-                onChange={productFormik.handleChange}
+                value={userFormik.values.location}
+                onChange={userFormik.handleChange}
                 fullWidth
                 select
               >
-                {locations.map((option: LocationType) => (
+                <MenuItem value={0}>All</MenuItem>
+                {locationsData.map((option) => (
                   <MenuItem key={option.id} value={option.id}>
                     {option.name}
                   </MenuItem>
@@ -109,37 +103,21 @@ const RewardsDetailInfoCard = ({
               </UIEditTextField>
             </Box>
           </UIFlexWrapBox>
+        </Stack>
+        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
             <StyledLocationInfoTitle>Amount:</StyledLocationInfoTitle>
-            <Box flexGrow={1}>
+            <Box>
               <UIEditTextField
                 name="amount"
-                value={productFormik.values.amount}
-                onChange={productFormik.handleChange}
+                value={userFormik.values.amount}
+                onChange={userFormik.handleChange}
                 fullWidth
               />
             </Box>
           </UIFlexWrapBox>
         </Stack>
       </UIFlexWrapBox>
-      <Box
-        sx={{
-          width: '100%',
-          paddingTop: '20px',
-        }}
-      >
-        <StyledLocationInfoTitle>Short:</StyledLocationInfoTitle>
-        <Box>
-          <UIEditTextField
-            name="short"
-            value={productFormik.values.short}
-            onChange={productFormik.handleChange}
-            fullWidth
-            multiline
-            rows={3}
-          />
-        </Box>
-      </Box>
       <Box
         sx={{
           width: '100%',
@@ -151,10 +129,8 @@ const RewardsDetailInfoCard = ({
         <StyledLocationInfoTitle>Description:</StyledLocationInfoTitle>
         <ReactQuill
           theme="snow"
-          value={productFormik.values.description}
-          onChange={(e: string) =>
-            productFormik.setFieldValue('description', e)
-          }
+          value={value}
+          onChange={setValue}
           modules={modules}
           formats={formats}
         />

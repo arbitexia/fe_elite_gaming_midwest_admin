@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Stack } from '@mui/material';
 import { UIFlexWrapBox } from '@/components/UI';
@@ -16,10 +16,15 @@ import { GetPointParam } from '@/types';
 
 const UsersDetailPage = () => {
   const router = useRouter();
+  const [isTablet, setIsTablet] = useState<boolean>(false);
   const { currentUser, currentId, onUserSelect } = useUser();
   const { points, onGetPoints } = usePoint();
   const { id } = router.query;
-  console.log(id);
+
+  useEffect(() => {
+    if (currentUser) setIsTablet(currentUser.roleId === 3);
+  }, [currentUser]);
+
   useEffect(() => {
     onUserSelect(parseInt(id as string));
   }, [id]);
@@ -36,13 +41,16 @@ const UsersDetailPage = () => {
       {currentId === parseInt(id as string) && currentUser && (
         <Stack direction="column" spacing={2.5} paddingTop={4}>
           <UserDetailInfoCard user={currentUser} />
-          <UserDetailRequestCard />
+          {!isTablet && <UserDetailRequestCard />}
+          {!isTablet && (
+            <UIFlexWrapBox sx={{ gap: '20px' }}>
+              <UserDetailPointsCard points={points} />
+              <UserDetailTransactionCard />
+            </UIFlexWrapBox>
+          )}
+
           <UIFlexWrapBox sx={{ gap: '20px' }}>
-            <UserDetailPointsCard points={points} />
-            <UserDetailTransactionCard />
-          </UIFlexWrapBox>
-          <UIFlexWrapBox sx={{ gap: '20px' }}>
-            <UserDetailRewardsCard />
+            {!isTablet && <UserDetailRewardsCard />}
             <UserDetailActivityCard />
           </UIFlexWrapBox>
         </Stack>

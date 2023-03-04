@@ -16,6 +16,7 @@ import {
 import { Edit, Delete } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import { useLocation } from '@/hooks';
+import { useAppToast } from '@/providers';
 
 export type LocationDetailHeaderProps = {
   name: string;
@@ -27,6 +28,7 @@ const LocationDetailHeader = ({
   isEditable,
 }: LocationDetailHeaderProps) => {
   const router = useRouter();
+  const appToast = useAppToast();
   const { id } = router.query;
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const { onDeleteLocation } = useLocation();
@@ -36,6 +38,11 @@ const LocationDetailHeader = ({
   const handleOk = () => {
     setOpenDeleteModal(false);
     onDeleteLocation(parseInt(id as string));
+    router.push('/locations');
+    appToast({
+      severity: 'success',
+      message: `The ${name} has been removed!`,
+    });
   };
   return (
     <UIFlexSpaceBox sx={{ mb: '35px', alignItems: 'center', gap: '12px' }}>
@@ -76,9 +83,9 @@ const LocationDetailHeader = ({
         maxWidth="xs"
         open={openDeleteModal}
       >
-        <DialogTitle>Delete Reward</DialogTitle>
+        <DialogTitle>Delete {name}</DialogTitle>
         <DialogContent>
-          <Typography>Are you sure you want to delete reward?</Typography>
+          <Typography>Are you sure you want to remove {name}?</Typography>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleCancel}>

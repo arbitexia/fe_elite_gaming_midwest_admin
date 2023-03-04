@@ -1,7 +1,7 @@
-import { LocationType, UserType, RewardItemType, AwardType } from '@/types';
+import { LocationType, UserType, RewardItemType } from '@/types';
 
 export interface TransactionsProps {
-  transactionItem: AwardType;
+  transactionItem: TransactionType;
 }
 
 export type TransactionType = {

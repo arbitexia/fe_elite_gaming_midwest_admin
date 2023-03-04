@@ -1,15 +1,6 @@
 import { UserStatus, RequestStatus, RewardStatus } from '@/constants/Enum';
 import config from '@/config';
 
-export function formatPhoneNumber(phoneNumberString: string) {
-  const cleaned = ('' + phoneNumberString).replace(/\D/g, '');
-  const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-  if (match) {
-    return '(' + match[1] + ') ' + match[2] + '-' + match[3];
-  }
-  return null;
-}
-
 export const getColor = (value: string) => {
   if (
     value === UserStatus.ACTIVATED ||
@@ -45,4 +36,15 @@ export const getAuthorizeHeader = () => {
     'Access-Control-Allow-Methods': 'GET,POST',
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
+};
+
+export const hasElInArray = (data: unknown[]) => data.length > 0;
+
+export const formatPhoneNumber = (str: string) => {
+  const cleaned = ('' + str).replace(/\D/g, '');
+  const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+  }
+  return null;
 };

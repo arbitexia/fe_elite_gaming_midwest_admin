@@ -12,9 +12,11 @@ import { initLocationData } from '@/_mock/locations';
 import { LocationType, UpdateLocationParam } from '@/types';
 import { useFormik } from 'formik';
 import { useAsset, useLocation } from '@/hooks';
+import { useAppToast } from '@/providers';
 
 const LocationsById = () => {
   const router = useRouter();
+  const appToast = useAppToast();
   const { id } = router.query;
   const [locationItem, setLocationItem] = useState<LocationType | undefined>(
     undefined
@@ -40,6 +42,10 @@ const LocationsById = () => {
       onUpdateLocation(params);
       onSaveGallery(values.id, 'LOCATION');
       router.push('/locations');
+      appToast({
+        severity: 'success',
+        message: 'Successfully, game placee has been updated!',
+      });
     },
   });
 

@@ -4,7 +4,7 @@ import { MenuAction } from '@/constants/Enum';
 export const menuActions = [
   { label: 'View more', color: '#28B446', action: MenuAction.VIEW },
   { label: 'Edit', color: '#667180', action: MenuAction.EDIT },
-  { label: 'Delete', color: 'rgba(251, 2, 2, 0.6)', action: MenuAction.DELETE },
+  { label: 'Delete', color: '#fb020299', action: MenuAction.DELETE },
 ];
 
 export const profileData: UserType.User = {
@@ -16,7 +16,7 @@ export const profileData: UserType.User = {
   birthday: '14/06/1991',
   createdAt: '17/09/2021',
   assetId: 1,
-  location: {
+  address: {
     address1: '96607 Claire Square Suite',
     address2: 'St. Louis Park, HI',
     city: 'New York',
@@ -152,7 +152,7 @@ export const guestActivityData: GuestActivityDataType[] = [
   },
 ];
 
-export const roleShortCodes = {
+export const slugIndex = {
   admins: 'ADMIN',
   tablets: 'TABLET',
   customers: 'CUSTOMER',
@@ -162,4 +162,6 @@ export const userStatus = [
   { id: 'ACTIVATED', value: 'Activated' },
   { id: 'ARCHIVED', value: 'Archived' },
   { id: 'DISABLED', value: 'Disabled' },
+  { id: 'VERIFY_EMAIL', value: 'Verify Email' },
+  { id: 'VERIFY_PHONE', value: 'Verify Phone' },
 ];

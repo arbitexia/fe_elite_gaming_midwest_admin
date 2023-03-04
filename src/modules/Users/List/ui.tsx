@@ -49,11 +49,10 @@ export const StyledTableCell = styled(TableCell)({
     color: 'rgba(0, 0, 0, 0.3)',
     '&:nth-of-type(3)': {
       color: '#06251F',
-      fontWeight: 600,
+      fontWeight: 500,
     },
     '&:nth-of-type(4)': {
       color: 'rgba(0, 0, 0, 0.7)',
-      fontSize: 13,
     },
     '&:nth-of-type(5)': {
       color: 'rgba(0, 0, 0, 0.7)',

@@ -32,11 +32,3 @@ export declare namespace CommonType {
     pageInfo: PageInfo;
   };
 }
-
-export interface PaginationProps {
-  page: number;
-  rowsPerPage: number;
-  total: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-  setRowsPerPage: React.Dispatch<React.SetStateAction<number>>;
-}

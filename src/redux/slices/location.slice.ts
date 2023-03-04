@@ -128,14 +128,10 @@ export const locationSlice = createSlice({
         state.error = null;
         state.message = null;
       })
-      .addCase(
-        getLocation.fulfilled,
-        (state, { payload }: PayloadAction<LocationType>) => {
-          state.loading = false;
-          state.status = ResponseStatus.SUCCESS;
-          console.log(payload);
-        }
-      )
+      .addCase(getLocation.fulfilled, (state) => {
+        state.loading = false;
+        state.status = ResponseStatus.SUCCESS;
+      })
       .addCase(getLocation.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
@@ -148,14 +144,10 @@ export const locationSlice = createSlice({
         state.error = null;
         state.message = null;
       })
-      .addCase(
-        createLocation.fulfilled,
-        (state, { payload }: PayloadAction<LocationType>) => {
-          state.loading = false;
-          state.status = ResponseStatus.SUCCESS;
-          console.log(payload);
-        }
-      )
+      .addCase(createLocation.fulfilled, (state) => {
+        state.loading = false;
+        state.status = ResponseStatus.SUCCESS;
+      })
       .addCase(createLocation.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
@@ -168,14 +160,10 @@ export const locationSlice = createSlice({
         state.error = null;
         state.message = null;
       })
-      .addCase(
-        updateLocation.fulfilled,
-        (state, { payload }: PayloadAction<LocationType>) => {
-          state.loading = false;
-          state.status = ResponseStatus.SUCCESS;
-          console.log(payload);
-        }
-      )
+      .addCase(updateLocation.fulfilled, (state) => {
+        state.loading = false;
+        state.status = ResponseStatus.SUCCESS;
+      })
       .addCase(updateLocation.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
@@ -188,14 +176,10 @@ export const locationSlice = createSlice({
         state.error = null;
         state.message = null;
       })
-      .addCase(
-        deleteLocation.fulfilled,
-        (state, { payload }: PayloadAction<LocationType>) => {
-          state.loading = false;
-          state.status = ResponseStatus.SUCCESS;
-          console.log(payload);
-        }
-      )
+      .addCase(deleteLocation.fulfilled, (state) => {
+        state.loading = false;
+        state.status = ResponseStatus.SUCCESS;
+      })
       .addCase(deleteLocation.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;

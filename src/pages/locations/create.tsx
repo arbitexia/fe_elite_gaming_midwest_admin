@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { DashboardLayout } from '@/layouts';
 import { Box } from '@mui/material';
 import { UIFlexSpaceBox } from '@/components/UI';
@@ -11,12 +12,13 @@ import { useFormik } from 'formik';
 import { LocationType, CreateLocationParam } from '@/types';
 import { useLocation, useAsset } from '@/hooks';
 import { initLocationData } from '@/_mock/locations';
-import { useRouter } from 'next/router';
+import { useAppToast } from '@/providers';
 
 const LocationCreatePage = () => {
+  const router = useRouter();
+  const appToast = useAppToast();
   const { onCreateLocation } = useLocation();
   const { onSetGalleries, onSaveGallery } = useAsset();
-  const router = useRouter();
   const [isReady, setIsReady] = useState(true);
   useEffect(() => {
     if (!isReady) return;
@@ -37,10 +39,12 @@ const LocationCreatePage = () => {
         },
       };
       const location = await onCreateLocation(params);
-      if (location.id) {
-        onSaveGallery(location.id, 'LOCATION');
-        router.push('/locations');
-      }
+      onSaveGallery(location.id, 'LOCATION');
+      router.push('/locations');
+      appToast({
+        severity: 'success',
+        message: 'Successfully, new game placee has been registered!',
+      });
     },
   });
 

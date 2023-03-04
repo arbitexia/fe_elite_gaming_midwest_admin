@@ -15,7 +15,6 @@ const AppLayout = (props: Props) => {
   const router = useRouter();
   const { isAuthenticated } = useAuth({});
   useEffect(() => {
-    console.log(isAuthenticated);
     if (!isAuthenticated) router.push('/login');
   }, [isAuthenticated]);
   return (

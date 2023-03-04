@@ -8,6 +8,7 @@ import {
   IconButton,
   Divider,
   TableSortLabel,
+  Typography,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import { UIChip } from '@/components/UI';
@@ -30,6 +31,7 @@ type UsersTableProps = {
 };
 
 const UsersTable = ({ usersTableData }: UsersTableProps) => {
+  console.log(usersTableData);
   const router = useRouter();
   const { onDeleteUser } = useUser();
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -145,6 +147,21 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
     setOrderBy(property);
   };
 
+  // TODO - Convert info with type
+  const renderFirstLogin = (info: any) => {
+    if (!info || info?.status !== 200) return;
+    return (
+      <>
+        <Typography variant="caption" component="p">
+          IP: {info.ip}
+        </Typography>
+        <Typography variant="caption" component="p">
+          {`${info.city} ${info.region_code}, ${info.postal}, ${info.country_code}`}
+        </Typography>
+      </>
+    );
+  };
+
   return (
     <Table>
       <TableHead>
@@ -203,7 +220,7 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
               direction={order}
               onClick={createSortHandler('birthday')}
             >
-              Birthday
+              First Login
             </TableSortLabel>
           </StyledTableCell>
           <StyledTableCell align="center">Role</StyledTableCell>
@@ -235,7 +252,7 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
             getComparator(order, orderBy)
           ).map((userItem) => {
             const isItemSelected = isSelected(userItem.id.toString());
-            // const labelId = `enhanced-table-checkbox-${index}`;
+
             return (
               <StyledTableRow
                 key={userItem.id}
@@ -259,10 +276,11 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
                 <StyledTableCell>{userItem.fullName}</StyledTableCell>
                 <StyledTableCell>{userItem.email}</StyledTableCell>
                 <StyledTableCell>
-                  {userItem.phone ? formatPhoneNumber(userItem.phone) : ''}
+                  {formatPhoneNumber(userItem.phone)}
                 </StyledTableCell>
                 <StyledTableCell>
-                  {format(new Date(userItem.birthday), 'MM/dd/yyyy')}
+                  {/* {format(new Date(userItem.birthday), 'yyyy-MM-dd')} */}
+                  {renderFirstLogin(userItem?.firstLogin)}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {userItem.role?.name}
@@ -274,10 +292,7 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
                   />
                 </StyledTableCell>
                 <StyledTableCell>
-                  {format(
-                    new Date(userItem.createdAt as string),
-                    'MM/dd/yyyy hh:mm:ss'
-                  )}
+                  {format(new Date(userItem.createdAt as string), 'yyyy-MM-dd')}
                 </StyledTableCell>
                 <StyledTableCell>
                   <IconButton

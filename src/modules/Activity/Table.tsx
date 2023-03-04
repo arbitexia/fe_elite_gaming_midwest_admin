@@ -150,7 +150,7 @@ const ActivityTable = ({ activityTableData }: ActivityTableProps) => {
               </StyledTableCell>
 
               <StyledTableCell>
-                {format(new Date(activityItem.createdAt), 'MM/dd/yyyy')}
+                {format(new Date(activityItem.createdAt), 'yyyy-MM-dd')}
               </StyledTableCell>
               <StyledTableCell>{activityItem.model}</StyledTableCell>
               <StyledTableCell>{activityItem.action}</StyledTableCell>

@@ -15,7 +15,6 @@ import {
 } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import { useRouter } from 'next/router';
-import { useProduct } from '@/hooks';
 
 export type RewardDetailHeaderProps = {
   name: string;
@@ -26,14 +25,11 @@ const RewardDetailHeader = ({ name, isEditable }: RewardDetailHeaderProps) => {
   const router = useRouter();
   const { id } = router.query;
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const { onDeleteProduct } = useProduct();
   const handleCancel = () => {
     setOpenDeleteModal(false);
   };
-  const handleOk = async () => {
+  const handleOk = () => {
     setOpenDeleteModal(false);
-    await onDeleteProduct(parseInt(id as string));
-    router.push(`/rewards`);
   };
   return (
     <UIFlexSpaceBox
@@ -51,7 +47,7 @@ const RewardDetailHeader = ({ name, isEditable }: RewardDetailHeaderProps) => {
       </Typography>
       <UIFlexWrapBox>
         {isEditable ? (
-          <UIDefaultButton type="submit">Save</UIDefaultButton>
+          <UIDefaultButton>Save</UIDefaultButton>
         ) : (
           <>
             <UIActionButton

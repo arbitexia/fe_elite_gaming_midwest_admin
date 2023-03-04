@@ -47,7 +47,7 @@ const Sidebar = () => {
             <Box sx={{ position: 'relative' }} key={index}>
               {item.id === selectedMenu && <StyledSidebarActiveBar />}
               <StyledSidebarButton
-                disabled={item.disabled}
+                disabled={!!item.disabled}
                 onClick={() => {
                   setSelectedMenu(item.id);
                   setDropdownOpen(item.dropdown ? item.text : '');
@@ -75,7 +75,7 @@ const Sidebar = () => {
               </StyledSidebarButton>
               {item.dropdown && (
                 <Collapse
-                  in={item.text === dropdownOpen ? true : false}
+                  in={item.text === dropdownOpen}
                   timeout="auto"
                   unmountOnExit
                 >

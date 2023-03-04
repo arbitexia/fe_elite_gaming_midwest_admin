@@ -1,10 +1,11 @@
-import { ProductStatus, ProductType, RewardItemType } from '@/types';
+import { RewardItemType, ProductStatus } from '@/types';
 
 export const rewardsData: RewardItemType[] = [
   {
     id: 1,
     name: 'AirPods 2',
     urls: ['images/earphone.jpg'],
+    locationId: 0,
     location: {
       name: 'Palm Casino Resort',
       coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -24,13 +25,14 @@ export const rewardsData: RewardItemType[] = [
     short: '128gb RAM $600',
     description: '',
     amount: 3,
-    status: 'Available',
+    status: ProductStatus.AVAILABLE,
     createdAt: '14/06/2022',
   },
   {
     id: 2,
     name: 'Marshal V6',
     urls: ['images/marshal.jpg'],
+    locationId: 0,
     location: {
       name: 'Palm Casino Resort',
       coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -50,13 +52,14 @@ export const rewardsData: RewardItemType[] = [
     short: '128gb RAM $600',
     description: '',
     amount: 3,
-    status: 'Available',
+    status: ProductStatus.AVAILABLE,
     createdAt: '14/06/2022',
   },
   {
     id: 3,
     name: 'AppleWatch 8',
     urls: ['images/iwatch.jpg'],
+    locationId: 0,
     location: {
       name: 'Palm Casino Resort',
       coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -76,13 +79,14 @@ export const rewardsData: RewardItemType[] = [
     short: '128gb RAM $600',
     description: '',
     amount: 3,
-    status: 'Available',
+    status: ProductStatus.AVAILABLE,
     createdAt: '14/06/2022',
   },
   {
     id: 4,
     name: 'iPhone 14 pro',
     urls: ['images/iphone.jpg'],
+    locationId: 0,
     location: {
       name: 'Palm Casino Resort',
       coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -102,13 +106,14 @@ export const rewardsData: RewardItemType[] = [
     short: '128gb RAM $600',
     description: '',
     amount: 3,
-    status: 'Available',
+    status: ProductStatus.AVAILABLE,
     createdAt: '14/06/2022',
   },
   {
     id: 5,
     name: 'AirPods 2',
     urls: ['images/earphone.jpg'],
+    locationId: 0,
     location: {
       name: 'Palm Casino Resort',
       coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -128,13 +133,14 @@ export const rewardsData: RewardItemType[] = [
     short: '128gb RAM $600',
     description: '',
     amount: 3,
-    status: 'Available',
+    status: ProductStatus.AVAILABLE,
     createdAt: '14/06/2022',
   },
   {
     id: 6,
     name: 'Marshal V6',
     urls: ['images/marshal.jpg'],
+    locationId: 0,
     location: {
       name: 'Palm Casino Resort',
       coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -154,13 +160,14 @@ export const rewardsData: RewardItemType[] = [
     short: '128gb RAM $600',
     description: '',
     amount: 3,
-    status: 'Available',
+    status: ProductStatus.AVAILABLE,
     createdAt: '14/06/2022',
   },
   {
     id: 7,
     name: 'AppleWatch 8',
     urls: ['images/iwatch.jpg'],
+    locationId: 0,
     location: {
       name: 'Palm Casino Resort',
       coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -180,13 +187,14 @@ export const rewardsData: RewardItemType[] = [
     short: '128gb RAM $600',
     description: '',
     amount: 3,
-    status: 'Available',
+    status: ProductStatus.AVAILABLE,
     createdAt: '14/06/2022',
   },
   {
     id: 8,
     name: 'iPhone 14 pro',
     urls: ['images/iphone.jpg'],
+    locationId: 0,
     location: {
       name: 'Palm Casino Resort',
       coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -206,13 +214,14 @@ export const rewardsData: RewardItemType[] = [
     short: '128gb RAM $600',
     description: '',
     amount: 3,
-    status: 'Available',
+    status: ProductStatus.AVAILABLE,
     createdAt: '14/06/2022',
   },
   {
     id: 9,
     name: 'iPhone 14 pro',
     urls: ['images/iphone.jpg'],
+    locationId: 0,
     location: {
       name: 'Palm Casino Resort',
       coords: { lat: 40.7127837, lng: -74.0059413 },
@@ -232,18 +241,7 @@ export const rewardsData: RewardItemType[] = [
     short: '128gb RAM $600',
     description: '',
     amount: 3,
-    status: 'Available',
+    status: ProductStatus.AVAILABLE,
     createdAt: '14/06/2022',
   },
 ];
-
-export const initProductData: ProductType = {
-  id: 0,
-  name: '',
-  locationId: 0,
-  status: ProductStatus.AVAILABLE,
-  amount: 0,
-  point: 0,
-  short: '',
-  description: '',
-};

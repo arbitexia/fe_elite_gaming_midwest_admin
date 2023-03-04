@@ -39,13 +39,9 @@ export const changePassword = async (params: ChangePasswordParam) => {
 };
 
 export const updateUser = async (params: UpdateUserParam) => {
-  const response = await jwtAxios.put(
-    `/users/${params.userId}`,
-    { input: params.input },
-    {
-      headers: getAuthorizeHeader(),
-    }
-  );
+  const response = await jwtAxios.put(`/users}`, params, {
+    headers: getAuthorizeHeader(),
+  });
   return response.data;
 };
 

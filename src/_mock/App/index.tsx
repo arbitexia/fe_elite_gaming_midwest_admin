@@ -7,37 +7,10 @@ export const languageMenuItems = [
 
 export const superSidebarItems: MenuItemObj[] = [
   {
-    id: 1,
-    text: 'Analytics',
-    isSelected: false,
-    route: 'analytics',
-    disabled: true,
-  },
-  {
-    id: 2,
-    text: 'Locations',
-    route: 'locations',
-    isSelected: false,
-  },
-  {
-    id: 3,
-    text: 'Rewards',
-    route: 'rewards',
-    isSelected: false,
-    disabled: false,
-  },
-  {
-    id: 4,
-    text: 'Request',
-    route: 'requests',
-    isSelected: false,
-    disabled: false,
-  },
-  {
     id: 5,
     text: 'Users',
     isSelected: false,
-    disabled: false,
+
     dropdown: [
       {
         text: 'Customers',
@@ -63,23 +36,34 @@ export const superSidebarItems: MenuItemObj[] = [
     ],
   },
   {
-    id: 6,
-    text: 'Comments',
-    route: 'comments',
+    id: 2,
+    text: 'Locations',
+    route: 'locations',
     isSelected: false,
-    disabled: true,
   },
+  {
+    id: 3,
+    text: 'Rewards',
+    route: 'rewards',
+    isSelected: false,
+  },
+  {
+    id: 4,
+    text: 'Request',
+    route: 'requests',
+    isSelected: false,
+  },
+
   {
     id: 7,
     text: 'Reports',
-    disabled: false,
+
     isSelected: false,
     dropdown: [
       {
         text: 'Activity',
         route: 'activity',
         isSelected: false,
-        disabled: false,
       },
       {
         text: 'Transaction',
@@ -87,6 +71,20 @@ export const superSidebarItems: MenuItemObj[] = [
         isSelected: false,
       },
     ],
+  },
+  {
+    id: 6,
+    text: 'Comments',
+    route: 'comments',
+    isSelected: false,
+    disabled: true,
+  },
+  {
+    id: 1,
+    text: 'Analytics',
+    isSelected: false,
+    route: 'analytics',
+    disabled: true,
   },
   {
     id: 8,

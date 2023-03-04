@@ -9,12 +9,6 @@ import {
   IconButton,
   Divider,
   TableSortLabel,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Typography,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import { UIChip } from '@/components/UI';
@@ -33,35 +27,18 @@ import { format } from 'date-fns';
 
 type RewardsTableProps = {
   rewardsTableData: ProductType[];
-  onDeleteProduct: (id: number) => void;
 };
 
-const RewardsTable = ({
-  rewardsTableData,
-  onDeleteProduct,
-}: RewardsTableProps) => {
+const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
   const router = useRouter();
   const [selected, setSelected] = useState<readonly string[]>([]);
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [id, setId] = useState(0);
-
-  const handleCancel = () => {
-    setOpenDeleteModal(false);
-  };
-  const handleOk = async () => {
-    setOpenDeleteModal(false);
-    onDeleteProduct(id);
-    //router.push(`/rewards`);
-  };
 
   const handleNavBtnClick = (key: string) => {
-    console.log(anchorElOptionsMenu?.getAttribute('data-key'));
     if (key === MenuAction.DELETE) {
-      setId(parseInt(anchorElOptionsMenu?.getAttribute('data-key') as string));
-      setOpenDeleteModal(true);
+      //TODO Delete Action
     } else
       router.push(
         `${router.asPath}${
@@ -119,6 +96,21 @@ const RewardsTable = ({
     return stabilizedThis.map((el) => el[0]);
   }
 
+  function descendingComparator(
+    a: ProductType,
+    b: ProductType,
+    orderBy: keyof ProductType
+  ) {
+    console.log(a, b, orderBy);
+    // if (b[orderBy] < a[orderBy]) {
+    //   return -1;
+    // }
+    // if (b[orderBy] > a[orderBy]) {
+    //   return 1;
+    // }
+    return 0;
+  }
+
   function getComparator<Key extends keyof ProductType>(
     order: Order,
     orderBy: Key
@@ -126,16 +118,6 @@ const RewardsTable = ({
     return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
-  }
-
-  function descendingComparator(a: any, b: any, orderBy: keyof ProductType) {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
   }
 
   const createSortHandler =
@@ -296,7 +278,7 @@ const RewardsTable = ({
               </StyledTableCell>
               <StyledTableCell align="center">
                 {rewardItem.createdAt
-                  ? format(new Date(rewardItem.createdAt), 'MM/dd/yyyy')
+                  ? format(new Date(rewardItem.createdAt), 'yyyy-MM-dd')
                   : ''}
               </StyledTableCell>
               <StyledTableCell>
@@ -352,22 +334,6 @@ const RewardsTable = ({
           );
         })}
       </StyledOptionMenu>
-      <Dialog
-        sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
-        maxWidth="xs"
-        open={openDeleteModal}
-      >
-        <DialogTitle>Delete Reward</DialogTitle>
-        <DialogContent>
-          <Typography>Are you sure you want to delete reward?</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleCancel}>
-            Cancel
-          </Button>
-          <Button onClick={handleOk}>Ok</Button>
-        </DialogActions>
-      </Dialog>
     </Table>
   );
 };

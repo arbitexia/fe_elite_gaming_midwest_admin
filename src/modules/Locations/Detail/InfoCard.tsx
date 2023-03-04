@@ -71,7 +71,13 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
           <UIFlexWrapBox>
             <StyledLocationInfoTitle>Location:</StyledLocationInfoTitle>
             <StyledLocationInfoValue>
-              {locationItem.fullAddress ?? ''}
+              {`${locationItem.address?.address1 ?? ''} ${
+                locationItem.address?.address2 ?? ''
+              } ${locationItem.address?.city ?? ''} ${
+                locationItem.address?.state ?? ''
+              } ${locationItem.address?.zipcode ?? ''} ${
+                locationItem.address?.country ?? ''
+              }`}
             </StyledLocationInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>

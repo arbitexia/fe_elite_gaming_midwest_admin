@@ -9,11 +9,10 @@ const UsersDetailPage = () => {
   const router = useRouter();
   const { currentUser, currentId, onUserSelect } = useUser();
   const { id } = router.query;
-  const { isReady } = router;
 
   useEffect(() => {
-    if (id) onUserSelect(parseInt(id as string));
-  }, [id, isReady]);
+    onUserSelect(parseInt(id as string));
+  }, [id]);
 
   return (
     <DashboardLayout title="Users">

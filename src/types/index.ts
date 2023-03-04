@@ -36,7 +36,7 @@ export type {
   RefreshTokenPrams,
   RefreshTokenType,
 } from './auth.type';
-export type { CommonType, PaginationProps } from './common.type';
+export type { CommonType } from './common.type';
 export { AssetItemType } from './asset.type';
 export type {
   AssetType,
@@ -50,5 +50,9 @@ export type {
 export { ResponseStatus, AuthCallbackStatus } from './common.type';
 export type { UserLocation, PointType, GetPointParam } from './point.type';
 export type { AwardType, CreateAwardParam, GetAwardsParam } from './award.type';
-export type { ProductType, GetProductsParam } from './product.type';
 export { ProductStatus } from './product.type';
+export type {
+  ProductType,
+  GetProductsParam,
+  GetProductParam,
+} from './product.type';
