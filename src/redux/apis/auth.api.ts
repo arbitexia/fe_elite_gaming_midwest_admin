@@ -11,6 +11,7 @@ import {
   ForgotPasswordParams,
   ResetPasswordParams,
   RefreshTokenPrams,
+  RegisterType,
 } from '@/types';
 import axios from 'axios';
 import config from '@/config';
@@ -21,6 +22,15 @@ const headers = getHeader();
 
 export const refreshToken = async (params: RefreshTokenPrams) => {
   const response = await axios.post(`${baseUrl}/api/refresh`, params, headers);
+  return response.data;
+};
+
+export const createNewUser = async (params: RegisterType) => {
+  const response = await axios.post(
+    `${baseUrl}/api/create_new_user`,
+    params.user,
+    headers
+  );
   return response.data;
 };
 

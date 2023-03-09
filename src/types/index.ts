@@ -33,6 +33,7 @@ export type {
   AdminAuthType,
   ForgotPasswordType,
   ResetPasswordType,
+  RegisterType,
   RefreshTokenPrams,
   RefreshTokenType,
 } from './auth.type';

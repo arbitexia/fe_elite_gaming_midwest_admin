@@ -23,6 +23,10 @@ export type RefreshTokenType = {
   accessToken: string;
 };
 
+export type RegisterType = {
+  user: UserType.User;
+};
+
 export type AdminAuthType = {
   user: UserType.User;
   role: RoleType.Role;
