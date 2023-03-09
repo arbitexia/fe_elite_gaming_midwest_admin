@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useAppToast } from '@/providers';
 import {
+  createNewUser,
   authorize,
   forgotPassword,
   resetPassword,
@@ -10,11 +11,12 @@ import {
 } from '@/redux/slices';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from './redux';
-import { ResponseStatus } from '@/types';
+import { RegisterType, ResponseStatus } from '@/types';
 
 export interface useAuthProps {
   handleAuthResetSuccess?: () => void;
   handleAuthUserSuccess?: () => void;
+  handleRegisterUserSuccess?: () => void;
 }
 
 export const useAuth = (callbackFunc?: useAuthProps) => {
@@ -34,8 +36,14 @@ export const useAuth = (callbackFunc?: useAuthProps) => {
         callbackFunc?.handleAuthUserSuccess();
       callbackFunc?.handleAuthResetSuccess &&
         callbackFunc?.handleAuthResetSuccess();
+      callbackFunc?.handleRegisterUserSuccess &&
+        callbackFunc?.handleRegisterUserSuccess();
     }
   }, [loading]);
+
+  const onCreateNewUser = async (param: RegisterType) => {
+    await dispatch(createNewUser(param));
+  };
 
   const onLogin = async (identifier: string, password: string) => {
     await dispatch(authorize({ identifier, password }));
@@ -51,6 +59,7 @@ export const useAuth = (callbackFunc?: useAuthProps) => {
   return {
     isAuthenticated: accessToken ? true : false,
     accessToken: accessToken,
+    onCreateNewUser,
     onLogin,
     onForgotPassword,
     onResetPassword,

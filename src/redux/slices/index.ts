@@ -32,6 +32,7 @@ export {
 export {
   default as authReducer,
   authSelector,
+  createNewUser,
   authorize,
   forgotPassword,
   resetPassword,
