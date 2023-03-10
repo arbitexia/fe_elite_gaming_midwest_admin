@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { format } from 'date-fns';
 import {
   Table,
   TableHead,
@@ -11,7 +12,12 @@ import {
   Typography,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
+import { menuActions } from '@/_mock/users';
 import { UIChip } from '@/components/UI';
+import { MenuAction } from '@/constants';
+import { formatPhoneNumber, getColor } from '@/libs/data-helper';
+import { UserType } from '@/types';
+import { useUser } from '@/hooks';
 import {
   StyledTableRow,
   StyledTableCell,
@@ -19,12 +25,6 @@ import {
   StyledOptionMenu,
   StyledOptionMenuItem,
 } from './ui';
-import { menuActions } from '@/_mock/users';
-import { formatPhoneNumber, getColor } from '@/libs/data-helper';
-import { MenuAction } from '@/constants/Enum';
-import { UserType } from '@/types';
-import { format } from 'date-fns';
-import { useUser } from '@/hooks';
 
 type UsersTableProps = {
   usersTableData: UserType.User[];

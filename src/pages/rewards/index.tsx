@@ -1,24 +1,24 @@
 import { useState, useEffect } from 'react';
+import { Divider } from '@mui/material';
 import {
   RewardsHeader,
   RewardsTable,
   RewardsPagination,
 } from '@/modules/Rewards';
 import { DashboardLayout } from '@/layouts';
-import { ProductType } from '@/types';
-import { Divider } from '@mui/material';
+import { Product } from '@/types';
 import { useProduct } from '@/hooks';
 
 const RewardsPage = () => {
   const { products, pageInfo, onGetProducts } = useProduct();
-  const [rewardList, setRewardList] = useState<ProductType[]>([]);
+  const [productList, setProductList] = useState<Product[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [searchLocation, setSearchLocation] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
-    setRewardList(products);
+    setProductList(products);
   }, [products]);
 
   useEffect(() => {
@@ -36,6 +36,7 @@ const RewardsPage = () => {
       cursor: { page: page, size: rowsPerPage },
     });
   };
+
   return (
     <DashboardLayout title="Rewards">
       <RewardsHeader
@@ -45,7 +46,7 @@ const RewardsPage = () => {
         onLocationChange={(value: number) => setSearchLocation(value)}
       />
       <Divider sx={{ mt: '30px' }} />
-      <RewardsTable rewardsTableData={rewardList} />
+      <RewardsTable rewardsTableData={productList} />
       <RewardsPagination
         page={page}
         rowsPerPage={rowsPerPage}

@@ -1,33 +1,35 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { DashboardLayout } from '@/layouts';
 import { UIFlexSpaceBox } from '@/components/UI';
+import { useProduct } from '@/hooks';
+import { DashboardLayout } from '@/layouts';
 import {
   RewardsDetailHeader,
   RewardsDetailCarouselCard,
   RewardsDetailInfoCard,
 } from '@/modules/Rewards';
-import { ProductType } from '@/types';
-import { useProduct } from '@/hooks';
+import { Product } from '@/types';
 
 const RewardsById = () => {
   const router = useRouter();
   const { id } = router.query;
   const { onGetProductById } = useProduct();
-  const [rewardsItem, setRewardsItem] = useState<
-    ProductType | undefined | null
-  >(null);
+  const [productItem, setProductItem] = useState<Product | undefined | null>(
+    null
+  );
+
   useEffect(() => {
-    setRewardsItem(onGetProductById(parseInt(id as string)));
+    setProductItem(onGetProductById(parseInt(id as string)));
   }, [id]);
+
   return (
-    <DashboardLayout title={rewardsItem ? rewardsItem.name : 'Rewards'}>
-      {rewardsItem && (
+    <DashboardLayout title={productItem ? productItem.name : 'Rewards'}>
+      {productItem && (
         <>
-          <RewardsDetailHeader name={rewardsItem.name} isEditable={false} />
+          <RewardsDetailHeader name={productItem.name} isEditable={false} />
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
             <RewardsDetailCarouselCard />
-            <RewardsDetailInfoCard rewardsItem={rewardsItem} />
+            <RewardsDetailInfoCard productItem={productItem} />
           </UIFlexSpaceBox>{' '}
         </>
       )}

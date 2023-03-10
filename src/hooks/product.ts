@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useAppToast } from '@/providers';
 import {
   getProduct,
@@ -9,14 +10,12 @@ import {
   resetProductMessage,
   setGalleries,
 } from '@/redux/slices';
-
 import {
-  GetProductsParam,
+  FilterProductsParam,
   // CreateProductParam,
   // UpdateProductParam,
-  ProductType,
+  Product,
 } from '@/types';
-import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from './redux';
 
 export const useProduct = () => {
@@ -40,7 +39,7 @@ export const useProduct = () => {
   }, [loading]);
 
   const onGetProductById = (id: number) => {
-    const product = products.find((product: ProductType) => product.id === id);
+    const product = products.find((product: Product) => product.id === id);
     dispatch(setGalleries(product?.gallery ?? []));
     return product;
   };
@@ -49,7 +48,7 @@ export const useProduct = () => {
     await dispatch(getProduct(id));
   };
 
-  const onGetProducts = async (param: GetProductsParam) => {
+  const onGetProducts = async (param: FilterProductsParam) => {
     await dispatch(getProducts(param));
   };
 

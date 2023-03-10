@@ -1,29 +1,19 @@
 import { AssetType } from './asset.type';
 import { LocationType } from './location.type';
 
-export enum ProductStatus {
-  AVAILABLE = 'AVAILABLE',
-  DISABLED = 'DISABLED',
-  OUTOFSTOCK = 'OUTOFSTOCK',
-}
-
-export type ProductType = {
-  id: number;
-  name: string;
-  locationId: number;
-  location?: LocationType;
-  gallery?: AssetType.Gallery[];
-  status: ProductStatus;
-  amount: number;
-  point: number;
-  short: string;
-  urls: string[];
-  description: string;
-  createdAt?: string;
-  updatedAt?: string;
+export type CreateProductParam = {
+  product: {
+    name: string;
+    locationId: number;
+    amount: number;
+    point: number;
+    status: string;
+    short: string;
+    description: string;
+  };
 };
 
-export type GetProductsParam = {
+export type FilterProductsParam = {
   filterBy: {
     location: number;
     pointFrom: number;
@@ -38,4 +28,20 @@ export type GetProductsParam = {
 
 export type GetProductParam = {
   id: number;
+};
+
+export type Product = {
+  id: number;
+  name: string;
+  locationId: number;
+  location?: LocationType;
+  urls?: string[];
+  amount: number;
+  point: number;
+  status: string;
+  short: string;
+  description: string;
+  gallery?: AssetType.Gallery[];
+  createdAt?: string;
+  updatedAt?: string;
 };

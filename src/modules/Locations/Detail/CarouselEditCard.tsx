@@ -1,18 +1,18 @@
 import { useState } from 'react';
+import SwipeableViews from 'react-swipeable-views';
 import { Box, IconButton, Typography } from '@mui/material';
+import { ArrowBackIos, ArrowForwardIos, AddAPhoto } from '@mui/icons-material';
+import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
+import { useAsset } from '@/hooks/asset';
+import { convertMBtoBytes } from '@/libs/data-helper';
+import { useAppToast } from '@/providers';
+import { AssetType } from '@/types';
+import Thumbnail from './Thumbnail';
 import {
   StyledLocationCardBox,
   StyledLocationEditPhotoButton,
   StyledLocationAddPhotoButton,
 } from './ui';
-import SwipeableViews from 'react-swipeable-views';
-import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
-import { ArrowBackIos, ArrowForwardIos, AddAPhoto } from '@mui/icons-material';
-import Thumbnail from './Thumbnail';
-import { convertMBtoBytes } from '@/libs/data-helper';
-import { useAppToast } from '@/providers';
-import { useAsset } from '@/hooks/asset';
-import { AssetType } from '@/types';
 
 const LocationsDetailCarouselEditCard = () => {
   const [activeStep, setActiveStep] = useState(0);

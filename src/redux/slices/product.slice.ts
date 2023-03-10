@@ -1,18 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { productApi } from '@/redux/apis';
 import { AxiosError } from 'axios';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ResponseStatus } from '@/constants';
+import { productApi } from '@/redux/apis';
 import { RootState, AppDispatch } from '@/redux/store';
-import {
-  ReduxJson,
-  // GetProductParam,
-  GetProductsParam,
-  // CreateProductParam,
-  // UpdateProductParam,
-  // DeleteProductParam,
-  ResponseStatus,
-  ProductType,
-  CommonType,
-} from '@/types';
+import { ReduxJson, FilterProductsParam, Product, CommonType } from '@/types';
 
 // Initial state
 const initialState: ReduxJson.ProductState = {
@@ -27,10 +18,10 @@ const initialState: ReduxJson.ProductState = {
 };
 
 export const getProducts = createAsyncThunk<
-  CommonType.Pagination<ProductType>,
-  GetProductsParam,
+  CommonType.Pagination<Product>,
+  FilterProductsParam,
   { dispatch: AppDispatch; state: RootState }
->('product/getProducts', async (params: GetProductsParam, thunkAPI) => {
+>('product/getProducts', async (params: FilterProductsParam, thunkAPI) => {
   try {
     return await productApi.getProducts(params);
   } catch (error) {
@@ -40,7 +31,7 @@ export const getProducts = createAsyncThunk<
 });
 
 export const getProduct = createAsyncThunk<
-  ProductType,
+  Product,
   number,
   { dispatch: AppDispatch; state: RootState }
 >('product/getProduct', async (params: number, thunkAPI) => {
@@ -53,7 +44,7 @@ export const getProduct = createAsyncThunk<
 });
 
 // export const createProduct = createAsyncThunk<
-//   ProductType,
+//   Product,
 //   CreateProductParam,
 //   { dispatch: AppDispatch; state: RootState }
 // >('product/createProduct', async (params: CreateProductParam, thunkAPI) => {
@@ -66,7 +57,7 @@ export const getProduct = createAsyncThunk<
 // });
 
 // export const updateProduct = createAsyncThunk<
-//   ProductType.Product,
+//   Product.Product,
 //   UpdateProductParam,
 //   { dispatch: AppDispatch; state: RootState }
 // >('product/updateProduct', async (params: UpdateProductParam, thunkAPI) => {
@@ -111,10 +102,7 @@ export const productSlice = createSlice({
       })
       .addCase(
         getProducts.fulfilled,
-        (
-          state,
-          { payload }: PayloadAction<CommonType.Pagination<ProductType>>
-        ) => {
+        (state, { payload }: PayloadAction<CommonType.Pagination<Product>>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.pageInfo = payload.pageInfo;
@@ -135,7 +123,7 @@ export const productSlice = createSlice({
       })
       .addCase(
         getProduct.fulfilled,
-        (state, { payload }: PayloadAction<ProductType>) => {
+        (state, { payload }: PayloadAction<Product>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.currentProduct = payload;
@@ -156,7 +144,7 @@ export const productSlice = createSlice({
     // })
     // .addCase(
     //   createProduct.fulfilled,
-    //   (state, { payload }: PayloadAction<ProductType>) => {
+    //   (state, { payload }: PayloadAction<Product>) => {
     //     state.loading = false;
     //     state.status = ResponseStatus.SUCCESS;
     //     state.currentProduct = payload;
@@ -177,7 +165,7 @@ export const productSlice = createSlice({
     // })
     // .addCase(
     //   updateProduct.fulfilled,
-    //   (state, { payload }: PayloadAction<ProductType.Product>) => {
+    //   (state, { payload }: PayloadAction<Product.Product>) => {
     //     state.loading = false;
     //     state.status = ResponseStatus.SUCCESS;
     //     state.currentProduct = payload;

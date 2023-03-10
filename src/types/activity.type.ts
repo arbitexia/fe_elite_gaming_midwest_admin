@@ -4,7 +4,7 @@ import {
   RewardItemType,
   RequestItemType,
 } from '@/types';
-import { ActivityModel, ActivityType } from '@/constants/Enum';
+import { ActivityModel, ActivityType } from '@/constants';
 
 export type ActivityItemType = {
   id: number;

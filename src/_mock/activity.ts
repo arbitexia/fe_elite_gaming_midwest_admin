@@ -1,5 +1,5 @@
-import { ActivityItemType, ProductStatus } from '@/types';
-import { ActivityModel, ActivityType } from '@/constants/Enum';
+import { ActivityModel, Activity, ProductStatus } from '@/constants';
+import { ActivityItemType } from '@/types';
 
 export const activityData: ActivityItemType[] = [
   {
@@ -46,7 +46,7 @@ export const activityData: ActivityItemType[] = [
       ],
     },
     model: ActivityModel.USER,
-    action: ActivityType.CHECKIN,
+    action: Activity.CHECKIN,
     status: '1000 Point',
     createdAt: '2022/11/22',
   },
@@ -140,7 +140,7 @@ export const activityData: ActivityItemType[] = [
       requestedAt: '14/06/2022',
     },
     model: ActivityModel.REQUEST,
-    action: ActivityType.CREATE,
+    action: Activity.CREATE,
     status: 'Waiting',
     createdAt: '2022/11/22',
   },
@@ -192,7 +192,7 @@ export const activityData: ActivityItemType[] = [
         short: '128gb RAM $600',
         description: '',
         amount: 3,
-        status: ProductStatus.AVAILABLE,
+        status: Activity.CREATE,
         createdAt: '14/06/2022',
       },
       user: {
@@ -234,7 +234,7 @@ export const activityData: ActivityItemType[] = [
       requestedAt: '14/06/2022',
     },
     model: ActivityModel.REQUEST,
-    action: ActivityType.UPDATE,
+    action: Activity.UPDATE,
     status: 'Accepted',
     createdAt: '2022/11/22',
   },

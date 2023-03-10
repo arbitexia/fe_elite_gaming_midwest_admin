@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { assetApi } from '@/redux/apis';
 import { AxiosError } from 'axios';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ResponseStatus } from '@/constants';
+import { assetApi } from '@/redux/apis';
 import { RootState, AppDispatch } from '@/redux/store';
 import {
   AssetType,
@@ -10,7 +11,6 @@ import {
   DeleteGalleryParams,
   UpdateGalleryParams,
   ReduxJson,
-  ResponseStatus,
   LocationType,
 } from '@/types';
 import { getLocation } from './location.slice';

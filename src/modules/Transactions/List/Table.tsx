@@ -9,7 +9,11 @@ import {
   TableSortLabel,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
+import { menuActions } from '@/_mock/users';
 import { UIChip } from '@/components/UI';
+import { MenuAction } from '@/constants';
+import { getColor } from '@/libs/data-helper';
+import { TransactionType } from '@/types';
 import {
   StyledTableRow,
   StyledTableCell,
@@ -17,10 +21,6 @@ import {
   StyledOptionMenu,
   StyledOptionMenuItem,
 } from './ui';
-import { menuActions } from '@/_mock/users';
-import { getColor } from '@/libs/data-helper';
-import { MenuAction } from '@/constants/Enum';
-import { TransactionType } from '@/types';
 
 type TransactionsTableProps = {
   transactionTableData: TransactionType[];

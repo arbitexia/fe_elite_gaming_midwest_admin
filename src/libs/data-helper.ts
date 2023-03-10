@@ -1,4 +1,4 @@
-import { UserStatus, RequestStatus, RewardStatus } from '@/constants/Enum';
+import { RequestStatus, RewardStatus, UserStatus } from '@/constants/enum';
 import config from '@/config';
 
 export const getColor = (value: string) => {

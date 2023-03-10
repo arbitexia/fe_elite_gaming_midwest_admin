@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { format } from 'date-fns';
 import {
   Box,
   Table,
@@ -11,7 +12,11 @@ import {
   TableSortLabel,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
+import { menuActions } from '@/_mock/users';
 import { UIChip } from '@/components/UI';
+import { MenuAction } from '@/constants';
+import { getColor } from '@/libs/data-helper';
+import { Product } from '@/types';
 import {
   StyledTableRow,
   StyledTableCell,
@@ -19,14 +24,9 @@ import {
   StyledOptionMenu,
   StyledOptionMenuItem,
 } from './ui';
-import { menuActions } from '@/_mock/users';
-import { getColor } from '@/libs/data-helper';
-import { MenuAction } from '@/constants/Enum';
-import { ProductType } from '@/types';
-import { format } from 'date-fns';
 
 type RewardsTableProps = {
-  rewardsTableData: ProductType[];
+  rewardsTableData: Product[];
 };
 
 const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
@@ -79,7 +79,7 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
 
   type Order = 'asc' | 'desc';
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof ProductType>('id');
+  const [orderBy, setOrderBy] = useState<keyof Product>('id');
 
   function stableSort<T>(
     array: readonly T[],
@@ -97,9 +97,9 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
   }
 
   function descendingComparator(
-    a: ProductType,
-    b: ProductType,
-    orderBy: keyof ProductType
+    a: Product,
+    b: Product,
+    orderBy: keyof Product
   ) {
     console.log(a, b, orderBy);
     // if (b[orderBy] < a[orderBy]) {
@@ -111,22 +111,22 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
     return 0;
   }
 
-  function getComparator<Key extends keyof ProductType>(
+  function getComparator<Key extends keyof Product>(
     order: Order,
     orderBy: Key
-  ): (a: ProductType, b: ProductType) => number {
+  ): (a: Product, b: Product) => number {
     return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
 
   const createSortHandler =
-    (property: keyof ProductType) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof Product) => (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof ProductType
+    property: keyof Product
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -199,7 +199,7 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
         </StyledTableRow>
       </TableHead>
       <TableBody>
-        {stableSort<ProductType>(
+        {stableSort<Product>(
           rewardsTableData,
           getComparator(order, orderBy)
         ).map((rewardItem) => {

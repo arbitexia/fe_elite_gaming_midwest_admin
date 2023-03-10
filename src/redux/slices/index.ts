@@ -44,17 +44,6 @@ export {
 } from './auth.slice';
 
 export {
-  default as userReducer,
-  usersSelector,
-  getUser,
-  getUsers,
-  changePassword,
-  updateUser,
-  deleteUser,
-  resetUserMessage,
-} from './user.slice';
-
-export {
   default as locationReducer,
   locationSelector,
   getLocations,
@@ -79,3 +68,14 @@ export {
   getProduct,
   resetProductMessage,
 } from './product.slice';
+
+export {
+  default as userReducer,
+  usersSelector,
+  getUser,
+  getUsers,
+  changePassword,
+  updateUser,
+  deleteUser,
+  resetUserMessage,
+} from './user.slice';

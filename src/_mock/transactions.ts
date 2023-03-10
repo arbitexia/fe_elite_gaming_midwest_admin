@@ -1,4 +1,5 @@
-import { TransactionType, ProductStatus } from '@/types';
+import { ProductStatus } from '@/constants';
+import { TransactionType } from '@/types';
 
 export const transactionData: TransactionType[] = [
   {

@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { useAppToast } from '@/providers';
 import {
   getLocation,
@@ -9,15 +11,12 @@ import {
   locationSelector,
   setGalleries,
 } from '@/redux/slices';
-
 import {
   GetLocationsParam,
   LocationType,
   CreateLocationParam,
   UpdateLocationParam,
 } from '@/types';
-import { PayloadAction } from '@reduxjs/toolkit';
-import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from './redux';
 
 export const useLocation = () => {
