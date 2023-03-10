@@ -93,3 +93,33 @@ export const UIViewButton = styled(Button)({
     border: '2px solid rgba(137, 200, 198, 0.5)',
   },
 });
+
+export const UIPhotoAddButton = styled(Button)({
+  width: '190px',
+  height: '42px',
+  background: 'rgba(60, 96, 95, 0.8)',
+  border: '1px solid rgba(191, 215, 225, 0.05)',
+  borderRadius: '8px',
+  fontWeight: '500',
+  fontSize: '16px',
+  lineHeight: '24px',
+  color: '#FFFFFF',
+  '&:hover': {
+    background: 'rgba(60, 96, 95, 0.5)',
+  },
+});
+
+export const UIPhotoEditButton = styled(Button)({
+  width: '190px',
+  height: '42px',
+  background: 'rgba(191, 215, 225, 0.05)',
+  border: '2px solid rgba(137, 200, 198, 0.4)',
+  borderRadius: '8px',
+  fontWeight: '500',
+  fontSize: '16px',
+  lineHeight: '24px',
+  color: '#008A83',
+  '&:hover': {
+    color: '#83A9A8',
+  },
+});

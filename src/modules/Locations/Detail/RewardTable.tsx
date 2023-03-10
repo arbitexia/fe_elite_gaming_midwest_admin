@@ -8,15 +8,15 @@ import {
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import { rewardsData } from '@/_mock/rewards';
-import { UIChip } from '@/components/UI';
+import {
+  UICardBox,
+  UIChip,
+  UITable,
+  UITableRow,
+  UITableCell,
+} from '@/components/UI';
 import { getColor } from '@/libs/data-helper';
 import RewardsPagination from './Pagination';
-import {
-  StyledLocationCardBox,
-  StyledLocationTable,
-  StyledLocationTableRow,
-  StyledLocationTableCell,
-} from './ui';
 
 const LocationDetailRewardTable = () => {
   const router = useRouter();
@@ -42,7 +42,7 @@ const LocationDetailRewardTable = () => {
   //   });
   // };
   return (
-    <StyledLocationCardBox sx={{ marginTop: '30px' }}>
+    <UICardBox sx={{ marginTop: '30px' }}>
       <Typography
         sx={{
           fontWeight: '600',
@@ -53,38 +53,38 @@ const LocationDetailRewardTable = () => {
       >
         Rewards
       </Typography>
-      <StyledLocationTable size="small">
+      <UITable size="small">
         <TableHead>
           <TableRow>
-            <StyledLocationTableCell>ID</StyledLocationTableCell>
-            <StyledLocationTableCell>Product</StyledLocationTableCell>
-            <StyledLocationTableCell>Detail</StyledLocationTableCell>
-            <StyledLocationTableCell>Points</StyledLocationTableCell>
-            <StyledLocationTableCell>Status</StyledLocationTableCell>
-            <StyledLocationTableCell>Due Date</StyledLocationTableCell>
-            <StyledLocationTableCell></StyledLocationTableCell>
+            <UITableCell>ID</UITableCell>
+            <UITableCell>Product</UITableCell>
+            <UITableCell>Detail</UITableCell>
+            <UITableCell>Points</UITableCell>
+            <UITableCell>Status</UITableCell>
+            <UITableCell>Due Date</UITableCell>
+            <UITableCell></UITableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rewardsData.map((item) => {
             return (
-              <StyledLocationTableRow key={item.id}>
-                <StyledLocationTableCell
+              <UITableRow key={item.id}>
+                <UITableCell
                   onClick={() => router.push(`locations/${item.id}`)}
                   sx={{ cursor: 'pointer' }}
                 >
                   #{item.id}
-                </StyledLocationTableCell>
-                <StyledLocationTableCell>{item.name}</StyledLocationTableCell>
-                <StyledLocationTableCell>{item.short}</StyledLocationTableCell>
-                <StyledLocationTableCell>{item.point}</StyledLocationTableCell>
-                <StyledLocationTableCell>
+                </UITableCell>
+                <UITableCell>{item.name}</UITableCell>
+                <UITableCell>{item.short}</UITableCell>
+                <UITableCell>{item.point}</UITableCell>
+                <UITableCell>
                   <UIChip label={item.status} color={getColor(item.status)} />
-                </StyledLocationTableCell>
-                <StyledLocationTableCell sx={{ color: '#B3B3B3 !important' }}>
+                </UITableCell>
+                <UITableCell sx={{ color: '#B3B3B3 !important' }}>
                   {item.createdAt}
-                </StyledLocationTableCell>
-                <StyledLocationTableCell>
+                </UITableCell>
+                <UITableCell>
                   <IconButton
                     data-key={item.id}
                     // onClick={(event: React.MouseEvent<HTMLElement>) => {
@@ -93,14 +93,14 @@ const LocationDetailRewardTable = () => {
                   >
                     <MoreHorizIcon sx={{ color: 'rgba(137, 200, 198, 0.5)' }} />
                   </IconButton>
-                </StyledLocationTableCell>
-              </StyledLocationTableRow>
+                </UITableCell>
+              </UITableRow>
             );
           })}
         </TableBody>
-      </StyledLocationTable>
+      </UITable>
       <RewardsPagination />
-    </StyledLocationCardBox>
+    </UICardBox>
   );
 };
 

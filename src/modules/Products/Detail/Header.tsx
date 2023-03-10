@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import {
   Button,
+  Typography,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  Typography,
 } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import {
@@ -15,40 +15,42 @@ import {
   UIActionButton,
   UIFlexWrapBox,
 } from '@/components/UI';
-import { useLocation } from '@/hooks';
+import { useProduct } from '@/hooks';
 import { useAppToast } from '@/providers';
 
-export type LocationDetailHeaderProps = {
+export type ProductDetailHeaderProps = {
   name: string;
   isEditable: boolean;
 };
 
-const LocationDetailHeader = ({
+const ProductDetailHeader = ({
   name,
   isEditable,
-}: LocationDetailHeaderProps) => {
+}: ProductDetailHeaderProps) => {
   const router = useRouter();
-  const appToast = useAppToast();
   const { id } = router.query;
+  const appToast = useAppToast();
+  const { onDeleteProduct } = useProduct();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const { onDeleteLocation } = useLocation();
-
-  const handleCancel = () => {
-    setOpenDeleteModal(false);
-  };
 
   const handleOk = () => {
+    onDeleteProduct(parseInt(id as string));
     setOpenDeleteModal(false);
-    onDeleteLocation(parseInt(id as string));
-    router.push('/locations');
+    router.push('/products');
     appToast({
       severity: 'success',
       message: `The ${name} has been removed!`,
     });
   };
 
+  const handleCancel = () => {
+    setOpenDeleteModal(false);
+  };
+
   return (
-    <UIFlexSpaceBox sx={{ mb: '35px', alignItems: 'center', gap: '12px' }}>
+    <UIFlexSpaceBox
+      sx={{ mt: '35px', mb: '30px', alignItems: 'center', gap: '12px' }}
+    >
       <Typography
         sx={{
           fontWeight: 600,
@@ -69,7 +71,7 @@ const LocationDetailHeader = ({
               color="#28B446"
               title="Edit"
               handleClick={() => {
-                router.push(`/locations/edit/${id}`);
+                router.push(`/products/edit/${id}`);
               }}
             />
             <UIActionButton
@@ -86,9 +88,11 @@ const LocationDetailHeader = ({
         maxWidth="xs"
         open={openDeleteModal}
       >
-        <DialogTitle>Delete {name}</DialogTitle>
+        <DialogTitle>Delete Product {name}</DialogTitle>
         <DialogContent>
-          <Typography>Are you sure you want to remove {name}?</Typography>
+          <Typography>
+            Are you sure you want to delete product {name} ?
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleCancel}>
@@ -101,4 +105,4 @@ const LocationDetailHeader = ({
   );
 };
 
-export default LocationDetailHeader;
+export default ProductDetailHeader;

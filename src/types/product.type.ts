@@ -1,8 +1,24 @@
 import { AssetType } from './asset.type';
 import { LocationType } from './location.type';
 
+export type Product = {
+  id: number;
+  name: string;
+  locationId: number;
+  location: LocationType;
+  urls?: string[];
+  amount: number;
+  point: number;
+  status: string;
+  short: string;
+  description: string;
+  gallery?: AssetType.Gallery[];
+  createdAt?: string;
+  updatedAt?: string;
+};
+
 export type CreateProductParam = {
-  product: {
+  input: {
     name: string;
     locationId: number;
     amount: number;
@@ -15,7 +31,7 @@ export type CreateProductParam = {
 
 export type FilterProductsParam = {
   filterBy: {
-    location: number;
+    product: number;
     pointFrom: number;
     pointTo: number;
     search: string;
@@ -30,18 +46,19 @@ export type GetProductParam = {
   id: number;
 };
 
-export type Product = {
+export type UpdateProductParam = {
   id: number;
-  name: string;
-  locationId: number;
-  location?: LocationType;
-  urls?: string[];
-  amount: number;
-  point: number;
-  status: string;
-  short: string;
-  description: string;
-  gallery?: AssetType.Gallery[];
-  createdAt?: string;
-  updatedAt?: string;
+  input: {
+    name: string;
+    locationId: number;
+    amount: number;
+    point: number;
+    status: string;
+    short: string;
+    description: string;
+  };
+};
+
+export type DeleteProductParam = {
+  productId: number;
 };

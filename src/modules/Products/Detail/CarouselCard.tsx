@@ -9,7 +9,7 @@ import Thumbnail from './Thumbnail';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const LocationsDetailCarouselCard = () => {
+const ProductsDetailCarouselCard = () => {
   const [activeStep, setActiveStep] = useState(0);
   const { galleries } = useAsset();
 
@@ -37,10 +37,8 @@ const LocationsDetailCarouselCard = () => {
         <Box
           sx={{
             width: 'calc(100% - 120px)',
-            display: 'block',
-            overflow: 'hidden',
             borderRadius: '12px',
-            height: '350px',
+            overflow: 'hidden',
           }}
         >
           <AutoPlaySwipeableViews
@@ -104,4 +102,4 @@ const LocationsDetailCarouselCard = () => {
   );
 };
 
-export default LocationsDetailCarouselCard;
+export default ProductsDetailCarouselCard;

@@ -67,6 +67,9 @@ export {
   productSelector,
   getProducts,
   getProduct,
+  createProduct,
+  updateProduct,
+  deleteProduct,
   resetProductMessage,
 } from './product.slice';
 

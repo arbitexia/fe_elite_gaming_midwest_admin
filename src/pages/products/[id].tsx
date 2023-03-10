@@ -4,13 +4,13 @@ import { UIFlexSpaceBox } from '@/components/UI';
 import { useProduct } from '@/hooks';
 import { DashboardLayout } from '@/layouts';
 import {
-  RewardsDetailHeader,
-  RewardsDetailCarouselCard,
-  RewardsDetailInfoCard,
-} from '@/modules/Rewards';
+  ProductsDetailHeader,
+  ProductsDetailCarouselCard,
+  ProductsDetailInfoCard,
+} from '@/modules/Products';
 import { Product } from '@/types';
 
-const RewardsById = () => {
+const ProductsById = () => {
   const router = useRouter();
   const { id } = router.query;
   const { onGetProductById } = useProduct();
@@ -23,13 +23,13 @@ const RewardsById = () => {
   }, [id]);
 
   return (
-    <DashboardLayout title={productItem ? productItem.name : 'Rewards'}>
+    <DashboardLayout title={productItem ? productItem.name : 'Products'}>
       {productItem && (
         <>
-          <RewardsDetailHeader name={productItem.name} isEditable={false} />
+          <ProductsDetailHeader name={productItem.name} isEditable={false} />
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
-            <RewardsDetailCarouselCard />
-            <RewardsDetailInfoCard productItem={productItem} />
+            <ProductsDetailCarouselCard />
+            <ProductsDetailInfoCard productItem={productItem} />
           </UIFlexSpaceBox>{' '}
         </>
       )}
@@ -37,4 +37,4 @@ const RewardsById = () => {
   );
 };
 
-export default RewardsById;
+export default ProductsById;

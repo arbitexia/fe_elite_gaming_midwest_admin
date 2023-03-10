@@ -7,7 +7,7 @@ import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import { useAsset } from '@/hooks/asset';
 import { convertMBtoBytes } from '@/libs/data-helper';
 import { useAppToast } from '@/providers';
-import { AssetType } from '@/types';
+import { AssetType, Product } from '@/types';
 import Thumbnail from './Thumbnail';
 import {
   StyledLocationCardBox,
@@ -17,7 +17,11 @@ import {
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const RewardsDetailCarouselEditCard = () => {
+const RewardsDetailCarouselEditCard = ({
+  productItem,
+}: {
+  productItem: Product;
+}) => {
   const [activeStep, setActiveStep] = useState(0);
   const {
     galleries,
@@ -27,6 +31,7 @@ const RewardsDetailCarouselEditCard = () => {
     onDeleteImage,
   } = useAsset();
   const appToast = useAppToast();
+  console.log('product = ', productItem);
 
   const handleStepChange = (step: number) => {
     setActiveStep(step);

@@ -1,19 +1,20 @@
 import { useEffect } from 'react';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { useAppToast } from '@/providers';
 import {
   getProduct,
   getProducts,
-  // createProduct,
-  // deleteProduct,
-  // updateProduct,
+  createProduct,
+  deleteProduct,
+  updateProduct,
   productSelector,
   resetProductMessage,
   setGalleries,
 } from '@/redux/slices';
 import {
+  CreateProductParam,
   FilterProductsParam,
-  // CreateProductParam,
-  // UpdateProductParam,
+  UpdateProductParam,
   Product,
 } from '@/types';
 import { useAppSelector, useAppDispatch } from './redux';
@@ -52,17 +53,22 @@ export const useProduct = () => {
     await dispatch(getProducts(param));
   };
 
-  // const onCreateProduct = async (param: CreateProductParam) => {
-  //   await dispatch(createProduct(param));
-  // };
+  const onCreateProduct = async (
+    param: CreateProductParam
+  ): Promise<Product> => {
+    const { payload }: PayloadAction<unknown> = await dispatch(
+      createProduct(param)
+    );
+    return payload as Product;
+  };
 
-  // const onUpdateProduct = async (param: UpdateProductParam) => {
-  //   await dispatch(updateProduct(param));
-  // };
+  const onUpdateProduct = async (param: UpdateProductParam) => {
+    await dispatch(updateProduct(param));
+  };
 
-  // const onDeleteProduct = async (id: number) => {
-  //   await dispatch(deleteProduct({ productId: id }));
-  // };
+  const onDeleteProduct = async (id: number) => {
+    await dispatch(deleteProduct({ productId: id }));
+  };
 
   return {
     products,
@@ -72,8 +78,8 @@ export const useProduct = () => {
     onGetProductById,
     onProductSelect,
     onGetProducts,
-    // onCreateProduct,
-    // onUpdateProduct,
-    // onDeleteProduct,
+    onCreateProduct,
+    onUpdateProduct,
+    onDeleteProduct,
   };
 };

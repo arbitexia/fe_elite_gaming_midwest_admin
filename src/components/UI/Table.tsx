@@ -1,23 +1,54 @@
 import {
-  Menu,
-  MenuItem,
-  TableCell,
-  TableRow,
-  Typography,
   styled,
+  Table,
+  TableRow,
+  TableCell,
   tableCellClasses,
   tableRowClasses,
 } from '@mui/material';
 
-export const StyledSelectMenuItem = styled(MenuItem)({
-  fontWeight: 600,
-  fontSize: 14,
-  lineHeight: '21px',
-  textAlign: 'center',
-  color: 'rgba(137, 200, 198, 0.8)',
+export const UITable = styled(Table)({
+  marginTop: '25px',
+  borderCollapse: 'separate',
+  borderSpacing: '0 10px',
 });
 
-export const StyledTableHeaderCell = styled(TableCell)({
+export const UITableRow = styled(TableRow)({
+  boxShadow: '0px 7px 20px rgba(25, 42, 89, 0.05)',
+});
+
+export const UITableCell = styled(TableCell)({
+  [`&.${tableCellClasses.head}`]: {
+    fontWeight: 600,
+    fontSize: 12,
+    lineHeight: '21px',
+    letterSpacing: '0.1px',
+    textTransform: 'uppercase',
+    color: 'rgba(0, 0, 0, 0.3)',
+    border: 0,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+    height: '80px',
+    fontWeight: 500,
+    color: '#222B35',
+    background: '#FFFFFF',
+    border: '1px solid #F3F3F3',
+    borderRight: 0,
+    borderLeft: 0,
+    '&:first-of-type': {
+      borderRadius: '7px 0 0 7px',
+      color: '#718096',
+      fontWeight: 400,
+    },
+    '&:last-of-type': {
+      borderRadius: '0 7px 7px 0',
+      color: '',
+    },
+  },
+});
+
+export const UIListTableHeaderCell = styled(TableCell)({
   fontWeight: 600,
   fontSize: 12,
   lineHeight: '21px',
@@ -26,7 +57,7 @@ export const StyledTableHeaderCell = styled(TableCell)({
   color: 'rgba(0, 0, 0, 0.3)',
 });
 
-export const StyledTableCell = styled(TableCell)({
+export const UIListTableCell = styled(TableCell)({
   [`&.${tableCellClasses.head}`]: {
     fontWeight: 600,
     fontSize: 12,
@@ -49,10 +80,11 @@ export const StyledTableCell = styled(TableCell)({
     color: 'rgba(0, 0, 0, 0.3)',
     '&:nth-of-type(3)': {
       color: '#06251F',
-      fontWeight: 500,
+      fontWeight: 600,
     },
     '&:nth-of-type(4)': {
       color: 'rgba(0, 0, 0, 0.7)',
+      fontSize: 13,
     },
     '&:nth-of-type(5)': {
       color: 'rgba(0, 0, 0, 0.7)',
@@ -73,7 +105,7 @@ export const StyledTableCell = styled(TableCell)({
   border: 0,
 });
 
-export const StyledTableRow = styled(TableRow)({
+export const UIListTableRow = styled(TableRow)({
   '&:nth-of-type(odd)': {
     background: 'rgba(194, 239, 238, 0.2)',
   },
@@ -85,24 +117,4 @@ export const StyledTableRow = styled(TableRow)({
   },
 
   border: 0,
-});
-
-export const StyledOptionMenu = styled(Menu)({
-  '&.MuiMenu-paper': {
-    background: '#FFFFFF',
-    borderRadius: '8px',
-    border: '1px solid rgba(137, 200, 198, 0.15)',
-    boxShadow: '10px 10px 25px rgba(25, 42, 89, 0.15)',
-    overflow: 'visible',
-  },
-});
-
-export const StyledOptionMenuItem = styled(MenuItem)({
-  width: '170px',
-  padding: '10px 20px',
-});
-
-export const StyledOptionMenuItemText = styled(Typography)({
-  fontSize: 14,
-  fontWeight: 600,
 });

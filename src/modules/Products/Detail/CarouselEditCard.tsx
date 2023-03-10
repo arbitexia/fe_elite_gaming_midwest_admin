@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
+import { autoPlay } from 'react-swipeable-views-utils';
 import { Box, IconButton, Typography } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos, AddAPhoto } from '@mui/icons-material';
 import {
@@ -14,8 +15,9 @@ import { convertMBtoBytes } from '@/libs/data-helper';
 import { useAppToast } from '@/providers';
 import { AssetType } from '@/types';
 import Thumbnail from './Thumbnail';
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const LocationsDetailCarouselEditCard = () => {
+const ProductsDetailCarouselEditCard = () => {
   const [activeStep, setActiveStep] = useState(0);
   const {
     galleries,
@@ -25,6 +27,10 @@ const LocationsDetailCarouselEditCard = () => {
     onDeleteImage,
   } = useAsset();
   const appToast = useAppToast();
+
+  const handleStepChange = (step: number) => {
+    setActiveStep(step);
+  };
 
   const handleNext = () => {
     if (galleries.length <= 1) return;
@@ -90,13 +96,15 @@ const LocationsDetailCarouselEditCard = () => {
         <Box
           sx={{
             width: 'calc(100% - 120px)',
-            display: 'block',
-            overflow: 'hidden',
             borderRadius: '12px',
-            height: '350px',
+            overflow: 'hidden',
           }}
         >
-          <SwipeableViews index={activeStep} enableMouseEvents>
+          <AutoPlaySwipeableViews
+            index={activeStep}
+            onChangeIndex={handleStepChange}
+            enableMouseEvents
+          >
             {galleries.length > 0 ? (
               galleries.map((gallery, index) => {
                 return Math.abs(activeStep - index) <= 2 ? (
@@ -123,7 +131,7 @@ const LocationsDetailCarouselEditCard = () => {
                 alt="image"
               />
             )}
-          </SwipeableViews>
+          </AutoPlaySwipeableViews>
         </Box>
         <UIFlexSpaceBox
           flexDirection="column"
@@ -200,4 +208,4 @@ const LocationsDetailCarouselEditCard = () => {
   );
 };
 
-export default LocationsDetailCarouselEditCard;
+export default ProductsDetailCarouselEditCard;

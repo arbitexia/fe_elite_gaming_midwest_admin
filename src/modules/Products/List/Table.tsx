@@ -3,13 +3,19 @@ import { useRouter } from 'next/router';
 import { format } from 'date-fns';
 import {
   Box,
+  Button,
+  Checkbox,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Divider,
+  IconButton,
   Table,
   TableHead,
   TableBody,
-  Checkbox,
-  IconButton,
-  Divider,
   TableSortLabel,
+  Typography,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import { menuActions } from '@/_mock/users';
@@ -22,22 +28,31 @@ import {
   UIOptionMenuItemText,
 } from '@/components/UI';
 import { MenuAction } from '@/constants';
+import { useProduct } from '@/hooks';
 import { getColor } from '@/libs/data-helper';
+import { useAppToast } from '@/providers';
 import { Product } from '@/types';
 
-type RewardsTableProps = {
-  rewardsTableData: Product[];
+type ProductsTableProps = {
+  productsTableData: Product[];
 };
 
-const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
+const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
   const router = useRouter();
+  const appToast = useAppToast();
+  const { onDeleteProduct } = useProduct();
   const [selected, setSelected] = useState<readonly string[]>([]);
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);
+  const [anchorId, setAnchorId] = useState(0);
+  const [name, setName] = useState('');
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
 
   const handleNavBtnClick = (key: string) => {
     if (key === MenuAction.DELETE) {
+      setOpenDeleteModal(true);
       //TODO Delete Action
     } else
       router.push(
@@ -47,9 +62,22 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
       );
   };
 
+  const handleCancel = () => {
+    setOpenDeleteModal(false);
+  };
+
+  const handleOk = () => {
+    onDeleteProduct(anchorId);
+    setOpenDeleteModal(false);
+    appToast({
+      severity: 'success',
+      message: `The ${name} has been removed!`,
+    });
+  };
+
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rewardsTableData.map((n) => n.id.toString());
+      const newSelected = productsTableData.map((n) => n.id.toString());
       setSelected(newSelected);
       return;
     }
@@ -124,6 +152,7 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
     (property: keyof Product) => (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
+
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: keyof Product
@@ -140,11 +169,12 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
           <UIListTableCell>
             <Checkbox
               indeterminate={
-                selected.length > 0 && selected.length < rewardsTableData.length
+                selected.length > 0 &&
+                selected.length < productsTableData.length
               }
               checked={
-                rewardsTableData.length > 0 &&
-                selected.length === rewardsTableData.length
+                productsTableData.length > 0 &&
+                selected.length === productsTableData.length
               }
               onChange={handleSelectAllClick}
             />
@@ -200,31 +230,33 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
       </TableHead>
       <TableBody>
         {stableSort<Product>(
-          rewardsTableData,
+          productsTableData,
           getComparator(order, orderBy)
-        ).map((rewardItem) => {
-          const isItemSelected = isSelected(rewardItem.id.toString());
+        ).map((productItem) => {
+          const isItemSelected = isSelected(productItem.id.toString());
           // const labelId = `enhanced-table-checkbox-${index}`;
           return (
             <UIListTableRow
-              key={rewardItem.id}
-              data-key={rewardItem.id}
+              key={productItem.id}
+              data-key={productItem.id}
               role="checkbox"
               sx={{ position: 'relative' }}
             >
               <UIListTableCell>
                 <Checkbox
                   checked={isItemSelected}
-                  onClick={(event) =>
-                    handleClick(event, rewardItem.id.toString())
-                  }
+                  onClick={(event) => {
+                    handleClick(event, productItem.id.toString());
+                  }}
                 />
               </UIListTableCell>
               <UIListTableCell
-                onClick={() => router.push(`${router.asPath}/${rewardItem.id}`)}
+                onClick={() =>
+                  router.push(`${router.asPath}/${productItem.id}`)
+                }
                 sx={{ cursor: 'pointer' }}
               >
-                #{rewardItem.id}
+                #{productItem.id}
               </UIListTableCell>
               <UIListTableCell>
                 <Box
@@ -235,7 +267,7 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
                     position: 'relative',
                   }}
                 >
-                  {rewardItem.name}
+                  {productItem.name}
                   <Box
                     sx={{
                       position: 'absolute',
@@ -253,8 +285,8 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
                     <Box
                       component="img"
                       src={
-                        rewardItem.gallery && rewardItem.gallery.length
-                          ? rewardItem.gallery[0].asset?.url ??
+                        productItem.gallery && productItem.gallery.length
+                          ? productItem.gallery[0].asset?.url ??
                             '/images/noImage.jpg'
                           : '/images/noImage.jpg'
                       }
@@ -268,23 +300,25 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
                   </Box>
                 </Box>
               </UIListTableCell>
-              <UIListTableCell>{rewardItem.short}</UIListTableCell>
-              <UIListTableCell>{rewardItem.point}</UIListTableCell>
+              <UIListTableCell>{productItem.short}</UIListTableCell>
+              <UIListTableCell>{productItem.point}</UIListTableCell>
               <UIListTableCell align="center">
                 <UIChip
-                  label={rewardItem.status}
-                  color={getColor(rewardItem.status)}
+                  label={productItem.status}
+                  color={getColor(productItem.status)}
                 />
               </UIListTableCell>
               <UIListTableCell align="center">
-                {rewardItem.createdAt
-                  ? format(new Date(rewardItem.createdAt), 'yyyy-MM-dd')
+                {productItem.createdAt
+                  ? format(new Date(productItem.createdAt), 'yyyy-MM-dd')
                   : ''}
               </UIListTableCell>
               <UIListTableCell>
                 <IconButton
-                  data-key={rewardItem.id}
+                  data-key={productItem.id}
                   onClick={(event: React.MouseEvent<HTMLElement>) => {
+                    setAnchorId(productItem.id);
+                    setName(productItem.name);
                     setAnchorElOptionsMenu(event.currentTarget);
                   }}
                 >
@@ -295,7 +329,6 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
           );
         })}
       </TableBody>
-
       <UIOptionMenu
         PaperProps={{
           elevation: 0,
@@ -334,8 +367,24 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
           );
         })}
       </UIOptionMenu>
+      <Dialog
+        sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
+        maxWidth="xs"
+        open={openDeleteModal}
+      >
+        <DialogTitle>Delete {name}</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to remove {name}?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button onClick={handleOk}>Ok</Button>
+        </DialogActions>
+      </Dialog>
     </Table>
   );
 };
 
-export default RewardsTable;
+export default ProductsTable;

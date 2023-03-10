@@ -4,12 +4,13 @@ import mapboxgl from 'mapbox-gl';
 import { Typography, Stack, Box, MenuItem } from '@mui/material';
 import { locationStatus, locationType } from '@/_mock/locations';
 import {
+  UICardBox,
   UIFlexWrapBox,
   UIFlexSpaceBox,
   UIEditTextField,
+  UIInfoTitle,
 } from '@/components/UI';
 import { LocationType } from '@/types';
-import { StyledLocationCardBox, StyledLocationInfoTitle } from './ui';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const accessToken =
@@ -57,7 +58,7 @@ const LocationsDetailInfoEditCard = ({
     };
   }, []);
   return (
-    <StyledLocationCardBox sx={{ height: '580px' }}>
+    <UICardBox sx={{ height: '580px' }}>
       <UIFlexSpaceBox>
         <Typography
           sx={{
@@ -70,7 +71,7 @@ const LocationsDetailInfoEditCard = ({
           Information:
         </Typography>
         <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-          <StyledLocationInfoTitle>Status:</StyledLocationInfoTitle>
+          <UIInfoTitle>Status:</UIInfoTitle>
           <Box width={150}>
             <UIEditTextField
               name="status"
@@ -93,7 +94,7 @@ const LocationsDetailInfoEditCard = ({
       <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>Name:</StyledLocationInfoTitle>
+            <UIInfoTitle>Name:</UIInfoTitle>
             <Box>
               <UIEditTextField
                 name="name"
@@ -106,7 +107,7 @@ const LocationsDetailInfoEditCard = ({
         </Stack>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>Type:</StyledLocationInfoTitle>
+            <UIInfoTitle>Type:</UIInfoTitle>
             <Box flexGrow={1}>
               <UIEditTextField
                 name="type"
@@ -131,7 +132,7 @@ const LocationsDetailInfoEditCard = ({
       <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>Address1:</StyledLocationInfoTitle>
+            <UIInfoTitle>Address1:</UIInfoTitle>
             <Box>
               <UIEditTextField
                 name="address.address1"
@@ -142,7 +143,7 @@ const LocationsDetailInfoEditCard = ({
             </Box>
           </UIFlexWrapBox>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>City:</StyledLocationInfoTitle>
+            <UIInfoTitle>City:</UIInfoTitle>
             <Box>
               <UIEditTextField
                 name="address.city"
@@ -153,7 +154,7 @@ const LocationsDetailInfoEditCard = ({
             </Box>
           </UIFlexWrapBox>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>ZipCode:</StyledLocationInfoTitle>
+            <UIInfoTitle>ZipCode:</UIInfoTitle>
             <Box>
               <UIEditTextField
                 name="address.zipcode"
@@ -166,7 +167,7 @@ const LocationsDetailInfoEditCard = ({
         </Stack>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>Address2:</StyledLocationInfoTitle>
+            <UIInfoTitle>Address2:</UIInfoTitle>
             <Box>
               <UIEditTextField
                 name="address.address2"
@@ -177,7 +178,7 @@ const LocationsDetailInfoEditCard = ({
             </Box>
           </UIFlexWrapBox>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>State:</StyledLocationInfoTitle>
+            <UIInfoTitle>State:</UIInfoTitle>
             <Box>
               <UIEditTextField
                 name="address.state"
@@ -188,7 +189,7 @@ const LocationsDetailInfoEditCard = ({
             </Box>
           </UIFlexWrapBox>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>Country:</StyledLocationInfoTitle>
+            <UIInfoTitle>Country:</UIInfoTitle>
             <Box>
               <UIEditTextField
                 name="address.country"
@@ -201,9 +202,7 @@ const LocationsDetailInfoEditCard = ({
         </Stack>
       </UIFlexWrapBox>
       <UIFlexWrapBox sx={{ alignItems: 'center', my: '18px' }}>
-        <StyledLocationInfoTitle sx={{ width: '90px' }}>
-          Description:
-        </StyledLocationInfoTitle>
+        <UIInfoTitle sx={{ width: '90px' }}>Description:</UIInfoTitle>
         <Box flexGrow={1}>
           <UIEditTextField
             multiline
@@ -226,7 +225,7 @@ const LocationsDetailInfoEditCard = ({
           overflow: 'hidden',
         }}
       />
-    </StyledLocationCardBox>
+    </UICardBox>
   );
 };
 

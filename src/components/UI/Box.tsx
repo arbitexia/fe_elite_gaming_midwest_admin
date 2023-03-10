@@ -29,3 +29,15 @@ export const UIFlexColumnBox = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   gap: theme.spacing(1),
 }));
+
+export const UICardBox = styled(Box)({
+  padding: '30px 30px',
+  background: '#FFFFFF',
+  border: '1px solid #F3F3F3',
+  boxShadow: '5px 6px 30px -15px rgba(25, 42, 89, 0.2)',
+  borderRadius: '15px',
+  display: 'flex',
+  flexDirection: 'column',
+  flex: '1 1 0',
+  minHeight: '450px',
+});
