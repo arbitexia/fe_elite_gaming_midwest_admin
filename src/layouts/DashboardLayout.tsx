@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { Box } from '@mui/material';
 import { AppSEO, AppNavbar, AppSidebar } from '@/components/App';
 import { UIAppLayoutWrapper, UIContainer } from '@/components/UI';
 import { useAuth } from '@/hooks';
-import { Box } from '@mui/material';
 
 interface Props {
   title?: string;

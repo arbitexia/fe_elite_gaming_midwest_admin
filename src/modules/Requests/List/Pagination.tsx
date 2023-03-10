@@ -1,5 +1,5 @@
-import { TablePagination } from '@mui/material';
 import { useState } from 'react';
+import { TablePagination } from '@mui/material';
 
 export default function RequestsPagination() {
   const [page, setPage] = useState(2);

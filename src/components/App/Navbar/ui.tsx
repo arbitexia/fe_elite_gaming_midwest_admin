@@ -1,3 +1,4 @@
+import { intervalToDuration, formatDuration } from 'date-fns';
 import {
   styled,
   AppBar,
@@ -10,7 +11,6 @@ import {
   InputBase,
   Typography,
 } from '@mui/material';
-import { intervalToDuration, formatDuration } from 'date-fns';
 import { NotificationMenuItemProps } from '@/types';
 
 export const Search = styled(Box)({

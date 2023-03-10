@@ -9,11 +9,11 @@ import {
   TableSortLabel,
 } from '@mui/material';
 import { UIChip, UIFlexColumnBox, UIFlexWrapBox } from '@/components/UI';
-import { StyledRequestTableRow, StyledRequestTableCell } from './ui';
 import { getColor } from '@/libs/data-helper';
-import RequestsPagination from './Pagination';
 import { useAppToast } from '@/providers';
 import { RequestItemType } from '@/types';
+import RequestsPagination from './Pagination';
+import { StyledRequestTableRow, StyledRequestTableCell } from './ui';
 
 interface RequestTableProps {
   requestsData: RequestItemType[];

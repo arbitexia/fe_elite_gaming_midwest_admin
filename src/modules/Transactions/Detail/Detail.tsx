@@ -1,6 +1,10 @@
+import { format } from 'date-fns';
 import { Box, Grid, Typography } from '@mui/material';
 import { Print } from '@mui/icons-material';
 import { UIFlexSpaceBox, UIActionButton, UIImage } from '@/components/UI';
+import { TransactionsProps } from '@/types';
+import { useAppToast } from '@/providers';
+import DetailTable from './DetailTable';
 import {
   StyledDetailBox,
   StyledDetailBoxHeader,
@@ -10,10 +14,6 @@ import {
   StyledStatusCol,
   StyledOrderModalHeading,
 } from './ui';
-import { TransactionsProps } from '@/types';
-import DetailTable from './DetailTable';
-import { format } from 'date-fns';
-import { useAppToast } from '@/providers';
 
 const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
   const appToast = useAppToast();

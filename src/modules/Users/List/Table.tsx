@@ -31,7 +31,6 @@ type UsersTableProps = {
 };
 
 const UsersTable = ({ usersTableData }: UsersTableProps) => {
-  console.log(usersTableData);
   const router = useRouter();
   const { onDeleteUser } = useUser();
   const [selected, setSelected] = useState<readonly string[]>([]);

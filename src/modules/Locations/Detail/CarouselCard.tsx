@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Box, IconButton } from '@mui/material';
-import { StyledLocationCardBox } from './ui';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
-import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
+import { Box, IconButton } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-import Thumbnail from './Thumbnail';
+import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import { useAsset } from '@/hooks/asset';
+import Thumbnail from './Thumbnail';
+import { StyledLocationCardBox } from './ui';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 

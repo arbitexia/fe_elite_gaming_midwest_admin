@@ -7,16 +7,16 @@ import {
   IconButton,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
+import { rewardsData } from '@/_mock/rewards';
 import { UIChip } from '@/components/UI';
+import { getColor } from '@/libs/data-helper';
+import RewardsPagination from './Pagination';
 import {
   StyledLocationCardBox,
   StyledLocationTable,
   StyledLocationTableRow,
   StyledLocationTableCell,
 } from './ui';
-import { getColor } from '@/libs/data-helper';
-import { rewardsData } from '@/_mock/rewards';
-import RewardsPagination from './Pagination';
 
 const LocationDetailRewardTable = () => {
   const router = useRouter();

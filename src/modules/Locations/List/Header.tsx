@@ -1,12 +1,12 @@
+import { useRouter } from 'next/router';
+import { Typography, InputAdornment } from '@mui/material';
+import { Search as SearchIcon } from '@mui/icons-material';
 import {
   UIFlexSpaceBox,
   UIFlexWrapBox,
   UIDefaultTextField,
   UIDefaultButton,
 } from '@/components/UI';
-import { Typography, InputAdornment } from '@mui/material';
-import { Search as SearchIcon } from '@mui/icons-material';
-import { useRouter } from 'next/router';
 
 interface LocationsHeaderProps {
   searchValue: string;

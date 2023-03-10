@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Table, TableHead, TableBody, TableSortLabel } from '@mui/material';
-import { StyledTableRow, StyledTableCell } from './ui';
-import { ActivityItemType } from '@/types';
 import { format } from 'date-fns';
+import { Table, TableHead, TableBody, TableSortLabel } from '@mui/material';
+import { ActivityItemType } from '@/types';
+import { StyledTableRow, StyledTableCell } from './ui';
 
 type ActivityTableProps = {
   activityTableData: ActivityItemType[];

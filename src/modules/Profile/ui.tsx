@@ -1,4 +1,3 @@
-import { UIEditTextField, UIFlexWrapBox } from '@/components/UI';
 import {
   styled,
   Avatar,
@@ -8,6 +7,7 @@ import {
   TableRow,
   TableCell,
 } from '@mui/material';
+import { UIEditTextField, UIFlexWrapBox } from '@/components/UI';
 
 export const StyledUserInfoTitle = styled(Typography)({
   width: '110px',

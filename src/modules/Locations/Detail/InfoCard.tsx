@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
+import mapboxgl from 'mapbox-gl';
+
 import { Typography, Stack, Box } from '@mui/material';
 import { UIFlexWrapBox } from '@/components/UI';
+import { LocationsDetailProps } from '@/types';
 import {
   StyledLocationCardBox,
   StyledLocationInfoTitle,
   StyledLocationInfoValue,
 } from './ui';
-import { LocationsDetailProps } from '@/types';
-import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const accessToken =

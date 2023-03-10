@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
+import { FormikProps } from 'formik';
+import mapboxgl from 'mapbox-gl';
 import { Typography, Stack, Box, MenuItem } from '@mui/material';
+import { locationStatus, locationType } from '@/_mock/locations';
 import {
   UIFlexWrapBox,
   UIFlexSpaceBox,
   UIEditTextField,
 } from '@/components/UI';
-import { StyledLocationCardBox, StyledLocationInfoTitle } from './ui';
 import { LocationType } from '@/types';
-import mapboxgl from 'mapbox-gl';
+import { StyledLocationCardBox, StyledLocationInfoTitle } from './ui';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { locationStatus, locationType } from '@/_mock/locations';
-import { FormikProps } from 'formik';
 
 const accessToken =
   'pk.eyJ1Ijoic2FoaWx0aGFrYXJlNTIxIiwiYSI6ImNrbjVvMTkzNDA2MXQydnM2OHJ6aHJvbXEifQ.z5aEqRBTtDMWoxVzf3aGsg';

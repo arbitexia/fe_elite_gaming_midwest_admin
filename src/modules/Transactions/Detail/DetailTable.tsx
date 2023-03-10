@@ -1,6 +1,6 @@
 import { TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import { StyledTable, TableHeadCell } from './ui';
 import { TransactionsProps } from '@/types';
+import { StyledTable, TableHeadCell } from './ui';
 
 const DetailTable = ({ transactionItem }: TransactionsProps) => {
   return (
