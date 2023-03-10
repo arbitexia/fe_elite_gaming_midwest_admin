@@ -6,8 +6,8 @@ import {
   UIFlexCenterBox,
   UIDefaultButton,
   UIListHeader,
+  UISelectMenuItem,
 } from '@/components/UI';
-import { StyledSelectMenuItem } from './ui';
 import { useRouter } from 'next/router';
 import { locationsData } from '@/_mock/locations';
 
@@ -53,11 +53,10 @@ const RewardsListHeader = ({
               },
             }}
           >
-            <StyledSelectMenuItem value={0}>All</StyledSelectMenuItem>
             {locationsData.map((option) => (
-              <StyledSelectMenuItem key={option.id} value={option.id}>
+              <UISelectMenuItem key={option.id} value={option.id}>
                 {option.name}
-              </StyledSelectMenuItem>
+              </UISelectMenuItem>
             ))}
           </UIDefaultTextField>
         </UIFlexCenterBox>

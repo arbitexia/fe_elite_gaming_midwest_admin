@@ -3,10 +3,9 @@ import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import { Box, IconButton } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
+import { UICardBox, UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import { useAsset } from '@/hooks/asset';
 import Thumbnail from './Thumbnail';
-import { StyledLocationCardBox } from './ui';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const RewardsDetailCarouselCard = () => {
@@ -32,7 +31,7 @@ const RewardsDetailCarouselCard = () => {
   };
 
   return (
-    <StyledLocationCardBox alignSelf="flex-start">
+    <UICardBox alignSelf="flex-start">
       <UIFlexCenterBox sx={{ gap: '20px' }}>
         <Box
           sx={{
@@ -98,7 +97,7 @@ const RewardsDetailCarouselCard = () => {
           </UIFlexSpaceBox>
         </UIFlexSpaceBox>
       </UIFlexCenterBox>
-    </StyledLocationCardBox>
+    </UICardBox>
   );
 };
 

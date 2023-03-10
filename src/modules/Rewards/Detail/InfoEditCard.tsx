@@ -1,12 +1,17 @@
 import { useState } from 'react';
-import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import { useFormik } from 'formik';
 import { Box, Typography, Stack, MenuItem } from '@mui/material';
 import { locationsData } from '@/_mock/locations';
-import { UIFlexWrapBox, UIEditTextField } from '@/components/UI';
+import {
+  UICardBox,
+  UIFlexWrapBox,
+  UIEditTextField,
+  UIInfoTitle,
+} from '@/components/UI';
+import { formats, modules } from '@/constants';
 import { Product } from '@/types';
-import { StyledLocationCardBox, StyledLocationInfoTitle } from './ui';
+import 'react-quill/dist/quill.snow.css';
 
 const ReactQuill = dynamic(
   () => {
@@ -16,50 +21,16 @@ const ReactQuill = dynamic(
 );
 
 const RewardsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [value, setValue] = useState('');
-
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      [{ font: [] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [
-        { list: 'ordered' },
-        { list: 'bullet' },
-        { indent: '-1' },
-        { indent: '+1' },
-      ],
-      ['link', 'image'],
-      ['clean'],
-    ],
-  };
-
-  const formats = [
-    'header',
-    'font',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'list',
-    'bullet',
-    'indent',
-    'link',
-    'image',
-  ];
-
   const productFormik = useFormik({
     initialValues: productItem,
     onSubmit: async (values) => {
       console.log(values);
-      // await authorize({ variables: { ...values } });
     },
   });
 
   return (
-    <StyledLocationCardBox>
+    <UICardBox>
       <Typography
         sx={{
           fontWeight: '600',
@@ -73,7 +44,7 @@ const RewardsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
       <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>Points:</StyledLocationInfoTitle>
+            <UIInfoTitle>Points:</UIInfoTitle>
             <Box>
               <UIEditTextField
                 name="name"
@@ -84,7 +55,7 @@ const RewardsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
             </Box>
           </UIFlexWrapBox>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>Location:</StyledLocationInfoTitle>
+            <UIInfoTitle>Location:</UIInfoTitle>
             <Box width={230}>
               <UIEditTextField
                 name="location"
@@ -106,7 +77,7 @@ const RewardsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
         </Stack>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <StyledLocationInfoTitle>Amount:</StyledLocationInfoTitle>
+            <UIInfoTitle>Amount:</UIInfoTitle>
             <Box>
               <UIEditTextField
                 name="amount"
@@ -126,7 +97,7 @@ const RewardsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
           '.quill': { height: '250px', marginTop: '20px' },
         }}
       >
-        <StyledLocationInfoTitle>Description:</StyledLocationInfoTitle>
+        <UIInfoTitle>Description:</UIInfoTitle>
         <ReactQuill
           theme="snow"
           value={value}
@@ -135,7 +106,7 @@ const RewardsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
           formats={formats}
         />
       </Box>
-    </StyledLocationCardBox>
+    </UICardBox>
   );
 };
 

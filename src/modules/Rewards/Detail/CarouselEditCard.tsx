@@ -3,17 +3,18 @@ import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import { Box, IconButton, Typography } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos, AddAPhoto } from '@mui/icons-material';
-import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
+import {
+  UICardBox,
+  UIFlexSpaceBox,
+  UIFlexCenterBox,
+  UIPhotoAddButton,
+  UIPhotoEditButton,
+} from '@/components/UI';
 import { useAsset } from '@/hooks/asset';
 import { convertMBtoBytes } from '@/libs/data-helper';
 import { useAppToast } from '@/providers';
 import { AssetType, Product } from '@/types';
 import Thumbnail from './Thumbnail';
-import {
-  StyledLocationCardBox,
-  StyledLocationEditPhotoButton,
-  StyledLocationAddPhotoButton,
-} from './ui';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -96,7 +97,7 @@ const RewardsDetailCarouselEditCard = ({
   };
 
   return (
-    <StyledLocationCardBox alignSelf="flex-start">
+    <UICardBox alignSelf="flex-start">
       <UIFlexCenterBox sx={{ gap: '20px' }}>
         <Box
           sx={{
@@ -186,7 +187,7 @@ const RewardsDetailCarouselEditCard = ({
         <br /> Maximium image count: 4
       </Typography>
       <UIFlexCenterBox sx={{ gap: '15px', marginTop: '31px' }}>
-        <StyledLocationEditPhotoButton>
+        <UIPhotoEditButton>
           <label htmlFor="photo-edit">Edit Photo</label>
           <input
             id="photo-edit"
@@ -195,9 +196,9 @@ const RewardsDetailCarouselEditCard = ({
             accept="image/png, image/gif, image/jpeg"
             hidden
           />
-        </StyledLocationEditPhotoButton>
+        </UIPhotoEditButton>
 
-        <StyledLocationAddPhotoButton
+        <UIPhotoAddButton
           startIcon={<AddAPhoto sx={{ color: 'rgba(255, 255, 255, 0.54)' }} />}
         >
           <label htmlFor="photo-create">Add Photo</label>
@@ -208,9 +209,9 @@ const RewardsDetailCarouselEditCard = ({
             accept="image/png, image/gif, image/jpeg"
             hidden
           />
-        </StyledLocationAddPhotoButton>
+        </UIPhotoAddButton>
       </UIFlexCenterBox>
-    </StyledLocationCardBox>
+    </UICardBox>
   );
 };
 
