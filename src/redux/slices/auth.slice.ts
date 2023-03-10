@@ -9,6 +9,7 @@ import {
   AdminAuthType,
   ForgotPasswordParams,
   ForgotPasswordType,
+  RegisterType,
   ResetPasswordParams,
   ResetPasswordType,
 } from '@/types';
@@ -24,6 +25,19 @@ const initialState: ReduxJson.AuthState = {
   user: null,
   role: {},
 };
+
+export const createNewUser = createAsyncThunk<
+  RegisterType,
+  RegisterType,
+  { dispatch: AppDispatch; state: RootState }
+>('auth/createNewUser', async (params: RegisterType, thunkAPI) => {
+  try {
+    return await authApi.createNewUser(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
 
 export const authorize = createAsyncThunk<
   AdminAuthType,
@@ -120,6 +134,23 @@ export const authSlice = createSlice({
         state.error = payload as string;
         state.message = null;
         state.accessToken = '';
+      })
+      .addCase(createNewUser.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(createNewUser.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(createNewUser.fulfilled, (state) => {
+        state.loading = false;
+        state.status = ResponseStatus.SUCCESS;
+        state.message = 'Success';
       })
       .addCase(resetPassword.pending, (state) => {
         state.loading = true;

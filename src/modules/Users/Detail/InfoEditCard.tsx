@@ -1,9 +1,10 @@
-import { format } from 'date-fns';
+import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
 import { userStatus } from '@/_mock/users';
 import { UIFlexWrapBox, UIFlexSpaceBox } from '@/components/UI';
 import { UserRole } from '@/constants/enum';
+import { useAuth } from '@/hooks';
 import { UserType } from '@/types';
 import UsersDetailHeader from './Header';
 import {
@@ -15,19 +16,24 @@ import {
   StyledUserInfoCardStatus,
   StyledUserEditTextField,
 } from './ui';
-
 interface UsersDetailHeaderProps {
   user: UserType.User;
 }
 
 const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
-  const userFormik = useFormik({
-    initialValues: user,
-    onSubmit: async (values) => {
-      console.log(values);
-      // await authorize({ variables: { ...values } });
+  const router = useRouter();
+  const { onCreateNewUser } = useAuth({
+    handleRegisterUserSuccess: () => {
+      router.push('/users/customers');
     },
   });
+  const userFormik = useFormik({
+    initialValues: { ...user, birthday: '1991-10-10' },
+    onSubmit: async (values) => {
+      onCreateNewUser({ user: values });
+    },
+  });
+
   return (
     <Box component="form" onSubmit={userFormik.handleSubmit}>
       <UsersDetailHeader user={user} />
@@ -196,10 +202,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                   <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="birthday"
-                    value={format(
-                      new Date(userFormik.values.birthday),
-                      'yyyy-MM-dd'
-                    )}
+                    value={userFormik.values.birthday}
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
