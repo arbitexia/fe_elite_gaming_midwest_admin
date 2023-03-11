@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import { FormikProps } from 'formik';
-import { Box, Typography, Stack, MenuItem } from '@mui/material';
+import { Box, Typography, Stack } from '@mui/material';
 import {
   UICardBox,
   UIFlexWrapBox,
@@ -10,7 +10,6 @@ import {
   UIInfoTitle,
 } from '@/components/UI';
 import { formats, modules } from '@/constants';
-import { useLocation } from '@/hooks';
 import { Product } from '@/types';
 
 const ReactQuill = dynamic(
@@ -25,13 +24,11 @@ const ProductsDetailInfoEditCard = ({
 }: {
   productFormik: FormikProps<Product>;
 }) => {
-  const { locations, onGetLocations } = useLocation();
   const [value, setValue] = useState('');
   const [isReady, setIsReady] = useState<boolean>(false);
 
   useEffect(() => {
     if (!isReady) return;
-    onGetLocations({ filterBy: { search: '' } });
     setIsReady(false);
   }, [isReady]);
 
@@ -59,28 +56,6 @@ const ProductsDetailInfoEditCard = ({
                 fullWidth
                 type="number"
               />
-            </Box>
-          </UIFlexWrapBox>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>Location:</UIInfoTitle>
-            <Box width={230}>
-              <UIEditTextField
-                name="location"
-                defaultValue={locations[0].id}
-                value={productFormik.values.location}
-                onChange={productFormik.handleChange}
-                fullWidth
-                select
-              >
-                {locations.map((location) => (
-                  <MenuItem
-                    key={`location-option-${location.id}`}
-                    value={location.id}
-                  >
-                    {location.name}
-                  </MenuItem>
-                ))}
-              </UIEditTextField>
             </Box>
           </UIFlexWrapBox>
         </Stack>

@@ -33,7 +33,6 @@ const ProductsCreate = () => {
       const params: CreateProductParam = {
         input: {
           name: values.name,
-          locationId: values.location.id,
           amount: values.amount,
           point: values.point,
           status: values.status,

@@ -31,7 +31,6 @@ const ProductEdit = () => {
         id: values.id,
         input: {
           name: values.name,
-          locationId: values.location.id,
           amount: values.amount,
           point: values.point,
           status: values.status,

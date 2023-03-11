@@ -27,10 +27,6 @@ const ProductsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
             <UIInfoValue>{productItem.name}</UIInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
-            <UIInfoTitle>Location:</UIInfoTitle>
-            <UIInfoValue>{productItem.location?.name}</UIInfoValue>
-          </UIFlexWrapBox>
-          <UIFlexWrapBox>
             <UIInfoTitle>Description:</UIInfoTitle>
             <UIInfoValue>{productItem.description}</UIInfoValue>
           </UIFlexWrapBox>
