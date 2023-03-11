@@ -1,17 +1,16 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { productApi } from '@/redux/apis';
 import { AxiosError } from 'axios';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ResponseStatus } from '@/constants';
+import { productApi } from '@/redux/apis';
 import { RootState, AppDispatch } from '@/redux/store';
 import {
   ReduxJson,
-  // GetProductParam,
-  GetProductsParam,
-  // CreateProductParam,
-  // UpdateProductParam,
-  // DeleteProductParam,
-  ResponseStatus,
-  ProductType,
+  FilterProductsParam,
+  Product,
   CommonType,
+  CreateProductParam,
+  UpdateProductParam,
+  DeleteProductParam,
 } from '@/types';
 
 // Initial state
@@ -27,10 +26,10 @@ const initialState: ReduxJson.ProductState = {
 };
 
 export const getProducts = createAsyncThunk<
-  CommonType.Pagination<ProductType>,
-  GetProductsParam,
+  CommonType.Pagination<Product>,
+  FilterProductsParam,
   { dispatch: AppDispatch; state: RootState }
->('product/getProducts', async (params: GetProductsParam, thunkAPI) => {
+>('product/getProducts', async (params: FilterProductsParam, thunkAPI) => {
   try {
     return await productApi.getProducts(params);
   } catch (error) {
@@ -40,56 +39,56 @@ export const getProducts = createAsyncThunk<
 });
 
 export const getProduct = createAsyncThunk<
-  ProductType,
+  Product,
   number,
   { dispatch: AppDispatch; state: RootState }
->('product/getProduct', async (params: number, thunkAPI) => {
+>('product/getProduct', async (id: number, thunkAPI) => {
   try {
-    return await productApi.getProduct(params);
+    return await productApi.getProduct({ id });
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
   }
 });
 
-// export const createProduct = createAsyncThunk<
-//   ProductType,
-//   CreateProductParam,
-//   { dispatch: AppDispatch; state: RootState }
-// >('product/createProduct', async (params: CreateProductParam, thunkAPI) => {
-//   try {
-//     return await productApi.createProduct(params);
-//   } catch (error) {
-//     const err = error as AxiosError;
-//     return thunkAPI.rejectWithValue(err.response?.data);
-//   }
-// });
+export const createProduct = createAsyncThunk<
+  Product,
+  CreateProductParam,
+  { dispatch: AppDispatch; state: RootState }
+>('product/createProduct', async (params: CreateProductParam, thunkAPI) => {
+  try {
+    return await productApi.createProduct(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
 
-// export const updateProduct = createAsyncThunk<
-//   ProductType.Product,
-//   UpdateProductParam,
-//   { dispatch: AppDispatch; state: RootState }
-// >('product/updateProduct', async (params: UpdateProductParam, thunkAPI) => {
-//   try {
-//     return await productApi.updateProduct(params);
-//   } catch (error) {
-//     const err = error as AxiosError;
-//     return thunkAPI.rejectWithValue(err.response?.data);
-//   }
-// });
+export const updateProduct = createAsyncThunk<
+  Product,
+  UpdateProductParam,
+  { dispatch: AppDispatch; state: RootState }
+>('product/updateProduct', async (params: UpdateProductParam, thunkAPI) => {
+  try {
+    return await productApi.updateProduct(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
 
-// export const deleteProduct = createAsyncThunk<
-//   CommonType.Message,
-//   DeleteProductParam,
-//   { dispatch: AppDispatch; state: RootState }
-// >('product/deleteProduct', async (params: DeleteProductParam, thunkAPI) => {
-//   try {
-//     return await productApi.deleteProduct(params);
-//   } catch (error) {
-//     const err = error as AxiosError;
-//     return thunkAPI.rejectWithValue(err.response?.data);
-//   }
-// });
+export const deleteProduct = createAsyncThunk<
+  CommonType.Message & { id: string },
+  DeleteProductParam,
+  { dispatch: AppDispatch; state: RootState }
+>('product/deleteProduct', async (params: DeleteProductParam, thunkAPI) => {
+  try {
+    return await productApi.deleteProduct(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
 
 // Actual Slice
 export const productSlice = createSlice({
@@ -111,10 +110,7 @@ export const productSlice = createSlice({
       })
       .addCase(
         getProducts.fulfilled,
-        (
-          state,
-          { payload }: PayloadAction<CommonType.Pagination<ProductType>>
-        ) => {
+        (state, { payload }: PayloadAction<CommonType.Pagination<Product>>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.pageInfo = payload.pageInfo;
@@ -135,7 +131,7 @@ export const productSlice = createSlice({
       })
       .addCase(
         getProduct.fulfilled,
-        (state, { payload }: PayloadAction<ProductType>) => {
+        (state, { payload }: PayloadAction<Product>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.currentProduct = payload;
@@ -147,69 +143,75 @@ export const productSlice = createSlice({
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;
         state.message = null;
+      })
+      .addCase(createProduct.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        createProduct.fulfilled,
+        (state, { payload }: PayloadAction<Product>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.currentProduct = payload;
+          state.currentId = payload.id;
+        }
+      )
+      .addCase(createProduct.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(updateProduct.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        updateProduct.fulfilled,
+        (state, { payload }: PayloadAction<Product>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.currentProduct = payload;
+          state.currentId = payload.id;
+        }
+      )
+      .addCase(updateProduct.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(deleteProduct.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        deleteProduct.fulfilled,
+        (
+          state,
+          { payload }: PayloadAction<CommonType.Message & { id: string }>
+        ) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.message = payload.message;
+          state.products = state.products.filter(
+            (product) => product.id !== parseInt(payload.id)
+          );
+        }
+      )
+      .addCase(deleteProduct.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
       });
-    // .addCase(createProduct.pending, (state) => {
-    //   state.loading = true;
-    //   state.status = ResponseStatus.PENDING;
-    //   state.error = null;
-    //   state.message = null;
-    // })
-    // .addCase(
-    //   createProduct.fulfilled,
-    //   (state, { payload }: PayloadAction<ProductType>) => {
-    //     state.loading = false;
-    //     state.status = ResponseStatus.SUCCESS;
-    //     state.currentProduct = payload;
-    //     state.currentId = payload.id;
-    //   }
-    // )
-    // .addCase(createProduct.rejected, (state, { payload }) => {
-    //   state.loading = false;
-    //   state.status = ResponseStatus.FAILED;
-    //   state.error = payload as string;
-    //   state.message = null;
-    // })
-    // .addCase(updateProduct.pending, (state) => {
-    //   state.loading = true;
-    //   state.status = ResponseStatus.PENDING;
-    //   state.error = null;
-    //   state.message = null;
-    // })
-    // .addCase(
-    //   updateProduct.fulfilled,
-    //   (state, { payload }: PayloadAction<ProductType.Product>) => {
-    //     state.loading = false;
-    //     state.status = ResponseStatus.SUCCESS;
-    //     state.currentProduct = payload;
-    //     state.currentId = payload.id;
-    //   }
-    // )
-    // .addCase(updateProduct.rejected, (state, { payload }) => {
-    //   state.loading = false;
-    //   state.status = ResponseStatus.FAILED;
-    //   state.error = payload as string;
-    //   state.message = null;
-    // })
-    // .addCase(deleteProduct.pending, (state) => {
-    //   state.loading = true;
-    //   state.status = ResponseStatus.PENDING;
-    //   state.error = null;
-    //   state.message = null;
-    // })
-    // .addCase(
-    //   deleteProduct.fulfilled,
-    //   (state, { payload }: PayloadAction<CommonType.Message>) => {
-    //     state.loading = false;
-    //     state.status = ResponseStatus.SUCCESS;
-    //     state.message = payload.message;
-    //   }
-    // )
-    // .addCase(deleteProduct.rejected, (state, { payload }) => {
-    //   state.loading = false;
-    //   state.status = ResponseStatus.FAILED;
-    //   state.error = payload as string;
-    //   state.message = null;
-    // });
   },
 });
 

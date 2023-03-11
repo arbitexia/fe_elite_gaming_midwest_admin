@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { Box, Collapse, List } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { superSidebarItems } from '@/_mock/App';
 import { UIFlexCenterBox, UIImage } from '@/components/UI';
 import {
   StyledSidebarActiveButton,
@@ -8,10 +12,6 @@ import {
   StyledSidebarWrapper,
   StyledSidebarDropButton,
 } from './ui';
-import { superSidebarItems } from '@/_mock/App';
-import { useRouter } from 'next/router';
-import { Box, Collapse, List } from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 const Sidebar = () => {
   const router = useRouter();
@@ -19,6 +19,7 @@ const Sidebar = () => {
   const [selectedDropdown, setSelectedDropdown] = useState<string>('');
   const [dropdownOpen, setDropdownOpen] = useState('');
   const path = router.asPath;
+
   useEffect(() => {
     superSidebarItems.map((item) => {
       if (item.dropdown)

@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { Box } from '@mui/material';
 import { AppSEO, AppNavbar, AppSidebar } from '@/components/App';
 import { UIAppLayoutWrapper, UIContainer } from '@/components/UI';
 import { useAuth } from '@/hooks';
-import { Box } from '@mui/material';
 
 interface Props {
   title?: string;
@@ -14,9 +14,11 @@ interface Props {
 const AppLayout = (props: Props) => {
   const router = useRouter();
   const { isAuthenticated } = useAuth({});
+
   useEffect(() => {
     if (!isAuthenticated) router.push('/login');
   }, [isAuthenticated]);
+
   return (
     <UIAppLayoutWrapper sx={{ background: '#F7F7F7' }}>
       <AppSEO title={props.title as string} description="" />

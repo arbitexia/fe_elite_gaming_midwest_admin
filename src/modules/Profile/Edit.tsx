@@ -1,6 +1,10 @@
+import { useFormik } from 'formik';
 import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
+import { userStatus } from '@/_mock/users';
 import { UIFlexWrapBox, UIFlexSpaceBox } from '@/components/UI';
+import { UserRole } from '@/constants';
 import { UserType } from '@/types';
+import ProfileHeader from './Header';
 import {
   StyledUserInfoTitle,
   StyledUserInfoCard,
@@ -10,10 +14,6 @@ import {
   StyledUserInfoCardStatus,
   StyledUserEditTextField,
 } from './ui';
-import ProfileHeader from './Header';
-import { userStatus } from '@/_mock/users';
-import { useFormik } from 'formik';
-import { UserRole } from '@/constants/Enum';
 
 interface ProfileEditProps {
   user: UserType.User;

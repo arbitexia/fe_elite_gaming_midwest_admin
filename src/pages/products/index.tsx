@@ -1,34 +1,34 @@
 import { useState, useEffect } from 'react';
-import {
-  RewardsHeader,
-  RewardsTable,
-  RewardsPagination,
-} from '@/modules/Rewards';
-import { DashboardLayout } from '@/layouts';
-import { ProductType } from '@/types';
 import { Divider } from '@mui/material';
+import {
+  ProductsHeader,
+  ProductsTable,
+  ProductsPagination,
+} from '@/modules/Products';
+import { DashboardLayout } from '@/layouts';
+import { Product } from '@/types';
 import { useProduct } from '@/hooks';
 
-const RewardsPage = () => {
+const ProductsPage = () => {
   const { products, pageInfo, onGetProducts } = useProduct();
-  const [rewardList, setRewardList] = useState<ProductType[]>([]);
+  const [productList, setProductList] = useState<Product[]>([]);
   const [searchValue, setSearchValue] = useState('');
-  const [searchLocation, setSearchLocation] = useState(0);
+  const [searchProduct, setSearchProduct] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
-    setRewardList(products);
+    setProductList(products);
   }, [products]);
 
   useEffect(() => {
     handleSearch();
-  }, [searchValue, searchLocation, page, rowsPerPage]);
+  }, [searchValue, setSearchProduct, page, rowsPerPage]);
 
   const handleSearch = () => {
     onGetProducts({
       filterBy: {
-        location: searchLocation,
+        product: searchProduct,
         search: searchValue,
         pointFrom: 0,
         pointTo: 1000000,
@@ -36,17 +36,18 @@ const RewardsPage = () => {
       cursor: { page: page, size: rowsPerPage },
     });
   };
+
   return (
-    <DashboardLayout title="Rewards">
-      <RewardsHeader
+    <DashboardLayout title="Products">
+      <ProductsHeader
         searchValue={searchValue}
-        searchLocation={searchLocation}
+        searchProduct={searchProduct}
         onValueChange={(value: string) => setSearchValue(value)}
-        onLocationChange={(value: number) => setSearchLocation(value)}
+        onProductChange={(value: number) => setSearchProduct(value)}
       />
       <Divider sx={{ mt: '30px' }} />
-      <RewardsTable rewardsTableData={rewardList} />
-      <RewardsPagination
+      <ProductsTable productsTableData={productList} />
+      <ProductsPagination
         page={page}
         rowsPerPage={rowsPerPage}
         total={pageInfo?.total ?? 0}
@@ -57,4 +58,4 @@ const RewardsPage = () => {
   );
 };
 
-export default RewardsPage;
+export default ProductsPage;

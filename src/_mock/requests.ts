@@ -1,4 +1,5 @@
-import { RequestItemType, ProductStatus } from '@/types';
+import { ProductStatus } from '@/constants';
+import { RequestItemType } from '@/types';
 
 export const requestsData: RequestItemType[] = [
   {

@@ -54,6 +54,7 @@ const LocationsById = () => {
     setLocationItem(location);
     locationFormik.setValues(location ?? initLocationData);
   }, [id]);
+
   return (
     <DashboardLayout title={locationItem ? locationItem.name : 'Locations'}>
       {locationItem && (

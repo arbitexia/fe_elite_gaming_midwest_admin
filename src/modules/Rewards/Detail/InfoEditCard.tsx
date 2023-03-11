@@ -1,21 +1,21 @@
 import { useState } from 'react';
-import { Box, Typography, Stack, MenuItem } from '@mui/material';
-import { UIFlexWrapBox, UIEditTextField } from '@/components/UI';
-import { StyledLocationCardBox, StyledLocationInfoTitle } from './ui';
-import { RewardsDetailProps } from '@/types';
 import 'react-quill/dist/quill.snow.css';
-import { useFormik } from 'formik';
-import { locationsData } from '@/_mock/locations';
 import dynamic from 'next/dynamic';
-// const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-const ReactQuill: any = dynamic(
+import { useFormik } from 'formik';
+import { Box, Typography, Stack, MenuItem } from '@mui/material';
+import { locationsData } from '@/_mock/locations';
+import { UIFlexWrapBox, UIEditTextField } from '@/components/UI';
+import { Product } from '@/types';
+import { StyledLocationCardBox, StyledLocationInfoTitle } from './ui';
+
+const ReactQuill = dynamic(
   () => {
     return import('react-quill');
   },
   { loading: () => null, ssr: false }
 );
 
-const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
+const RewardsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [value, setValue] = useState('');
 
@@ -50,8 +50,8 @@ const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
     'image',
   ];
 
-  const userFormik = useFormik({
-    initialValues: rewardsItem,
+  const productFormik = useFormik({
+    initialValues: productItem,
     onSubmit: async (values) => {
       console.log(values);
       // await authorize({ variables: { ...values } });
@@ -77,8 +77,8 @@ const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
             <Box>
               <UIEditTextField
                 name="name"
-                value={userFormik.values.name}
-                onChange={userFormik.handleChange}
+                value={productFormik.values.name}
+                onChange={productFormik.handleChange}
                 fullWidth
               />
             </Box>
@@ -89,8 +89,8 @@ const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
               <UIEditTextField
                 name="location"
                 defaultValue={0}
-                value={userFormik.values.location}
-                onChange={userFormik.handleChange}
+                value={productFormik.values.location}
+                onChange={productFormik.handleChange}
                 fullWidth
                 select
               >
@@ -110,8 +110,8 @@ const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
             <Box>
               <UIEditTextField
                 name="amount"
-                value={userFormik.values.amount}
-                onChange={userFormik.handleChange}
+                value={productFormik.values.amount}
+                onChange={productFormik.handleChange}
                 fullWidth
               />
             </Box>

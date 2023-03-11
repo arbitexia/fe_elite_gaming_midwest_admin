@@ -1,7 +1,7 @@
+import { PaletteMode } from '@mui/material';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '@/redux/store';
 import { ReduxJson } from '@/types';
-import { PaletteMode } from '@mui/material';
 
 export enum ThemeMode {
   LIGHT = `light`,

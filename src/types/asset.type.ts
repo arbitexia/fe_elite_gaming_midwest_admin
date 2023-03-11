@@ -1,8 +1,4 @@
-export enum AssetItemType {
-  IMAGE = 'IMAGE',
-  VIDEO = 'VIDEO',
-  DOCUMENT = 'DOCUMENT',
-}
+import { Assets } from '@/constants';
 
 export type CreateUploadFormParams = {
   fileName: string;
@@ -20,7 +16,7 @@ export type CreateAssetParams = {
   input: {
     desc: string;
     name: string;
-    type: AssetItemType;
+    type: Assets;
     url: string;
   };
 };
@@ -29,7 +25,7 @@ export type CreateGalleryParams = {
   input: {
     desc?: string;
     name?: string;
-    type?: AssetItemType;
+    type?: Assets;
     assetId?: number;
     url?: string;
     victimId: number;

@@ -1,5 +1,5 @@
-import { appImageLoader } from '@/libs/image-loader';
 import Image from 'next/image';
+import { appImageLoader } from '@/libs/image-loader';
 
 interface Props {
   src: string;

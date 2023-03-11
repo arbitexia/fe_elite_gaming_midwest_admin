@@ -1,18 +1,19 @@
 import { useState } from 'react';
-import { Box, IconButton, Typography } from '@mui/material';
-import {
-  StyledLocationCardBox,
-  StyledLocationEditPhotoButton,
-  StyledLocationAddPhotoButton,
-} from './ui';
 import SwipeableViews from 'react-swipeable-views';
-import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
+import { Box, IconButton, Typography } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos, AddAPhoto } from '@mui/icons-material';
-import Thumbnail from './Thumbnail';
+import {
+  UICardBox,
+  UIFlexSpaceBox,
+  UIFlexCenterBox,
+  UIPhotoAddButton,
+  UIPhotoEditButton,
+} from '@/components/UI';
+import { useAsset } from '@/hooks/asset';
 import { convertMBtoBytes } from '@/libs/data-helper';
 import { useAppToast } from '@/providers';
-import { useAsset } from '@/hooks/asset';
 import { AssetType } from '@/types';
+import Thumbnail from './Thumbnail';
 
 const LocationsDetailCarouselEditCard = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -84,7 +85,7 @@ const LocationsDetailCarouselEditCard = () => {
   };
 
   return (
-    <StyledLocationCardBox alignSelf="flex-start">
+    <UICardBox alignSelf="flex-start">
       <UIFlexCenterBox sx={{ gap: '20px' }}>
         <Box
           sx={{
@@ -172,7 +173,7 @@ const LocationsDetailCarouselEditCard = () => {
         <br /> Maximium image count: 4
       </Typography>
       <UIFlexCenterBox sx={{ gap: '15px', marginTop: '31px' }}>
-        <StyledLocationEditPhotoButton>
+        <UIPhotoEditButton>
           <label htmlFor="photo-edit">Edit Photo</label>
           <input
             id="photo-edit"
@@ -181,9 +182,8 @@ const LocationsDetailCarouselEditCard = () => {
             accept="image/png, image/gif, image/jpeg"
             hidden
           />
-        </StyledLocationEditPhotoButton>
-
-        <StyledLocationAddPhotoButton
+        </UIPhotoEditButton>
+        <UIPhotoAddButton
           startIcon={<AddAPhoto sx={{ color: 'rgba(255, 255, 255, 0.54)' }} />}
         >
           <label htmlFor="photo-create">Add Photo</label>
@@ -194,9 +194,9 @@ const LocationsDetailCarouselEditCard = () => {
             accept="image/png, image/gif, image/jpeg"
             hidden
           />
-        </StyledLocationAddPhotoButton>
+        </UIPhotoAddButton>
       </UIFlexCenterBox>
-    </StyledLocationCardBox>
+    </UICardBox>
   );
 };
 

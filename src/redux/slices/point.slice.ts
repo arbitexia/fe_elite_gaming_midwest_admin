@@ -1,8 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { pointApi } from '@/redux/apis';
 import { AxiosError } from 'axios';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ResponseStatus } from '@/constants';
+import { pointApi } from '@/redux/apis';
 import { RootState, AppDispatch } from '@/redux/store';
-import { ReduxJson, ResponseStatus, GetPointParam, PointType } from '@/types';
+import { ReduxJson, GetPointParam, PointType } from '@/types';
 
 // Initial state
 const initialState: ReduxJson.PointState = {

@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { userApi } from '@/redux/apis';
 import { AxiosError } from 'axios';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ResponseStatus } from '@/constants';
+import { userApi } from '@/redux/apis';
 import { RootState, AppDispatch } from '@/redux/store';
 import {
   ReduxJson,
@@ -9,7 +10,6 @@ import {
   ChangePasswordParam,
   UpdateUserParam,
   DeleteUserParam,
-  ResponseStatus,
   UserType,
   CommonType,
 } from '@/types';

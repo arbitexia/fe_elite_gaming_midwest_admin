@@ -1,10 +1,10 @@
+import { Typography, InputAdornment } from '@mui/material';
+import { Search as SearchIcon } from '@mui/icons-material';
 import {
   UIFlexSpaceBox,
   UIFlexWrapBox,
   UIDefaultTextField,
 } from '@/components/UI';
-import { Typography, InputAdornment } from '@mui/material';
-import { Search as SearchIcon } from '@mui/icons-material';
 
 interface RequestsHeaderProps {
   searchValue: string;

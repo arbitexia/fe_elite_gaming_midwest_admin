@@ -1,8 +1,7 @@
+import { useEffect } from 'react';
 import { useAppToast } from '@/providers';
 import { getPoints, resetPointMessage, pointSelector } from '@/redux/slices';
-
 import { GetPointParam } from '@/types';
-import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from './redux';
 
 export const usePoint = () => {

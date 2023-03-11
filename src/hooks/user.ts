@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useAppToast } from '@/providers';
 import {
   getUser,
@@ -8,14 +9,12 @@ import {
   usersSelector,
   resetUserMessage,
 } from '@/redux/slices';
-
 import {
   ChangePasswordParam,
   GetUsersParam,
   UpdateUserParam,
   UserType,
 } from '@/types';
-import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from './redux';
 
 export const useUser = () => {

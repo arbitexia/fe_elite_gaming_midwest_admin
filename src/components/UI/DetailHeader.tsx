@@ -1,9 +1,9 @@
+import { Stack, Box, Typography } from '@mui/material';
 import {
   UIFlexSpaceBox,
   UIActionButton,
   UIDefaultButton,
 } from '@/components/UI';
-import { Stack, Box, Typography } from '@mui/material';
 
 export type ActionItemType = {
   color: string;

@@ -1,5 +1,6 @@
 import { Typography, InputAdornment } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
+import { transactionsType } from '@/_mock/transactions';
 import {
   UIFlexSpaceBox,
   UIFlexWrapBox,
@@ -7,7 +8,6 @@ import {
   UIFlexCenterBox,
 } from '@/components/UI';
 import { StyledSelectMenuItem } from './ui';
-import { transactionsType } from '@/_mock/transactions';
 
 interface TransactionsListHeaderProps {
   searchValue: string;

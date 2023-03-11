@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { Box, IconButton } from '@mui/material';
-import { StyledLocationCardBox } from './ui';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
-import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
+import { Box, IconButton } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-import Thumbnail from './Thumbnail';
+import { UICardBox, UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import { useAsset } from '@/hooks/asset';
+import Thumbnail from './Thumbnail';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -33,7 +32,7 @@ const LocationsDetailCarouselCard = () => {
   };
 
   return (
-    <StyledLocationCardBox alignSelf="flex-start">
+    <UICardBox alignSelf="flex-start">
       <UIFlexCenterBox sx={{ gap: '20px' }}>
         <Box
           sx={{
@@ -101,7 +100,7 @@ const LocationsDetailCarouselCard = () => {
           </UIFlexSpaceBox>
         </UIFlexSpaceBox>
       </UIFlexCenterBox>
-    </StyledLocationCardBox>
+    </UICardBox>
   );
 };
 

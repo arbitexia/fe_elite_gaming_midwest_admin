@@ -1,15 +1,15 @@
+import { useRouter } from 'next/router';
 import { Typography, InputAdornment, Divider } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
+import { userStatus } from '@/_mock/users';
 import {
   UIFlexSpaceBox,
   UIFlexWrapBox,
   UIDefaultTextField,
   UIFlexCenterBox,
   UIDefaultButton,
+  UISelectMenuItem,
 } from '@/components/UI';
-import { userStatus } from '@/_mock/users';
-import { StyledSelectMenuItem } from './ui';
-import { useRouter } from 'next/router';
 
 interface UsersListHeaderProps {
   onSearch: () => void;
@@ -74,13 +74,13 @@ const UsersListHeader = ({
               },
             }}
           >
-            <StyledSelectMenuItem key={'ALL'} value={'ALL'}>
+            <UISelectMenuItem key={'ALL'} value={'ALL'}>
               ALL
-            </StyledSelectMenuItem>
+            </UISelectMenuItem>
             {userStatus.map((option) => (
-              <StyledSelectMenuItem key={option.id} value={option.id}>
+              <UISelectMenuItem key={option.id} value={option.id}>
                 {option.value}
-              </StyledSelectMenuItem>
+              </UISelectMenuItem>
             ))}
           </UIDefaultTextField>
         </UIFlexCenterBox>

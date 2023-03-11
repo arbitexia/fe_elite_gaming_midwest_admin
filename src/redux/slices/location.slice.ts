@@ -1,12 +1,12 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { locationApi } from '@/redux/apis';
 import { AxiosError } from 'axios';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ResponseStatus } from '@/constants';
+import { locationApi } from '@/redux/apis';
 import { RootState, AppDispatch } from '@/redux/store';
 import {
   ReduxJson,
   GetLocationsParam,
   GetLocationParam,
-  ResponseStatus,
   LocationType,
   CreateLocationParam,
   UpdateLocationParam,

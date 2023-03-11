@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { format } from 'date-fns';
 import {
   Box,
   Table,
@@ -11,22 +12,21 @@ import {
   TableSortLabel,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
-import { UIChip } from '@/components/UI';
-import {
-  StyledTableRow,
-  StyledTableCell,
-  StyledOptionMenuItemText,
-  StyledOptionMenu,
-  StyledOptionMenuItem,
-} from './ui';
 import { menuActions } from '@/_mock/users';
+import {
+  UIChip,
+  UIListTableRow,
+  UIListTableCell,
+  UIOptionMenu,
+  UIOptionMenuItem,
+  UIOptionMenuItemText,
+} from '@/components/UI';
+import { MenuAction } from '@/constants';
 import { getColor } from '@/libs/data-helper';
-import { MenuAction } from '@/constants/Enum';
-import { ProductType } from '@/types';
-import { format } from 'date-fns';
+import { Product } from '@/types';
 
 type RewardsTableProps = {
-  rewardsTableData: ProductType[];
+  rewardsTableData: Product[];
 };
 
 const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
@@ -79,7 +79,7 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
 
   type Order = 'asc' | 'desc';
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof ProductType>('id');
+  const [orderBy, setOrderBy] = useState<keyof Product>('id');
 
   function stableSort<T>(
     array: readonly T[],
@@ -97,9 +97,9 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
   }
 
   function descendingComparator(
-    a: ProductType,
-    b: ProductType,
-    orderBy: keyof ProductType
+    a: Product,
+    b: Product,
+    orderBy: keyof Product
   ) {
     console.log(a, b, orderBy);
     // if (b[orderBy] < a[orderBy]) {
@@ -111,22 +111,22 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
     return 0;
   }
 
-  function getComparator<Key extends keyof ProductType>(
+  function getComparator<Key extends keyof Product>(
     order: Order,
     orderBy: Key
-  ): (a: ProductType, b: ProductType) => number {
+  ): (a: Product, b: Product) => number {
     return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
 
   const createSortHandler =
-    (property: keyof ProductType) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof Product) => (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof ProductType
+    property: keyof Product
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -136,8 +136,8 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
   return (
     <Table>
       <TableHead>
-        <StyledTableRow>
-          <StyledTableCell>
+        <UIListTableRow>
+          <UIListTableCell>
             <Checkbox
               indeterminate={
                 selected.length > 0 && selected.length < rewardsTableData.length
@@ -148,8 +148,8 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
               }
               onChange={handleSelectAllClick}
             />
-          </StyledTableCell>
-          <StyledTableCell>
+          </UIListTableCell>
+          <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'id'}
               direction={order}
@@ -157,8 +157,8 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
             >
               Id
             </TableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell>
+          </UIListTableCell>
+          <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'name'}
               direction={order}
@@ -166,9 +166,9 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
             >
               Product
             </TableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell>Detail</StyledTableCell>
-          <StyledTableCell>
+          </UIListTableCell>
+          <UIListTableCell>Detail</UIListTableCell>
+          <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'point'}
               direction={order}
@@ -176,8 +176,8 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
             >
               Points
             </TableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell align="center">
+          </UIListTableCell>
+          <UIListTableCell align="center">
             <TableSortLabel
               active={orderBy === 'status'}
               direction={order}
@@ -185,8 +185,8 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
             >
               Status
             </TableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell align="center">
+          </UIListTableCell>
+          <UIListTableCell align="center">
             <TableSortLabel
               active={orderBy === 'createdAt'}
               direction={order}
@@ -194,39 +194,39 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
             >
               Due Date
             </TableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell />
-        </StyledTableRow>
+          </UIListTableCell>
+          <UIListTableCell />
+        </UIListTableRow>
       </TableHead>
       <TableBody>
-        {stableSort<ProductType>(
+        {stableSort<Product>(
           rewardsTableData,
           getComparator(order, orderBy)
         ).map((rewardItem) => {
           const isItemSelected = isSelected(rewardItem.id.toString());
           // const labelId = `enhanced-table-checkbox-${index}`;
           return (
-            <StyledTableRow
+            <UIListTableRow
               key={rewardItem.id}
               data-key={rewardItem.id}
               role="checkbox"
               sx={{ position: 'relative' }}
             >
-              <StyledTableCell>
+              <UIListTableCell>
                 <Checkbox
                   checked={isItemSelected}
                   onClick={(event) =>
                     handleClick(event, rewardItem.id.toString())
                   }
                 />
-              </StyledTableCell>
-              <StyledTableCell
+              </UIListTableCell>
+              <UIListTableCell
                 onClick={() => router.push(`${router.asPath}/${rewardItem.id}`)}
                 sx={{ cursor: 'pointer' }}
               >
                 #{rewardItem.id}
-              </StyledTableCell>
-              <StyledTableCell>
+              </UIListTableCell>
+              <UIListTableCell>
                 <Box
                   sx={{
                     cursor: 'pointer',
@@ -267,21 +267,21 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
                     />
                   </Box>
                 </Box>
-              </StyledTableCell>
-              <StyledTableCell>{rewardItem.short}</StyledTableCell>
-              <StyledTableCell>{rewardItem.point}</StyledTableCell>
-              <StyledTableCell align="center">
+              </UIListTableCell>
+              <UIListTableCell>{rewardItem.short}</UIListTableCell>
+              <UIListTableCell>{rewardItem.point}</UIListTableCell>
+              <UIListTableCell align="center">
                 <UIChip
                   label={rewardItem.status}
                   color={getColor(rewardItem.status)}
                 />
-              </StyledTableCell>
-              <StyledTableCell align="center">
+              </UIListTableCell>
+              <UIListTableCell align="center">
                 {rewardItem.createdAt
                   ? format(new Date(rewardItem.createdAt), 'yyyy-MM-dd')
                   : ''}
-              </StyledTableCell>
-              <StyledTableCell>
+              </UIListTableCell>
+              <UIListTableCell>
                 <IconButton
                   data-key={rewardItem.id}
                   onClick={(event: React.MouseEvent<HTMLElement>) => {
@@ -290,13 +290,13 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
                 >
                   <MoreHorizIcon sx={{ color: '#83A9A8' }} />
                 </IconButton>
-              </StyledTableCell>
-            </StyledTableRow>
+              </UIListTableCell>
+            </UIListTableRow>
           );
         })}
       </TableBody>
 
-      <StyledOptionMenu
+      <UIOptionMenu
         PaperProps={{
           elevation: 0,
         }}
@@ -315,12 +315,12 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
           return (
             <div key={index}>
               {index === 2 && <Divider />}
-              <StyledOptionMenuItem
+              <UIOptionMenuItem
                 disableRipple
                 disableTouchRipple
                 onClick={() => handleNavBtnClick(item.action)}
               >
-                <StyledOptionMenuItemText
+                <UIOptionMenuItemText
                   key={index}
                   sx={{
                     color: item.color,
@@ -328,12 +328,12 @@ const RewardsTable = ({ rewardsTableData }: RewardsTableProps) => {
                   }}
                 >
                   {item.label}
-                </StyledOptionMenuItemText>
-              </StyledOptionMenuItem>
+                </UIOptionMenuItemText>
+              </UIOptionMenuItem>
             </div>
           );
         })}
-      </StyledOptionMenu>
+      </UIOptionMenu>
     </Table>
   );
 };

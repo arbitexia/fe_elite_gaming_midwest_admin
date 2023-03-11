@@ -1,5 +1,5 @@
-import { UIFlexSpaceBox } from '@/components/UI';
 import { Typography } from '@mui/material';
+import { UIFlexSpaceBox } from '@/components/UI';
 
 export interface UIListHeaderProps {
   title: string;

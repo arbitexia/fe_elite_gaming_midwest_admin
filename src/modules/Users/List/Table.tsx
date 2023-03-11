@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { format } from 'date-fns';
 import {
   Table,
   TableHead,
@@ -11,19 +12,18 @@ import {
   Typography,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
-import { UIChip } from '@/components/UI';
-import {
-  StyledTableRow,
-  StyledTableCell,
-  StyledOptionMenuItemText,
-  StyledOptionMenu,
-  StyledOptionMenuItem,
-} from './ui';
 import { menuActions } from '@/_mock/users';
+import {
+  UIChip,
+  UIOptionMenuItemText,
+  UIOptionMenu,
+  UIOptionMenuItem,
+  UIListTableCell,
+  UIListTableRow,
+} from '@/components/UI';
+import { MenuAction } from '@/constants';
 import { formatPhoneNumber, getColor } from '@/libs/data-helper';
-import { MenuAction } from '@/constants/Enum';
 import { UserType } from '@/types';
-import { format } from 'date-fns';
 import { useUser } from '@/hooks';
 
 type UsersTableProps = {
@@ -31,7 +31,6 @@ type UsersTableProps = {
 };
 
 const UsersTable = ({ usersTableData }: UsersTableProps) => {
-  console.log(usersTableData);
   const router = useRouter();
   const { onDeleteUser } = useUser();
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -165,8 +164,8 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
   return (
     <Table>
       <TableHead>
-        <StyledTableRow>
-          <StyledTableCell>
+        <UIListTableRow>
+          <UIListTableCell>
             <Checkbox
               indeterminate={
                 selected.length > 0 && selected.length < usersTableData.length
@@ -177,8 +176,8 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
               }
               onChange={handleSelectAllClick}
             />
-          </StyledTableCell>
-          <StyledTableCell>
+          </UIListTableCell>
+          <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'id'}
               direction={order}
@@ -186,8 +185,8 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
             >
               Id
             </TableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell>
+          </UIListTableCell>
+          <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'firstName'}
               direction={order}
@@ -195,8 +194,8 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
             >
               Name
             </TableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell>
+          </UIListTableCell>
+          <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'email'}
               direction={order}
@@ -204,8 +203,8 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
             >
               Email
             </TableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell>
+          </UIListTableCell>
+          <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'phone'}
               direction={order}
@@ -213,8 +212,8 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
             >
               Phone
             </TableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell>
+          </UIListTableCell>
+          <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'birthday'}
               direction={order}
@@ -222,9 +221,9 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
             >
               First Login
             </TableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell align="center">Role</StyledTableCell>
-          <StyledTableCell align="center">
+          </UIListTableCell>
+          <UIListTableCell align="center">Role</UIListTableCell>
+          <UIListTableCell align="center">
             <TableSortLabel
               active={orderBy === 'status'}
               direction={order}
@@ -232,8 +231,8 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
             >
               Status
             </TableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell>
+          </UIListTableCell>
+          <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'createdAt'}
               direction={order}
@@ -241,9 +240,9 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
             >
               Created At
             </TableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell />
-        </StyledTableRow>
+          </UIListTableCell>
+          <UIListTableCell />
+        </UIListTableRow>
       </TableHead>
       <TableBody>
         {usersTableData.length > 0 &&
@@ -254,47 +253,47 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
             const isItemSelected = isSelected(userItem.id.toString());
 
             return (
-              <StyledTableRow
+              <UIListTableRow
                 key={userItem.id}
                 data-key={userItem.id}
                 role="checkbox"
               >
-                <StyledTableCell>
+                <UIListTableCell>
                   <Checkbox
                     checked={isItemSelected}
                     onClick={(event) =>
                       handleClick(event, userItem.id.toString())
                     }
                   />
-                </StyledTableCell>
-                <StyledTableCell
+                </UIListTableCell>
+                <UIListTableCell
                   onClick={() => router.push(`${router.asPath}/${userItem.id}`)}
                   sx={{ cursor: 'pointer' }}
                 >
                   #{userItem.id}
-                </StyledTableCell>
-                <StyledTableCell>{userItem.fullName}</StyledTableCell>
-                <StyledTableCell>{userItem.email}</StyledTableCell>
-                <StyledTableCell>
+                </UIListTableCell>
+                <UIListTableCell>{userItem.fullName}</UIListTableCell>
+                <UIListTableCell>{userItem.email}</UIListTableCell>
+                <UIListTableCell>
                   {formatPhoneNumber(userItem.phone)}
-                </StyledTableCell>
-                <StyledTableCell>
+                </UIListTableCell>
+                <UIListTableCell>
                   {/* {format(new Date(userItem.birthday), 'yyyy-MM-dd')} */}
                   {renderFirstLogin(userItem?.firstLogin)}
-                </StyledTableCell>
-                <StyledTableCell align="center">
+                </UIListTableCell>
+                <UIListTableCell align="center">
                   {userItem.role?.name}
-                </StyledTableCell>
-                <StyledTableCell align="center">
+                </UIListTableCell>
+                <UIListTableCell align="center">
                   <UIChip
                     label={userItem.status}
                     color={getColor(userItem.status ?? 'ACTIVATED')}
                   />
-                </StyledTableCell>
-                <StyledTableCell>
+                </UIListTableCell>
+                <UIListTableCell>
                   {format(new Date(userItem.createdAt as string), 'yyyy-MM-dd')}
-                </StyledTableCell>
-                <StyledTableCell>
+                </UIListTableCell>
+                <UIListTableCell>
                   <IconButton
                     data-key={userItem.id}
                     onClick={(event: React.MouseEvent<HTMLElement>) => {
@@ -303,12 +302,12 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
                   >
                     <MoreHorizIcon sx={{ color: '#83A9A8' }} />
                   </IconButton>
-                </StyledTableCell>
-              </StyledTableRow>
+                </UIListTableCell>
+              </UIListTableRow>
             );
           })}
       </TableBody>
-      <StyledOptionMenu
+      <UIOptionMenu
         PaperProps={{
           elevation: 0,
         }}
@@ -327,12 +326,12 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
           return (
             <div key={index}>
               {index === 2 && <Divider />}
-              <StyledOptionMenuItem
+              <UIOptionMenuItem
                 disableRipple
                 disableTouchRipple
                 onClick={() => handleNavBtnClick(item.action)}
               >
-                <StyledOptionMenuItemText
+                <UIOptionMenuItemText
                   key={index}
                   sx={{
                     color: item.color,
@@ -340,12 +339,12 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
                   }}
                 >
                   {item.label}
-                </StyledOptionMenuItemText>
-              </StyledOptionMenuItem>
+                </UIOptionMenuItemText>
+              </UIOptionMenuItem>
             </div>
           );
         })}
-      </StyledOptionMenu>
+      </UIOptionMenu>
     </Table>
   );
 };

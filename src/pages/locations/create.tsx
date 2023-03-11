@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { DashboardLayout } from '@/layouts';
+import { useFormik } from 'formik';
 import { Box } from '@mui/material';
+import { initLocationData } from '@/_mock/locations';
+import { useLocation, useAsset } from '@/hooks';
+import { DashboardLayout } from '@/layouts';
 import { UIFlexSpaceBox } from '@/components/UI';
 import {
   LocationDetailHeader,
   LocationsDetailCarouselEditCard,
   LocationsDetailInfoEditCard,
 } from '@/modules/Locations';
-import { useFormik } from 'formik';
 import { LocationType, CreateLocationParam } from '@/types';
-import { useLocation, useAsset } from '@/hooks';
-import { initLocationData } from '@/_mock/locations';
 import { useAppToast } from '@/providers';
 
 const LocationCreatePage = () => {
@@ -20,11 +20,13 @@ const LocationCreatePage = () => {
   const { onCreateLocation } = useLocation();
   const { onSetGalleries, onSaveGallery } = useAsset();
   const [isReady, setIsReady] = useState(true);
+
   useEffect(() => {
     if (!isReady) return;
     onSetGalleries([]);
     setIsReady(false);
   }, [isReady]);
+
   const locationFormik = useFormik<LocationType>({
     initialValues: initLocationData,
     onSubmit: async (values: LocationType) => {

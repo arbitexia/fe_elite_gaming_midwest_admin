@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useAuth } from '@/hooks';
 import {
   Avatar,
   Box,
@@ -19,6 +18,9 @@ import {
   Menu as MenuIcon,
   ExpandMoreOutlined as ExpandMoreOutlinedIcon,
 } from '@mui/icons-material';
+import { notificationData } from '@/_mock/App/index';
+import { UIImage } from '@/components/UI';
+import { useAuth } from '@/hooks';
 import {
   StyledAppBar,
   StyledIconButton,
@@ -31,8 +33,6 @@ import {
   NotificationMenuItem,
   NotificationMenuContainer,
 } from './ui';
-import { UIImage } from '@/components/UI';
-import { notificationData } from '@/_mock/App/index';
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.

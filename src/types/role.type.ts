@@ -1,4 +1,4 @@
-import { UserRole } from '@/constants/Enum';
+import { UserRole } from '@/constants/enum';
 export declare namespace RoleType {
   type Role = {
     id: number;

@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
-import { Typography, Stack, Box } from '@mui/material';
-import { UIFlexWrapBox } from '@/components/UI';
-import {
-  StyledLocationCardBox,
-  StyledLocationInfoTitle,
-  StyledLocationInfoValue,
-} from './ui';
-import { LocationsDetailProps } from '@/types';
 import mapboxgl from 'mapbox-gl';
+
+import { Typography, Stack, Box } from '@mui/material';
+import {
+  UICardBox,
+  UIFlexWrapBox,
+  UIInfoTitle,
+  UIInfoValue,
+} from '@/components/UI';
+import { LocationsDetailProps } from '@/types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const accessToken =
@@ -49,7 +50,7 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
     };
   }, []);
   return (
-    <StyledLocationCardBox>
+    <UICardBox>
       <Typography
         sx={{
           fontWeight: '600',
@@ -63,14 +64,12 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
       <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox>
-            <StyledLocationInfoTitle>Name:</StyledLocationInfoTitle>
-            <StyledLocationInfoValue>
-              {locationItem.name}
-            </StyledLocationInfoValue>
+            <UIInfoTitle>Name:</UIInfoTitle>
+            <UIInfoValue>{locationItem.name}</UIInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
-            <StyledLocationInfoTitle>Location:</StyledLocationInfoTitle>
-            <StyledLocationInfoValue>
+            <UIInfoTitle>Location:</UIInfoTitle>
+            <UIInfoValue>
               {`${locationItem.address?.address1 ?? ''} ${
                 locationItem.address?.address2 ?? ''
               } ${locationItem.address?.city ?? ''} ${
@@ -78,27 +77,23 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
               } ${locationItem.address?.zipcode ?? ''} ${
                 locationItem.address?.country ?? ''
               }`}
-            </StyledLocationInfoValue>
+            </UIInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
-            <StyledLocationInfoTitle>Description:</StyledLocationInfoTitle>
-            <StyledLocationInfoValue sx={{ height: '100px' }}>
+            <UIInfoTitle>Description:</UIInfoTitle>
+            <UIInfoValue sx={{ height: '100px' }}>
               {locationItem.description ?? ''}
-            </StyledLocationInfoValue>
+            </UIInfoValue>
           </UIFlexWrapBox>
         </Stack>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox>
-            <StyledLocationInfoTitle>Status:</StyledLocationInfoTitle>
-            <StyledLocationInfoValue>
-              {locationItem.status}
-            </StyledLocationInfoValue>
+            <UIInfoTitle>Status:</UIInfoTitle>
+            <UIInfoValue>{locationItem.status}</UIInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
-            <StyledLocationInfoTitle>Type:</StyledLocationInfoTitle>
-            <StyledLocationInfoValue>
-              {locationItem.type}
-            </StyledLocationInfoValue>
+            <UIInfoTitle>Type:</UIInfoTitle>
+            <UIInfoValue>{locationItem.type}</UIInfoValue>
           </UIFlexWrapBox>
         </Stack>
       </UIFlexWrapBox>
@@ -109,7 +104,7 @@ const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
         borderRadius="8px"
         overflow="hiddend"
       />
-    </StyledLocationCardBox>
+    </UICardBox>
   );
 };
 

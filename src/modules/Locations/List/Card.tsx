@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import { UIFlexSpaceBox, UIItemCard } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
+import { UIFlexSpaceBox, UIItemCard } from '@/components/UI';
 import { LocationType } from '@/types';
 import {
   StyledLocationViewButton,

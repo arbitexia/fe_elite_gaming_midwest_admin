@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
-import { UIImage } from '@/components/UI';
-import { languageMenuItems } from '@/_mock/App';
 import { useSelectedLanguage, LanguageSwitcher } from 'next-export-i18n';
+import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
+import { languageMenuItems } from '@/_mock/App';
+import { UIImage } from '@/components/UI';
 
 export const LanguageSelector = () => {
   const [anchorElLanguage, setAnchorElLanguage] = useState<null | HTMLElement>(

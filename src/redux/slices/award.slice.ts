@@ -1,11 +1,11 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { awardApi } from '@/redux/apis';
 import { AxiosError } from 'axios';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ResponseStatus } from '@/constants';
+import { awardApi } from '@/redux/apis';
 import { RootState, AppDispatch } from '@/redux/store';
 import {
   ReduxJson,
   GetAwardsParam,
-  ResponseStatus,
   AwardType,
   CreateAwardParam,
   CommonType,

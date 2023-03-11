@@ -7,7 +7,7 @@ export const languageMenuItems = [
 
 export const superSidebarItems: MenuItemObj[] = [
   {
-    id: 5,
+    id: 1,
     text: 'Users',
     isSelected: false,
 
@@ -43,19 +43,25 @@ export const superSidebarItems: MenuItemObj[] = [
   },
   {
     id: 3,
+    text: 'Products',
+    route: 'products',
+    isSelected: false,
+  },
+  {
+    id: 4,
     text: 'Rewards',
     route: 'rewards',
     isSelected: false,
   },
   {
-    id: 4,
+    id: 5,
     text: 'Request',
     route: 'requests',
     isSelected: false,
   },
 
   {
-    id: 7,
+    id: 6,
     text: 'Reports',
 
     isSelected: false,
@@ -73,21 +79,21 @@ export const superSidebarItems: MenuItemObj[] = [
     ],
   },
   {
-    id: 6,
+    id: 7,
     text: 'Comments',
     route: 'comments',
     isSelected: false,
     disabled: true,
   },
   {
-    id: 1,
+    id: 8,
     text: 'Analytics',
     isSelected: false,
     route: 'analytics',
     disabled: true,
   },
   {
-    id: 8,
+    id: 9,
     text: 'Site Settings',
     route: 'settings',
     disabled: true,

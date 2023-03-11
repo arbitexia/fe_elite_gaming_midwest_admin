@@ -1,6 +1,6 @@
-import { UserStatus } from '@/constants/Enum';
-import { CommonType } from './common.type';
+import { UserStatus } from '@/constants/enum';
 import { AssetType } from './asset.type';
+import { CommonType } from './common.type';
 import { RoleType } from './role.type';
 
 export declare namespace UserType {

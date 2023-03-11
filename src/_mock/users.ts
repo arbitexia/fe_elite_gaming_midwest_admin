@@ -1,5 +1,5 @@
+import { MenuAction } from '@/constants';
 import { UserType } from '@/types';
-import { MenuAction } from '@/constants/Enum';
 
 export const menuActions = [
   { label: 'View more', color: '#28B446', action: MenuAction.VIEW },

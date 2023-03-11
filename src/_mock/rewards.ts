@@ -1,4 +1,5 @@
-import { RewardItemType, ProductStatus } from '@/types';
+import { ProductStatus } from '@/constants';
+import { RewardItemType } from '@/types';
 
 export const rewardsData: RewardItemType[] = [
   {

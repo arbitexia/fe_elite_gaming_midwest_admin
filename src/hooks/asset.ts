@@ -1,12 +1,6 @@
 import { useEffect } from 'react';
-import { useAppToast } from '@/providers';
-import { useAppDispatch, useAppSelector } from './redux';
-import {
-  AssetItemType,
-  AssetType,
-  PresignedPostType,
-  ResponseStatus,
-} from '@/types';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { Assets, ResponseStatus } from '@/constants';
 import { assetApi } from '@/redux/apis';
 import {
   assetSelector,
@@ -19,7 +13,9 @@ import {
   updateGallery,
   addGalleryItem,
 } from '@/redux/slices';
-import { PayloadAction } from '@reduxjs/toolkit';
+import { useAppToast } from '@/providers';
+import { AssetType, PresignedPostType } from '@/types';
+import { useAppDispatch, useAppSelector } from './redux';
 
 export const useAsset = () => {
   const appToast = useAppToast();
@@ -74,7 +70,7 @@ export const useAsset = () => {
         input: {
           desc: '',
           name: file.name,
-          type: AssetItemType.IMAGE,
+          type: Assets.IMAGE,
           url,
         },
       })

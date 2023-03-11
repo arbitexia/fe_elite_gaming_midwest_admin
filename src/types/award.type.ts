@@ -1,4 +1,5 @@
-import { ProductType } from './product.type';
+import { AwardStatus } from '../constants';
+import { Product } from './product.type';
 import { UserType } from './users.type';
 
 export type CreateAwardParam = {
@@ -16,18 +17,12 @@ export type GetAwardsParam = {
   };
 };
 
-export enum AwardStatus {
-  ACCEPTED = 'ACCEPTED',
-  DECLINED = 'DECLINED',
-  WAITING = 'WAITING',
-}
-
 export type AwardType = {
   id: number;
   userLocationId: number;
   userLocation?: Location;
   productId: number;
-  product?: ProductType;
+  product?: Product;
   assigneeId: number;
   assignee?: UserType.User;
   status: AwardStatus;

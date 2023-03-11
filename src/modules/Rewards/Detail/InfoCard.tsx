@@ -1,15 +1,13 @@
 import { Typography, Stack } from '@mui/material';
 import { UIFlexWrapBox } from '@/components/UI';
+import { Product } from '@/types';
 import {
   StyledLocationCardBox,
   StyledLocationInfoTitle,
   StyledLocationInfoValue,
 } from './ui';
-import { RewardsDetailProps } from '@/types';
 
-const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
+const RewardsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
   return (
     <StyledLocationCardBox>
       <Typography
@@ -27,19 +25,19 @@ const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
           <UIFlexWrapBox>
             <StyledLocationInfoTitle>Points:</StyledLocationInfoTitle>
             <StyledLocationInfoValue>
-              {rewardsItem.name}
+              {productItem.name}
             </StyledLocationInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
             <StyledLocationInfoTitle>Location:</StyledLocationInfoTitle>
             <StyledLocationInfoValue>
-              {rewardsItem.location?.name}
+              {productItem.location?.name}
             </StyledLocationInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
             <StyledLocationInfoTitle>Description:</StyledLocationInfoTitle>
             <StyledLocationInfoValue>
-              {rewardsItem.description}
+              {productItem.description}
             </StyledLocationInfoValue>
           </UIFlexWrapBox>
         </Stack>
@@ -47,7 +45,7 @@ const RewardsDetailInfoCard = ({ rewardsItem }: RewardsDetailProps) => {
           <UIFlexWrapBox>
             <StyledLocationInfoTitle>Amount:</StyledLocationInfoTitle>
             <StyledLocationInfoValue>
-              {rewardsItem.amount}
+              {productItem.amount}
             </StyledLocationInfoValue>
           </UIFlexWrapBox>
         </Stack>

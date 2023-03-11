@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { ResponseStatus } from '@/constants';
 import { useAppToast } from '@/providers';
 import {
   createNewUser,
@@ -9,9 +11,8 @@ import {
   clearAuthMessage,
   logout,
 } from '@/redux/slices';
-import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from './redux';
-import { RegisterType, ResponseStatus } from '@/types';
+import { RegisterType } from '@/types';
 
 export interface useAuthProps {
   handleAuthResetSuccess?: () => void;

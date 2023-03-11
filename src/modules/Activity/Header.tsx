@@ -6,8 +6,8 @@ import {
   UIDefaultTextField,
   UIFlexCenterBox,
 } from '@/components/UI';
+import { ActivityModel } from '@/constants';
 import { StyledSelectMenuItem } from './ui';
-import { ActivityModel } from '@/constants/Enum';
 
 interface ActivityListHeaderProps {
   searchValue: string;
