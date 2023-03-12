@@ -30,7 +30,7 @@ const ProductsById = () => {
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
             <ProductsDetailCarouselCard />
             <ProductsDetailInfoCard productItem={productItem} />
-          </UIFlexSpaceBox>{' '}
+          </UIFlexSpaceBox>
         </>
       )}
     </DashboardLayout>

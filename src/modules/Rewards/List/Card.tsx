@@ -1,28 +1,29 @@
 import { useRouter } from 'next/router';
 import { Box, Typography } from '@mui/material';
 import { UIFlexSpaceBox, UIItemCard } from '@/components/UI';
-import { LocationType } from '@/types';
+import { Product } from '@/types';
 import {
   StyledLocationViewButton,
   StyledLocationEditButton,
   StyledImageBox,
 } from './ui';
 
-export type LocationsCardProps = {
-  item: LocationType;
+export type ProductCardProp = {
+  locationId: number;
+  product: Product;
 };
 
-export const LocationsCard = ({ item }: LocationsCardProps) => {
+const ProductCard = ({ locationId, product }: ProductCardProp) => {
   const router = useRouter();
 
   return (
-    <UIItemCard sx={{ width: 254, height: 360 }}>
+    <UIItemCard sx={{ width: 300, height: 360 }}>
       <StyledImageBox>
         <Box
           component="img"
           src={
-            item.gallery && item.gallery.length > 0
-              ? item.gallery[0].asset?.url ?? '/images/noImage.jpg'
+            product.gallery && product.gallery.length > 0
+              ? product.gallery[0].asset?.url ?? '/images/noImage.jpg'
               : '/images/noImage.jpg'
           }
           width={220}
@@ -39,43 +40,28 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
           color: 'gba(5, 34, 33, 0.8)',
         }}
       >
-        {item.name}
+        {product.name}
       </Typography>
       <Typography
         sx={{
-          mt: '15px',
+          mt: '10px',
           fontWeight: '600',
           fontSize: '12px',
-          lineHeight: '16px',
-          color: '#83A9A8',
+          lineHeight: '22px',
+          minHeight: '22px',
+          color: 'gba(5, 34, 33, 0.8)',
         }}
       >
-        Location:
-      </Typography>
-      <Typography
-        sx={{
-          fontWeight: '600',
-          fontSize: '12px',
-          lineHeight: '16px',
-          height: '16px',
-          overflow: 'hidden',
-          color: 'rgba(0, 0, 0, 0.3)',
-        }}
-      >
-        {`${item.address?.address1 ?? ''} ${item.address?.address2 ?? ''} ${
-          item.address?.city ?? ''
-        } ${item.address?.state ?? ''} ${item.address?.zipcode ?? ''} ${
-          item.address?.country ?? ''
-        }`}
+        {`${product.amount} / ${product.point}`}
       </Typography>
       <UIFlexSpaceBox sx={{ marginTop: '30px' }}>
         <StyledLocationViewButton
-          onClick={() => router.push(`/locations/${item.id}`)}
+          onClick={() => router.push(`/rewards/${locationId}/${product.id}`)}
         >
-          View
+          View More
         </StyledLocationViewButton>
         <StyledLocationEditButton
-          onClick={() => router.push(`/locations/edit/${item.id}`)}
+          onClick={() => router.push(`/products/edit/${product.id}`)}
         >
           Edit
         </StyledLocationEditButton>
@@ -83,3 +69,5 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
     </UIItemCard>
   );
 };
+
+export default ProductCard;

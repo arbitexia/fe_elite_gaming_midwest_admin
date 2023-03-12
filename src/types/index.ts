@@ -46,7 +46,7 @@ export type {
 } from './product.type';
 export type { ReduxJson } from './redux.type';
 export type { RequestItemType } from './requests.type';
-export type { RewardItemType, RewardsDetailProps } from './rewards.type';
+export type { CreateRewardParam } from './reward.type';
 export type { RoleType } from './role.type';
 export type { TransactionType, TransactionsProps } from './transactions.type';
 export type {

@@ -6,20 +6,14 @@ import {
   ProductsPagination,
 } from '@/modules/Products';
 import { DashboardLayout } from '@/layouts';
-import { Product } from '@/types';
 import { useProduct } from '@/hooks';
 
 const ProductsPage = () => {
   const { products, pageInfo, onGetProducts } = useProduct();
-  const [productList, setProductList] = useState<Product[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [searchProduct, setSearchProduct] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  useEffect(() => {
-    setProductList(products);
-  }, [products]);
 
   useEffect(() => {
     handleSearch();
@@ -46,7 +40,7 @@ const ProductsPage = () => {
         onProductChange={(value: number) => setSearchProduct(value)}
       />
       <Divider sx={{ mt: '30px' }} />
-      <ProductsTable productsTableData={productList} />
+      <ProductsTable productsTableData={products} />
       <ProductsPagination
         page={page}
         rowsPerPage={rowsPerPage}
