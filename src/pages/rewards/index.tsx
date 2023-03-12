@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Divider } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import {
   UIFlexSpaceBox,
   UIFlexWrapBox,
@@ -13,18 +13,28 @@ import {
   RewardsListHeader,
   RewardCreatDialog,
 } from '@/modules/Rewards';
+import { useRouter } from 'next/router';
 
 const Rewards = () => {
-  const { locations } = useLocation();
+  const router = useRouter();
+  const { locations, onGetLocations } = useLocation();
   const { products, onGetProductsByLocationId } = useReward();
   const [searchValue, setSearchValue] = useState('');
   const [isOpenCreateDlg, setIsOpenCreatDlg] = useState<boolean>(false);
-  const [selectedLocationId, setSelectedLocationId] = useState<number>(
-    locations[0].id
-  );
+  const [selectedLocationId, setSelectedLocationId] = useState<number>(0);
 
   useEffect(() => {
-    onGetProductsByLocationId(selectedLocationId);
+    onGetLocations({ filterBy: { search: '' } });
+  }, [router]);
+
+  useEffect(() => {
+    setSelectedLocationId(locations[0].id);
+  }, [locations]);
+
+  useEffect(() => {
+    if (selectedLocationId > 0) {
+      onGetProductsByLocationId(selectedLocationId);
+    }
   }, [selectedLocationId]);
 
   const handleClick = (id: number) => {
@@ -39,7 +49,7 @@ const Rewards = () => {
         onOpenDlg={() => setIsOpenCreatDlg(true)}
       />
       <Divider sx={{ mt: '30px' }} />
-      <UIFlexSpaceBox sx={{ gap: '26px', py: '40px' }}>
+      <Box display="flex" sx={{ mt: 4 }}>
         <UIFlexWrapBox
           sx={{
             gap: '20px',
@@ -78,7 +88,7 @@ const Rewards = () => {
             />
           ))}
         </UIFlexWrapBox>
-      </UIFlexSpaceBox>
+      </Box>
       <RewardCreatDialog
         isOpenCreateDlg={isOpenCreateDlg}
         closeDlg={() => {
