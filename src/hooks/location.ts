@@ -43,11 +43,13 @@ export const useLocation = () => {
     await dispatch(getLocations(param));
   };
 
-  const onCreateLocation = async (param: Location.Body): Promise<Location> => {
+  const onCreateLocation = async (
+    param: Location.Body
+  ): Promise<Location.Data> => {
     const { payload }: PayloadAction<unknown> = await dispatch(
       createLocation(param)
     );
-    return payload as Location;
+    return payload as Location.Data;
   };
 
   const onUpdateLocation = async (param: Location.Param & Location.Body) => {

@@ -3,8 +3,8 @@ import { Location, Product } from '@/types';
 export declare namespace Reward {
   type Data = {
     id: number;
-    location: Location;
-    product: Product;
+    location: Location.Data;
+    product: Product.Data;
     createdAt?: string;
     updatedAt?: string;
   };

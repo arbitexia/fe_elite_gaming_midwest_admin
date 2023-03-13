@@ -12,7 +12,7 @@ import {
   ProductsDetailInfoEditCard,
 } from '@/modules/Products';
 import { useAppToast } from '@/providers';
-import { CreateProductParam, Product } from '@/types';
+import { Product } from '@/types';
 
 const ProductsCreate = () => {
   const router = useRouter();
@@ -27,10 +27,10 @@ const ProductsCreate = () => {
     setIsReady(false);
   }, [isReady]);
 
-  const productFormik = useFormik<Product>({
+  const productFormik = useFormik<Product.Data>({
     initialValues: productMockData,
-    onSubmit: async (values: Product) => {
-      const params: CreateProductParam = {
+    onSubmit: async (values) => {
+      const params: Product.Body = {
         input: {
           name: values.name,
           amount: values.amount,

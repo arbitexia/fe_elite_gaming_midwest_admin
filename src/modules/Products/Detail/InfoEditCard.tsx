@@ -19,11 +19,13 @@ const ReactQuill = dynamic(
   { loading: () => null, ssr: false }
 );
 
+interface IProductsDetailInfoEditCard {
+  productFormik: FormikProps<Product.Data>;
+}
+
 const ProductsDetailInfoEditCard = ({
   productFormik,
-}: {
-  productFormik: FormikProps<Product>;
-}) => {
+}: IProductsDetailInfoEditCard) => {
   const [isReady, setIsReady] = useState<boolean>(false);
 
   useEffect(() => {

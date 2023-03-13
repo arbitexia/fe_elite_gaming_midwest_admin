@@ -15,12 +15,12 @@ const LocationsById = () => {
   const router = useRouter();
   const { id } = router.query;
   const { onGetLocationById } = useLocation();
-  const [locationItem, setLocationItem] = useState<Location | undefined>(
-    undefined
-  );
+  const [locationItem, setLocationItem] = useState<Location.Data | undefined>();
+
   useEffect(() => {
     setLocationItem(onGetLocationById(parseInt(id as string)));
   }, [id]);
+
   return (
     <DashboardLayout title={locationItem ? locationItem.name : 'Locations'}>
       {locationItem && (

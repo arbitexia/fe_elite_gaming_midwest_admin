@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { Close } from '@mui/icons-material';
-interface LocationsDetailThumbnailProps {
+
+interface ILocationsDetailThumbnail {
   index: number;
   activeStep: number;
   url: string;
@@ -13,7 +14,7 @@ const LocationsDetailThumbnail = ({
   activeStep,
   url,
   handleRemove,
-}: LocationsDetailThumbnailProps) => {
+}: ILocationsDetailThumbnail) => {
   const [isHover, setIsHover] = useState(false);
   return (
     <Box

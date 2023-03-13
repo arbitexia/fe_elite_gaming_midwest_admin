@@ -1,6 +1,6 @@
 import { Product } from '@/types';
 
-export const productMockData: Product = {
+export const productMockData: Product.Data = {
   id: 0,
   name: 'AirPods 2',
   amount: 3,

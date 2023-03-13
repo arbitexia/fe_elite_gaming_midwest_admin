@@ -28,14 +28,7 @@ export type {
   NotificationType,
 } from './notification.type';
 export type { UserLocation, PointType, GetPointParam } from './point.type';
-export type {
-  Product,
-  CreateProductParam,
-  FilterProductsParam,
-  GetProductParam,
-  UpdateProductParam,
-  DeleteProductParam,
-} from './product.type';
+export type { Product } from './product.type';
 export type { ReduxJson } from './redux.type';
 export type { RequestItemType } from './requests.type';
 export type { Reward } from './reward.type';

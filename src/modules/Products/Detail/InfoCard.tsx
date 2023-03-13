@@ -7,7 +7,11 @@ import {
 } from '@/components/UI';
 import { Product } from '@/types';
 
-const ProductsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
+interface IProductsDetailInfoCard {
+  productItem: Product.Data;
+}
+
+const ProductsDetailInfoCard = ({ productItem }: IProductsDetailInfoCard) => {
   return (
     <UICardBox>
       <Typography

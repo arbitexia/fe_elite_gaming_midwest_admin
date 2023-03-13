@@ -11,7 +11,7 @@ import {
 } from '@/components/UI';
 import { locationsData } from '@/_mock/locations';
 
-interface ProductsListHeaderProps {
+interface IProductsListHeader {
   searchValue: string;
   searchProduct: number;
   onValueChange: (value: string) => void;
@@ -23,7 +23,7 @@ const ProductsListHeader = ({
   searchProduct,
   onValueChange,
   onProductChange,
-}: ProductsListHeaderProps) => {
+}: IProductsListHeader) => {
   const router = useRouter();
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);
