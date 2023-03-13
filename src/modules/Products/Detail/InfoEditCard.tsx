@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import { FormikProps } from 'formik';
 import { Box, Typography, Stack } from '@mui/material';
@@ -11,6 +10,7 @@ import {
 } from '@/components/UI';
 import { formats, modules } from '@/constants';
 import { Product } from '@/types';
+import 'react-quill/dist/quill.snow.css';
 
 const ReactQuill = dynamic(
   () => {
@@ -24,7 +24,6 @@ const ProductsDetailInfoEditCard = ({
 }: {
   productFormik: FormikProps<Product>;
 }) => {
-  const [value, setValue] = useState('');
   const [isReady, setIsReady] = useState<boolean>(false);
 
   useEffect(() => {
@@ -47,14 +46,13 @@ const ProductsDetailInfoEditCard = ({
       <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>Points:</UIInfoTitle>
+            <UIInfoTitle>Name:</UIInfoTitle>
             <Box>
               <UIEditTextField
-                name="point"
-                value={productFormik.values.point}
+                name="name"
+                value={productFormik.values.name}
                 onChange={productFormik.handleChange}
                 fullWidth
-                type="number"
               />
             </Box>
           </UIFlexWrapBox>
@@ -74,6 +72,35 @@ const ProductsDetailInfoEditCard = ({
           </UIFlexWrapBox>
         </Stack>
       </UIFlexWrapBox>
+      <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
+        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
+          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+            <UIInfoTitle>Points:</UIInfoTitle>
+            <Box>
+              <UIEditTextField
+                name="point"
+                value={productFormik.values.point}
+                onChange={productFormik.handleChange}
+                fullWidth
+                type="number"
+              />
+            </Box>
+          </UIFlexWrapBox>
+        </Stack>
+        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
+          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+            <UIInfoTitle>Short:</UIInfoTitle>
+            <Box>
+              <UIEditTextField
+                name="short"
+                value={productFormik.values.short}
+                onChange={productFormik.handleChange}
+                fullWidth
+              />
+            </Box>
+          </UIFlexWrapBox>
+        </Stack>
+      </UIFlexWrapBox>
       <Box
         sx={{
           width: '100%',
@@ -85,8 +112,9 @@ const ProductsDetailInfoEditCard = ({
         <UIInfoTitle>Description:</UIInfoTitle>
         <ReactQuill
           theme="snow"
-          value={value}
-          onChange={setValue}
+          value={productFormik.values.description}
+          placeholder={productFormik.values.description}
+          onChange={productFormik.handleChange}
           modules={modules}
           formats={formats}
         />

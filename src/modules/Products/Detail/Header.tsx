@@ -59,7 +59,7 @@ const ProductDetailHeader = ({
           color: '#06251F',
         }}
       >
-        {name}
+        {/* {name} */}
       </Typography>
       <UIFlexWrapBox>
         {isEditable ? (

@@ -229,12 +229,23 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
         </UIListTableRow>
       </TableHead>
       <TableBody>
+        {productsTableData.length === 0 && (
+          <UIListTableRow
+            sx={{
+              position: 'relative',
+              backgroundColor: 'transparent !important',
+            }}
+          >
+            <UIListTableCell colSpan={7} sx={{ textAlign: 'center' }}>
+              No Data
+            </UIListTableCell>
+          </UIListTableRow>
+        )}
         {stableSort<Product>(
           productsTableData,
           getComparator(order, orderBy)
-        ).map((productItem) => {
+        ).map((productItem, index) => {
           const isItemSelected = isSelected(productItem.id.toString());
-          // const labelId = `enhanced-table-checkbox-${index}`;
           return (
             <UIListTableRow
               key={productItem.id}
@@ -256,7 +267,7 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
                 }
                 sx={{ cursor: 'pointer' }}
               >
-                #{productItem.id}
+                #{index + 1}
               </UIListTableCell>
               <UIListTableCell>
                 <Box
