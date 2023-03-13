@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Dialog,
@@ -20,10 +20,14 @@ const RewardCreatDialog = ({
   closeDlg: () => void;
 }) => {
   const { locations } = useLocation();
-  const { products } = useProduct();
+  const { products, onGetProducts } = useProduct();
   const { onCreateReward } = useReward();
   const [locationId, setLocationId] = useState<string>('');
   const [productId, setProductId] = React.useState<string[]>([]);
+
+  useEffect(() => {
+    onGetProducts({ filterBy: { search: '' } });
+  }, [locationId]);
 
   const handleLocationChange = (
     event: SelectChangeEvent<typeof locationId>

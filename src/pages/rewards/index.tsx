@@ -27,7 +27,9 @@ const Rewards = () => {
   }, [router]);
 
   useEffect(() => {
-    setSelectedLocationId(locations[0].id);
+    if (locations.length > 0) {
+      setSelectedLocationId(locations[0].id);
+    }
   }, [locations]);
 
   useEffect(() => {
@@ -79,13 +81,14 @@ const Rewards = () => {
           )}
         </UIFlexWrapBox>
         <UIFlexWrapBox sx={{ gap: '20px', width: '80%' }}>
-          {products.map((product) => (
-            <ProductCard
-              key={`product-item-${product.id}`}
-              locationId={selectedLocationId}
-              product={product}
-            />
-          ))}
+          {products &&
+            products.map((product) => (
+              <ProductCard
+                key={`product-item-${product.id}`}
+                locationId={selectedLocationId}
+                product={product}
+              />
+            ))}
         </UIFlexWrapBox>
       </Box>
       <RewardCreatDialog
