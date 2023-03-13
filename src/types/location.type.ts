@@ -1,53 +1,38 @@
 import { AssetType } from './asset.type';
 import { CommonType } from './common.type';
 
-export type LocationType = {
-  id: number;
-  name: string;
-  coords: { lat: number; lng: number };
-  address: CommonType.Address;
-  status: string;
-  type: string;
-  description?: string;
-  gallery?: AssetType.Gallery[];
-};
-
-export interface LocationsDetailProps {
-  locationItem: LocationType;
-}
-
-export type GetLocationsParam = {
-  filterBy: {
-    search: string;
+export declare namespace Location {
+  type Data = {
+    id: number;
+    name: string;
+    coords: { lat: number; lng: number };
+    address: CommonType.Address;
+    status: string;
+    type: string;
+    description?: string;
+    gallery?: AssetType.Gallery[];
   };
-  // cursor: {
-  //   page: number;
-  //   size: number;
-  // };
-};
 
-export type GetLocationParam = {
-  locationId: number;
-};
+  type Param = { id: number };
 
-export type LocationInputParam = {
-  name: string;
-  coords: { lat: number; lng: number };
-  address: CommonType.Address;
-  description: string;
-  status: string;
-  type: string;
-};
+  type Body = {
+    input: {
+      name: string;
+      coords: { lat: number; lng: number };
+      address: CommonType.Address;
+      description: string;
+      status: string;
+      type: string;
+    };
+  };
 
-export type CreateLocationParam = {
-  input: LocationInputParam;
-};
-
-export type UpdateLocationParam = {
-  id: number;
-  input: LocationInputParam;
-};
-
-export type DeleteLocationParam = {
-  locationId: number;
-};
+  type Filter = {
+    filterBy: {
+      search: string;
+    };
+    // cursor: {
+    //   page: number;
+    //   size: number;
+    // };
+  };
+}

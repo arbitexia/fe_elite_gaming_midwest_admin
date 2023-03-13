@@ -3,10 +3,11 @@ import { ResponseStatus } from '@/constants';
 import { AssetType } from './asset.type';
 import { CommonType } from './common.type';
 import { UserType } from './users.type';
-import { LocationType } from './location.type';
+import { Location } from './location.type';
 import { PointType } from './point.type';
 import { AwardType } from './award.type';
 import { Product } from './product.type';
+import { Reward } from './reward.type';
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
     loading: boolean;
@@ -63,7 +64,7 @@ export declare namespace ReduxJson {
   export type LocationState = {
     loading: boolean;
     status: ResponseStatus | null;
-    locations: LocationType[];
+    locations: Location.Data[];
     pageInfo: CommonType.PageInfo | null;
     message: string | null;
     error: string | null;
@@ -93,7 +94,6 @@ export declare namespace ReduxJson {
     status: ResponseStatus | null;
     message: string | null;
     error: string | null;
-    locationId: number;
-    products: Product[];
+    rewards: Reward.Data[];
   };
 }

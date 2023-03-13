@@ -5,14 +5,14 @@ import {
   UIInfoTitle,
   UIInfoValue,
 } from '@/components/UI';
-import { LocationType, Product } from '@/types';
+import { Location, Product } from '@/types';
 
 const ProductsDetailInfoCard = ({
   productItem,
   location,
 }: {
   productItem: Product;
-  location?: LocationType | null;
+  location?: Location | null;
 }) => {
   return (
     <UICardBox>

@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { FormikProps } from 'formik';
 import mapboxgl from 'mapbox-gl';
 import { Typography, Stack, Box, MenuItem } from '@mui/material';
 import { locationStatus, locationType } from '@/_mock/locations';
+import { formats, modules } from '@/constants';
 import {
   UICardBox,
   UIFlexWrapBox,
@@ -10,8 +12,16 @@ import {
   UIEditTextField,
   UIInfoTitle,
 } from '@/components/UI';
-import { LocationType } from '@/types';
+import { Location } from '@/types';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import 'react-quill/dist/quill.snow.css';
+
+const ReactQuill = dynamic(
+  () => {
+    return import('react-quill');
+  },
+  { loading: () => null, ssr: false }
+);
 
 const accessToken =
   'pk.eyJ1Ijoic2FoaWx0aGFrYXJlNTIxIiwiYSI6ImNrbjVvMTkzNDA2MXQydnM2OHJ6aHJvbXEifQ.z5aEqRBTtDMWoxVzf3aGsg';
@@ -19,7 +29,7 @@ const accessToken =
 const LocationsDetailInfoEditCard = ({
   locationFormik,
 }: {
-  locationFormik: FormikProps<LocationType>;
+  locationFormik: FormikProps<Location.Data>;
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState<mapboxgl.Map>();
@@ -57,8 +67,9 @@ const LocationsDetailInfoEditCard = ({
       mapboxMap.remove();
     };
   }, []);
+
   return (
-    <UICardBox sx={{ height: '580px' }}>
+    <UICardBox>
       <UIFlexSpaceBox>
         <Typography
           sx={{
@@ -111,7 +122,6 @@ const LocationsDetailInfoEditCard = ({
             <Box flexGrow={1}>
               <UIEditTextField
                 name="type"
-                defaultValue={'Open'}
                 value={locationFormik.values.type ?? locationType[0].id}
                 onChange={locationFormik.handleChange}
                 fullWidth
@@ -201,26 +211,31 @@ const LocationsDetailInfoEditCard = ({
           </UIFlexWrapBox>
         </Stack>
       </UIFlexWrapBox>
-      <UIFlexWrapBox sx={{ alignItems: 'center', my: '18px' }}>
-        <UIInfoTitle sx={{ width: '90px' }}>Description:</UIInfoTitle>
-        <Box flexGrow={1}>
-          <UIEditTextField
-            multiline
-            maxRows={2}
-            sx={{ '.MuiInputBase-root': { height: '62px' } }}
-            fullWidth
-            name="description"
-            value={locationFormik.values.description ?? ''}
-            onChange={locationFormik.handleChange}
-          />
-        </Box>
-      </UIFlexWrapBox>
+      <Box
+        sx={{
+          width: '100%',
+          height: '350px',
+          paddingTop: '20px',
+          '.quill': { height: '250px', marginTop: '20px' },
+        }}
+      >
+        <UIInfoTitle>Description:</UIInfoTitle>
+        <ReactQuill
+          theme="snow"
+          value={locationFormik.values.description}
+          placeholder={locationFormik.values.description}
+          onChange={locationFormik.handleChange}
+          modules={modules}
+          formats={formats}
+        />
+      </Box>
       <Box
         ref={mapNode}
         sx={{
           flexGrow: 1,
           width: '100%',
           height: '250px',
+          marginTop: '50px',
           borderRadius: '8px',
           overflow: 'hidden',
         }}

@@ -22,15 +22,7 @@ export type {
 } from './auth.type';
 export type { AwardType, CreateAwardParam, GetAwardsParam } from './award.type';
 export type { CommonType } from './common.type';
-export type {
-  LocationType,
-  LocationsDetailProps,
-  GetLocationsParam,
-  GetLocationParam,
-  CreateLocationParam,
-  UpdateLocationParam,
-  DeleteLocationParam,
-} from './location.type';
+export type { Location } from './location.type';
 export type {
   NotificationMenuItemProps,
   NotificationType,
@@ -46,7 +38,7 @@ export type {
 } from './product.type';
 export type { ReduxJson } from './redux.type';
 export type { RequestItemType } from './requests.type';
-export type { CreateRewardParam } from './reward.type';
+export type { Reward } from './reward.type';
 export type { RoleType } from './role.type';
 export type { TransactionType, TransactionsProps } from './transactions.type';
 export type {

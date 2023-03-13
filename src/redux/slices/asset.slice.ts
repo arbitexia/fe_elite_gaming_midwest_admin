@@ -11,7 +11,7 @@ import {
   DeleteGalleryParams,
   UpdateGalleryParams,
   ReduxJson,
-  LocationType,
+  Location,
 } from '@/types';
 import { getLocation } from './location.slice';
 
@@ -117,7 +117,7 @@ export const assetSlice = createSlice({
       })
       .addCase(
         getLocation.fulfilled,
-        (state, { payload }: PayloadAction<LocationType>) => {
+        (state, { payload }: PayloadAction<Location>) => {
           state.loading = false;
           state.galleries = payload.gallery ?? [];
           state.status = ResponseStatus.SUCCESS;

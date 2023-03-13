@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { Box, Typography } from '@mui/material';
 import { UIFlexSpaceBox, UIItemCard } from '@/components/UI';
-import { LocationType } from '@/types';
+import { Location } from '@/types';
 import {
   StyledLocationViewButton,
   StyledLocationEditButton,
@@ -9,7 +9,7 @@ import {
 } from './ui';
 
 export type LocationsCardProps = {
-  item: LocationType;
+  item: Location.Data;
 };
 
 export const LocationsCard = ({ item }: LocationsCardProps) => {

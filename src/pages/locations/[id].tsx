@@ -8,14 +8,14 @@ import {
   LocationsDetailInfoCard,
   LocationDetailRewardTable,
 } from '@/modules/Locations';
-import { LocationType } from '@/types';
+import { Location } from '@/types';
 import { useLocation } from '@/hooks';
 
 const LocationsById = () => {
   const router = useRouter();
   const { id } = router.query;
   const { onGetLocationById } = useLocation();
-  const [locationItem, setLocationItem] = useState<LocationType | undefined>(
+  const [locationItem, setLocationItem] = useState<Location | undefined>(
     undefined
   );
   useEffect(() => {

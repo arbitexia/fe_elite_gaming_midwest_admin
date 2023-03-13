@@ -1,4 +1,4 @@
-import { LocationType, UserType, RewardItemType } from '@/types';
+import { Location, UserType, RewardItemType } from '@/types';
 
 export interface TransactionsProps {
   transactionItem: TransactionType;
@@ -7,7 +7,7 @@ export interface TransactionsProps {
 export type TransactionType = {
   id: number;
   user: UserType.MockUser;
-  location: LocationType;
+  location: Location;
   reward: RewardItemType;
   assignee: UserType.MockUser;
   type: string;

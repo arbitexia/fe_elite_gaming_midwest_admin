@@ -76,8 +76,8 @@ export {
 export {
   default as rewardReducer,
   rewardSelector,
-  createReward,
-  getProductsByLocationId,
+  filterRewards,
+  createRewards,
   resetRewardMessage,
 } from './reward.slice';
 

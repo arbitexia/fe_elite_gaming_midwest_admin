@@ -1,6 +1,6 @@
-import { LocationType } from '@/types';
+import { Location } from '@/types';
 
-export const initLocationData: LocationType = {
+export const initLocationData: Location.Data = {
   name: '',
   coords: { lat: 0, lng: 0 },
   id: 0,
@@ -14,10 +14,11 @@ export const initLocationData: LocationType = {
   },
   status: '',
   type: '',
-  description: '',
+  description:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 };
 
-export const locationsData: LocationType[] = [
+export const locationsData: Location.Data[] = [
   {
     name: 'Palm Casino Resort',
     coords: { lat: 40.7127837, lng: -74.0059413 },

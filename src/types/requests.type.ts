@@ -1,4 +1,4 @@
-import { LocationType } from './location.type';
+import { Location } from './location.type';
 import { RewardItemType } from './rewards.type';
 import { UserType } from './users.type';
 
@@ -6,7 +6,7 @@ export type RequestItemType = {
   id: number;
   item: RewardItemType;
   user: UserType.MockUser;
-  location: LocationType;
+  location: Location;
   status: string;
   requestedAt: string;
 };

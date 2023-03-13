@@ -11,12 +11,7 @@ import {
   locationSelector,
   setGalleries,
 } from '@/redux/slices';
-import {
-  GetLocationsParam,
-  LocationType,
-  CreateLocationParam,
-  UpdateLocationParam,
-} from '@/types';
+import { Location } from '@/types';
 import { useAppSelector, useAppDispatch } from './redux';
 
 export const useLocation = () => {
@@ -34,35 +29,33 @@ export const useLocation = () => {
 
   const onGetLocationById = (id: number) => {
     const location = locations.find(
-      (location: LocationType) => location.id === id
+      (location: Location.Data) => location.id === id
     );
     dispatch(setGalleries(location?.gallery ?? []));
     return location;
   };
 
   const onLocationSelect = async (id: number) => {
-    await dispatch(getLocation({ locationId: id }));
+    await dispatch(getLocation({ id }));
   };
 
-  const onGetLocations = async (param: GetLocationsParam) => {
+  const onGetLocations = async (param: Location.Filter) => {
     await dispatch(getLocations(param));
   };
 
-  const onCreateLocation = async (
-    param: CreateLocationParam
-  ): Promise<LocationType> => {
+  const onCreateLocation = async (param: Location.Body): Promise<Location> => {
     const { payload }: PayloadAction<unknown> = await dispatch(
       createLocation(param)
     );
-    return payload as LocationType;
+    return payload as Location;
   };
 
-  const onUpdateLocation = async (param: UpdateLocationParam) => {
+  const onUpdateLocation = async (param: Location.Param & Location.Body) => {
     await dispatch(updateLocation(param));
   };
 
   const onDeleteLocation = async (id: number) => {
-    await dispatch(deleteLocation({ locationId: id }));
+    await dispatch(deleteLocation({ id }));
   };
 
   return {

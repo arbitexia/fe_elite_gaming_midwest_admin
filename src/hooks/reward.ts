@@ -2,18 +2,17 @@ import { useEffect } from 'react';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { useAppToast } from '@/providers';
 import {
-  createReward,
   rewardSelector,
+  filterRewards,
+  createRewards,
   resetRewardMessage,
-  getProductsByLocationId,
 } from '@/redux/slices';
-import { CreateRewardParam } from '@/types';
+import { Reward } from '@/types';
 import { useAppSelector, useAppDispatch } from './redux';
 
 export const useReward = () => {
   const appToast = useAppToast();
-  const { loading, message, error, locationId, products } =
-    useAppSelector(rewardSelector);
+  const { loading, message, error, rewards } = useAppSelector(rewardSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -23,19 +22,22 @@ export const useReward = () => {
     dispatch(resetRewardMessage(null));
   }, [loading]);
 
-  const onCreateReward = async (param: CreateRewardParam): Promise<unknown> => {
-    const { payload }: PayloadAction<unknown> = await dispatch(
-      createReward(param)
-    );
+  const onFilterRewards = async (
+    filter: Reward.Filter
+  ): Promise<Reward.Data[]> => {
+    const { payload } = (await dispatch(
+      filterRewards(filter)
+    )) as PayloadAction<Reward.Data[]>;
+
     return payload;
   };
 
-  const onGetProductsByLocationId = async (id: number): Promise<unknown> => {
-    const { payload }: PayloadAction<unknown> = await dispatch(
-      getProductsByLocationId(id)
-    );
+  const onCreateRewards = async (body: Reward.Body): Promise<Reward.Data[]> => {
+    const { payload } = (await dispatch(createRewards(body))) as PayloadAction<
+      Reward.Data[]
+    >;
     return payload;
   };
 
-  return { locationId, products, onCreateReward, onGetProductsByLocationId };
+  return { rewards, onFilterRewards, onCreateRewards };
 };

@@ -3,15 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ResponseStatus } from '@/constants';
 import { locationApi } from '@/redux/apis';
 import { RootState, AppDispatch } from '@/redux/store';
-import {
-  ReduxJson,
-  GetLocationsParam,
-  GetLocationParam,
-  LocationType,
-  CreateLocationParam,
-  UpdateLocationParam,
-  DeleteLocationParam,
-} from '@/types';
+import { ReduxJson, Location } from '@/types';
 
 // Initial state
 const initialState: ReduxJson.LocationState = {
@@ -19,17 +11,15 @@ const initialState: ReduxJson.LocationState = {
   status: null,
   locations: [],
   pageInfo: null,
-  // currentId: 0,
-  // currentLocation: null,
   message: null,
   error: null,
 };
 
 export const getLocations = createAsyncThunk<
-  LocationType[],
-  GetLocationsParam,
+  Location.Data[],
+  Location.Filter,
   { dispatch: AppDispatch; state: RootState }
->('location/getLocations', async (params: GetLocationsParam, thunkAPI) => {
+>('location/getLocations', async (params: Location.Filter, thunkAPI) => {
   try {
     return await locationApi.getLocations(params);
   } catch (error) {
@@ -39,10 +29,10 @@ export const getLocations = createAsyncThunk<
 });
 
 export const getLocation = createAsyncThunk<
-  LocationType,
-  GetLocationParam,
+  Location.Data,
+  Location.Param,
   { dispatch: AppDispatch; state: RootState }
->('location/getLocation', async (params: GetLocationParam, thunkAPI) => {
+>('location/getLocation', async (params: Location.Param, thunkAPI) => {
   try {
     return await locationApi.getLocation(params);
   } catch (error) {
@@ -52,12 +42,12 @@ export const getLocation = createAsyncThunk<
 });
 
 export const createLocation = createAsyncThunk<
-  LocationType,
-  CreateLocationParam,
+  Location.Data,
+  Location.Body,
   { dispatch: AppDispatch; state: RootState }
->('location/createLocation', async (params: CreateLocationParam, thunkAPI) => {
+>('location/createLocation', async (body: Location.Body, thunkAPI) => {
   try {
-    return await locationApi.createLocation(params);
+    return await locationApi.createLocation(body);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
@@ -65,23 +55,26 @@ export const createLocation = createAsyncThunk<
 });
 
 export const updateLocation = createAsyncThunk<
-  LocationType,
-  UpdateLocationParam,
+  Location.Data,
+  Location.Param & Location.Body,
   { dispatch: AppDispatch; state: RootState }
->('location/updateLocation', async (params: UpdateLocationParam, thunkAPI) => {
-  try {
-    return await locationApi.updateLocation(params);
-  } catch (error) {
-    const err = error as AxiosError;
-    return thunkAPI.rejectWithValue(err.response?.data);
+>(
+  'location/updateLocation',
+  async (params: Location.Param & Location.Body, thunkAPI) => {
+    try {
+      return await locationApi.updateLocation(params);
+    } catch (error) {
+      const err = error as AxiosError;
+      return thunkAPI.rejectWithValue(err.response?.data);
+    }
   }
-});
+);
 
 export const deleteLocation = createAsyncThunk<
-  LocationType,
-  DeleteLocationParam,
+  string,
+  Location.Param,
   { dispatch: AppDispatch; state: RootState }
->('location/deleteLocation', async (params: DeleteLocationParam, thunkAPI) => {
+>('location/deleteLocation', async (params: Location.Param, thunkAPI) => {
   try {
     return await locationApi.deleteLocation(params);
   } catch (error) {
@@ -110,7 +103,7 @@ export const locationSlice = createSlice({
       })
       .addCase(
         getLocations.fulfilled,
-        (state, { payload }: PayloadAction<LocationType[]>) => {
+        (state, { payload }: PayloadAction<Location.Data[]>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.locations = payload;

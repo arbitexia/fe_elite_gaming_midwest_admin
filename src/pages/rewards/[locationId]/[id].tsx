@@ -9,7 +9,7 @@ import {
   ProductsDetailInfoCard,
   ProductsTable,
 } from '@/modules/Rewards';
-import { LocationType, Product } from '@/types';
+import { Location, Product } from '@/types';
 
 const RewardById = () => {
   const router = useRouter();
@@ -20,9 +20,9 @@ const RewardById = () => {
   const [productItem, setProductItem] = useState<Product | undefined | null>(
     null
   );
-  const [locationItem, setLocationItem] = useState<
-    LocationType | undefined | null
-  >(null);
+  const [locationItem, setLocationItem] = useState<Location | undefined | null>(
+    null
+  );
 
   useEffect(() => {
     if (id) setProductItem(onGetProductById(parseInt(id as string)));

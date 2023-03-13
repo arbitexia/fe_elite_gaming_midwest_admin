@@ -1,22 +1,8 @@
-/**
- * Copyright (c) 2022, Red Vector, Inc.
- * All rights reserved
- */
-
-/**
- * Author: Daniel Pit
- */
 import { jwtAxios } from './axios.api';
 import { getAuthorizeHeader } from '@/libs/data-helper';
-import {
-  GetLocationsParam,
-  GetLocationParam,
-  CreateLocationParam,
-  UpdateLocationParam,
-  DeleteLocationParam,
-} from '@/types';
+import { Location } from '@/types';
 
-export const getLocations = async (params: GetLocationsParam) => {
+export const getLocations = async (params: Location.Filter) => {
   const response = await jwtAxios.get(`/locations`, {
     params,
     headers: getAuthorizeHeader(),
@@ -24,29 +10,29 @@ export const getLocations = async (params: GetLocationsParam) => {
   return response.data;
 };
 
-export const getLocation = async (params: GetLocationParam) => {
-  const response = await jwtAxios.get(`/locations/${params.locationId}`, {
+export const getLocation = async (params: Location.Param) => {
+  const response = await jwtAxios.get(`/locations/${params.id}`, {
     headers: getAuthorizeHeader(),
   });
   return response.data;
 };
 
-export const createLocation = async (params: CreateLocationParam) => {
+export const createLocation = async (params: Location.Body) => {
   const response = await jwtAxios.post(`/locations`, params, {
     headers: getAuthorizeHeader(),
   });
   return response.data;
 };
 
-export const updateLocation = async (params: UpdateLocationParam) => {
-  const response = await jwtAxios.put(`/locations/${params.id}`, params, {
+export const updateLocation = async (param: Location.Param & Location.Body) => {
+  const response = await jwtAxios.put(`/locations/${param.id}`, param, {
     headers: getAuthorizeHeader(),
   });
   return response.data;
 };
 
-export const deleteLocation = async (params: DeleteLocationParam) => {
-  const response = await jwtAxios.delete(`/locations/${params.locationId}`, {
+export const deleteLocation = async (param: Location.Param) => {
+  const response = await jwtAxios.delete(`/locations/${param.id}`, {
     headers: getAuthorizeHeader(),
   });
   return response.data;

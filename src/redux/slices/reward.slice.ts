@@ -3,37 +3,36 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ResponseStatus } from '@/constants';
 import { rewardApi } from '@/redux/apis';
 import { RootState, AppDispatch } from '@/redux/store';
-import { CommonType, CreateRewardParam, Product, ReduxJson } from '@/types';
+import { ReduxJson, Reward } from '@/types';
 
 const initialState: ReduxJson.RewardState = {
   loading: true,
   status: null,
   message: null,
   error: null,
-  locationId: 0,
-  products: [],
+  rewards: [],
 };
 
-export const createReward = createAsyncThunk<
-  CommonType.Message & { locationId: number; products: Product[] },
-  CreateRewardParam,
+export const filterRewards = createAsyncThunk<
+  Reward.Data[],
+  Reward.Filter,
   { dispatch: AppDispatch; state: RootState }
->('reward/createReward', async (params: CreateRewardParam, thunkAPI) => {
+>('rewards/filterRewards', async (filter: Reward.Filter, thunkAPI) => {
   try {
-    return await rewardApi.createReward(params);
+    return await rewardApi.filter(filter);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
   }
 });
 
-export const getProductsByLocationId = createAsyncThunk<
-  Product[],
-  number,
+export const createRewards = createAsyncThunk<
+  Reward.Data[],
+  Reward.Body,
   { dispatch: AppDispatch; state: RootState }
->('reward/getProductsByLocationId', async (id: number, thunkAPI) => {
+>('rewards/createRewards', async (body: Reward.Body, thunkAPI) => {
   try {
-    return await rewardApi.getProductsByLocationId(id);
+    return await rewardApi.create(body);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
@@ -51,53 +50,44 @@ export const rewardSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createReward.pending, (state) => {
+      .addCase(filterRewards.pending, (state) => {
         state.loading = true;
         state.status = ResponseStatus.PENDING;
         state.error = null;
         state.message = null;
       })
-      .addCase(createReward.rejected, (state, { payload }) => {
+      .addCase(filterRewards.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;
         state.message = null;
       })
       .addCase(
-        createReward.fulfilled,
-        (
-          state,
-          {
-            payload,
-          }: PayloadAction<
-            CommonType.Message & { locationId: number; products: Product[] }
-          >
-        ) => {
+        filterRewards.fulfilled,
+        (state, { payload }: PayloadAction<Reward.Data[]>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          state.message = payload.message;
-          state.locationId = payload.locationId;
-          state.products = payload.products;
+          state.rewards = payload;
         }
       )
-      .addCase(getProductsByLocationId.pending, (state) => {
+      .addCase(createRewards.pending, (state) => {
         state.loading = true;
         state.status = ResponseStatus.PENDING;
         state.error = null;
         state.message = null;
       })
-      .addCase(getProductsByLocationId.rejected, (state, { payload }) => {
+      .addCase(createRewards.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;
         state.message = null;
       })
       .addCase(
-        getProductsByLocationId.fulfilled,
-        (state, { payload }: PayloadAction<Product[]>) => {
+        createRewards.fulfilled,
+        (state, { payload }: PayloadAction<Reward.Data[]>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          state.products = payload;
+          state.rewards = payload;
         }
       );
   },
