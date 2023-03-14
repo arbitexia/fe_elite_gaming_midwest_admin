@@ -12,7 +12,7 @@ import { Reward } from '@/types';
 
 const Rewards = () => {
   const router = useRouter();
-  const { rewards, onFilterRewards } = useReward();
+  const { onFilterRewards } = useReward();
   const [searchValue, setSearchValue] = useState('');
   const [isOpenCreateDlg, setIsOpenCreatDlg] = useState<boolean>(false);
 
