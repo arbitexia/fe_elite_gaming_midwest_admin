@@ -7,59 +7,25 @@ import {
   UIDefaultButton,
   UIListHeader,
 } from '@/components/UI';
-import { StyledSelectMenuItem } from './ui';
-import { useRouter } from 'next/router';
-import { locationsData } from '@/_mock/locations';
 
 interface RewardsListHeaderProps {
   searchValue: string;
-  searchLocation: number;
   onValueChange: (value: string) => void;
-  onLocationChange: (value: number) => void;
+  onOpenDlg: () => void;
 }
 
 const RewardsListHeader = ({
   searchValue,
-  searchLocation,
   onValueChange,
-  onLocationChange,
+  onOpenDlg,
 }: RewardsListHeaderProps) => {
-  const router = useRouter();
-  const handleCreate = () => {
-    router.push(`${router.asPath}/create`);
-  };
-
   return (
     <UIListHeader title="Rewards">
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
         <UIFlexCenterBox>
           <Typography sx={{ fontWeight: 500, fontSize: 14, color: '#374E4E' }}>
-            Location
+            Reward
           </Typography>
-          <UIDefaultTextField
-            size="small"
-            select
-            value={searchLocation}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              onLocationChange(parseInt(e.target.value))
-            }
-            sx={{
-              width: '160px',
-              '.MuiInputBase-input': {
-                fontWeight: 600,
-                fontSize: 14,
-                lineHeight: '21px',
-                color: 'rgba(137, 200, 198, 0.8)',
-              },
-            }}
-          >
-            <StyledSelectMenuItem value={0}>All</StyledSelectMenuItem>
-            {locationsData.map((option) => (
-              <StyledSelectMenuItem key={option.id} value={option.id}>
-                {option.name}
-              </StyledSelectMenuItem>
-            ))}
-          </UIDefaultTextField>
         </UIFlexCenterBox>
         <UIDefaultTextField
           placeholder="Search"
@@ -82,7 +48,7 @@ const RewardsListHeader = ({
         <Divider orientation="vertical" sx={{ height: '40px' }} />
         <UIDefaultButton
           sx={{ minWidth: '110px', borderRadius: '8px' }}
-          onClick={handleCreate}
+          onClick={onOpenDlg}
         >
           + Create
         </UIDefaultButton>

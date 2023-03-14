@@ -1,11 +1,13 @@
 import { PaletteMode } from '@mui/material';
+import { ResponseStatus } from '@/constants';
 import { AssetType } from './asset.type';
-import { ResponseStatus, CommonType } from './common.type';
+import { CommonType } from './common.type';
 import { UserType } from './users.type';
-import { LocationType } from './location.type';
+import { Location } from './location.type';
 import { PointType } from './point.type';
 import { AwardType } from './award.type';
-import { ProductType } from './product.type';
+import { Product } from './product.type';
+import { Reward } from './reward.type';
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
     loading: boolean;
@@ -62,7 +64,7 @@ export declare namespace ReduxJson {
   export type LocationState = {
     loading: boolean;
     status: ResponseStatus | null;
-    locations: LocationType[];
+    locations: Location.Data[];
     pageInfo: CommonType.PageInfo | null;
     message: string | null;
     error: string | null;
@@ -79,11 +81,19 @@ export declare namespace ReduxJson {
   export type ProductState = {
     loading: boolean;
     status: ResponseStatus | null;
-    products: ProductType[];
+    products: Product.Data[];
     pageInfo: CommonType.PageInfo | null;
     currentId: number;
-    currentProduct: ProductType | null;
+    currentProduct: Product.Data | null;
     message: string | null;
     error: string | null;
+  };
+
+  export type RewardState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    message: string | null;
+    error: string | null;
+    rewards: Reward.DataList[];
   };
 }

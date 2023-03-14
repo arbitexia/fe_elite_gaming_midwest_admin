@@ -14,9 +14,9 @@ const ProductsById = () => {
   const router = useRouter();
   const { id } = router.query;
   const { onGetProductById } = useProduct();
-  const [productItem, setProductItem] = useState<Product | undefined | null>(
-    null
-  );
+  const [productItem, setProductItem] = useState<
+    Product.Data | undefined | null
+  >(null);
 
   useEffect(() => {
     setProductItem(onGetProductById(parseInt(id as string)));
@@ -30,7 +30,7 @@ const ProductsById = () => {
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
             <ProductsDetailCarouselCard />
             <ProductsDetailInfoCard productItem={productItem} />
-          </UIFlexSpaceBox>{' '}
+          </UIFlexSpaceBox>
         </>
       )}
     </DashboardLayout>

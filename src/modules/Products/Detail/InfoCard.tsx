@@ -1,4 +1,4 @@
-import { Typography, Stack } from '@mui/material';
+import { Typography, Stack, Box } from '@mui/material';
 import {
   UICardBox,
   UIFlexWrapBox,
@@ -7,7 +7,11 @@ import {
 } from '@/components/UI';
 import { Product } from '@/types';
 
-const ProductsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
+interface IProductsDetailInfoCard {
+  productItem: Product.Data;
+}
+
+const ProductsDetailInfoCard = ({ productItem }: IProductsDetailInfoCard) => {
   return (
     <UICardBox>
       <Typography
@@ -23,25 +27,36 @@ const ProductsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
       <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox>
-            <UIInfoTitle>Points:</UIInfoTitle>
+            <UIInfoTitle>Name:</UIInfoTitle>
             <UIInfoValue>{productItem.name}</UIInfoValue>
           </UIFlexWrapBox>
-          <UIFlexWrapBox>
-            <UIInfoTitle>Location:</UIInfoTitle>
-            <UIInfoValue>{productItem.location?.name}</UIInfoValue>
-          </UIFlexWrapBox>
-          <UIFlexWrapBox>
-            <UIInfoTitle>Description:</UIInfoTitle>
-            <UIInfoValue>{productItem.description}</UIInfoValue>
-          </UIFlexWrapBox>
-        </Stack>
-        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox>
             <UIInfoTitle>Amount:</UIInfoTitle>
             <UIInfoValue>{productItem.amount}</UIInfoValue>
           </UIFlexWrapBox>
         </Stack>
+        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
+          <UIFlexWrapBox>
+            <UIInfoTitle>Point:</UIInfoTitle>
+            <UIInfoValue>{productItem.point}</UIInfoValue>
+          </UIFlexWrapBox>
+          <UIFlexWrapBox>
+            <UIInfoTitle>Short:</UIInfoTitle>
+            <UIInfoValue>{productItem.short}</UIInfoValue>
+          </UIFlexWrapBox>
+        </Stack>
       </UIFlexWrapBox>
+      <Box
+        sx={{
+          width: '100%',
+          height: '350px',
+          paddingTop: '20px',
+          '.quill': { height: '250px', marginTop: '20px' },
+        }}
+      >
+        <UIInfoTitle>Description:</UIInfoTitle>
+        <UIInfoValue>{productItem.description}</UIInfoValue>
+      </Box>
     </UICardBox>
   );
 };

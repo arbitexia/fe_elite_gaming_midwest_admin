@@ -1,7 +1,7 @@
 import { ProductStatus } from '@/constants';
-import { RewardItemType } from '@/types';
+import { Reward } from '@/types';
 
-export const rewardsData: RewardItemType[] = [
+export const rewardsData: Reward.Data[] = [
   {
     id: 1,
     name: 'AirPods 2',

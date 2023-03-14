@@ -3,15 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ResponseStatus } from '@/constants';
 import { productApi } from '@/redux/apis';
 import { RootState, AppDispatch } from '@/redux/store';
-import {
-  ReduxJson,
-  FilterProductsParam,
-  Product,
-  CommonType,
-  CreateProductParam,
-  UpdateProductParam,
-  DeleteProductParam,
-} from '@/types';
+import { ReduxJson, Product, CommonType } from '@/types';
 
 // Initial state
 const initialState: ReduxJson.ProductState = {
@@ -26,10 +18,10 @@ const initialState: ReduxJson.ProductState = {
 };
 
 export const getProducts = createAsyncThunk<
-  CommonType.Pagination<Product>,
-  FilterProductsParam,
+  CommonType.Pagination<Product.Data>,
+  Product.Filter,
   { dispatch: AppDispatch; state: RootState }
->('product/getProducts', async (params: FilterProductsParam, thunkAPI) => {
+>('product/getProducts', async (params: Product.Filter, thunkAPI) => {
   try {
     return await productApi.getProducts(params);
   } catch (error) {
@@ -39,12 +31,12 @@ export const getProducts = createAsyncThunk<
 });
 
 export const getProduct = createAsyncThunk<
-  Product,
-  number,
+  Product.Data,
+  Product.Param,
   { dispatch: AppDispatch; state: RootState }
->('product/getProduct', async (id: number, thunkAPI) => {
+>('product/getProduct', async (param: Product.Param, thunkAPI) => {
   try {
-    return await productApi.getProduct({ id });
+    return await productApi.getProduct(param);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
@@ -52,10 +44,10 @@ export const getProduct = createAsyncThunk<
 });
 
 export const createProduct = createAsyncThunk<
-  Product,
-  CreateProductParam,
+  Product.Data,
+  Product.Body,
   { dispatch: AppDispatch; state: RootState }
->('product/createProduct', async (params: CreateProductParam, thunkAPI) => {
+>('product/createProduct', async (params: Product.Body, thunkAPI) => {
   try {
     return await productApi.createProduct(params);
   } catch (error) {
@@ -65,23 +57,26 @@ export const createProduct = createAsyncThunk<
 });
 
 export const updateProduct = createAsyncThunk<
-  Product,
-  UpdateProductParam,
+  Product.Data,
+  Product.Param & Product.Body,
   { dispatch: AppDispatch; state: RootState }
->('product/updateProduct', async (params: UpdateProductParam, thunkAPI) => {
-  try {
-    return await productApi.updateProduct(params);
-  } catch (error) {
-    const err = error as AxiosError;
-    return thunkAPI.rejectWithValue(err.response?.data);
+>(
+  'product/updateProduct',
+  async (params: Product.Param & Product.Body, thunkAPI) => {
+    try {
+      return await productApi.updateProduct(params);
+    } catch (error) {
+      const err = error as AxiosError;
+      return thunkAPI.rejectWithValue(err.response?.data);
+    }
   }
-});
+);
 
 export const deleteProduct = createAsyncThunk<
   CommonType.Message & { id: string },
-  DeleteProductParam,
+  Product.Param,
   { dispatch: AppDispatch; state: RootState }
->('product/deleteProduct', async (params: DeleteProductParam, thunkAPI) => {
+>('product/deleteProduct', async (params: Product.Param, thunkAPI) => {
   try {
     return await productApi.deleteProduct(params);
   } catch (error) {
@@ -110,7 +105,10 @@ export const productSlice = createSlice({
       })
       .addCase(
         getProducts.fulfilled,
-        (state, { payload }: PayloadAction<CommonType.Pagination<Product>>) => {
+        (
+          state,
+          { payload }: PayloadAction<CommonType.Pagination<Product.Data>>
+        ) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.pageInfo = payload.pageInfo;
@@ -131,7 +129,7 @@ export const productSlice = createSlice({
       })
       .addCase(
         getProduct.fulfilled,
-        (state, { payload }: PayloadAction<Product>) => {
+        (state, { payload }: PayloadAction<Product.Data>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.currentProduct = payload;
@@ -152,7 +150,7 @@ export const productSlice = createSlice({
       })
       .addCase(
         createProduct.fulfilled,
-        (state, { payload }: PayloadAction<Product>) => {
+        (state, { payload }: PayloadAction<Product.Data>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.currentProduct = payload;
@@ -173,7 +171,7 @@ export const productSlice = createSlice({
       })
       .addCase(
         updateProduct.fulfilled,
-        (state, { payload }: PayloadAction<Product>) => {
+        (state, { payload }: PayloadAction<Product.Data>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.currentProduct = payload;

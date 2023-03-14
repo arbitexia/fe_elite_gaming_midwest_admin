@@ -34,7 +34,7 @@ const ProductDetailHeader = ({
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const handleOk = () => {
-    onDeleteProduct(parseInt(id as string));
+    onDeleteProduct({ id: parseInt(id as string) });
     setOpenDeleteModal(false);
     router.push('/products');
     appToast({
@@ -59,7 +59,7 @@ const ProductDetailHeader = ({
           color: '#06251F',
         }}
       >
-        {name}
+        {/* {name} */}
       </Typography>
       <UIFlexWrapBox>
         {isEditable ? (

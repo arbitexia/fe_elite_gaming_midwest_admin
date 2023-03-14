@@ -1,14 +1,6 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
-import {
-  Button,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from '@mui/material';
-import { Edit, Delete } from '@mui/icons-material';
+import { Typography } from '@mui/material';
+import { Edit } from '@mui/icons-material';
 import {
   UIFlexSpaceBox,
   UIDefaultButton,
@@ -16,23 +8,17 @@ import {
   UIFlexWrapBox,
 } from '@/components/UI';
 
-export type RewardDetailHeaderProps = {
+export type ProductDetailHeaderProps = {
   name: string;
   isEditable: boolean;
 };
 
-const RewardDetailHeader = ({ name, isEditable }: RewardDetailHeaderProps) => {
+const ProductDetailHeader = ({
+  name,
+  isEditable,
+}: ProductDetailHeaderProps) => {
   const router = useRouter();
   const { id } = router.query;
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
-  const handleOk = () => {
-    setOpenDeleteModal(false);
-  };
-
-  const handleCancel = () => {
-    setOpenDeleteModal(false);
-  };
 
   return (
     <UIFlexSpaceBox
@@ -50,7 +36,7 @@ const RewardDetailHeader = ({ name, isEditable }: RewardDetailHeaderProps) => {
       </Typography>
       <UIFlexWrapBox>
         {isEditable ? (
-          <UIDefaultButton>Save</UIDefaultButton>
+          <UIDefaultButton type="submit">Save</UIDefaultButton>
         ) : (
           <>
             <UIActionButton
@@ -58,36 +44,14 @@ const RewardDetailHeader = ({ name, isEditable }: RewardDetailHeaderProps) => {
               color="#28B446"
               title="Edit"
               handleClick={() => {
-                router.push(`/rewards/edit/${id}`);
+                router.push(`/products/edit/${id}`);
               }}
-            />
-            <UIActionButton
-              icon={<Delete />}
-              color="#F14336"
-              title="Delete"
-              handleClick={() => setOpenDeleteModal(true)}
             />
           </>
         )}
       </UIFlexWrapBox>
-      <Dialog
-        sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
-        maxWidth="xs"
-        open={openDeleteModal}
-      >
-        <DialogTitle>Delete Reward</DialogTitle>
-        <DialogContent>
-          <Typography>Are you sure you want to delete reward?</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleCancel}>
-            Cancel
-          </Button>
-          <Button onClick={handleOk}>Ok</Button>
-        </DialogActions>
-      </Dialog>
     </UIFlexSpaceBox>
   );
 };
 
-export default RewardDetailHeader;
+export default ProductDetailHeader;

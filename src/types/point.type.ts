@@ -1,4 +1,4 @@
-import { LocationType } from './location.type';
+import { Location } from './location.type';
 import { UserType } from './users.type';
 
 export type UserLocation = {
@@ -6,7 +6,7 @@ export type UserLocation = {
   userId: number;
   user?: UserType.User;
   locationId: number;
-  location?: LocationType;
+  location?: Location;
   createdAt?: string;
   updatedAt?: string;
 };

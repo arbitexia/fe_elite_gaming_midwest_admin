@@ -34,7 +34,7 @@ import { useAppToast } from '@/providers';
 import { Product } from '@/types';
 
 type ProductsTableProps = {
-  productsTableData: Product[];
+  productsTableData: Product.Data[];
 };
 
 const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
@@ -67,7 +67,7 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
   };
 
   const handleOk = () => {
-    onDeleteProduct(anchorId);
+    onDeleteProduct({ id: anchorId });
     setOpenDeleteModal(false);
     appToast({
       severity: 'success',
@@ -107,7 +107,7 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
 
   type Order = 'asc' | 'desc';
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof Product>('id');
+  const [orderBy, setOrderBy] = useState<keyof Product.Data>('id');
 
   function stableSort<T>(
     array: readonly T[],
@@ -125,9 +125,9 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
   }
 
   function descendingComparator(
-    a: Product,
-    b: Product,
-    orderBy: keyof Product
+    a: Product.Data,
+    b: Product.Data,
+    orderBy: keyof Product.Data
   ) {
     console.log(a, b, orderBy);
     // if (b[orderBy] < a[orderBy]) {
@@ -139,23 +139,23 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
     return 0;
   }
 
-  function getComparator<Key extends keyof Product>(
+  function getComparator<Key extends keyof Product.Data>(
     order: Order,
     orderBy: Key
-  ): (a: Product, b: Product) => number {
+  ): (a: Product.Data, b: Product.Data) => number {
     return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
 
   const createSortHandler =
-    (property: keyof Product) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof Product.Data) => (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof Product
+    property: keyof Product.Data
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -229,12 +229,23 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
         </UIListTableRow>
       </TableHead>
       <TableBody>
-        {stableSort<Product>(
+        {productsTableData.length === 0 && (
+          <UIListTableRow
+            sx={{
+              position: 'relative',
+              backgroundColor: 'transparent !important',
+            }}
+          >
+            <UIListTableCell colSpan={7} sx={{ textAlign: 'center' }}>
+              No Data
+            </UIListTableCell>
+          </UIListTableRow>
+        )}
+        {stableSort<Product.Data>(
           productsTableData,
           getComparator(order, orderBy)
-        ).map((productItem) => {
+        ).map((productItem, index) => {
           const isItemSelected = isSelected(productItem.id.toString());
-          // const labelId = `enhanced-table-checkbox-${index}`;
           return (
             <UIListTableRow
               key={productItem.id}
@@ -256,7 +267,7 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
                 }
                 sx={{ cursor: 'pointer' }}
               >
-                #{productItem.id}
+                #{index + 1}
               </UIListTableCell>
               <UIListTableCell>
                 <Box

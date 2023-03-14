@@ -1,4 +1,15 @@
 import { MenuItemObj } from '@/types';
+import {
+  Person,
+  LocationOn,
+  Storefront,
+  Work,
+  RequestPage,
+  Report,
+  Comment,
+  Analytics,
+  Settings,
+} from '@mui/icons-material';
 
 export const languageMenuItems = [
   { icon: 'images/icons/en.svg', key: 'en', text: 'English' },
@@ -10,7 +21,7 @@ export const superSidebarItems: MenuItemObj[] = [
     id: 1,
     text: 'Users',
     isSelected: false,
-
+    icon: <Person sx={{ marginRight: 2 }} />,
     dropdown: [
       {
         text: 'Customers',
@@ -40,31 +51,35 @@ export const superSidebarItems: MenuItemObj[] = [
     text: 'Locations',
     route: 'locations',
     isSelected: false,
+    icon: <LocationOn sx={{ marginRight: 2 }} />,
   },
   {
     id: 3,
     text: 'Products',
     route: 'products',
     isSelected: false,
+    icon: <Storefront sx={{ marginRight: 2 }} />,
   },
   {
     id: 4,
     text: 'Rewards',
     route: 'rewards',
     isSelected: false,
+    icon: <Work sx={{ marginRight: 2 }} />,
   },
   {
     id: 5,
     text: 'Request',
     route: 'requests',
     isSelected: false,
+    icon: <RequestPage sx={{ marginRight: 2 }} />,
   },
 
   {
     id: 6,
     text: 'Reports',
-
     isSelected: false,
+    icon: <Report sx={{ marginRight: 2 }} />,
     dropdown: [
       {
         text: 'Activity',
@@ -83,12 +98,14 @@ export const superSidebarItems: MenuItemObj[] = [
     text: 'Comments',
     route: 'comments',
     isSelected: false,
+    icon: <Comment sx={{ marginRight: 2 }} />,
     disabled: true,
   },
   {
     id: 8,
     text: 'Analytics',
     isSelected: false,
+    icon: <Analytics sx={{ marginRight: 2 }} />,
     route: 'analytics',
     disabled: true,
   },
@@ -98,6 +115,7 @@ export const superSidebarItems: MenuItemObj[] = [
     route: 'settings',
     disabled: true,
     isSelected: false,
+    icon: <Settings sx={{ marginRight: 2 }} />,
   },
 ];
 

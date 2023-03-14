@@ -11,12 +11,7 @@ import {
   resetProductMessage,
   setGalleries,
 } from '@/redux/slices';
-import {
-  CreateProductParam,
-  FilterProductsParam,
-  UpdateProductParam,
-  Product,
-} from '@/types';
+import { Product } from '@/types';
 import { useAppSelector, useAppDispatch } from './redux';
 
 export const useProduct = () => {
@@ -40,34 +35,34 @@ export const useProduct = () => {
   }, [loading]);
 
   const onGetProductById = (id: number) => {
-    const product = products.find((product: Product) => product.id === id);
+    const product = products.find((product) => product.id === id);
     dispatch(setGalleries(product?.gallery ?? []));
     return product;
   };
 
-  const onProductSelect = async (id: number) => {
-    await dispatch(getProduct(id));
+  const onProductSelect = async (param: Product.Param) => {
+    await dispatch(getProduct(param));
   };
 
-  const onGetProducts = async (param: FilterProductsParam) => {
+  const onGetProducts = async (param: Product.Filter) => {
     await dispatch(getProducts(param));
   };
 
   const onCreateProduct = async (
-    param: CreateProductParam
-  ): Promise<Product> => {
+    param: Product.Body
+  ): Promise<Product.Data> => {
     const { payload }: PayloadAction<unknown> = await dispatch(
       createProduct(param)
     );
-    return payload as Product;
+    return payload as Product.Data;
   };
 
-  const onUpdateProduct = async (param: UpdateProductParam) => {
+  const onUpdateProduct = async (param: Product.Param & Product.Body) => {
     await dispatch(updateProduct(param));
   };
 
-  const onDeleteProduct = async (id: number) => {
-    await dispatch(deleteProduct({ productId: id }));
+  const onDeleteProduct = async (param: Product.Param) => {
+    await dispatch(deleteProduct(param));
   };
 
   return {

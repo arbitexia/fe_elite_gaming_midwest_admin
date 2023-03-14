@@ -11,7 +11,7 @@ import {
   LocationsDetailCarouselEditCard,
   LocationsDetailInfoEditCard,
 } from '@/modules/Locations';
-import { LocationType, CreateLocationParam } from '@/types';
+import { Location } from '@/types';
 import { useAppToast } from '@/providers';
 
 const LocationCreatePage = () => {
@@ -27,10 +27,10 @@ const LocationCreatePage = () => {
     setIsReady(false);
   }, [isReady]);
 
-  const locationFormik = useFormik<LocationType>({
+  const locationFormik = useFormik<Location.Data>({
     initialValues: initLocationData,
-    onSubmit: async (values: LocationType) => {
-      let params: CreateLocationParam = {
+    onSubmit: async (values) => {
+      let params: Location.Body = {
         input: {
           name: values.name,
           coords: values.coords,

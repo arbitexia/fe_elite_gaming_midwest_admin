@@ -1,15 +1,21 @@
 import { Typography, Stack } from '@mui/material';
-import { UIFlexWrapBox } from '@/components/UI';
-import { Product } from '@/types';
 import {
-  StyledLocationCardBox,
-  StyledLocationInfoTitle,
-  StyledLocationInfoValue,
-} from './ui';
+  UICardBox,
+  UIFlexWrapBox,
+  UIInfoTitle,
+  UIInfoValue,
+} from '@/components/UI';
+import { Location, Product } from '@/types';
 
-const RewardsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
+const ProductsDetailInfoCard = ({
+  productItem,
+  location,
+}: {
+  productItem: Product;
+  location?: Location | null;
+}) => {
   return (
-    <StyledLocationCardBox>
+    <UICardBox>
       <Typography
         sx={{
           fontWeight: '600',
@@ -23,35 +29,31 @@ const RewardsDetailInfoCard = ({ productItem }: { productItem: Product }) => {
       <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox>
-            <StyledLocationInfoTitle>Points:</StyledLocationInfoTitle>
-            <StyledLocationInfoValue>
-              {productItem.name}
-            </StyledLocationInfoValue>
+            <UIInfoTitle>Points:</UIInfoTitle>
+            <UIInfoValue>{productItem.name}</UIInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
-            <StyledLocationInfoTitle>Location:</StyledLocationInfoTitle>
-            <StyledLocationInfoValue>
-              {productItem.location?.name}
-            </StyledLocationInfoValue>
+            <UIInfoTitle>Location:</UIInfoTitle>
+            <UIInfoValue>{location?.name}</UIInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
-            <StyledLocationInfoTitle>Description:</StyledLocationInfoTitle>
-            <StyledLocationInfoValue>
-              {productItem.description}
-            </StyledLocationInfoValue>
+            <UIInfoTitle>Description:</UIInfoTitle>
+            <UIInfoValue>{productItem.description}</UIInfoValue>
           </UIFlexWrapBox>
         </Stack>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox>
-            <StyledLocationInfoTitle>Amount:</StyledLocationInfoTitle>
-            <StyledLocationInfoValue>
-              {productItem.amount}
-            </StyledLocationInfoValue>
+            <UIInfoTitle>Status:</UIInfoTitle>
+            <UIInfoValue>{productItem.status}</UIInfoValue>
+          </UIFlexWrapBox>
+          <UIFlexWrapBox>
+            <UIInfoTitle>Type:</UIInfoTitle>
+            <UIInfoValue>{productItem.short}</UIInfoValue>
           </UIFlexWrapBox>
         </Stack>
       </UIFlexWrapBox>
-    </StyledLocationCardBox>
+    </UICardBox>
   );
 };
 
-export default RewardsDetailInfoCard;
+export default ProductsDetailInfoCard;

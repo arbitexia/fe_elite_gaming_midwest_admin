@@ -9,7 +9,7 @@ import {
   LocationsDetailInfoEditCard,
 } from '@/modules/Locations';
 import { initLocationData } from '@/_mock/locations';
-import { LocationType, UpdateLocationParam } from '@/types';
+import { Location } from '@/types';
 import { useFormik } from 'formik';
 import { useAsset, useLocation } from '@/hooks';
 import { useAppToast } from '@/providers';
@@ -18,16 +18,16 @@ const LocationsById = () => {
   const router = useRouter();
   const appToast = useAppToast();
   const { id } = router.query;
-  const [locationItem, setLocationItem] = useState<LocationType | undefined>(
+  const [locationItem, setLocationItem] = useState<Location.Data | undefined>(
     undefined
   );
   const { onGetLocationById, onUpdateLocation } = useLocation();
   const { onSaveGallery } = useAsset();
 
-  const locationFormik = useFormik<LocationType>({
+  const locationFormik = useFormik<Location.Data>({
     initialValues: locationItem ?? initLocationData,
     onSubmit: async (values) => {
-      let params: UpdateLocationParam = {
+      let params: Location.Param & Location.Body = {
         id: values.id,
         input: {
           name: values.name,

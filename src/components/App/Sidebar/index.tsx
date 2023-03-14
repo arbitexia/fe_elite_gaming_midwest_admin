@@ -55,9 +55,16 @@ const Sidebar = () => {
                   item.route && router.push(`/${item.route}`);
                 }}
                 key={index}
-                sx={item.id === selectedMenu ? StyledSidebarActiveButton : {}}
+                sx={
+                  item.id === selectedMenu
+                    ? StyledSidebarActiveButton
+                    : { paddingLeft: '10px' }
+                }
               >
-                {item.text}
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  {item.icon}
+                  {item.text}
+                </Box>
                 {item.dropdown && (
                   <Box
                     component="span"

@@ -6,12 +6,12 @@ import { productMockData } from '@/_mock/product';
 import { useAsset, useProduct } from '@/hooks';
 import { DashboardLayout } from '@/layouts';
 import { useAppToast } from '@/providers';
-import { Product, UpdateProductParam } from '@/types';
+import { Product } from '@/types';
 import {
+  ProductsDetailHeader,
   ProductsDetailCarouselEditCard,
   ProductsDetailInfoEditCard,
 } from '@/modules/Products';
-import ProductDetailHeader from '@/modules/Products/Detail/Header';
 import { UIFlexSpaceBox } from '@/components/UI';
 
 const ProductEdit = () => {
@@ -20,18 +20,17 @@ const ProductEdit = () => {
   const { id } = router.query;
   const { onGetProductById, onUpdateProduct } = useProduct();
   const { onSaveGallery } = useAsset();
-  const [productItem, setProductItem] = useState<Product | undefined | null>(
-    null
-  );
+  const [productItem, setProductItem] = useState<
+    Product.Data | undefined | null
+  >(null);
 
-  const productFormik = useFormik<Product>({
+  const productFormik = useFormik<Product.Data>({
     initialValues: productItem ?? productMockData,
     onSubmit: async (values) => {
-      const params: UpdateProductParam = {
+      const params: Product.Param & Product.Body = {
         id: values.id,
         input: {
           name: values.name,
-          locationId: values.location.id,
           amount: values.amount,
           point: values.point,
           status: values.status,
@@ -59,7 +58,7 @@ const ProductEdit = () => {
     <DashboardLayout title={productItem ? productItem.name : 'Products'}>
       {productFormik && (
         <Box component="form" onSubmit={productFormik.handleSubmit}>
-          <ProductDetailHeader
+          <ProductsDetailHeader
             name={productFormik.values.name}
             isEditable={true}
           />

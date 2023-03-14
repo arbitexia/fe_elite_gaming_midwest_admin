@@ -13,4 +13,5 @@ export interface MenuItemObj {
   route?: string;
   disabled?: boolean;
   isService?: boolean;
+  icon?: JSX.Element;
 }

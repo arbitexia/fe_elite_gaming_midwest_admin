@@ -74,6 +74,14 @@ export {
 } from './product.slice';
 
 export {
+  default as rewardReducer,
+  rewardSelector,
+  filterRewards,
+  createRewards,
+  resetRewardMessage,
+} from './reward.slice';
+
+export {
   default as userReducer,
   usersSelector,
   getUser,

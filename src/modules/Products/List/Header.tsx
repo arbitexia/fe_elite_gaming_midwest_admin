@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { Typography, InputAdornment, Divider } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import {
@@ -8,10 +9,9 @@ import {
   UIListHeader,
   UISelectMenuItem,
 } from '@/components/UI';
-import { useRouter } from 'next/router';
 import { locationsData } from '@/_mock/locations';
 
-interface ProductsListHeaderProps {
+interface IProductsListHeader {
   searchValue: string;
   searchProduct: number;
   onValueChange: (value: string) => void;
@@ -23,8 +23,9 @@ const ProductsListHeader = ({
   searchProduct,
   onValueChange,
   onProductChange,
-}: ProductsListHeaderProps) => {
+}: IProductsListHeader) => {
   const router = useRouter();
+
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);
   };

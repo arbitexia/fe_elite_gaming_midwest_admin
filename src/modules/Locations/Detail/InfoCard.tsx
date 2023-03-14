@@ -8,13 +8,19 @@ import {
   UIInfoTitle,
   UIInfoValue,
 } from '@/components/UI';
-import { LocationsDetailProps } from '@/types';
+import { Location } from '@/types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const accessToken =
   'pk.eyJ1Ijoic2FoaWx0aGFrYXJlNTIxIiwiYSI6ImNrbjVvMTkzNDA2MXQydnM2OHJ6aHJvbXEifQ.z5aEqRBTtDMWoxVzf3aGsg';
 
-const LocationsDetailInfoCard = ({ locationItem }: LocationsDetailProps) => {
+interface ILocationsDetailInfoCard {
+  locationItem: Location.Data;
+}
+
+const LocationsDetailInfoCard = ({
+  locationItem,
+}: ILocationsDetailInfoCard) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState<mapboxgl.Map>();
 
