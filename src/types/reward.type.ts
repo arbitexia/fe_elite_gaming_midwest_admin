@@ -9,6 +9,10 @@ export declare namespace Reward {
     updatedAt?: string;
   };
 
+  type DataList = Location.Data & {
+    reward: Reward.Data & { product: Product.Data }[];
+  };
+
   type Param = { id: number };
 
   type Body = {

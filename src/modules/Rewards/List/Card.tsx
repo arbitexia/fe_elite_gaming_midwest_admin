@@ -10,7 +10,7 @@ import {
 
 export type ProductCardProp = {
   locationId: number;
-  product: Product;
+  product: Product.Data;
 };
 
 const ProductCard = ({ locationId, product }: ProductCardProp) => {

@@ -81,10 +81,10 @@ export declare namespace ReduxJson {
   export type ProductState = {
     loading: boolean;
     status: ResponseStatus | null;
-    products: Product[];
+    products: Product.Data[];
     pageInfo: CommonType.PageInfo | null;
     currentId: number;
-    currentProduct: Product | null;
+    currentProduct: Product.Data | null;
     message: string | null;
     error: string | null;
   };
@@ -94,6 +94,6 @@ export declare namespace ReduxJson {
     status: ResponseStatus | null;
     message: string | null;
     error: string | null;
-    rewards: Reward.Data[];
+    rewards: Reward.DataList[];
   };
 }

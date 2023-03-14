@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Divider } from '@mui/material';
 import { useReward } from '@/hooks';
 import { DashboardLayout } from '@/layouts';
-import { RewardsListHeader, RewardCreatDialog } from '@/modules/Rewards';
+import {
+  RewardsListHeader,
+  RewardCreatDialog,
+  RewardsTable,
+} from '@/modules/Rewards';
 import { useRouter } from 'next/router';
 import { Reward } from '@/types';
 
@@ -28,6 +32,7 @@ const Rewards = () => {
         onOpenDlg={() => setIsOpenCreatDlg(true)}
       />
       <Divider sx={{ mt: '30px' }} />
+      <RewardsTable />
       <RewardCreatDialog
         isOpenCreateDlg={isOpenCreateDlg}
         closeDlg={() => {

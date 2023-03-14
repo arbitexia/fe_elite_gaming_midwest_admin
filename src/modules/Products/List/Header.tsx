@@ -25,6 +25,7 @@ const ProductsListHeader = ({
   onProductChange,
 }: IProductsListHeader) => {
   const router = useRouter();
+
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);
   };

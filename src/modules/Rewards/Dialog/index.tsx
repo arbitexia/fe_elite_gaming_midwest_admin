@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { UIFlexSpaceBox, UIOptionMenuItem } from '@/components/UI';
 import { useLocation, useProduct, useReward } from '@/hooks';
-import { CreateRewardParam } from '@/types';
+import { Reward } from '@/types';
 
 const RewardCreatDialog = ({
   isOpenCreateDlg,
@@ -19,15 +19,37 @@ const RewardCreatDialog = ({
   isOpenCreateDlg: boolean;
   closeDlg: () => void;
 }) => {
-  const { locations } = useLocation();
+  const { locations, onGetLocations } = useLocation();
   const { products, onGetProducts } = useProduct();
-  const { onCreateReward } = useReward();
+  const { onCreateRewards } = useReward();
   const [locationId, setLocationId] = useState<string>('');
-  const [productId, setProductId] = React.useState<string[]>([]);
+  const [productId, setProductId] = useState<string[]>([]);
+  const [searchLocationValue, setSearchLocationValue] = useState('');
+  const [searchProductVal, setSearchProductVal] = useState('');
+
+  const handleLocationSearch = () => {
+    onGetLocations({ filterBy: { search: searchLocationValue } });
+  };
+
+  const handleProductSearch = () => {
+    onGetProducts({
+      filterBy: {
+        product: 0,
+        search: searchProductVal,
+        pointFrom: 0,
+        pointTo: 100000000,
+      },
+      cursor: { page: 0, size: 1000 },
+    });
+  };
 
   useEffect(() => {
-    onGetProducts({ filterBy: { search: '' } });
-  }, [locationId]);
+    handleLocationSearch();
+  }, [searchLocationValue]);
+
+  useEffect(() => {
+    handleProductSearch();
+  }, [searchProductVal]);
 
   const handleLocationChange = (
     event: SelectChangeEvent<typeof locationId>
@@ -42,13 +64,16 @@ const RewardCreatDialog = ({
   };
 
   const handleOk = async () => {
-    const params: CreateRewardParam = {
-      input: {
-        locationId: parseInt(locationId),
-        productIds: productId.toString(),
-      },
+    const params: Reward.Body = {
+      input: productId.map((productId) => {
+        return {
+          locationId: parseInt(locationId),
+          productId: parseInt(productId),
+        };
+      }),
     };
-    await onCreateReward(params);
+
+    await onCreateRewards(params);
     closeDlg();
   };
 

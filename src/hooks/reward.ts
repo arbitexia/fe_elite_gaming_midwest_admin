@@ -24,10 +24,10 @@ export const useReward = () => {
 
   const onFilterRewards = async (
     filter: Reward.Filter
-  ): Promise<Reward.Data[]> => {
+  ): Promise<Reward.DataList> => {
     const { payload } = (await dispatch(
       filterRewards(filter)
-    )) as PayloadAction<Reward.Data[]>;
+    )) as PayloadAction<Reward.DataList>;
 
     return payload;
   };

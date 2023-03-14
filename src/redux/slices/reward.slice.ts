@@ -14,7 +14,7 @@ const initialState: ReduxJson.RewardState = {
 };
 
 export const filterRewards = createAsyncThunk<
-  Reward.Data[],
+  Reward.DataList[],
   Reward.Filter,
   { dispatch: AppDispatch; state: RootState }
 >('rewards/filterRewards', async (filter: Reward.Filter, thunkAPI) => {
@@ -27,7 +27,7 @@ export const filterRewards = createAsyncThunk<
 });
 
 export const createRewards = createAsyncThunk<
-  Reward.Data[],
+  Reward.DataList,
   Reward.Body,
   { dispatch: AppDispatch; state: RootState }
 >('rewards/createRewards', async (body: Reward.Body, thunkAPI) => {
@@ -64,7 +64,7 @@ export const rewardSlice = createSlice({
       })
       .addCase(
         filterRewards.fulfilled,
-        (state, { payload }: PayloadAction<Reward.Data[]>) => {
+        (state, { payload }: PayloadAction<Reward.DataList[]>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.rewards = payload;
@@ -82,14 +82,10 @@ export const rewardSlice = createSlice({
         state.error = payload as string;
         state.message = null;
       })
-      .addCase(
-        createRewards.fulfilled,
-        (state, { payload }: PayloadAction<Reward.Data[]>) => {
-          state.loading = false;
-          state.status = ResponseStatus.SUCCESS;
-          state.rewards = payload;
-        }
-      );
+      .addCase(createRewards.fulfilled, (state) => {
+        state.loading = false;
+        state.status = ResponseStatus.SUCCESS;
+      });
   },
 });
 
