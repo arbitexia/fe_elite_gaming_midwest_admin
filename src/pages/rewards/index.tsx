@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { Divider } from '@mui/material';
 import { useReward } from '@/hooks';
 import { DashboardLayout } from '@/layouts';
@@ -7,7 +8,6 @@ import {
   RewardCreatDialog,
   RewardsTable,
 } from '@/modules/Rewards';
-import { useRouter } from 'next/router';
 import { Reward } from '@/types';
 
 const Rewards = () => {
