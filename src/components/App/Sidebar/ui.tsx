@@ -62,6 +62,7 @@ export const StyledSidebarActiveButton = {
   backgroundColor: '#00FFF81A',
   fontWeight: '600',
   color: '#006F69',
+  paddingLeft: '10px',
 };
 
 export const StyledSidebarActiveBar = styled(Box)({

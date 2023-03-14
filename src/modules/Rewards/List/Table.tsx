@@ -18,8 +18,6 @@ import RewardDetailTable from './RewardDetailTable';
 const Row = ({ row, id }: { row: Reward.DataList; id: number }) => {
   const [open, setOpen] = React.useState(false);
 
-  console.log(row.reward);
-
   return (
     <>
       <UIListTableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
