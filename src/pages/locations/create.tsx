@@ -20,7 +20,6 @@ const LocationCreatePage = () => {
   const { onCreateLocation } = useLocation();
   const { onSetGalleries, onSaveGallery } = useAsset();
   const [isReady, setIsReady] = useState(true);
-
   useEffect(() => {
     if (!isReady) return;
     onSetGalleries([]);
@@ -45,7 +44,7 @@ const LocationCreatePage = () => {
       router.push('/locations');
       appToast({
         severity: 'success',
-        message: 'Successfully, new game placee has been registered!',
+        message: 'Successfully, new game place has been registered!',
       });
     },
   });

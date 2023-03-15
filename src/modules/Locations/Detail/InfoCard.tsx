@@ -85,12 +85,6 @@ const LocationsDetailInfoCard = ({
               }`}
             </UIInfoValue>
           </UIFlexWrapBox>
-          <UIFlexWrapBox>
-            <UIInfoTitle>Description:</UIInfoTitle>
-            <UIInfoValue sx={{ height: '100px' }}>
-              {locationItem.description ?? ''}
-            </UIInfoValue>
-          </UIFlexWrapBox>
         </Stack>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox>
@@ -103,6 +97,15 @@ const LocationsDetailInfoCard = ({
           </UIFlexWrapBox>
         </Stack>
       </UIFlexWrapBox>
+      <Box sx={{ mt: 2 }}>
+        <UIInfoTitle>Description:</UIInfoTitle>
+        <UIInfoValue
+          sx={{ height: '100px' }}
+          dangerouslySetInnerHTML={{
+            __html: locationItem.description ?? '',
+          }}
+        />
+      </Box>
       <Box
         ref={mapNode}
         width="100%"

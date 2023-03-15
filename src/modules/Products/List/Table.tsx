@@ -129,7 +129,6 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
     b: Product.Data,
     orderBy: keyof Product.Data
   ) {
-    console.log(a, b, orderBy);
     // if (b[orderBy] < a[orderBy]) {
     //   return -1;
     // }

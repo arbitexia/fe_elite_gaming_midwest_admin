@@ -2,8 +2,10 @@ import { Location, Product } from '@/types';
 
 export declare namespace Reward {
   type Data = {
-    id: number;
-    location: Location.Data;
+    id?: number;
+    locationId?: number;
+    productId?: number;
+    location?: Location.Data;
     product: Product.Data;
     createdAt?: string;
     updatedAt?: string;
@@ -20,6 +22,13 @@ export declare namespace Reward {
   };
 
   type Filter = {
-    condition: { locationId?: number; search: string };
+    filterBy: {
+      locationId?: number;
+      search: string;
+    };
+    cursor: {
+      page: number;
+      size: number;
+    };
   };
 }

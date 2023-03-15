@@ -95,5 +95,6 @@ export declare namespace ReduxJson {
     message: string | null;
     error: string | null;
     rewards: Reward.DataList[];
+    pageInfo: CommonType.PageInfo | null;
   };
 }

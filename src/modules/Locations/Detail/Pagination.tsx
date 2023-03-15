@@ -1,12 +1,21 @@
-import { useState } from 'react';
+import React from 'react';
 import { TablePagination } from '@mui/material';
-
-export default function RewardsPagination() {
-  const [page, setPage] = useState(2);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
+interface RewordsPaginationProps {
+  page: number;
+  rowsPerPage: number;
+  total: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setRowsPerPage: React.Dispatch<React.SetStateAction<number>>;
+}
+export default function RewardsPagination({
+  page,
+  rowsPerPage,
+  total,
+  setPage,
+  setRowsPerPage,
+}: RewordsPaginationProps) {
   const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
+    _event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
@@ -38,7 +47,7 @@ export default function RewardsPagination() {
         },
       }}
       component="div"
-      count={100}
+      count={total}
       page={page}
       onPageChange={handleChangePage}
       rowsPerPage={rowsPerPage}

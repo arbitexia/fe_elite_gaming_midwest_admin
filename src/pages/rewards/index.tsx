@@ -5,7 +5,7 @@ import { useReward } from '@/hooks';
 import { DashboardLayout } from '@/layouts';
 import {
   RewardsListHeader,
-  RewardCreatDialog,
+  RewardCreateDialog,
   RewardsTable,
 } from '@/modules/Rewards';
 import { Reward } from '@/types';
@@ -14,14 +14,24 @@ const Rewards = () => {
   const router = useRouter();
   const { onFilterRewards } = useReward();
   const [searchValue, setSearchValue] = useState('');
-  const [isOpenCreateDlg, setIsOpenCreatDlg] = useState<boolean>(false);
+  const [isOpenCreateDlg, setIsOpenCreateDlg] = useState<boolean>(false);
 
   useEffect(() => {
-    filterRewards({ condition: { search: searchValue } });
+    const fetchRewards = () => {
+      try {
+        filterRewards({
+          filterBy: { search: searchValue },
+          cursor: { page: 0, size: 1000 },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchRewards();
   }, [router]);
 
-  const filterRewards = (filter: Reward.Filter) => {
-    onFilterRewards(filter);
+  const filterRewards = async (filter: Reward.Filter) => {
+    await onFilterRewards(filter);
   };
 
   return (
@@ -29,14 +39,18 @@ const Rewards = () => {
       <RewardsListHeader
         searchValue={searchValue}
         onValueChange={(value: string) => setSearchValue(value)}
-        onOpenDlg={() => setIsOpenCreatDlg(true)}
+        onOpenDlg={() => setIsOpenCreateDlg(true)}
       />
       <Divider sx={{ mt: '30px' }} />
       <RewardsTable />
-      <RewardCreatDialog
+      <RewardCreateDialog
         isOpenCreateDlg={isOpenCreateDlg}
-        closeDlg={() => {
-          setIsOpenCreatDlg(false);
+        closeDlg={async () => {
+          await filterRewards({
+            filterBy: { search: searchValue },
+            cursor: { page: 0, size: 1000 },
+          });
+          setIsOpenCreateDlg(false);
         }}
       />
     </DashboardLayout>

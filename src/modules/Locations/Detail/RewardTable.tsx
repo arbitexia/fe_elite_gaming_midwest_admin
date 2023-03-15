@@ -1,4 +1,6 @@
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { format } from 'date-fns';
 import {
   TableHead,
   TableBody,
@@ -7,19 +9,48 @@ import {
   IconButton,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
-import { rewardsData } from '@/_mock/rewards';
 import {
   UICardBox,
   UIChip,
   UITable,
   UITableRow,
   UITableCell,
+  UIInfoTitle,
 } from '@/components/UI';
 import { getColor } from '@/libs/data-helper';
 import RewardsPagination from './Pagination';
+import { useReward } from '@/hooks';
+import { Reward } from '@/types';
 
 const LocationDetailRewardTable = () => {
   const router = useRouter();
+  const { id: locationId } = router.query;
+  const { rewards, onFilterRewards, pageInfo } = useReward();
+  const [rewardsItem, setRewardsItem] = useState<Reward.Data[]>();
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  useEffect(() => {
+    const fetchRewards = async () => {
+      try {
+        await getRewardsByLocationId({
+          filterBy: { locationId: Number(locationId), search: '' },
+          cursor: { page: 0, size: 1000 },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (locationId && !rewards) {
+      fetchRewards();
+    } else {
+      setRewardsItem(rewards?.[0]?.reward);
+    }
+  }, [locationId, router, rewards]);
+
+  const getRewardsByLocationId = async (filter: Reward.Filter) => {
+    await onFilterRewards(filter);
+  };
+
   // const getSpecTableCell = (specifications: any) => {
   //   return Object.keys(specifications).map((key, index) => {
   //     return (
@@ -66,7 +97,7 @@ const LocationDetailRewardTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rewardsData.map((item) => {
+          {rewardsItem?.map((item) => {
             return (
               <UITableRow key={item.id}>
                 <UITableCell
@@ -75,14 +106,19 @@ const LocationDetailRewardTable = () => {
                 >
                   #{item.id}
                 </UITableCell>
-                <UITableCell>{item.name}</UITableCell>
-                <UITableCell>{item.short}</UITableCell>
-                <UITableCell>{item.point}</UITableCell>
+                <UITableCell>{item.product.name}</UITableCell>
+                <UITableCell>{item.product.short}</UITableCell>
+                <UITableCell>{item.product.point}</UITableCell>
                 <UITableCell>
-                  <UIChip label={item.status} color={getColor(item.status)} />
+                  <UIChip
+                    label={item.product.status}
+                    color={getColor(item.product.status)}
+                  />
                 </UITableCell>
                 <UITableCell sx={{ color: '#B3B3B3 !important' }}>
-                  {item.createdAt}
+                  {item.product.createdAt
+                    ? format(new Date(item.product.createdAt), 'yyyy-MM-dd')
+                    : ''}
                 </UITableCell>
                 <UITableCell>
                   <IconButton
@@ -99,7 +135,13 @@ const LocationDetailRewardTable = () => {
           })}
         </TableBody>
       </UITable>
-      <RewardsPagination />
+      <RewardsPagination
+        page={page}
+        rowsPerPage={rowsPerPage}
+        total={pageInfo?.total ?? 0}
+        setPage={setPage}
+        setRowsPerPage={setRowsPerPage}
+      />
     </UICardBox>
   );
 };
