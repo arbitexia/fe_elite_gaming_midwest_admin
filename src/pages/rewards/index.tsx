@@ -28,7 +28,7 @@ const Rewards = () => {
       }
     };
     fetchRewards();
-  }, [router]);
+  }, [router, searchValue]);
 
   const filterRewards = async (filter: Reward.Filter) => {
     await onFilterRewards(filter);

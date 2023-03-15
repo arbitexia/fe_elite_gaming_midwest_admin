@@ -15,7 +15,6 @@ import {
   UITable,
   UITableRow,
   UITableCell,
-  UIInfoTitle,
 } from '@/components/UI';
 import { getColor } from '@/libs/data-helper';
 import RewardsPagination from './Pagination';
@@ -26,7 +25,6 @@ const LocationDetailRewardTable = () => {
   const router = useRouter();
   const { id: locationId } = router.query;
   const { rewards, onFilterRewards, pageInfo } = useReward();
-  const [rewardsItem, setRewardsItem] = useState<Reward.Data[]>();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   useEffect(() => {
@@ -34,18 +32,14 @@ const LocationDetailRewardTable = () => {
       try {
         await getRewardsByLocationId({
           filterBy: { locationId: Number(locationId), search: '' },
-          cursor: { page: 0, size: 1000 },
+          cursor: { page, size: rowsPerPage },
         });
       } catch (error) {
         console.log(error);
       }
     };
-    if (locationId && !rewards) {
-      fetchRewards();
-    } else {
-      setRewardsItem(rewards?.[0]?.reward);
-    }
-  }, [locationId, router, rewards]);
+    fetchRewards();
+  }, [locationId, router]);
 
   const getRewardsByLocationId = async (filter: Reward.Filter) => {
     await onFilterRewards(filter);
@@ -97,7 +91,7 @@ const LocationDetailRewardTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rewardsItem?.map((item) => {
+          {rewards?.[0]?.reward?.map((item: Reward.Data) => {
             return (
               <UITableRow key={item.id}>
                 <UITableCell
