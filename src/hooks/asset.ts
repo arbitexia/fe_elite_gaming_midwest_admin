@@ -44,7 +44,9 @@ export const useAsset = () => {
     if (galleries[index].id !== 0) {
       await dispatch(deleteGallery({ galleryId: galleries[index].id }));
     }
-    dispatch(removeGalleryItem(index));
+    const newGalleries = [...galleries];
+    newGalleries.splice(index, 1);
+    dispatch(setGalleries(newGalleries));
   };
 
   const uploadImageS3 = async (file: File) => {
@@ -105,7 +107,25 @@ export const useAsset = () => {
         asset,
       };
       dispatch(setGalleries(tmp));
-    } else await dispatch(updateGallery({ id: gallery.id, assetId: asset.id }));
+    } else {
+      const result = await dispatch(
+        updateGallery({ id: gallery.id, assetId: asset.id })
+      );
+      dispatch(
+        setGalleries(
+          galleries.map((obj) => {
+            const newGallery = result.payload as AssetType.Gallery;
+            if (
+              Number(obj.id) === Number(newGallery.id) &&
+              Number(obj.victimId) === Number(newGallery.victimId)
+            ) {
+              return newGallery;
+            }
+            return obj;
+          })
+        )
+      );
+    }
   };
 
   return {

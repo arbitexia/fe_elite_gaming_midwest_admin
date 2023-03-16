@@ -27,11 +27,17 @@ const ProductsDetailInfoEditCard = ({
   productFormik,
 }: IProductsDetailInfoEditCard) => {
   const [isReady, setIsReady] = useState<boolean>(false);
-
+  const [desc, setDesc] = useState('');
   useEffect(() => {
     if (!isReady) return;
     setIsReady(false);
   }, [isReady]);
+
+  useEffect(() => {
+    if (productFormik.values.description) {
+      setDesc(productFormik.values.description);
+    }
+  }, [productFormik.values.description]);
 
   return (
     <UICardBox>
@@ -114,9 +120,12 @@ const ProductsDetailInfoEditCard = ({
         <UIInfoTitle>Description:</UIInfoTitle>
         <ReactQuill
           theme="snow"
-          value={productFormik.values.description}
+          value={desc}
           placeholder={productFormik.values.description}
-          onChange={productFormik.handleChange}
+          onChange={(data) => {
+            setDesc(data);
+            productFormik.setFieldValue('description', data);
+          }}
           modules={modules}
           formats={formats}
         />

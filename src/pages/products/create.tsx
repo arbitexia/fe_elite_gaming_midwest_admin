@@ -19,7 +19,7 @@ const ProductsCreate = () => {
   const appToast = useAppToast();
   const { onCreateProduct } = useProduct();
   const { onSetGalleries, onSaveGallery } = useAsset();
-  const [isReady, setIsReady] = useState<boolean>(false);
+  const [isReady, setIsReady] = useState<boolean>(true);
 
   useEffect(() => {
     if (!isReady) return;

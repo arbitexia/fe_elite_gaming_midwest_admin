@@ -62,7 +62,9 @@ const LocationsById = () => {
           <LocationDetailHeader name={locationItem.name} isEditable={true} />
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
             <LocationsDetailCarouselEditCard />
-            <LocationsDetailInfoEditCard locationFormik={locationFormik} />
+            {locationItem && (
+              <LocationsDetailInfoEditCard locationFormik={locationFormik} />
+            )}
           </UIFlexSpaceBox>
         </Box>
       )}

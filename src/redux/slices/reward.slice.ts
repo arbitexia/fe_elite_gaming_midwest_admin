@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ResponseStatus } from '@/constants';
 import { rewardApi } from '@/redux/apis';
 import { RootState, AppDispatch } from '@/redux/store';
-import { ReduxJson, Reward } from '@/types';
+import { CommonType, ReduxJson, Reward } from '@/types';
 
 const initialState: ReduxJson.RewardState = {
   loading: true,
@@ -11,10 +11,11 @@ const initialState: ReduxJson.RewardState = {
   message: null,
   error: null,
   rewards: [],
+  pageInfo: null,
 };
 
 export const filterRewards = createAsyncThunk<
-  Reward.DataList[],
+  CommonType.Pagination<Reward.DataList>,
   Reward.Filter,
   { dispatch: AppDispatch; state: RootState }
 >('rewards/filterRewards', async (filter: Reward.Filter, thunkAPI) => {
@@ -64,10 +65,14 @@ export const rewardSlice = createSlice({
       })
       .addCase(
         filterRewards.fulfilled,
-        (state, { payload }: PayloadAction<Reward.DataList[]>) => {
+        (
+          state,
+          { payload }: PayloadAction<CommonType.Pagination<Reward.DataList>>
+        ) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          state.rewards = payload;
+          state.rewards = payload.data;
+          state.pageInfo = payload.pageInfo;
         }
       )
       .addCase(createRewards.pending, (state) => {

@@ -50,7 +50,6 @@ const LocationsDetailCarouselEditCard = () => {
     const reader = new FileReader();
     const file = e.target.files ? e.target.files[0] : null;
     if (!file) return;
-
     // Restrict user to upload file less than 3.1MB
     if (file.size > convertMBtoBytes(3.1)) {
       appToast('error', 'File size is too large');
@@ -60,10 +59,8 @@ const LocationsDetailCarouselEditCard = () => {
       const asset: AssetType.Asset = await onCreateAsset(file);
       onUpdateGallery(activeStep, asset);
     };
-
     reader.readAsDataURL(file);
   };
-
   const onImageAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     // setShowImageError(false);

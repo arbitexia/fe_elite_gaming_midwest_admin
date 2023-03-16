@@ -34,7 +34,12 @@ const LocationsDetailInfoEditCard = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState<mapboxgl.Map>();
   const mapNode = useRef(null);
-
+  const [desc, setDesc] = useState('');
+  useEffect(() => {
+    if (locationFormik.values.description) {
+      setDesc(locationFormik.values.description);
+    }
+  }, [locationFormik.values.description]);
   useEffect(() => {
     const node = mapNode.current;
     if (typeof window === 'undefined' || node === null) return;
@@ -222,9 +227,12 @@ const LocationsDetailInfoEditCard = ({
         <UIInfoTitle>Description:</UIInfoTitle>
         <ReactQuill
           theme="snow"
-          value={locationFormik.values.description}
-          placeholder={locationFormik.values.description}
-          onChange={locationFormik.handleChange}
+          value={desc}
+          placeholder={'Enter the description'}
+          onChange={(data) => {
+            setDesc(data);
+            locationFormik.setFieldValue('description', data);
+          }}
           modules={modules}
           formats={formats}
         />

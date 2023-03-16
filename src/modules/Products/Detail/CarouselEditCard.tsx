@@ -27,7 +27,6 @@ const ProductsDetailCarouselEditCard = () => {
     onDeleteImage,
   } = useAsset();
   const appToast = useAppToast();
-
   const handleStepChange = (step: number) => {
     setActiveStep(step);
   };

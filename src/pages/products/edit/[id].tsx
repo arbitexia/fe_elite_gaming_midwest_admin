@@ -51,9 +51,10 @@ const ProductEdit = () => {
   useEffect(() => {
     const product = onGetProductById(parseInt(id as string));
     setProductItem(product);
-    productFormik.setValues(product ?? productMockData);
+    if (product) {
+      productFormik.setValues(product);
+    }
   }, [id]);
-
   return (
     <DashboardLayout title={productItem ? productItem.name : 'Products'}>
       {productFormik && (
@@ -64,7 +65,9 @@ const ProductEdit = () => {
           />
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
             <ProductsDetailCarouselEditCard />
-            <ProductsDetailInfoEditCard productFormik={productFormik} />
+            {productItem && (
+              <ProductsDetailInfoEditCard productFormik={productFormik} />
+            )}
           </UIFlexSpaceBox>
         </Box>
       )}

@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
-import {
-  UIFlexCenterBox,
-  UIFlexWrapBox,
-  UIListTableCell,
-} from '@/components/UI';
+import { UIFlexCenterBox, UIFlexWrapBox, UIInfoValue } from '@/components/UI';
 import { LocationsHeader, LocationsCard } from '@/modules/Locations';
 import { hasElInArray } from '@/libs/data-helper';
 import { DashboardLayout } from '@/layouts';
@@ -13,7 +9,6 @@ import { useLocation } from '@/hooks';
 const LocationsPage = () => {
   const { locations, onGetLocations } = useLocation();
   const [searchValue, setSearchValue] = useState('');
-
   useEffect(() => {
     onGetLocations({ filterBy: { search: searchValue } });
   }, [searchValue]);
@@ -33,7 +28,7 @@ const LocationsPage = () => {
             return <LocationsCard key={item.id} item={item} />;
           })
         ) : (
-          <UIListTableCell>No Data</UIListTableCell>
+          <UIInfoValue>No Data</UIInfoValue>
         )}
       </Box>
     </DashboardLayout>

@@ -18,7 +18,7 @@ import { useLocation, useProduct, useReward } from '@/hooks';
 import { UIDefaultTextField, UIFlexWrapBox } from '@/components/UI';
 import { Reward } from '@/types';
 
-const RewardCreatDialog = ({
+const RewardCreateDialog = ({
   isOpenCreateDlg,
   closeDlg,
 }: {
@@ -199,4 +199,4 @@ const RewardCreatDialog = ({
   );
 };
 
-export default RewardCreatDialog;
+export default RewardCreateDialog;

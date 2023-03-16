@@ -20,7 +20,6 @@ const LocationsById = () => {
   useEffect(() => {
     setLocationItem(onGetLocationById(parseInt(id as string)));
   }, [id]);
-
   return (
     <DashboardLayout title={locationItem ? locationItem.name : 'Locations'}>
       {locationItem && (

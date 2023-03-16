@@ -14,7 +14,6 @@ export type LocationsCardProps = {
 
 export const LocationsCard = ({ item }: LocationsCardProps) => {
   const router = useRouter();
-
   return (
     <UIItemCard sx={{ width: 254, height: 360 }}>
       <StyledImageBox>

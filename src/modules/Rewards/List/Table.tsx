@@ -59,7 +59,6 @@ const RewardsTable = () => {
   type Order = 'asc' | 'desc';
 
   const { rewards } = useReward();
-
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Reward.DataList>('id');
 

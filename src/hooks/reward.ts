@@ -12,7 +12,8 @@ import { useAppSelector, useAppDispatch } from './redux';
 
 export const useReward = () => {
   const appToast = useAppToast();
-  const { loading, message, error, rewards } = useAppSelector(rewardSelector);
+  const { loading, message, error, rewards, pageInfo } =
+    useAppSelector(rewardSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -39,5 +40,5 @@ export const useReward = () => {
     return payload;
   };
 
-  return { rewards, onFilterRewards, onCreateRewards };
+  return { pageInfo, rewards, onFilterRewards, onCreateRewards };
 };
