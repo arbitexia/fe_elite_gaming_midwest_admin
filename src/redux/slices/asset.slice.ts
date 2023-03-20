@@ -117,7 +117,7 @@ export const assetSlice = createSlice({
       })
       .addCase(
         getLocation.fulfilled,
-        (state, { payload }: PayloadAction<Location>) => {
+        (state, { payload }: PayloadAction<Location.Data>) => {
           state.loading = false;
           state.galleries = payload.gallery ?? [];
           state.status = ResponseStatus.SUCCESS;

@@ -5,9 +5,16 @@ export const requestsData: RequestItemType[] = [
   {
     id: 1,
     item: {
-      id: 6,
-      name: 'Marshal V6',
-      urls: ['images/marshal.jpg'],
+      product: {
+        id: 6,
+        name: 'Marshal V6',
+        point: 39000,
+        short: '128gb RAM $600',
+        description: '',
+        amount: 3,
+        status: ProductStatus.AVAILABLE,
+        createdAt: '14/06/2022',
+      },
       locationId: 0,
       location: {
         name: 'Palm Casino Resort',
@@ -24,12 +31,6 @@ export const requestsData: RequestItemType[] = [
         status: 'OPEN',
         type: 'Palm',
       },
-      point: 39000,
-      short: '128gb RAM $600',
-      description: '',
-      amount: 3,
-      status: ProductStatus.AVAILABLE,
-      createdAt: '14/06/2022',
     },
     user: {
       id: 1,
@@ -72,9 +73,16 @@ export const requestsData: RequestItemType[] = [
   {
     id: 2,
     item: {
-      id: 2,
-      name: 'Marshal V6',
-      urls: ['images/marshal.jpg'],
+      product: {
+        id: 2,
+        name: 'Marshal V6',
+        point: 19000,
+        short: '128gb RAM $600',
+        description: '',
+        amount: 3,
+        status: ProductStatus.AVAILABLE,
+        createdAt: '14/06/2022',
+      },
       locationId: 0,
       location: {
         name: 'Palm Casino Resort',
@@ -91,12 +99,6 @@ export const requestsData: RequestItemType[] = [
         status: 'OPEN',
         type: 'Palm',
       },
-      point: 19000,
-      short: '128gb RAM $600',
-      description: '',
-      amount: 3,
-      status: ProductStatus.AVAILABLE,
-      createdAt: '14/06/2022',
     },
     user: {
       id: 2,

@@ -55,7 +55,11 @@ const ProductsDetailInfoCard = ({ productItem }: IProductsDetailInfoCard) => {
         }}
       >
         <UIInfoTitle>Description:</UIInfoTitle>
-        <UIInfoValue>{productItem.description}</UIInfoValue>
+        <UIInfoValue          
+          dangerouslySetInnerHTML={{
+            __html: productItem.description ?? '',
+          }}
+        />
       </Box>
     </UICardBox>
   );

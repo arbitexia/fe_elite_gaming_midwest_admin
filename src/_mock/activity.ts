@@ -1,4 +1,4 @@
-import { ActivityModel, Activity, ProductStatus } from '@/constants';
+import { ActivityModel, ActivityType, ProductStatus } from '@/constants';
 import { ActivityItemType } from '@/types';
 
 export const activityData: ActivityItemType[] = [
@@ -38,15 +38,15 @@ export const activityData: ActivityItemType[] = [
       },
       status: 'OPEN',
       type: 'Palm',
-      urls: [
-        'images/palm.png',
-        'images/roulette.png',
-        'images/palm.png',
-        'images/roulette.png',
-      ],
+      // urls: [
+      //   'images/palm.png',
+      //   'images/roulette.png',
+      //   'images/palm.png',
+      //   'images/roulette.png',
+      // ],
     },
     model: ActivityModel.USER,
-    action: Activity.CHECKIN,
+    action: ActivityType.CHECKIN,
     status: '1000 Point',
     createdAt: '2022/11/22',
   },
@@ -76,8 +76,16 @@ export const activityData: ActivityItemType[] = [
       id: 1,
       item: {
         id: 6,
-        name: 'Marshal V6',
-        urls: ['images/marshal.jpg'],
+        product: {
+          id: 6,
+          name: 'Marshal V6',
+          point: 39000,
+          short: '128gb RAM $600',
+          description: '',
+          amount: 3,
+          status: ProductStatus.AVAILABLE,
+          createdAt: '14/06/2022',
+        },
         locationId: 0,
         location: {
           name: 'Palm Casino Resort',
@@ -94,11 +102,6 @@ export const activityData: ActivityItemType[] = [
           status: 'OPEN',
           type: 'PALM',
         },
-        point: 39000,
-        short: '128gb RAM $600',
-        description: '',
-        amount: 3,
-        status: ProductStatus.AVAILABLE,
         createdAt: '14/06/2022',
       },
       user: {
@@ -140,7 +143,7 @@ export const activityData: ActivityItemType[] = [
       requestedAt: '14/06/2022',
     },
     model: ActivityModel.REQUEST,
-    action: Activity.CREATE,
+    action: ActivityType.CREATE,
     status: 'Waiting',
     createdAt: '2022/11/22',
   },
@@ -170,8 +173,16 @@ export const activityData: ActivityItemType[] = [
       id: 1,
       item: {
         id: 6,
-        name: 'Marshal V6',
-        urls: ['images/marshal.jpg'],
+        product: {
+          id: 6,
+          name: 'Marshal V6',
+          point: 39000,
+          short: '128gb RAM $600',
+          description: '',
+          amount: 3,
+          status: ActivityType.CREATE,
+          createdAt: '14/06/2022',
+        },
         locationId: 0,
         location: {
           name: 'Palm Casino Resort',
@@ -188,11 +199,6 @@ export const activityData: ActivityItemType[] = [
           status: 'OPEN',
           type: 'Palm',
         },
-        point: 39000,
-        short: '128gb RAM $600',
-        description: '',
-        amount: 3,
-        status: Activity.CREATE,
         createdAt: '14/06/2022',
       },
       user: {
@@ -234,7 +240,7 @@ export const activityData: ActivityItemType[] = [
       requestedAt: '14/06/2022',
     },
     model: ActivityModel.REQUEST,
-    action: Activity.UPDATE,
+    action: ActivityType.UPDATE,
     status: 'Accepted',
     createdAt: '2022/11/22',
   },

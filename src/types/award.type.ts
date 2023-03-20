@@ -1,4 +1,5 @@
 import { AwardStatus } from '../constants';
+import { Location } from './location.type';
 import { Product } from './product.type';
 import { UserType } from './users.type';
 
@@ -20,9 +21,9 @@ export type GetAwardsParam = {
 export type AwardType = {
   id: number;
   userLocationId: number;
-  userLocation?: Location;
+  userLocation?: Location.Data;
   productId: number;
-  product?: Product;
+  product?: Product.Data;
   assigneeId: number;
   assignee?: UserType.User;
   status: AwardStatus;

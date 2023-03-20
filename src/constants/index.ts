@@ -1,5 +1,5 @@
 export {
-  Activity,
+  ActivityType,
   ActivityModel,
   Assets,
   AuthCallbackStatus,

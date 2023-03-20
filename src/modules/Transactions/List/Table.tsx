@@ -107,8 +107,8 @@ const TransactionsTable = ({
       }
     }
     if (orderBy === 'reward') {
-      if (b.reward.name < a.reward.name) return -1;
-      if (b.reward.name > a.reward.name) return 1;
+      if (b.reward.product.name < a.reward.product.name) return -1;
+      if (b.reward.product.name > a.reward.product.name) return 1;
     }
     if (b[orderBy] < a[orderBy]) {
       return -1;
@@ -235,7 +235,9 @@ const TransactionsTable = ({
                 {`${transactionItem.user.firstName} ${transactionItem.user.lastName}`}
               </StyledTableCell>
 
-              <StyledTableCell>{transactionItem.reward.name}</StyledTableCell>
+              <StyledTableCell>
+                {transactionItem.reward.product.name}
+              </StyledTableCell>
               <StyledTableCell>{transactionItem.amount}</StyledTableCell>
               <StyledTableCell>{transactionItem.type}</StyledTableCell>
               <StyledTableCell>{`${transactionItem.assignee.firstName} ${transactionItem.assignee.lastName}`}</StyledTableCell>

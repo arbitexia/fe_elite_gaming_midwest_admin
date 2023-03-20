@@ -40,7 +40,7 @@ const UserDetailRewardsCard = () => {
             return (
               <StyledRequestTableRow key={data.id}>
                 <StyledRewardsTableCell>
-                  {data.createdAt}
+                  {data.product.createdAt}
                 </StyledRewardsTableCell>
                 <StyledRewardsTableCell>
                   <Box>
@@ -52,17 +52,17 @@ const UserDetailRewardsCard = () => {
                         paddingBottom: '5px',
                       }}
                     >
-                      {data.name}
+                      {data.product.name}
                     </Typography>
                     <Typography
                       sx={{ fontSize: 12, fontWeight: 500, color: '#008A83' }}
                     >
-                      {data.point} points
+                      {data.product.point} points
                     </Typography>
                   </Box>
                 </StyledRewardsTableCell>
                 <StyledRewardsTableCell sx={{ fontWeight: 400 }}>
-                  {data.location.name}
+                  {data.location?.name}
                 </StyledRewardsTableCell>
                 <StyledRewardsTableCell>
                   <IconButton>

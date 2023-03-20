@@ -18,7 +18,9 @@ const Requests = () => {
             .toLowerCase()
             .includes(searchValue.toLowerCase()) ||
           userName.toLowerCase().includes(searchValue.toLowerCase()) ||
-          item.item.name.toLowerCase().includes(searchValue.toLowerCase())
+          item.item.product.name
+            .toLowerCase()
+            .includes(searchValue.toLowerCase())
         );
       });
     });

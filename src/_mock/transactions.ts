@@ -41,8 +41,16 @@ export const transactionData: TransactionType[] = [
     },
     reward: {
       id: 1,
-      name: 'AirPods 2',
-      urls: ['images/earphone.jpg'],
+      product: {
+        id: 1,
+        name: 'AirPods 2',
+        point: 12000,
+        short: '128gb RAM $600',
+        description: '',
+        amount: 3,
+        status: ProductStatus.AVAILABLE,
+        createdAt: '14/06/2022',
+      },
       locationId: 0,
       location: {
         name: 'Palm Casino Resort',
@@ -59,11 +67,6 @@ export const transactionData: TransactionType[] = [
         status: 'OPEN',
         type: 'Palm',
       },
-      point: 12000,
-      short: '128gb RAM $600',
-      description: '',
-      amount: 3,
-      status: ProductStatus.AVAILABLE,
       createdAt: '14/06/2022',
     },
     assignee: {

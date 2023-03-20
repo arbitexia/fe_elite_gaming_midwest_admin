@@ -82,10 +82,10 @@ const RewardsTable = () => {
     b: Reward.DataList,
     orderBy: keyof Reward.DataList
   ) {
-    if (b[orderBy] < a[orderBy]) {
+    if (b[orderBy]! < a[orderBy]!) {
       return -1;
     }
-    if (b[orderBy] > a[orderBy]) {
+    if (b[orderBy]! > a[orderBy]!) {
       return 1;
     }
     return 0;

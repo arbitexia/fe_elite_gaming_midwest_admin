@@ -23,7 +23,7 @@ const TransactionsPage = () => {
         return (
           (customer.toLowerCase().includes(searchValue.toLowerCase()) ||
             assignee.toLowerCase().includes(searchValue.toLowerCase()) ||
-            item.reward.name
+            item.reward.product.name
               .toLowerCase()
               .includes(searchValue.toLowerCase())) &&
           (searchType === 0 ||

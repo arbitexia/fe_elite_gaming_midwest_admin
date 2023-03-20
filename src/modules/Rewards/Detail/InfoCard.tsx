@@ -11,8 +11,8 @@ const ProductsDetailInfoCard = ({
   productItem,
   location,
 }: {
-  productItem: Product;
-  location?: Location | null;
+  productItem: Product.Data;
+  location?: Location.Data | null;
 }) => {
   return (
     <UICardBox>

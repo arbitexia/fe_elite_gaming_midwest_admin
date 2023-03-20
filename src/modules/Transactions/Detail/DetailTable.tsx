@@ -21,16 +21,18 @@ const DetailTable = ({ transactionItem }: TransactionsProps) => {
             {transactionItem.reward.id}
           </TableCell>
           <TableCell align="left">
-            {transactionItem.reward.name ?? '-'}
+            {transactionItem.reward.product.name ?? '-'}
           </TableCell>
           <TableCell align="left">
-            {transactionItem.reward.short ?? '-'}
+            {transactionItem.reward.product.short ?? '-'}
           </TableCell>
-          <TableCell>{transactionItem.reward.location.name}</TableCell>
+          <TableCell>{transactionItem.reward?.location?.name}</TableCell>
           <TableCell align="right">
-            {transactionItem.reward.point} Point
+            {transactionItem.reward.product.point} Point
           </TableCell>
-          <TableCell align="right">{transactionItem.reward.status}</TableCell>
+          <TableCell align="right">
+            {transactionItem.reward.product.status}
+          </TableCell>
         </TableRow>
       </TableBody>
     </StyledTable>

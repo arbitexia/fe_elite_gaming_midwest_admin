@@ -6,7 +6,7 @@ export type UserLocation = {
   userId: number;
   user?: UserType.User;
   locationId: number;
-  location?: Location;
+  location?: Location.Data;
   createdAt?: string;
   updatedAt?: string;
 };

@@ -79,10 +79,10 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
       }
     }
     if (orderBy === 'item') {
-      if (b.item.name < a.item.name) {
+      if (b.item.product.name < a.item.product.name) {
         return -1;
       }
-      if (b.item.name > a.item.name) {
+      if (b.item.product.name > a.item.product.name) {
         return 1;
       }
     }
@@ -112,10 +112,7 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
     return Object.keys(items).map((key, index) => {
       if (
         key === 'id' ||
-        key === 'location' ||
-        key === 'locationId' ||
         key === 'short' ||
-        key === 'urls' ||
         key === 'description' ||
         key === 'createdAt'
       )
@@ -249,7 +246,7 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
                 <StyledRequestTableRow key={`request-${index}`}>
                   <StyledRequestTableCell>#{request.id}</StyledRequestTableCell>
                   <StyledRequestTableCell>
-                    {renderItem(request.item)}
+                    {renderItem(request.item.product)}
                   </StyledRequestTableCell>
                   <StyledRequestTableCell sx={{ color: '#ABACAC !important' }}>
                     {request.requestedAt}

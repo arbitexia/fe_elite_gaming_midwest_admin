@@ -1,4 +1,4 @@
-export enum Activity {
+export enum ActivityType {
   CHECKIN = 'CHECKIN',
   SIGNUP = 'SIGNUP',
   LOGIN = 'LOGIN',
