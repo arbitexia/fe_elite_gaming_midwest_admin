@@ -1,4 +1,8 @@
-export type { ActivityItemType } from './activity.type';
+export type {
+  ActivityItemType,
+  ActivityFilterType,
+  ExportActivityType,
+} from './activity.type';
 export type { MenuItemObj, DropdownItems } from './app.type';
 export type {
   AssetType,
@@ -33,7 +37,11 @@ export type { ReduxJson } from './redux.type';
 export type { RequestItemType } from './requests.type';
 export type { Reward } from './reward.type';
 export type { RoleType } from './role.type';
-export type { TransactionType, TransactionsProps } from './transactions.type';
+export type {
+  TransactionType,
+  TransactionsProps,
+  TransactionFilterType,
+} from './transactions.type';
 export type {
   UserType,
   GetUserParam,

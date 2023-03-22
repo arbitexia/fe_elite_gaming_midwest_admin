@@ -8,6 +8,7 @@ import { PointType } from './point.type';
 import { AwardType } from './award.type';
 import { Product } from './product.type';
 import { Reward } from './reward.type';
+import { ActivityItemType } from './activity.type';
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
     loading: boolean;
@@ -95,6 +96,15 @@ export declare namespace ReduxJson {
     message: string | null;
     error: string | null;
     rewards: Reward.DataList[];
+    pageInfo: CommonType.PageInfo | null;
+  };
+
+  export type ActivityState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    message: string | null;
+    error: string | null;
+    activities: ActivityItemType[];
     pageInfo: CommonType.PageInfo | null;
   };
 }

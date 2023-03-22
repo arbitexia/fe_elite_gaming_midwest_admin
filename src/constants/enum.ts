@@ -12,10 +12,11 @@ export enum ActivityType {
 export enum ActivityModel {
   USER = 'USER',
   REWARD = 'REWARD',
-  POINT = 'POINT',
+  PRODUCT = 'PRODUCT',
   ASSET = 'ASSET',
-  REQUEST = 'REQUEST',
+  POINT = 'POINT',
   LOCATION = 'LOCATION',
+  GALLERY = 'GALLERY',
 }
 
 export enum Assets {

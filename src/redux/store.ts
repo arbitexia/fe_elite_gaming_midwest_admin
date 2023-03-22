@@ -25,6 +25,7 @@ import {
   awardReducer,
   productReducer,
   rewardReducer,
+  activityReducer,
 } from './slices';
 
 const combinedReducer = combineReducers({
@@ -37,6 +38,7 @@ const combinedReducer = combineReducers({
   award: awardReducer,
   product: productReducer,
   reward: rewardReducer,
+  activity: activityReducer,
 });
 
 const createStore = () => {
@@ -54,6 +56,7 @@ const createStore = () => {
       'award',
       'product',
       'reward',
+      'activity',
     ],
   };
 

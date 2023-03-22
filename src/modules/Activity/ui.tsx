@@ -45,21 +45,21 @@ export const StyledTableCell = styled(TableCell)({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     height: '80px',
-    color: '#06251F',
-    fontWeight: 600,
+    color: 'rgba(0, 0, 0, 0.3)',
+    fontWeight: 400,
     '&:nth-of-type(1)': {
       fontWeight: 400,
       color: 'rgba(0, 0, 0, 0.3)',
     },
-    '&:nth-of-type(3)': {
-      fontWeight: 400,
+    '&:nth-of-type(4)': {
+      fontWeight: 600,
       color: 'rgba(0, 0, 0, 0.7)',
     },
     '&:nth-of-type(5)': {
-      fontWeight: 400,
-      color: 'rgba(0, 0, 0, 0.3)',
+      fontWeight: 600,
+      color: 'rgba(0, 0, 0, 0.7)',
     },
-    '&:nth-of-type(8)': {
+    '&:nth-of-type(6)': {
       fontWeight: 400,
       color: 'rgba(0, 0, 0, 0.3)',
     },
