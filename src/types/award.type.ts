@@ -1,5 +1,5 @@
 import { AwardStatus } from '../constants';
-import { Location } from './location.type';
+import { UserLocation } from './point.type';
 import { Product } from './product.type';
 import { UserType } from './users.type';
 
@@ -9,7 +9,7 @@ export type CreateAwardParam = {
 
 export type GetAwardsParam = {
   filterBy: {
-    location: number;
+    // location: number;
     search: string;
   };
   cursor: {
@@ -21,7 +21,7 @@ export type GetAwardsParam = {
 export type AwardType = {
   id: number;
   userLocationId: number;
-  userLocation?: Location.Data;
+  userLocation?: UserLocation;
   productId: number;
   product?: Product.Data;
   assigneeId: number;

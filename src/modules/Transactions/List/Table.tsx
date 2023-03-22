@@ -13,7 +13,7 @@ import { menuActions } from '@/_mock/users';
 import { UIChip } from '@/components/UI';
 import { MenuAction } from '@/constants';
 import { getColor } from '@/libs/data-helper';
-import { TransactionType } from '@/types';
+import { AwardType, TransactionType } from '@/types';
 import {
   StyledTableRow,
   StyledTableCell,
@@ -21,9 +21,10 @@ import {
   StyledOptionMenu,
   StyledOptionMenuItem,
 } from './ui';
+import { format } from 'date-fns';
 
 type TransactionsTableProps = {
-  transactionTableData: TransactionType[];
+  transactionTableData: AwardType[];
 };
 
 const TransactionsTable = ({
@@ -62,61 +63,6 @@ const TransactionsTable = ({
       return a[1] - b[1];
     });
     return stabilizedThis.map((el) => el[0]);
-  }
-
-  function getComparator<Key extends keyof TransactionType>(
-    order: Order,
-    orderBy: Key
-  ): (a: TransactionType, b: TransactionType) => number {
-    return order === 'desc'
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  }
-
-  function descendingComparator(
-    a: TransactionType,
-    b: TransactionType,
-    orderBy: keyof TransactionType
-  ) {
-    if (orderBy === 'user') {
-      if (
-        `${b.user.firstName} ${b.user.lastName}` <
-        `${a.user.firstName} ${a.user.lastName}`
-      ) {
-        return -1;
-      }
-      if (
-        `${b.user.firstName} ${b.user.lastName}` >
-        `${a.user.firstName} ${a.user.lastName}`
-      ) {
-        return 1;
-      }
-    }
-    if (orderBy === 'assignee') {
-      if (
-        `${b.assignee.firstName} ${b.assignee.lastName}` <
-        `${a.assignee.firstName} ${a.assignee.lastName}`
-      ) {
-        return -1;
-      }
-      if (
-        `${b.assignee.firstName} ${b.assignee.lastName}` >
-        `${a.assignee.firstName} ${a.assignee.lastName}`
-      ) {
-        return 1;
-      }
-    }
-    if (orderBy === 'reward') {
-      if (b.reward.product.name < a.reward.product.name) return -1;
-      if (b.reward.product.name > a.reward.product.name) return 1;
-    }
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
   }
 
   const createSortHandler =
@@ -212,11 +158,7 @@ const TransactionsTable = ({
         </StyledTableRow>
       </TableHead>
       <TableBody>
-        {stableSort<TransactionType>(
-          transactionTableData,
-          getComparator(order, orderBy)
-        ).map((transactionItem) => {
-          // const labelId = `enhanced-table-checkbox-${index}`;
+        {transactionTableData?.map((transactionItem) => {
           return (
             <StyledTableRow
               key={transactionItem.id}
@@ -232,15 +174,17 @@ const TransactionsTable = ({
                 #{transactionItem.id}
               </StyledTableCell>
               <StyledTableCell>
-                {`${transactionItem.user.firstName} ${transactionItem.user.lastName}`}
+                {`${transactionItem?.userLocation?.user?.firstName} ${transactionItem.userLocation?.user?.lastName}`}
               </StyledTableCell>
 
+              <StyledTableCell>{transactionItem.product?.name}</StyledTableCell>
               <StyledTableCell>
-                {transactionItem.reward.product.name}
+                {transactionItem.product?.amount}
               </StyledTableCell>
-              <StyledTableCell>{transactionItem.amount}</StyledTableCell>
-              <StyledTableCell>{transactionItem.type}</StyledTableCell>
-              <StyledTableCell>{`${transactionItem.assignee.firstName} ${transactionItem.assignee.lastName}`}</StyledTableCell>
+              <StyledTableCell>
+                {transactionItem?.note ?? 'Point'}
+              </StyledTableCell>
+              <StyledTableCell>{`${transactionItem.assignee?.firstName} ${transactionItem.assignee?.lastName}`}</StyledTableCell>
               <StyledTableCell align="center">
                 <UIChip
                   label={transactionItem.status}
@@ -248,7 +192,10 @@ const TransactionsTable = ({
                 />
               </StyledTableCell>
               <StyledTableCell align="center">
-                {transactionItem.createdAt}
+                {format(
+                  new Date(transactionItem?.createdAt ?? '1900-12-12'),
+                  'yyyy-MM-dd'
+                )}
               </StyledTableCell>
               <StyledTableCell>
                 <IconButton

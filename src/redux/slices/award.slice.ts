@@ -15,14 +15,14 @@ import {
 const initialState: ReduxJson.AwardState = {
   loading: true,
   status: null,
-  awards: [],
-  pageInfo: null,
   message: null,
   error: null,
+  awards: [],
+  pageInfo: null,
 };
 
 export const getAwards = createAsyncThunk<
-  AwardType[],
+  CommonType.Pagination<AwardType>,
   GetAwardsParam,
   { dispatch: AppDispatch; state: RootState }
 >('Award/getAwards', async (params: GetAwardsParam, thunkAPI) => {
@@ -106,10 +106,14 @@ export const awardSlice = createSlice({
       })
       .addCase(
         getAwards.fulfilled,
-        (state, { payload }: PayloadAction<AwardType[]>) => {
+        (
+          state,
+          { payload }: PayloadAction<CommonType.Pagination<AwardType>>
+        ) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          state.awards = payload;
+          state.awards = payload.data;
+          state.pageInfo = payload.pageInfo;
         }
       )
       .addCase(getAwards.rejected, (state, { payload }) => {

@@ -91,3 +91,10 @@ export {
   deleteUser,
   resetUserMessage,
 } from './user.slice';
+
+export {
+  default as activityReducer,
+  activitySelector,
+  filterActivities,
+  resetActivityMessage,
+} from './activity.slice';

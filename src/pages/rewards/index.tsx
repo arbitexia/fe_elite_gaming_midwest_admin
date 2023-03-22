@@ -17,9 +17,9 @@ const Rewards = () => {
   const [isOpenCreateDlg, setIsOpenCreateDlg] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchRewards = () => {
+    const fetchRewards = async () => {
       try {
-        filterRewards({
+        await filterRewards({
           filterBy: { search: searchValue },
           cursor: { page: 0, size: 1000 },
         });

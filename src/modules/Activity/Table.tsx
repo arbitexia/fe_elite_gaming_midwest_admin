@@ -6,78 +6,30 @@ import { StyledTableRow, StyledTableCell } from './ui';
 
 type ActivityTableProps = {
   activityTableData: ActivityItemType[];
+  onOrder: (value: string) => void;
 };
 
-const ActivityTable = ({ activityTableData }: ActivityTableProps) => {
+const ActivityTable = ({ activityTableData, onOrder }: ActivityTableProps) => {
   type Order = 'asc' | 'desc';
-  const [order, setOrder] = useState<Order>('asc');
+  const [order, setOrder] = useState<Order>('desc');
   const [orderBy, setOrderBy] = useState<keyof ActivityItemType>('id');
-
-  function stableSort<T>(
-    array: readonly T[],
-    comparator: (a: T, b: T) => number
-  ) {
-    const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) {
-        return order;
-      }
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-  }
-
-  function getComparator<Key extends keyof ActivityItemType>(
-    order: Order,
-    orderBy: Key
-  ): (a: ActivityItemType, b: ActivityItemType) => number {
-    return order === 'desc'
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  }
-
-  function descendingComparator(
-    a: ActivityItemType,
-    b: ActivityItemType,
-    orderBy: keyof ActivityItemType
-  ) {
-    if (orderBy === 'user') {
-      if (
-        `${b.user.firstName} ${b.user.lastName}` <
-        `${a.user.firstName} ${a.user.lastName}`
-      ) {
-        return -1;
-      }
-      if (
-        `${b.user.firstName} ${b.user.lastName}` >
-        `${a.user.firstName} ${a.user.lastName}`
-      ) {
-        return 1;
-      }
-    }
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
-  }
 
   const createSortHandler =
     (property: keyof ActivityItemType) =>
     (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
+
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: keyof ActivityItemType
   ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const newOrder = orderBy === property && order === 'asc' ? 'desc' : 'asc';
+    setOrder(newOrder);
     setOrderBy(property);
+    onOrder(`${property}|${newOrder}`);
   };
+
   return (
     <Table>
       <TableHead>
@@ -100,7 +52,15 @@ const ActivityTable = ({ activityTableData }: ActivityTableProps) => {
               User
             </TableSortLabel>
           </StyledTableCell>
-          <StyledTableCell>Date</StyledTableCell>
+          <StyledTableCell>
+            <TableSortLabel
+              active={orderBy === 'createdAt'}
+              direction={order}
+              onClick={createSortHandler('createdAt')}
+            >
+              Date
+            </TableSortLabel>
+          </StyledTableCell>
           <StyledTableCell>
             <TableSortLabel
               active={orderBy === 'model'}
@@ -112,30 +72,18 @@ const ActivityTable = ({ activityTableData }: ActivityTableProps) => {
           </StyledTableCell>
           <StyledTableCell>
             <TableSortLabel
-              active={orderBy === 'action'}
+              active={orderBy === 'type'}
               direction={order}
-              onClick={createSortHandler('action')}
+              onClick={createSortHandler('type')}
             >
               Type
             </TableSortLabel>
           </StyledTableCell>
-          <StyledTableCell>
-            <TableSortLabel
-              active={orderBy === 'status'}
-              direction={order}
-              onClick={createSortHandler('status')}
-            >
-              Status
-            </TableSortLabel>
-          </StyledTableCell>
+          <StyledTableCell>Status</StyledTableCell>
         </StyledTableRow>
       </TableHead>
       <TableBody>
-        {stableSort<ActivityItemType>(
-          activityTableData,
-          getComparator(order, orderBy)
-        ).map((activityItem) => {
-          // const labelId = `enhanced-table-checkbox-${index}`;
+        {activityTableData?.map((activityItem) => {
           return (
             <StyledTableRow
               key={activityItem.id}
@@ -146,15 +94,19 @@ const ActivityTable = ({ activityTableData }: ActivityTableProps) => {
                 #{activityItem.id}
               </StyledTableCell>
               <StyledTableCell>
-                {`${activityItem.user.firstName} ${activityItem.user.lastName}`}
+                {`${activityItem?.user?.firstName ?? ''} ${
+                  activityItem?.user?.lastName ?? ''
+                }`}
               </StyledTableCell>
 
               <StyledTableCell>
                 {format(new Date(activityItem.createdAt), 'yyyy-MM-dd')}
               </StyledTableCell>
               <StyledTableCell>{activityItem.model}</StyledTableCell>
-              <StyledTableCell>{activityItem.action}</StyledTableCell>
-              <StyledTableCell>{activityItem.status}</StyledTableCell>
+              <StyledTableCell>{activityItem.type}</StyledTableCell>
+              <StyledTableCell>
+                {JSON.stringify(activityItem.metadata)}
+              </StyledTableCell>
             </StyledTableRow>
           );
         })}

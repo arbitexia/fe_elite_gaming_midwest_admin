@@ -6,4 +6,5 @@ export * as locationApi from './location.api';
 export * as pointApi from './point.api';
 export * as productApi from './product.api';
 export * as rewardApi from './reward.api';
+export * as activityApi from './activity.api';
 export { jwtAxios, setupJwt } from './axios.api';

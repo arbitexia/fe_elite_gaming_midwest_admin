@@ -3,10 +3,32 @@ import { ActivityModel, ActivityType } from '@/constants';
 
 export type ActivityItemType = {
   id: number;
-  user: UserType.MockUser;
+  user: UserType.User;
   model: ActivityModel;
-  victim: Location.Data | Reward.Data | RequestItemType;
-  action: ActivityType;
-  status: string;
+  victimId: number;
+  metadata: { status: string };
+  type: ActivityType;
   createdAt: string;
+};
+
+export type ExportActivityType = {
+  id: number;
+  user: string;
+  model: string;
+  victimId: number;
+  metadata: string;
+  type: string;
+  date: string;
+};
+
+export type ActivityFilterType = {
+  filterBy: {
+    modelType: string;
+    search?: string;
+    sort?: string;
+  };
+  cursor: {
+    page: number;
+    size: number;
+  };
 };

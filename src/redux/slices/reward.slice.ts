@@ -41,7 +41,7 @@ export const createRewards = createAsyncThunk<
 });
 
 export const rewardSlice = createSlice({
-  name: 'product',
+  name: 'reward',
   initialState,
   reducers: {
     resetRewardMessage: (state: ReduxJson.RewardState, _payload) => {

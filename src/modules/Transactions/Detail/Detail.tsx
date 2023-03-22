@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import { Box, Grid, Typography } from '@mui/material';
 import { Print } from '@mui/icons-material';
 import { UIFlexSpaceBox, UIActionButton, UIImage } from '@/components/UI';
-import { TransactionsProps } from '@/types';
+import { AwardType, TransactionsProps } from '@/types';
 import { useAppToast } from '@/providers';
 import DetailTable from './DetailTable';
 import {
@@ -15,7 +15,10 @@ import {
   StyledOrderModalHeading,
 } from './ui';
 
-const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
+export type TransactionDetailProps = {
+  transactionItem: AwardType;
+};
+const TransactionDetail = ({ transactionItem }: TransactionDetailProps) => {
   const appToast = useAppToast();
   return (
     <Box>
@@ -49,14 +52,17 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
           <Grid item xs={6}>
             <StyledGridBox component="div">
               <Typography variant="h5">Customer</Typography>
-              <Typography>{`${transactionItem.user.firstName ?? '-'} ${
-                transactionItem.user.lastName ?? '-'
+              <Typography>{`${
+                transactionItem.userLocation?.user?.firstName ?? '-'
+              } ${
+                transactionItem.userLocation?.user?.lastName ?? '-'
               }`}</Typography>
               <Typography>
-                {transactionItem?.user?.address?.address1 ?? '-'}
+                {transactionItem?.userLocation?.location?.address?.address1 ??
+                  '-'}
               </Typography>
               <Typography>
-                Phone: {transactionItem?.user?.phone ?? '-'}
+                Phone: {transactionItem?.userLocation?.user?.phone ?? '-'}
               </Typography>
 
               <Box component="div">
@@ -73,8 +79,8 @@ const TransactionDetail = ({ transactionItem }: TransactionsProps) => {
           <Grid item xs={6}>
             <StyledGridBox component="div">
               <Typography variant="h5">Assignee</Typography>
-              <Typography>{`${transactionItem.assignee.firstName ?? '-'} ${
-                transactionItem.assignee.lastName ?? '-'
+              <Typography>{`${transactionItem?.assignee?.firstName ?? '-'} ${
+                transactionItem?.assignee?.lastName ?? '-'
               }`}</Typography>
               <Typography>
                 {transactionItem?.assignee?.address?.address1 ?? '-'}
