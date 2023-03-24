@@ -1,73 +1,124 @@
+import React, { useEffect, useState } from 'react';
+import { Check as CheckIcon } from '@mui/icons-material';
 import { useRouter } from 'next/router';
-import { Box, Typography } from '@mui/material';
-import { UIFlexSpaceBox, UIItemCard } from '@/components/UI';
-import { Product } from '@/types';
+import { Box, Divider } from '@mui/material';
 import {
-  StyledLocationViewButton,
-  StyledLocationEditButton,
+  UICardBox,
+  UIFlexCenterBox,
+  UIFlexSpaceBox,
+  UIFlexWrapBox,
+  UIInfoTitle,
+  UIInfoValue,
+} from '@/components/UI';
+import { Reward } from '@/types';
+import {
   StyledImageBox,
+  StyledLabel,
+  StyledInfoTitle,
+  StyledItemBox,
+  StyledLeftWrapBox,
+  StyledInfoValue,
+  StyledRightWrapBox,
 } from './ui';
+import { format } from 'date-fns';
+import RewardDetailTable from './RewardDetailTable';
 
-export type ProductCardProp = {
-  locationId: number;
-  product: Product.Data;
+export type RewardsCardProp = {
+  rewards: Reward.DataList[];
 };
 
-const ProductCard = ({ locationId, product }: ProductCardProp) => {
+const RewardCard = ({ rewards }: RewardsCardProp) => {
   const router = useRouter();
+  const [selectedReward, setSelectedReward] = useState<Reward.DataList>();
+  useEffect(() => {
+    if (rewards && rewards.length > 0) {
+      setSelectedReward(rewards[0]);
+    } else {
+      setSelectedReward(undefined);
+    }
+  }, [rewards]);
 
+  const handleClickReward = (selectedId: number) => {
+    setSelectedReward(rewards.find((obj) => obj.id === selectedId));
+  };
+  if (!selectedReward) {
+    return (
+      <UIFlexCenterBox>
+        <UIInfoValue>No result</UIInfoValue>
+      </UIFlexCenterBox>
+    );
+  }
+  console.log(selectedReward.gallery);
   return (
-    <UIItemCard sx={{ width: 300, height: 360 }}>
-      <StyledImageBox>
-        <Box
-          component="img"
-          src={
-            product.gallery && product.gallery.length > 0
-              ? product.gallery[0].asset?.url ?? '/images/noImage.jpg'
-              : '/images/noImage.jpg'
-          }
-          width={220}
-          height={160}
-        />
-      </StyledImageBox>
-      <Typography
-        sx={{
-          mt: '30px',
-          fontWeight: '600',
-          fontSize: '18px',
-          lineHeight: '22px',
-          minHeight: '22px',
-          color: 'gba(5, 34, 33, 0.8)',
-        }}
-      >
-        {product.name}
-      </Typography>
-      <Typography
-        sx={{
-          mt: '10px',
-          fontWeight: '600',
-          fontSize: '12px',
-          lineHeight: '22px',
-          minHeight: '22px',
-          color: 'gba(5, 34, 33, 0.8)',
-        }}
-      >
-        {`${product.amount} / ${product.point}`}
-      </Typography>
-      <UIFlexSpaceBox sx={{ marginTop: '30px' }}>
-        <StyledLocationViewButton
-          onClick={() => router.push(`/rewards/${locationId}/${product.id}`)}
-        >
-          View More
-        </StyledLocationViewButton>
-        <StyledLocationEditButton
-          onClick={() => router.push(`/products/edit/${product.id}`)}
-        >
-          Edit
-        </StyledLocationEditButton>
-      </UIFlexSpaceBox>
-    </UIItemCard>
+    <UIFlexWrapBox sx={{ flexWrap: 'nowrap' }}>
+      <StyledLeftWrapBox>
+        <UICardBox sx={{ minHeight: '340px' }}>
+          <StyledImageBox>
+            <Box
+              component="img"
+              src={
+                selectedReward?.gallery && selectedReward.gallery.length > 0
+                  ? selectedReward?.gallery[0].asset?.url ??
+                    '/images/noImage.jpg'
+                  : '/images/noImage.jpg'
+              }
+              width="100%"
+              height="100%"
+            />
+          </StyledImageBox>
+          <StyledLabel sx={{ mt: '30px' }}>{selectedReward?.name}</StyledLabel>
+          <StyledInfoTitle sx={{ mt: '15px' }}>Location:</StyledInfoTitle>
+          <StyledInfoValue>
+            {`${selectedReward?.address?.address1 ?? ''} ${
+              selectedReward?.address?.address2 ?? ''
+            } ${selectedReward?.address?.city ?? ''} ${
+              selectedReward?.address?.state ?? ''
+            } ${selectedReward?.address?.zipcode ?? ''} ${
+              selectedReward?.address?.country ?? ''
+            }`}
+          </StyledInfoValue>
+          <StyledInfoTitle sx={{ mt: '8px' }}>State:</StyledInfoTitle>
+          <StyledInfoValue>{selectedReward?.status}</StyledInfoValue>
+          <StyledInfoTitle sx={{ mt: '8px' }}>Description:</StyledInfoTitle>
+          <StyledInfoValue
+            dangerouslySetInnerHTML={{
+              __html: selectedReward?.description ?? '',
+            }}
+          />
+        </UICardBox>
+        <Box sx={{ marginTop: '30px' }}>
+          {rewards?.map((obj, index) => {
+            return (
+              <StyledItemBox
+                key={index}
+                onClick={() => handleClickReward(obj.id)}
+              >
+                <UIFlexSpaceBox>
+                  <Box>
+                    <StyledLabel>{obj.name}</StyledLabel>
+                    <StyledInfoValue sx={{ marginTop: '8px' }}>
+                      {format(new Date(obj?.createdAt ?? ''), 'yyyy-MM-dd')}
+                    </StyledInfoValue>
+                  </Box>
+                  {Number(obj.id) === Number(selectedReward?.id) ? (
+                    <CheckIcon />
+                  ) : (
+                    ''
+                  )}
+                </UIFlexSpaceBox>
+              </StyledItemBox>
+            );
+          })}
+        </Box>
+      </StyledLeftWrapBox>
+      <Divider orientation="vertical" sx={{ height: '100vh', mx: 4 }} />
+      <StyledRightWrapBox>
+        {selectedReward?.reward && (
+          <RewardDetailTable rewards={selectedReward.reward} />
+        )}
+      </StyledRightWrapBox>
+    </UIFlexWrapBox>
   );
 };
 
-export default ProductCard;
+export default RewardCard;

@@ -18,21 +18,21 @@ export declare namespace Product {
 
   type Body = {
     input: {
-      name: string;
-      amount: number;
-      point: number;
-      status: string;
-      short: string;
-      description: string;
+      name?: string;
+      amount?: number;
+      point?: number;
+      status?: string;
+      short?: string;
+      description?: string;
     };
   };
 
   type Filter = {
     filterBy: {
-      product: number;
-      pointFrom: number;
-      pointTo: number;
+      pointFrom?: number;
+      pointTo?: number;
       search: string;
+      sort?: string;
     };
     cursor: {
       page: number;

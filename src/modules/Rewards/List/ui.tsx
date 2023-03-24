@@ -1,4 +1,4 @@
-import { styled, Box, Button } from '@mui/material';
+import { styled, Box, Typography } from '@mui/material';
 import { UIDefaultTextField } from '@/components/UI';
 
 export const StyledSearchTextField = styled(UIDefaultTextField)({
@@ -15,43 +15,59 @@ export const StyledSearchTextField = styled(UIDefaultTextField)({
   },
 });
 
-export const StyledLocationEditButton = styled(Button)({
-  width: '120px',
-  height: '42px',
-  background: 'rgba(137, 200, 198, 0.2)',
-  border: '1px solid rgba(191, 215, 225, 0.05)',
-  borderRadius: '8px',
-  fontWeight: '500',
-  fontSize: '16px',
-  lineHeight: '24px',
-  color: '#83A9A8',
-  '&:hover': {
-    color: '#FFFFFF',
-    background: '#008A83',
-    border: '1px solid rgba(191, 215, 225, 0.05)',
-  },
-});
-
-export const StyledLocationViewButton = styled(Button)({
-  width: '120px',
-  height: '42px',
-  background: 'rgba(191, 215, 225, 0.05)',
-  border: '2px solid rgba(137, 200, 198, 0.2)',
-  borderRadius: '8px',
-  fontWeight: '500',
-  fontSize: '16px',
-  lineHeight: '24px',
-  color: '#83A9A8',
-  '&:hover': {
-    color: '#008A83',
-    border: '2px solid rgba(137, 200, 198, 0.5)',
-  },
-});
-
 export const StyledImageBox = styled(Box)({
   textAlign: 'center',
   padding: 0,
   borderRadius: '6px',
   height: '150px',
   overflow: 'hidden',
+});
+
+export const StyledItemBox = styled(Box)({
+  '&:nth-of-type(odd)': {
+    background: 'rgba(194, 239, 238, 0.2)',
+  },
+  '&:nth-of-type(even)': {
+    background: 'rgba(242, 255, 253, 0.5)',
+  },
+  '&:nth-of-type(1)': {
+    borderTop: 'solid 1px rgba(0, 0, 0, 0.1)',
+  },
+  borderBottom: 'solid 1px rgba(0, 0, 0, 0.1)',
+  width: '320px',
+  padding: '12px',
+  height: '70px',
+});
+
+export const StyledLeftWrapBox = styled(Box)({
+  width: '320px',
+});
+
+export const StyledRightWrapBox = styled(Box)({
+  width: '100%',
+});
+
+export const StyledInfoTitle = styled(Typography)({
+  fontWeight: '600',
+  fontSize: '12px',
+  lineHeight: '16px',
+  color: '#83A9A8',
+});
+
+export const StyledInfoValue = styled(Typography)({
+  fontWeight: '600',
+  fontSize: '12px',
+  overflow: 'hidden',
+  color: 'rgba(0, 0, 0, 0.3)',
+  p: {
+    margin: '0px',
+  },
+});
+
+export const StyledLabel = styled(Typography)({
+  fontWeight: '600',
+  fontSize: '18px',
+  lineHeight: '22px',
+  minHeight: '22px',
+  color: 'gba(5, 34, 33, 0.8)',
 });

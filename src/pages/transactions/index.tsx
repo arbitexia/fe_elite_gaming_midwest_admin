@@ -15,7 +15,6 @@ const TransactionsPage = () => {
   const [searchType, setSearchType] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  console.log(awards);
   useEffect(() => {
     const loadAwards = async () => {
       try {

@@ -7,40 +7,49 @@ import {
 } from '@/modules/Products';
 import { DashboardLayout } from '@/layouts';
 import { useProduct } from '@/hooks';
+import { Product } from '@/types';
 
 const ProductsPage = () => {
-  const { products, pageInfo, onGetProducts } = useProduct();
+  const { products, pageInfo, onGetProducts, onUpdateProduct } = useProduct();
   const [searchValue, setSearchValue] = useState('');
-  const [searchProduct, setSearchProduct] = useState(0);
+  const [selectedLocationId, setSelectedLocationId] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
-    handleSearch();
-  }, [searchValue, setSearchProduct, page, rowsPerPage]);
+    fetchProducts();
+  }, [searchValue, selectedLocationId, page, rowsPerPage]);
 
-  const handleSearch = () => {
+  const fetchProducts = (sort?: string) => {
     onGetProducts({
       filterBy: {
-        product: searchProduct,
         search: searchValue,
-        pointFrom: 0,
-        pointTo: 1000000,
+        sort,
       },
       cursor: { page: page, size: rowsPerPage },
     });
   };
-
+  const handleUpdateAmount = async (data: Product.Data) => {
+    const params: Product.Param & Product.Body = {
+      id: data.id,
+      input: { amount: data.amount },
+    };
+    await onUpdateProduct(params);
+  };
   return (
     <DashboardLayout title="Products">
       <ProductsHeader
         searchValue={searchValue}
-        searchProduct={searchProduct}
-        onValueChange={(value: string) => setSearchValue(value)}
-        onProductChange={(value: number) => setSearchProduct(value)}
+        searchProduct={selectedLocationId}
+        onValueChange={setSearchValue}
+        onProductChange={setSelectedLocationId}
       />
       <Divider sx={{ mt: '30px' }} />
-      <ProductsTable productsTableData={products} />
+      <ProductsTable
+        productsTableData={products}
+        onOrder={(sort) => fetchProducts(sort)}
+        onUpdateAmount={handleUpdateAmount}
+      />
       <ProductsPagination
         page={page}
         rowsPerPage={rowsPerPage}

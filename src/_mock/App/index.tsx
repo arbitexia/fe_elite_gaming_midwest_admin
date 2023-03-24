@@ -55,7 +55,7 @@ export const superSidebarItems: MenuItemObj[] = [
   },
   {
     id: 3,
-    text: 'Products',
+    text: 'Inventory',
     route: 'products',
     isSelected: false,
     icon: <Storefront sx={{ marginRight: 2, width: 18 }} />,
@@ -82,12 +82,12 @@ export const superSidebarItems: MenuItemObj[] = [
     icon: <Report sx={{ marginRight: 2, width: 18 }} />,
     dropdown: [
       {
-        text: 'Activity',
+        text: 'Activities',
         route: 'activity',
         isSelected: false,
       },
       {
-        text: 'Transaction',
+        text: 'Transactions',
         route: 'transactions',
         isSelected: false,
       },
