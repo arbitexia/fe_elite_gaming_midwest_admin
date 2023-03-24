@@ -9,7 +9,7 @@ import {
   UIListHeader,
   UISelectMenuItem,
 } from '@/components/UI';
-import { locationsData } from '@/_mock/locations';
+import { useLocation } from '@/hooks';
 
 interface IProductsListHeader {
   searchValue: string;
@@ -25,13 +25,13 @@ const ProductsListHeader = ({
   onProductChange,
 }: IProductsListHeader) => {
   const router = useRouter();
-
+  const { locations } = useLocation();
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);
   };
 
   return (
-    <UIListHeader title="Products">
+    <UIListHeader title="Inventory">
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
         <UIFlexCenterBox>
           <Typography sx={{ fontWeight: 500, fontSize: 14, color: '#374E4E' }}>
@@ -55,7 +55,7 @@ const ProductsListHeader = ({
             }}
           >
             <UISelectMenuItem value={0}>All</UISelectMenuItem>
-            {locationsData.map((option) => (
+            {locations.map((option) => (
               <UISelectMenuItem key={option.id} value={option.id}>
                 {option.name}
               </UISelectMenuItem>
@@ -85,7 +85,7 @@ const ProductsListHeader = ({
           sx={{ minWidth: '110px', borderRadius: '8px' }}
           onClick={handleCreate}
         >
-          + Create
+          Add new product
         </UIDefaultButton>
       </UIFlexWrapBox>
     </UIListHeader>

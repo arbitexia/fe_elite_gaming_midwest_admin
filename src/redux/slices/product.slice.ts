@@ -174,6 +174,13 @@ export const productSlice = createSlice({
         (state, { payload }: PayloadAction<Product.Data>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
+          state.products = state.products.map((p) => {
+            if (p.id === payload.id) {
+              return payload;
+            } else {
+              return p;
+            }
+          });
           state.currentProduct = payload;
           state.currentId = payload.id;
         }

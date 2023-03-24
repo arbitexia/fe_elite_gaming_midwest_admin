@@ -1,50 +1,63 @@
 import React from 'react';
 import { format } from 'date-fns';
+import { Table, TableHead, TableBody, Box, Typography } from '@mui/material';
+import { Reward } from '@/types';
 import {
-  Table,
-  TableHead,
-  TableBody,
-  TableContainer,
-  Paper,
-} from '@mui/material';
-import { Product } from '@/types';
-import { UIChip, UIListTableCell, UIListTableRow } from '@/components/UI';
+  UIChip,
+  UIFlexCenterBox,
+  UIInfoValue,
+  UIListTableCell,
+  UIListTableRow,
+} from '@/components/UI';
 import { getColor } from '@/libs/data-helper';
 
 interface IRewardDetailTable {
-  rewards: Product.Data[];
+  rewards: Reward.Data[];
 }
 
 const RewardDetailTable = ({ rewards }: IRewardDetailTable) => {
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <UIListTableRow>
-            <UIListTableCell>ID</UIListTableCell>
-            <UIListTableCell>Name</UIListTableCell>
-            <UIListTableCell>Detail</UIListTableCell>
-            <UIListTableCell>Point</UIListTableCell>
-            <UIListTableCell>Status</UIListTableCell>
-            <UIListTableCell>Due Date</UIListTableCell>
-          </UIListTableRow>
-        </TableHead>
-        <TableBody>
-          {rewards.map((reward, index) => {
+    <Table>
+      <TableHead>
+        <UIListTableRow>
+          <UIListTableCell></UIListTableCell>
+          <UIListTableCell>Name</UIListTableCell>
+          <UIListTableCell>Detail</UIListTableCell>
+          <UIListTableCell>Point</UIListTableCell>
+          <UIListTableCell>Status</UIListTableCell>
+          <UIListTableCell>Due Date</UIListTableCell>
+        </UIListTableRow>
+      </TableHead>
+      <TableBody>
+        {rewards && rewards.length > 0 ? (
+          rewards?.map((reward, index) => {
+            const { product } = reward;
             return (
-              <UIListTableRow key={`reward-${reward.id}`}>
-                <UIListTableCell>{index + 1}</UIListTableCell>
-                <UIListTableCell>{reward.name}</UIListTableCell>
+              <UIListTableRow key={`reward-${index}`}>
+                <UIListTableCell>
+                  <Box
+                    component="img"
+                    src={
+                      product?.gallery && product?.gallery.length > 0
+                        ? product.gallery[0].asset?.url ?? '/images/noImage.jpg'
+                        : '/images/noImage.jpg'
+                    }
+                    width={60}
+                    height={60}
+                    sx={{ borderRadius: '6px', objectFit: 'cover' }}
+                  />
+                </UIListTableCell>
+                <UIListTableCell>{product.name}</UIListTableCell>
                 <UIListTableCell
                   sx={{ color: 'rgba(0, 0, 0, 0.3) !important' }}
                 >
-                  {reward.short}
+                  {product.short}
                 </UIListTableCell>
-                <UIListTableCell>{reward.point}</UIListTableCell>
+                <UIListTableCell>{product.point}</UIListTableCell>
                 <UIListTableCell>
                   <UIChip
-                    label={reward.status}
-                    color={getColor(reward.status)}
+                    label={product.status}
+                    color={getColor(product.status)}
                   />
                 </UIListTableCell>
                 <UIListTableCell>
@@ -54,10 +67,21 @@ const RewardDetailTable = ({ rewards }: IRewardDetailTable) => {
                 </UIListTableCell>
               </UIListTableRow>
             );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          })
+        ) : (
+          <UIListTableRow
+            sx={{
+              position: 'relative',
+              backgroundColor: 'transparent !important',
+            }}
+          >
+            <UIListTableCell colSpan={6} sx={{ textAlign: 'center' }}>
+              No Data
+            </UIListTableCell>
+          </UIListTableRow>
+        )}
+      </TableBody>
+    </Table>
   );
 };
 

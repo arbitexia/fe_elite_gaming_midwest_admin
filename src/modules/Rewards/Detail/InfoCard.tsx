@@ -1,11 +1,7 @@
 import { Typography, Stack } from '@mui/material';
-import {
-  UICardBox,
-  UIFlexWrapBox,
-  UIInfoTitle,
-  UIInfoValue,
-} from '@/components/UI';
+import { UIFlexWrapBox, UIInfoTitle, UIInfoValue } from '@/components/UI';
 import { Location, Product } from '@/types';
+import { UIStyledCard } from '@/components/UI/Card';
 
 const ProductsDetailInfoCard = ({
   productItem,
@@ -15,7 +11,7 @@ const ProductsDetailInfoCard = ({
   location?: Location.Data | null;
 }) => {
   return (
-    <UICardBox>
+    <UIStyledCard>
       <Typography
         sx={{
           fontWeight: '600',
@@ -30,7 +26,7 @@ const ProductsDetailInfoCard = ({
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox>
             <UIInfoTitle>Points:</UIInfoTitle>
-            <UIInfoValue>{productItem.name}</UIInfoValue>
+            <UIInfoValue>{productItem?.name}</UIInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
             <UIInfoTitle>Location:</UIInfoTitle>
@@ -38,21 +34,21 @@ const ProductsDetailInfoCard = ({
           </UIFlexWrapBox>
           <UIFlexWrapBox>
             <UIInfoTitle>Description:</UIInfoTitle>
-            <UIInfoValue>{productItem.description}</UIInfoValue>
+            <UIInfoValue>{productItem?.description}</UIInfoValue>
           </UIFlexWrapBox>
         </Stack>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox>
             <UIInfoTitle>Status:</UIInfoTitle>
-            <UIInfoValue>{productItem.status}</UIInfoValue>
+            <UIInfoValue>{productItem?.status}</UIInfoValue>
           </UIFlexWrapBox>
           <UIFlexWrapBox>
             <UIInfoTitle>Type:</UIInfoTitle>
-            <UIInfoValue>{productItem.short}</UIInfoValue>
+            <UIInfoValue>{productItem?.short}</UIInfoValue>
           </UIFlexWrapBox>
         </Stack>
       </UIFlexWrapBox>
-    </UICardBox>
+    </UIStyledCard>
   );
 };
 

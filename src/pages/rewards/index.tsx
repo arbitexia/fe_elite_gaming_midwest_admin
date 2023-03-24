@@ -6,13 +6,13 @@ import { DashboardLayout } from '@/layouts';
 import {
   RewardsListHeader,
   RewardCreateDialog,
-  RewardsTable,
+  RewardCard,
 } from '@/modules/Rewards';
 import { Reward } from '@/types';
 
 const Rewards = () => {
   const router = useRouter();
-  const { onFilterRewards } = useReward();
+  const { rewards, onFilterRewards } = useReward();
   const [searchValue, setSearchValue] = useState('');
   const [isOpenCreateDlg, setIsOpenCreateDlg] = useState<boolean>(false);
 
@@ -33,7 +33,6 @@ const Rewards = () => {
   const filterRewards = async (filter: Reward.Filter) => {
     await onFilterRewards(filter);
   };
-
   return (
     <DashboardLayout title="Rewards">
       <RewardsListHeader
@@ -41,8 +40,8 @@ const Rewards = () => {
         onValueChange={(value: string) => setSearchValue(value)}
         onOpenDlg={() => setIsOpenCreateDlg(true)}
       />
-      <Divider sx={{ mt: '30px' }} />
-      <RewardsTable />
+      <Divider sx={{ my: '30px' }} />
+      <RewardCard rewards={rewards} />
       <RewardCreateDialog
         isOpenCreateDlg={isOpenCreateDlg}
         closeDlg={async () => {

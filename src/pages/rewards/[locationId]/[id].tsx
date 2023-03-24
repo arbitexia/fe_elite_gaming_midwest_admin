@@ -4,7 +4,7 @@ import { UIFlexSpaceBox } from '@/components/UI';
 import { useLocation, useProduct, useReward } from '@/hooks';
 import { DashboardLayout } from '@/layouts';
 import { ProductsDetailCarouselCard } from '@/modules/Products';
-import { ProductDetailHeader, ProductsDetailInfoCard } from '@/modules/Rewards';
+import { ProductDetailHeader } from '@/modules/Rewards';
 import { Location, Product } from '@/types';
 
 const RewardById = () => {

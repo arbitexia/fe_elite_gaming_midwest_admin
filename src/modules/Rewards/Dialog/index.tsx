@@ -10,6 +10,7 @@ import {
   List,
   ListItem,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
   Paper,
 } from '@mui/material';
@@ -48,7 +49,6 @@ const RewardCreateDialog = ({
   const handleProductSearch = () => {
     onGetProducts({
       filterBy: {
-        product: 0,
         search: searchProductVal,
         pointFrom: 0,
         pointTo: 100000000,
@@ -82,8 +82,14 @@ const RewardCreateDialog = ({
       onCreateRewards(body);
     }
     closeDlg();
+    resetValues();
   };
-
+  const resetValues = () => {
+    setLocationId(0);
+    setProductIds([]);
+    setSearchProductVal('');
+    setSearchLocationValue('');
+  };
   return (
     <Dialog open={isOpenCreateDlg}>
       <DialogTitle>Create New Reward</DialogTitle>
@@ -110,8 +116,8 @@ const RewardCreateDialog = ({
             <List
               dense
               sx={{
-                width: '200px',
                 height: '300px',
+                overflow: 'auto',
                 bgcolor: 'background.paper',
               }}
             >
@@ -120,17 +126,17 @@ const RewardCreateDialog = ({
                 return (
                   <ListItem
                     key={labelId}
-                    secondaryAction={
-                      <Checkbox
-                        edge="end"
-                        onChange={() => handleCheckLocation(location.id)}
-                        checked={location.id === locationId}
-                        inputProps={{ 'aria-labelledby': labelId }}
-                      />
-                    }
+                    onClick={() => handleCheckLocation(location.id)}
                     disablePadding
                   >
                     <ListItemButton>
+                      <ListItemIcon>
+                        <Checkbox
+                          edge="start"
+                          checked={location.id === locationId}
+                          inputProps={{ 'aria-labelledby': labelId }}
+                        />
+                      </ListItemIcon>
                       <ListItemText id={labelId} primary={location.name} />
                     </ListItemButton>
                   </ListItem>
@@ -159,8 +165,8 @@ const RewardCreateDialog = ({
             <List
               dense
               sx={{
-                width: '200px',
                 height: '300px',
+                overflow: 'auto',
                 bgcolor: 'background.paper',
               }}
             >
@@ -169,17 +175,17 @@ const RewardCreateDialog = ({
                 return (
                   <ListItem
                     key={labelId}
-                    secondaryAction={
-                      <Checkbox
-                        edge="end"
-                        onChange={handleToggleProduct(product.id)}
-                        checked={productIds.indexOf(product.id) !== -1}
-                        inputProps={{ 'aria-labelledby': labelId }}
-                      />
-                    }
+                    onClick={handleToggleProduct(product.id)}
                     disablePadding
                   >
                     <ListItemButton>
+                      <ListItemIcon>
+                        <Checkbox
+                          edge="start"
+                          checked={productIds.indexOf(product.id) !== -1}
+                          inputProps={{ 'aria-labelledby': labelId }}
+                        />
+                      </ListItemIcon>
                       <ListItemText id={labelId} primary={product.name} />
                     </ListItemButton>
                   </ListItem>
@@ -190,7 +196,13 @@ const RewardCreateDialog = ({
         </UIFlexWrapBox>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={closeDlg}>
+        <Button
+          autoFocus
+          onClick={() => {
+            closeDlg();
+            resetValues();
+          }}
+        >
           Cancel
         </Button>
         <Button onClick={handleOk}>Ok</Button>

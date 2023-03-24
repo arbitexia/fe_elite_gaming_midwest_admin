@@ -11,6 +11,7 @@ export declare namespace Location {
     type: string;
     description?: string;
     gallery?: AssetType.Gallery[];
+    createdAt?: string;
   };
 
   type Param = { id: number };

@@ -17,7 +17,11 @@ import {
   TableSortLabel,
   Typography,
 } from '@mui/material';
-import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
+import {
+  MoreHoriz as MoreHorizIcon,
+  Add as PlusIcon,
+  Remove as MinusIcon,
+} from '@mui/icons-material';
 import { menuActions } from '@/_mock/users';
 import {
   UIChip,
@@ -26,6 +30,7 @@ import {
   UIOptionMenu,
   UIOptionMenuItem,
   UIOptionMenuItemText,
+  UIEditTextField,
 } from '@/components/UI';
 import { MenuAction } from '@/constants';
 import { useProduct } from '@/hooks';
@@ -35,9 +40,15 @@ import { Product } from '@/types';
 
 type ProductsTableProps = {
   productsTableData: Product.Data[];
+  onOrder: (value: string) => void;
+  onUpdateAmount: (data: Product.Data) => void;
 };
 
-const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
+const ProductsTable = ({
+  productsTableData,
+  onOrder,
+  onUpdateAmount,
+}: ProductsTableProps) => {
   const router = useRouter();
   const appToast = useAppToast();
   const { onDeleteProduct } = useProduct();
@@ -47,13 +58,11 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
   const [anchorId, setAnchorId] = useState(0);
   const [name, setName] = useState('');
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
 
   const handleNavBtnClick = (key: string) => {
     if (key === MenuAction.DELETE) {
       setOpenDeleteModal(true);
-      //TODO Delete Action
     } else
       router.push(
         `${router.asPath}${
@@ -109,44 +118,6 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Product.Data>('id');
 
-  function stableSort<T>(
-    array: readonly T[],
-    comparator: (a: T, b: T) => number
-  ) {
-    const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) {
-        return order;
-      }
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-  }
-
-  function descendingComparator(
-    a: Product.Data,
-    b: Product.Data,
-    orderBy: keyof Product.Data
-  ) {
-    // if (b[orderBy] < a[orderBy]) {
-    //   return -1;
-    // }
-    // if (b[orderBy] > a[orderBy]) {
-    //   return 1;
-    // }
-    return 0;
-  }
-
-  function getComparator<Key extends keyof Product.Data>(
-    order: Order,
-    orderBy: Key
-  ): (a: Product.Data, b: Product.Data) => number {
-    return order === 'desc'
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  }
-
   const createSortHandler =
     (property: keyof Product.Data) => (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
@@ -156,9 +127,21 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
     event: React.MouseEvent<unknown>,
     property: keyof Product.Data
   ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const newOrder = orderBy === property && order === 'asc' ? 'desc' : 'asc';
+    setOrder(newOrder);
     setOrderBy(property);
+    onOrder(`${property}|${newOrder}`);
+  };
+
+  const handleChangeAmount = (
+    action: 'Increase' | 'Decrease',
+    product: Product.Data
+  ) => {
+    onUpdateAmount(
+      action === 'Increase'
+        ? { ...product, amount: product.amount + 1 }
+        : { ...product, amount: product.amount - 1 }
+    );
   };
 
   return (
@@ -172,21 +155,14 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
                 selected.length < productsTableData.length
               }
               checked={
+                productsTableData &&
                 productsTableData.length > 0 &&
                 selected.length === productsTableData.length
               }
               onChange={handleSelectAllClick}
             />
           </UIListTableCell>
-          <UIListTableCell>
-            <TableSortLabel
-              active={orderBy === 'id'}
-              direction={order}
-              onClick={createSortHandler('id')}
-            >
-              Id
-            </TableSortLabel>
-          </UIListTableCell>
+          <UIListTableCell></UIListTableCell>
           <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'name'}
@@ -196,7 +172,15 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
               Product
             </TableSortLabel>
           </UIListTableCell>
-          <UIListTableCell>Detail</UIListTableCell>
+          <UIListTableCell>
+            <TableSortLabel
+              active={orderBy === 'short'}
+              direction={order}
+              onClick={createSortHandler('short')}
+            >
+              Detail
+            </TableSortLabel>
+          </UIListTableCell>
           <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'point'}
@@ -213,6 +197,15 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
               onClick={createSortHandler('status')}
             >
               Status
+            </TableSortLabel>
+          </UIListTableCell>
+          <UIListTableCell align="center">
+            <TableSortLabel
+              active={orderBy === 'amount'}
+              direction={order}
+              onClick={createSortHandler('amount')}
+            >
+              Amount
             </TableSortLabel>
           </UIListTableCell>
           <UIListTableCell align="center">
@@ -235,19 +228,16 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
               backgroundColor: 'transparent !important',
             }}
           >
-            <UIListTableCell colSpan={7} sx={{ textAlign: 'center' }}>
+            <UIListTableCell colSpan={8} sx={{ textAlign: 'center' }}>
               No Data
             </UIListTableCell>
           </UIListTableRow>
         )}
-        {stableSort<Product.Data>(
-          productsTableData,
-          getComparator(order, orderBy)
-        ).map((productItem, index) => {
+        {productsTableData?.map((productItem, index) => {
           const isItemSelected = isSelected(productItem.id.toString());
           return (
             <UIListTableRow
-              key={productItem.id}
+              key={index}
               data-key={productItem.id}
               role="checkbox"
               sx={{ position: 'relative' }}
@@ -266,23 +256,21 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
                 }
                 sx={{ cursor: 'pointer' }}
               >
-                #{index + 1}
-              </UIListTableCell>
-              <UIListTableCell>
                 <Box
                   sx={{
                     cursor: 'pointer',
                     div: { display: 'none' },
                     ':hover>div': { display: 'flex' },
                     position: 'relative',
+                    width: '60px',
+                    height: '60px',
                   }}
                 >
-                  {productItem.name}
                   <Box
                     sx={{
                       position: 'absolute',
                       zIndex: 1,
-                      left: 150,
+                      left: 100,
                       top: -150,
                       border: '2px solid rgba(137, 200, 198, 0.25)',
                       borderRadius: '15px',
@@ -308,8 +296,21 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
                       }}
                     />
                   </Box>
+                  <Box
+                    component="img"
+                    src={
+                      productItem?.gallery && productItem?.gallery.length > 0
+                        ? productItem.gallery[0].asset?.url ??
+                          '/images/noImage.jpg'
+                        : '/images/noImage.jpg'
+                    }
+                    width={60}
+                    height={60}
+                    sx={{ borderRadius: '6px', objectFit: 'cover' }}
+                  />
                 </Box>
               </UIListTableCell>
+              <UIListTableCell>{productItem.name}</UIListTableCell>
               <UIListTableCell>{productItem.short}</UIListTableCell>
               <UIListTableCell>{productItem.point}</UIListTableCell>
               <UIListTableCell align="center">
@@ -317,6 +318,32 @@ const ProductsTable = ({ productsTableData }: ProductsTableProps) => {
                   label={productItem.status}
                   color={getColor(productItem.status)}
                 />
+              </UIListTableCell>
+              <UIListTableCell align="center" sx={{ color: '#000!important' }}>
+                <IconButton
+                  onClick={() => {
+                    handleChangeAmount('Decrease', productItem);
+                  }}
+                >
+                  <MinusIcon />
+                </IconButton>
+                <UIEditTextField
+                  type="number"
+                  name="product.amount"
+                  value={productItem.amount}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                  }}
+                  sx={{ width: '80px' }}
+                  disabled
+                />
+                <IconButton
+                  onClick={() => {
+                    handleChangeAmount('Increase', productItem);
+                  }}
+                >
+                  <PlusIcon />
+                </IconButton>
               </UIListTableCell>
               <UIListTableCell align="center">
                 {productItem.createdAt
