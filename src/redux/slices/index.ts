@@ -98,3 +98,11 @@ export {
   filterActivities,
   resetActivityMessage,
 } from './activity.slice';
+
+export {
+  default as configReducer,
+  configSelector,
+  getConfig,
+  createConfig,
+  resetConfigMessage,
+} from './config.slice';

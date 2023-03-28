@@ -26,6 +26,7 @@ import {
   productReducer,
   rewardReducer,
   activityReducer,
+  configReducer,
 } from './slices';
 
 const combinedReducer = combineReducers({
@@ -39,6 +40,7 @@ const combinedReducer = combineReducers({
   product: productReducer,
   reward: rewardReducer,
   activity: activityReducer,
+  config: configReducer,
 });
 
 const createStore = () => {
@@ -57,6 +59,7 @@ const createStore = () => {
       'product',
       'reward',
       'activity',
+      'config',
     ],
   };
 

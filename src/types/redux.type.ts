@@ -9,6 +9,7 @@ import { AwardType } from './award.type';
 import { Product } from './product.type';
 import { Reward } from './reward.type';
 import { ActivityItemType } from './activity.type';
+import { ConfigType } from './config.type';
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
     loading: boolean;
@@ -106,5 +107,13 @@ export declare namespace ReduxJson {
     error: string | null;
     activities: ActivityItemType[];
     pageInfo: CommonType.PageInfo | null;
+  };
+
+  export type ConfigState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    configItem: ConfigType;
+    message: string | null;
+    error: string | null;
   };
 }

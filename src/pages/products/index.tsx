@@ -12,13 +12,12 @@ import { Product } from '@/types';
 const ProductsPage = () => {
   const { products, pageInfo, onGetProducts, onUpdateProduct } = useProduct();
   const [searchValue, setSearchValue] = useState('');
-  const [selectedLocationId, setSelectedLocationId] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     fetchProducts();
-  }, [searchValue, selectedLocationId, page, rowsPerPage]);
+  }, [searchValue, page, rowsPerPage]);
 
   const fetchProducts = (sort?: string) => {
     onGetProducts({
@@ -40,9 +39,7 @@ const ProductsPage = () => {
     <DashboardLayout title="Products">
       <ProductsHeader
         searchValue={searchValue}
-        searchProduct={selectedLocationId}
         onValueChange={setSearchValue}
-        onProductChange={setSelectedLocationId}
       />
       <Divider sx={{ mt: '30px' }} />
       <ProductsTable
