@@ -112,10 +112,16 @@ export const superSidebarItems: MenuItemObj[] = [
   {
     id: 9,
     text: 'Site Settings',
-    route: 'settings',
-    disabled: true,
+    disabled: false,
     isSelected: false,
     icon: <Settings sx={{ marginRight: 2, width: 18 }} />,
+    dropdown: [
+      {
+        text: 'Config',
+        route: 'config',
+        isSelected: false,
+      },
+    ],
   },
 ];
 

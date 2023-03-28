@@ -50,3 +50,8 @@ export type {
   UpdateUserParam,
   DeleteUserParam,
 } from './users.type';
+export type {
+  ConfigType,
+  ConfigInputType,
+  GetConfigParam,
+} from './config.type';

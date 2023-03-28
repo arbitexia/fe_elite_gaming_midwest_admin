@@ -39,9 +39,9 @@ export const StyledSidebarButton = styled(Button)({
 export const StyledSidebarDropButton = styled(Button)({
   position: 'relative',
   width: '195px',
-  height: '42px',
+  height: '38px',
   justifyContent: 'flex-start',
-  fontWeight: '400',
+  fontWeight: '500',
   fontSize: '14px',
   lineHeight: '21px',
   color: 'rgba(5, 34, 33, 0.8)',
