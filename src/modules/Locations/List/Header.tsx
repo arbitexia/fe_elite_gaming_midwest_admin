@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Typography, InputAdornment } from '@mui/material';
+import { Typography, InputAdornment, Divider } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import {
   UIFlexSpaceBox,

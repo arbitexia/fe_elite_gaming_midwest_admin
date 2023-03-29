@@ -55,3 +55,5 @@ export type {
   ConfigInputType,
   GetConfigParam,
 } from './config.type';
+
+export type { TabletType } from './tablet.type';

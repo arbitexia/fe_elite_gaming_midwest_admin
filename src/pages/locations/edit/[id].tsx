@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { DashboardLayout } from '@/layouts';
 import { UIFlexSpaceBox } from '@/components/UI';
 import {
@@ -60,6 +60,7 @@ const LocationsById = () => {
       {locationItem && (
         <Box component="form" onSubmit={locationFormik.handleSubmit}>
           <LocationDetailHeader name={locationItem.name} isEditable={true} />
+          <Divider sx={{ my: '18px' }} />
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
             <LocationsDetailCarouselEditCard />
             {locationItem && (

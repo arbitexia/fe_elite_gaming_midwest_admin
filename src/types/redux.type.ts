@@ -10,6 +10,7 @@ import { Product } from './product.type';
 import { Reward } from './reward.type';
 import { ActivityItemType } from './activity.type';
 import { ConfigType } from './config.type';
+import { TabletType } from './tablet.type';
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
     loading: boolean;
@@ -113,6 +114,15 @@ export declare namespace ReduxJson {
     loading: boolean;
     status: ResponseStatus | null;
     configItem: ConfigType;
+    message: string | null;
+    error: string | null;
+  };
+
+  export type TabletState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    tablets: TabletType.Data[];
+    pageInfo: CommonType.PageInfo | null;
     message: string | null;
     error: string | null;
   };

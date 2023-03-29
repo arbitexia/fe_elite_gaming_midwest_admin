@@ -10,6 +10,7 @@ import {
 } from '@/modules/Locations';
 import { Location } from '@/types';
 import { useLocation } from '@/hooks';
+import { Divider } from '@mui/material';
 
 const LocationsById = () => {
   const router = useRouter();
@@ -25,6 +26,7 @@ const LocationsById = () => {
       {locationItem && (
         <>
           <LocationDetailHeader name={locationItem.name} isEditable={false} />
+          <Divider sx={{ my: '18px' }} />
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
             <LocationsDetailCarouselCard />
             <LocationsDetailInfoCard locationItem={locationItem} />

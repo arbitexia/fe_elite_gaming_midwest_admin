@@ -2,11 +2,15 @@ import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
 import { userStatus } from '@/_mock/users';
-import { UIFlexWrapBox, UIFlexSpaceBox } from '@/components/UI';
+import {
+  UIFlexWrapBox,
+  UIFlexSpaceBox,
+  UIEditTextField,
+} from '@/components/UI';
 import { UserRole } from '@/constants/enum';
 import { useAuth } from '@/hooks';
 import { UserType } from '@/types';
-import UsersDetailHeader from './Header';
+
 import {
   StyledUserInfoTitle,
   StyledUserInfoCard,
@@ -16,6 +20,7 @@ import {
   StyledUserInfoCardStatus,
   StyledUserEditTextField,
 } from './ui';
+import { UsersDetailHeader } from '@/modules/Users';
 interface UsersDetailHeaderProps {
   user: UserType.User;
 }
@@ -33,10 +38,10 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
       onCreateNewUser({ user: values });
     },
   });
-
   return (
     <Box component="form" onSubmit={userFormik.handleSubmit}>
       <UsersDetailHeader user={user} />
+      <Divider sx={{ my: '18px' }} />
       <StyledUserInfoCard>
         <StyledUserInfoCardHeader />
         <StyledUserInfoCardContent>
@@ -110,26 +115,33 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
             <UIFlexSpaceBox
               sx={{
                 alignItems: 'flex-end',
+                gap: 3,
               }}
             >
               <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                 <StyledUserInfoTitle sx={{ width: 'auto' }}>
                   FirstName:{' '}
                 </StyledUserInfoTitle>
-                <StyledUserEditTextField
+                <UIEditTextField
                   name="firstName"
                   value={userFormik.values.firstName}
                   onChange={userFormik.handleChange}
+                  sx={{
+                    width: '250px',
+                  }}
                 />
               </UIFlexWrapBox>
               <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                 <StyledUserInfoTitle sx={{ width: 'auto' }}>
                   LastName:{' '}
                 </StyledUserInfoTitle>
-                <StyledUserEditTextField
+                <UIEditTextField
                   name="lastName"
                   value={userFormik.values.lastName}
                   onChange={userFormik.handleChange}
+                  sx={{
+                    width: '250px',
+                  }}
                 />
               </UIFlexWrapBox>
               <UIFlexWrapBox
@@ -137,11 +149,14 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                   alignItems: 'flex-end',
                 }}
               >
-                <StyledUserEditTextField
+                <UIEditTextField
                   name="status"
                   onChange={userFormik.handleChange}
                   value={userFormik.values.status}
                   select
+                  sx={{
+                    width: '250px',
+                  }}
                 >
                   {userStatus.map((item) => {
                     return (
@@ -150,7 +165,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                       </MenuItem>
                     );
                   })}
-                </StyledUserEditTextField>
+                </UIEditTextField>
               </UIFlexWrapBox>
             </UIFlexSpaceBox>
             <Divider sx={{ mt: '25px' }} />

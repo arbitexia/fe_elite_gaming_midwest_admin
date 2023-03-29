@@ -23,9 +23,7 @@ const UsersDetailPage = () => {
   };
   return (
     <DashboardLayout title="Users">
-      <Stack direction="column" spacing={2.5} paddingTop={4}>
-        <UserDetailInfoEditCard user={initUserData} />
-      </Stack>
+      <UserDetailInfoEditCard user={initUserData} />
     </DashboardLayout>
   );
 };

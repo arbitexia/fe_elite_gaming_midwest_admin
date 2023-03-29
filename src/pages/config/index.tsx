@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Stack } from '@mui/material';
 import { ConfigInfoCard } from '@/modules/Config';
 import { DashboardLayout } from '@/layouts';
 import { useConfig } from '@/hooks';
@@ -17,12 +16,10 @@ const ConfigPage = () => {
   };
   return (
     <DashboardLayout title="Config">
-      <Stack direction="column" spacing={2.5} paddingTop={4}>
-        <ConfigInfoCard
-          configData={configItem}
-          onCreateConfig={handleSaveConfig}
-        />
-      </Stack>
+      <ConfigInfoCard
+        configData={configItem}
+        onCreateConfig={handleSaveConfig}
+      />
     </DashboardLayout>
   );
 };

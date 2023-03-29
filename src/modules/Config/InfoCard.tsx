@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { Box, Typography, Stack } from '@mui/material';
+import { Box, Typography, Stack, Divider } from '@mui/material';
 import {
   UIFlexWrapBox,
   UIFlexSpaceBox,
@@ -31,13 +31,13 @@ const ConfigInfoCard = ({
 
   return (
     <Box component="form" onSubmit={configFormik.handleSubmit}>
-      <UIFlexSpaceBox sx={{ mb: '30px' }}>
+      <UIFlexSpaceBox>
         <Typography
           sx={{
             fontWeight: 600,
-            fontSize: 24,
-            lineHeight: '17px',
-            color: '#06251F',
+            fontSize: 36,
+            lineHeight: '54px',
+            color: '#89C8C6',
           }}
         >
           Settings/Config
@@ -49,13 +49,16 @@ const ConfigInfoCard = ({
               justifyContent: 'flex-end',
             }}
           >
-            <UIDefaultButton sx={{ marginLeft: '8px' }} type="submit">
+            <UIDefaultButton
+              sx={{ minWidth: '110px', borderRadius: '8px' }}
+              type="submit"
+            >
               Save
             </UIDefaultButton>
           </Box>
         </Stack>
       </UIFlexSpaceBox>
-
+      <Divider sx={{ my: '18px' }} />
       <StyledConfigInfoCard>
         <StyledConfigInfoCardHeader />
         <StyledConfigInfoCardContent>

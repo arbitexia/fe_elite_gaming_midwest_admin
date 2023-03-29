@@ -22,6 +22,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
   return (
     <Box>
       <UsersDetailHeader user={user} />
+      <Divider sx={{ my: '18px' }} />
       <StyledUserInfoCard>
         <StyledUserInfoCardHeader />
         <StyledUserInfoCardContent>

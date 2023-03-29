@@ -27,6 +27,7 @@ import {
   rewardReducer,
   activityReducer,
   configReducer,
+  tabletReducer,
 } from './slices';
 
 const combinedReducer = combineReducers({
@@ -41,6 +42,7 @@ const combinedReducer = combineReducers({
   reward: rewardReducer,
   activity: activityReducer,
   config: configReducer,
+  tablet: tabletReducer,
 });
 
 const createStore = () => {
@@ -60,6 +62,7 @@ const createStore = () => {
       'reward',
       'activity',
       'config',
+      'tablet',
     ],
   };
 

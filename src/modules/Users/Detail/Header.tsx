@@ -37,15 +37,15 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
     setOpenDeleteModal(false);
   };
   return (
-    <Box sx={{ mb: '30px' }}>
+    <>
       {user && (
         <UIFlexSpaceBox>
           <Typography
             sx={{
               fontWeight: 600,
-              fontSize: 24,
-              lineHeight: '17px',
-              color: '#06251F',
+              fontSize: 36,
+              lineHeight: '54px',
+              color: '#89C8C6',
             }}
           >
             {user.id === 0
@@ -109,7 +109,7 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
           </Dialog>
         </UIFlexSpaceBox>
       )}
-    </Box>
+    </>
   );
 };
 

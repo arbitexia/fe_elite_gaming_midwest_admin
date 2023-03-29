@@ -6,11 +6,11 @@ import { StyledTableRow, StyledTableCell } from './ui';
 
 type ActivityTableProps = {
   activityTableData: ActivityItemType[];
-  onOrder: (value: string) => void;
+  onSort: (value: string) => void;
 };
+type Order = 'asc' | 'desc';
 
-const ActivityTable = ({ activityTableData, onOrder }: ActivityTableProps) => {
-  type Order = 'asc' | 'desc';
+const ActivityTable = ({ activityTableData, onSort }: ActivityTableProps) => {
   const [order, setOrder] = useState<Order>('desc');
   const [orderBy, setOrderBy] = useState<keyof ActivityItemType>('id');
 
@@ -27,7 +27,7 @@ const ActivityTable = ({ activityTableData, onOrder }: ActivityTableProps) => {
     const newOrder = orderBy === property && order === 'asc' ? 'desc' : 'asc';
     setOrder(newOrder);
     setOrderBy(property);
-    onOrder(`${property}|${newOrder}`);
+    onSort(`${property}|${newOrder}`);
   };
 
   return (
