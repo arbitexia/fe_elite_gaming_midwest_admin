@@ -40,7 +40,7 @@ const Rewards = () => {
         onValueChange={(value: string) => setSearchValue(value)}
         onOpenDlg={() => setIsOpenCreateDlg(true)}
       />
-      <Divider sx={{ my: '30px' }} />
+      <Divider sx={{ mt: '18px', mb: '30px' }} />
       <RewardCard rewards={rewards} />
       <RewardCreateDialog
         isOpenCreateDlg={isOpenCreateDlg}

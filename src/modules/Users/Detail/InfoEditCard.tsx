@@ -9,7 +9,7 @@ import {
 } from '@/components/UI';
 import { UserRole } from '@/constants/enum';
 import { useAuth } from '@/hooks';
-import { UserType } from '@/types';
+import { UpdateUserParam, UserType } from '@/types';
 
 import {
   StyledUserInfoTitle,
@@ -21,13 +21,15 @@ import {
   StyledUserEditTextField,
 } from './ui';
 import { UsersDetailHeader } from '@/modules/Users';
+import { phoneNumberToString } from '@/libs/data-helper';
 interface UsersDetailHeaderProps {
   user: UserType.User;
 }
 
 const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
   const router = useRouter();
-  const { onCreateNewUser } = useAuth({
+  const { slug } = router.query;
+  const { onCreateNewUser, onUpdateUser } = useAuth({
     handleRegisterUserSuccess: () => {
       router.push('/users/customers');
     },
@@ -35,7 +37,18 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
   const userFormik = useFormik({
     initialValues: { ...user, birthday: '1991-10-10' },
     onSubmit: async (values) => {
-      onCreateNewUser({ user: values });
+      if (user?.id) {
+        const dataToUpdate: UpdateUserParam = {
+          userId: user.id,
+          input: values,
+        };
+        onUpdateUser(dataToUpdate);
+        router.push(`/users/${slug}`);
+      } else {
+        onCreateNewUser({
+          user: { ...values, phone: phoneNumberToString(values.phone) },
+        });
+      }
     },
   });
   return (
@@ -177,6 +190,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                     name="phone"
                     value={userFormik.values.phone}
                     onChange={userFormik.handleChange}
+                    disabled={user?.id > 0 ? true : false}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>

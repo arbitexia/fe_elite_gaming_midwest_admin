@@ -27,7 +27,7 @@ const UsersListPage = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [searchStatus, page, rowsPerPage, slug]);
+  }, [searchStatus, searchValue, page, rowsPerPage, slug]);
 
   const handleSearch = () => {
     onGetUsers({

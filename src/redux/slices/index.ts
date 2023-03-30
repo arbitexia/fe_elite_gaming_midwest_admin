@@ -86,7 +86,6 @@ export {
   usersSelector,
   getUser,
   getUsers,
-  changePassword,
   updateUser,
   deleteUser,
   resetUserMessage,

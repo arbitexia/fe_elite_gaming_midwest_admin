@@ -2,19 +2,13 @@ import { useEffect } from 'react';
 import { useAppToast } from '@/providers';
 import {
   getUser,
-  changePassword,
   getUsers,
   deleteUser,
   updateUser,
   usersSelector,
   resetUserMessage,
 } from '@/redux/slices';
-import {
-  ChangePasswordParam,
-  GetUsersParam,
-  UpdateUserParam,
-  UserType,
-} from '@/types';
+import { GetUsersParam, UpdateUserParam, UserType } from '@/types';
 import { useAppSelector, useAppDispatch } from './redux';
 
 export const useUser = () => {
@@ -50,10 +44,6 @@ export const useUser = () => {
     await dispatch(deleteUser({ userId: id }));
   };
 
-  const onChangePassword = async (param: ChangePasswordParam) => {
-    await dispatch(changePassword(param));
-  };
-
   return {
     users,
     currentUser,
@@ -62,7 +52,6 @@ export const useUser = () => {
     onGetUserById,
     onUserSelect,
     onGetUsers,
-    onChangePassword,
     onUpdateUser,
     onDeleteUser,
   };

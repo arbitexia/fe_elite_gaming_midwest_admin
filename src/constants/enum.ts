@@ -70,7 +70,6 @@ export enum RewardStatus {
 export enum UserRole {
   GUEST = 'GUEST',
   CUSTOMER = 'CUSTOMER',
-  TABLET = 'TABLET',
   ADMIN = 'ADMIN',
   SUPER = 'SUPER',
 }
