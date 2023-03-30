@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { initLocationData } from '@/_mock/locations';
 import { useLocation, useAsset } from '@/hooks';
 import { DashboardLayout } from '@/layouts';
@@ -56,6 +56,7 @@ const LocationCreatePage = () => {
           name={locationFormik.values.name}
           isEditable={true}
         />
+        <Divider sx={{ my: '18px' }} />
         <UIFlexSpaceBox sx={{ gap: '20px' }}>
           <LocationsDetailCarouselEditCard />
           <LocationsDetailInfoEditCard locationFormik={locationFormik} />

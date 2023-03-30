@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogActions,
   Typography,
+  Divider,
 } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import {
@@ -48,13 +49,13 @@ const LocationDetailHeader = ({
   };
 
   return (
-    <UIFlexSpaceBox sx={{ mb: '35px', alignItems: 'center', gap: '12px' }}>
+    <UIFlexSpaceBox sx={{ alignItems: 'center', gap: '12px' }}>
       <Typography
         sx={{
           fontWeight: 600,
-          fontSize: 24,
-          lineHeight: '17px',
-          color: '#06251F',
+          fontSize: 36,
+          lineHeight: '54px',
+          color: '#89C8C6',
         }}
       >
         {name}

@@ -106,3 +106,14 @@ export {
   createConfig,
   resetConfigMessage,
 } from './config.slice';
+
+export {
+  default as tabletReducer,
+  tabletSelector,
+  getTablets,
+  createTablet,
+  updateTablet,
+  deleteTablet,
+  changePasswordTablet,
+  resetTabletMessage,
+} from './tablet.slice';

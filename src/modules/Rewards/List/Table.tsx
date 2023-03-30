@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Box,
-  Collapse,
   Table,
   TableHead,
   TableBody,
@@ -13,7 +11,6 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { UIListTableCell, UIListTableRow } from '@/components/UI';
 import { useReward } from '@/hooks';
 import { Reward } from '@/types';
-import RewardDetailTable from './RewardDetailTable';
 
 const Row = ({ row, id }: { row: Reward.DataList; id: number }) => {
   const [open, setOpen] = React.useState(false);

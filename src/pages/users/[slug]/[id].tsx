@@ -39,7 +39,7 @@ const UsersDetailPage = () => {
   return (
     <DashboardLayout title="Users">
       {currentId === parseInt(id as string) && currentUser && (
-        <Stack direction="column" spacing={2.5} paddingTop={4}>
+        <Stack direction="column" spacing={2.5}>
           <UserDetailInfoCard user={currentUser} />
           {!isTablet && <UserDetailRequestCard />}
           {!isTablet && (

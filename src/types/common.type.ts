@@ -19,4 +19,12 @@ export declare namespace CommonType {
     data: T[];
     pageInfo: PageInfo;
   };
+
+  export type PaginationProps = {
+    page: number;
+    rowsPerPage: number;
+    total: number;
+    setPage: React.Dispatch<React.SetStateAction<number>>;
+    setRowsPerPage: React.Dispatch<React.SetStateAction<number>>;
+  };
 }

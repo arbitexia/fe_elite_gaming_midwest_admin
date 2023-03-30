@@ -41,6 +41,7 @@ export enum MenuAction {
   VIEW = `view`,
   EDIT = `edit`,
   DELETE = `delete`,
+  CHANGE_PASSWORD = `changePassword`,
 }
 
 export enum ProductStatus {

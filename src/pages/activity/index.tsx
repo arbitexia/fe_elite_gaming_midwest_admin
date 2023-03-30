@@ -96,7 +96,7 @@ const ActivityPage = () => {
         ref={csvLinkRef}
       ></CSVLink>
       <Divider sx={{ mt: '30px' }} />
-      <ActivityTable activityTableData={activities} onOrder={handleSort} />
+      <ActivityTable activityTableData={activities} onSort={handleSort} />
       <ActivityPagination
         page={page}
         rowsPerPage={rowsPerPage}

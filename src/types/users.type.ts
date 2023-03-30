@@ -20,6 +20,8 @@ export declare namespace UserType {
     role?: RoleType.Role;
     roleId?: number;
     firstLogin?: object;
+    locationId?: number;
+    userLocations?: UserLocationsType[];
     createdAt?: string;
     updatedAt?: string;
   };
@@ -77,6 +79,14 @@ export type UpdateUserParam = {
     status?: UserStatus;
     roleId: number;
   };
+};
+
+export type UserLocationsType = {
+  id: number;
+  userId: number;
+  locationId: number;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type DeleteUserParam = {

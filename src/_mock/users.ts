@@ -7,6 +7,16 @@ export const menuActions = [
   { label: 'Delete', color: '#fb020299', action: MenuAction.DELETE },
 ];
 
+export const menuTabletActions = [
+  {
+    label: 'Change password',
+    color: '#28B446',
+    action: MenuAction.CHANGE_PASSWORD,
+  },
+  { label: 'Edit', color: '#667180', action: MenuAction.EDIT },
+  { label: 'Delete', color: '#fb020299', action: MenuAction.DELETE },
+];
+
 export const profileData: UserType.User = {
   id: 1,
   firstName: 'Esthera',
@@ -154,7 +164,6 @@ export const guestActivityData: GuestActivityDataType[] = [
 
 export const slugIndex = {
   admins: 'ADMIN',
-  tablets: 'TABLET',
   customers: 'CUSTOMER',
 };
 

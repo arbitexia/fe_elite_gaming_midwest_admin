@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { UIFlexCenterBox, UIFlexWrapBox, UIInfoValue } from '@/components/UI';
 import { LocationsHeader, LocationsCard } from '@/modules/Locations';
 import { hasElInArray } from '@/libs/data-helper';
@@ -19,9 +19,10 @@ const LocationsPage = () => {
         searchValue={searchValue}
         onValueChange={(value) => setSearchValue(value)}
       />
+      <Divider sx={{ my: '18px' }} />
       <Box
         component={hasElInArray(locations) ? UIFlexWrapBox : UIFlexCenterBox}
-        sx={{ gap: '26px', py: '40px' }}
+        sx={{ gap: '26px' }}
       >
         {hasElInArray(locations) ? (
           locations.map((item) => {

@@ -9,6 +9,7 @@ import {
   Comment,
   Analytics,
   Settings,
+  Devices,
 } from '@mui/icons-material';
 
 export const languageMenuItems = [
@@ -26,11 +27,6 @@ export const superSidebarItems: MenuItemObj[] = [
       {
         text: 'Customers',
         route: 'users/customers',
-        isSelected: false,
-      },
-      {
-        text: 'Tablets',
-        route: 'users/tablets',
         isSelected: false,
       },
       {
@@ -55,20 +51,27 @@ export const superSidebarItems: MenuItemObj[] = [
   },
   {
     id: 3,
+    text: 'Tablets',
+    route: 'tablets',
+    isSelected: false,
+    icon: <Devices sx={{ marginRight: 2, width: 18 }} />,
+  },
+  {
+    id: 4,
     text: 'Inventory',
     route: 'products',
     isSelected: false,
     icon: <Storefront sx={{ marginRight: 2, width: 18 }} />,
   },
   {
-    id: 4,
+    id: 5,
     text: 'Rewards',
     route: 'rewards',
     isSelected: false,
     icon: <Work sx={{ marginRight: 2, width: 18 }} />,
   },
   {
-    id: 5,
+    id: 6,
     text: 'Request',
     route: 'requests',
     isSelected: false,
@@ -76,7 +79,7 @@ export const superSidebarItems: MenuItemObj[] = [
   },
 
   {
-    id: 6,
+    id: 7,
     text: 'Reports',
     isSelected: false,
     icon: <Report sx={{ marginRight: 2, width: 18 }} />,
@@ -94,7 +97,7 @@ export const superSidebarItems: MenuItemObj[] = [
     ],
   },
   {
-    id: 7,
+    id: 8,
     text: 'Comments',
     route: 'comments',
     isSelected: false,
@@ -102,7 +105,7 @@ export const superSidebarItems: MenuItemObj[] = [
     disabled: true,
   },
   {
-    id: 8,
+    id: 9,
     text: 'Analytics',
     isSelected: false,
     icon: <Analytics sx={{ marginRight: 2, width: 18 }} />,
@@ -110,7 +113,7 @@ export const superSidebarItems: MenuItemObj[] = [
     disabled: true,
   },
   {
-    id: 9,
+    id: 10,
     text: 'Site Settings',
     disabled: false,
     isSelected: false,
