@@ -146,7 +146,6 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
     setOrderBy(property);
   };
 
-  // TODO - Convert info with type
   const renderFirstLogin = (info: any) => {
     if (!info || info?.status !== 200) return;
     return (
@@ -272,13 +271,14 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
                 >
                   #{userItem.id}
                 </UIListTableCell>
-                <UIListTableCell>{userItem.fullName}</UIListTableCell>
+                <UIListTableCell>{`${userItem?.firstName ?? ''} ${
+                  userItem?.lastName ?? ''
+                }`}</UIListTableCell>
                 <UIListTableCell>{userItem.email}</UIListTableCell>
                 <UIListTableCell>
                   {formatPhoneNumber(userItem.phone)}
                 </UIListTableCell>
                 <UIListTableCell>
-                  {/* {format(new Date(userItem.birthday), 'yyyy-MM-dd')} */}
                   {renderFirstLogin(userItem?.firstLogin)}
                 </UIListTableCell>
                 <UIListTableCell align="center">

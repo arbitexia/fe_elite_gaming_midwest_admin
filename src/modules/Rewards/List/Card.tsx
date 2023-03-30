@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Check as CheckIcon } from '@mui/icons-material';
-import { useRouter } from 'next/router';
 import { Box, Divider } from '@mui/material';
 import {
   UICardBox,
   UIFlexCenterBox,
   UIFlexSpaceBox,
   UIFlexWrapBox,
-  UIInfoTitle,
   UIInfoValue,
 } from '@/components/UI';
 import { Reward } from '@/types';
@@ -28,7 +26,6 @@ export type RewardsCardProp = {
 };
 
 const RewardCard = ({ rewards }: RewardsCardProp) => {
-  const router = useRouter();
   const [selectedReward, setSelectedReward] = useState<Reward.DataList>();
   useEffect(() => {
     if (rewards && rewards.length > 0) {
@@ -48,7 +45,6 @@ const RewardCard = ({ rewards }: RewardsCardProp) => {
       </UIFlexCenterBox>
     );
   }
-  console.log(selectedReward.gallery);
   return (
     <UIFlexWrapBox sx={{ flexWrap: 'nowrap' }}>
       <StyledLeftWrapBox>
@@ -86,7 +82,14 @@ const RewardCard = ({ rewards }: RewardsCardProp) => {
             }}
           />
         </UICardBox>
-        <Box sx={{ marginTop: '30px' }}>
+        <Box
+          sx={{
+            mt: '30px',
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            maxHeight: '410px',
+          }}
+        >
           {rewards?.map((obj, index) => {
             return (
               <StyledItemBox
@@ -111,8 +114,11 @@ const RewardCard = ({ rewards }: RewardsCardProp) => {
           })}
         </Box>
       </StyledLeftWrapBox>
-      <Divider orientation="vertical" sx={{ height: '100vh', mx: 4 }} />
-      <StyledRightWrapBox>
+      <Divider
+        orientation="vertical"
+        sx={{ height: 'calc(100vh - 150px)', mx: 4 }}
+      />
+      <StyledRightWrapBox sx={{ overflowY: 'auto', maxHeight: '700px' }}>
         {selectedReward?.reward && (
           <RewardDetailTable rewards={selectedReward.reward} />
         )}

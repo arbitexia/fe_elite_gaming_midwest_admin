@@ -46,7 +46,6 @@ export type {
   UserType,
   GetUserParam,
   GetUsersParam,
-  ChangePasswordParam,
   UpdateUserParam,
   DeleteUserParam,
 } from './users.type';

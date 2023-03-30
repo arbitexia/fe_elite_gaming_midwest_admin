@@ -4,6 +4,7 @@ import { ResponseStatus } from '@/constants';
 import { useAppToast } from '@/providers';
 import {
   createNewUser,
+  updateUser,
   authorize,
   forgotPassword,
   resetPassword,
@@ -12,7 +13,7 @@ import {
   logout,
 } from '@/redux/slices';
 import { useAppDispatch, useAppSelector } from './redux';
-import { RegisterType } from '@/types';
+import { RegisterType, UpdateUserParam } from '@/types';
 
 export interface useAuthProps {
   handleAuthResetSuccess?: () => void;
@@ -46,6 +47,10 @@ export const useAuth = (callbackFunc?: useAuthProps) => {
     await dispatch(createNewUser(param));
   };
 
+  const onUpdateUser = async (param: UpdateUserParam) => {
+    await dispatch(updateUser(param));
+  };
+
   const onLogin = async (identifier: string, password: string) => {
     await dispatch(authorize({ identifier, password }));
   };
@@ -61,6 +66,7 @@ export const useAuth = (callbackFunc?: useAuthProps) => {
     isAuthenticated: accessToken ? true : false,
     accessToken: accessToken,
     onCreateNewUser,
+    onUpdateUser,
     onLogin,
     onForgotPassword,
     onResetPassword,

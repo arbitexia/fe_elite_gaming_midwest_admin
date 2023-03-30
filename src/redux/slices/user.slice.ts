@@ -7,7 +7,6 @@ import {
   ReduxJson,
   GetUserParam,
   GetUsersParam,
-  ChangePasswordParam,
   UpdateUserParam,
   DeleteUserParam,
   UserType,
@@ -46,19 +45,6 @@ export const getUser = createAsyncThunk<
 >('user/getUser', async (params: GetUserParam, thunkAPI) => {
   try {
     return await userApi.getUser(params);
-  } catch (error) {
-    const err = error as AxiosError;
-    return thunkAPI.rejectWithValue(err.response?.data);
-  }
-});
-
-export const changePassword = createAsyncThunk<
-  CommonType.Message,
-  ChangePasswordParam,
-  { dispatch: AppDispatch; state: RootState }
->('user/changePassword', async (params: ChangePasswordParam, thunkAPI) => {
-  try {
-    return await userApi.changePassword(params);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
@@ -143,26 +129,6 @@ export const userSlice = createSlice({
         }
       )
       .addCase(getUser.rejected, (state, { payload }) => {
-        state.loading = false;
-        state.status = ResponseStatus.FAILED;
-        state.error = payload as string;
-        state.message = null;
-      })
-      .addCase(changePassword.pending, (state) => {
-        state.loading = true;
-        state.status = ResponseStatus.PENDING;
-        state.error = null;
-        state.message = null;
-      })
-      .addCase(
-        changePassword.fulfilled,
-        (state, { payload }: PayloadAction<CommonType.Message>) => {
-          state.loading = false;
-          state.status = ResponseStatus.SUCCESS;
-          state.message = payload.message;
-        }
-      )
-      .addCase(changePassword.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;

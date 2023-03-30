@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider, GlobalStyles } from '@mui/material';
 import { useAppSelector } from '@/hooks';
 import { appSelector } from '@/redux/slices';
 import { createAppTheme } from '@/theme';
@@ -13,6 +13,19 @@ function AppThemeProvider({ children }: AppThemeProviderProps) {
 
   return (
     <ThemeProvider theme={createAppTheme(theme.mode)}>
+      <GlobalStyles
+        styles={{
+          '*::-webkit-scrollbar': {
+            width: '5px',
+          },
+          '*::-webkit-scrollbar-track': {
+            '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
+          },
+          '*::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgba(0,0,0,0.2)',
+          },
+        }}
+      />
       <CssBaseline />
       {children}
     </ThemeProvider>

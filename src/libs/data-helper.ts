@@ -48,3 +48,7 @@ export const formatPhoneNumber = (str: string) => {
   }
   return null;
 };
+
+export const phoneNumberToString = (str: string) => {
+  return ('' + str).replace(/\D/g, '');
+};

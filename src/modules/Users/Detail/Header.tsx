@@ -9,11 +9,7 @@ import {
   DialogActions,
   Button,
 } from '@mui/material';
-import {
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Replay as ReplayIcon,
-} from '@mui/icons-material';
+import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import {
   UIActionButton,
   UIDefaultButton,
@@ -50,7 +46,9 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
           >
             {user.id === 0
               ? 'Create User'
-              : `${user.firstName} ${user.lastName}'s Information`}
+              : `${user?.firstName ?? ''} ${
+                  user?.lastName ?? 'Customer'
+                }'s Information`}
           </Typography>
           <Stack direction="row" spacing={2} justifyContent="flex-end">
             <Box
@@ -59,16 +57,11 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
                 justifyContent: 'flex-end',
               }}
             >
-              {user.id !== 0 && (
-                <UIActionButton
-                  icon={<ReplayIcon />}
-                  color="#667180"
-                  title="Change password"
-                  handleClick={() => console.log('ActionButton')}
-                />
-              )}
               {router.asPath.includes('edit') || user.id === 0 ? (
-                <UIDefaultButton sx={{ marginLeft: '8px' }} type="submit">
+                <UIDefaultButton
+                  sx={{ minWidth: '110px', borderRadius: '8px' }}
+                  type="submit"
+                >
                   Save
                 </UIDefaultButton>
               ) : (

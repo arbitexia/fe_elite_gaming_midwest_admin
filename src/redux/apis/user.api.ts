@@ -11,7 +11,6 @@ import {
   GetUserParam,
   UpdateUserParam,
   DeleteUserParam,
-  ChangePasswordParam,
 } from '@/types';
 import { jwtAxios } from './axios.api';
 import { getAuthorizeHeader } from '@/libs/data-helper';
@@ -31,15 +30,8 @@ export const getUser = async (params: GetUserParam) => {
   return response.data;
 };
 
-export const changePassword = async (params: ChangePasswordParam) => {
-  const response = await jwtAxios.post(`/password`, params, {
-    headers: getAuthorizeHeader(),
-  });
-  return response.data;
-};
-
 export const updateUser = async (params: UpdateUserParam) => {
-  const response = await jwtAxios.put(`/users}`, params, {
+  const response = await jwtAxios.put(`/users`, params, {
     headers: getAuthorizeHeader(),
   });
   return response.data;

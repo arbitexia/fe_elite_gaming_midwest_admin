@@ -59,26 +59,9 @@ export type GetUserParam = {
   userId: number;
 };
 
-export type ChangePasswordParam = {
-  userId: number;
-  oldPassword: string;
-  password: string;
-};
-
 export type UpdateUserParam = {
   userId: number;
-  input: {
-    firstName?: string;
-    lastName?: string;
-    userName?: string;
-    assetId: number;
-    email?: string;
-    phone?: string;
-    address?: CommonType.Address;
-    birthday?: string;
-    status?: UserStatus;
-    roleId: number;
-  };
+  input: UserType.User;
 };
 
 export type UserLocationsType = {
