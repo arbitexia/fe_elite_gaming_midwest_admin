@@ -81,3 +81,8 @@ export enum UserStatus {
   VERIFY_PHONE = 'VERIFY_PHONE',
   VERIFY_EMAIL = 'VERIFY_EMAIL',
 }
+
+export enum LocationStatus {
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
+}

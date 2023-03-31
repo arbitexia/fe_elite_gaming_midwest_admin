@@ -12,7 +12,6 @@ const LocationsPage = () => {
   useEffect(() => {
     onGetLocations({ filterBy: { search: searchValue } });
   }, [searchValue]);
-
   return (
     <DashboardLayout title="Locations">
       <LocationsHeader
@@ -29,7 +28,14 @@ const LocationsPage = () => {
             return <LocationsCard key={item.id} item={item} />;
           })
         ) : (
-          <UIInfoValue>No Data</UIInfoValue>
+          <UIInfoValue
+            sx={{
+              color: 'rgba(0, 0, 0, 0.3)',
+              textTransform: 'uppercase',
+            }}
+          >
+            No Data
+          </UIInfoValue>
         )}
       </Box>
     </DashboardLayout>

@@ -114,7 +114,7 @@ const ProductsDetailInfoEditCard = ({
           width: '100%',
           height: '350px',
           paddingTop: '20px',
-          '.quill': { height: '250px', marginTop: '20px' },
+          '.quill': { height: '220px', marginTop: '20px' },
         }}
       >
         <UIInfoTitle>Description:</UIInfoTitle>
