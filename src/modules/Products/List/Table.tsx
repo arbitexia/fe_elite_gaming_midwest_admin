@@ -332,7 +332,7 @@ const ProductsTable = ({
                   name="product.amount"
                   value={productItem.amount}
                   onChange={(e) => {
-                    console.log(e.target.value);
+                    console.log(e);
                   }}
                   sx={{ width: '80px' }}
                   disabled

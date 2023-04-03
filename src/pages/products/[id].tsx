@@ -9,6 +9,7 @@ import {
   ProductsDetailInfoCard,
 } from '@/modules/Products';
 import { Product } from '@/types';
+import { Divider } from '@mui/material';
 
 const ProductsById = () => {
   const router = useRouter();
@@ -27,6 +28,7 @@ const ProductsById = () => {
       {productItem && (
         <>
           <ProductsDetailHeader name={productItem.name} isEditable={false} />
+          <Divider sx={{ mt: '18px', mb: '30px' }} />
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
             <ProductsDetailCarouselCard />
             <ProductsDetailInfoCard productItem={productItem} />

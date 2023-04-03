@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { productMockData } from '@/_mock/product';
 import { useAsset, useProduct } from '@/hooks';
 import { DashboardLayout } from '@/layouts';
@@ -63,6 +63,7 @@ const ProductEdit = () => {
             name={productFormik.values.name}
             isEditable={true}
           />
+          <Divider sx={{ mt: '18px', mb: '30px' }} />
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
             <ProductsDetailCarouselEditCard />
             {productItem && (

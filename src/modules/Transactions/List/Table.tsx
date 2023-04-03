@@ -36,7 +36,6 @@ const TransactionsTable = ({
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
 
   const handleNavBtnClick = (key: string) => {
-    console.log(anchorElOptionsMenu?.getAttribute('data-key'));
     if (key === MenuAction.DELETE) {
       //TODO Delete Action
     } else

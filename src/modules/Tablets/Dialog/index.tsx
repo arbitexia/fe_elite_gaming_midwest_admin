@@ -14,6 +14,7 @@ import { userStatus } from '@/_mock/users';
 import { TabletType } from '@/types';
 import { UserStatus } from '@/constants';
 import { useAppToast } from '@/providers';
+import { LocationStatus } from '@/constants/enum';
 
 type TabletDialogProps = {
   selectedTablet?: TabletType.Data;
@@ -124,13 +125,15 @@ const TabletDialog = ({
                 sx={{ width: '250px' }}
                 select
               >
-                {locations?.map((item) => {
-                  return (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  );
-                })}
+                {locations
+                  ?.filter((obj) => obj.status === LocationStatus.OPEN)
+                  ?.map((item) => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.name}
+                      </MenuItem>
+                    );
+                  })}
               </UIEditTextField>
             </UIFlexWrapBox>
             <UIFlexWrapBox sx={{ alignItems: 'center' }}>

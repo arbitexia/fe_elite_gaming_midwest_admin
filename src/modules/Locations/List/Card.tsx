@@ -15,7 +15,7 @@ export type LocationsCardProps = {
 export const LocationsCard = ({ item }: LocationsCardProps) => {
   const router = useRouter();
   return (
-    <UIItemCard sx={{ width: 254, height: 360 }}>
+    <UIItemCard sx={{ width: 254, height: 390 }}>
       <StyledImageBox>
         <Box
           component="img"
@@ -67,7 +67,30 @@ export const LocationsCard = ({ item }: LocationsCardProps) => {
           item.address?.country ?? ''
         }`}
       </Typography>
-      <UIFlexSpaceBox sx={{ marginTop: '30px' }}>
+      <Typography
+        sx={{
+          mt: '8px',
+          fontWeight: '600',
+          fontSize: '12px',
+          lineHeight: '16px',
+          color: '#83A9A8',
+        }}
+      >
+        Status:
+      </Typography>
+      <Typography
+        sx={{
+          fontWeight: '600',
+          fontSize: '12px',
+          lineHeight: '16px',
+          height: '16px',
+          overflow: 'hidden',
+          color: 'rgba(0, 0, 0, 0.3)',
+        }}
+      >
+        {`${item.status}`}
+      </Typography>
+      <UIFlexSpaceBox sx={{ marginTop: '24px' }}>
         <StyledLocationViewButton
           onClick={() => router.push(`/locations/${item.id}`)}
         >

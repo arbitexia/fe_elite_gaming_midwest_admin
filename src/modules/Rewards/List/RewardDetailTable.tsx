@@ -1,14 +1,8 @@
 import React from 'react';
 import { format } from 'date-fns';
-import { Table, TableHead, TableBody, Box, Typography } from '@mui/material';
+import { Table, TableHead, TableBody, Box } from '@mui/material';
 import { Reward } from '@/types';
-import {
-  UIChip,
-  UIFlexCenterBox,
-  UIInfoValue,
-  UIListTableCell,
-  UIListTableRow,
-} from '@/components/UI';
+import { UIChip, UIListTableCell, UIListTableRow } from '@/components/UI';
 import { getColor } from '@/libs/data-helper';
 
 interface IRewardDetailTable {

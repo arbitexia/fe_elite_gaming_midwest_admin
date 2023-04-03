@@ -18,6 +18,7 @@ import { Search as SearchIcon } from '@mui/icons-material';
 import { useLocation, useProduct, useReward } from '@/hooks';
 import { UIDefaultTextField, UIFlexWrapBox } from '@/components/UI';
 import { Reward } from '@/types';
+import { LocationStatus } from '@/constants/enum';
 
 const RewardCreateDialog = ({
   isOpenCreateDlg,
@@ -121,27 +122,29 @@ const RewardCreateDialog = ({
                 bgcolor: 'background.paper',
               }}
             >
-              {locations.map((location) => {
-                const labelId = `location-checkbox-list-secondary-label-${location.name}-${location.id}`;
-                return (
-                  <ListItem
-                    key={labelId}
-                    onClick={() => handleCheckLocation(location.id)}
-                    disablePadding
-                  >
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <Checkbox
-                          edge="start"
-                          checked={location.id === locationId}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </ListItemIcon>
-                      <ListItemText id={labelId} primary={location.name} />
-                    </ListItemButton>
-                  </ListItem>
-                );
-              })}
+              {locations
+                ?.filter((obj) => obj.status === LocationStatus.OPEN)
+                ?.map((location) => {
+                  const labelId = `location-checkbox-list-secondary-label-${location.name}-${location.id}`;
+                  return (
+                    <ListItem
+                      key={labelId}
+                      onClick={() => handleCheckLocation(location.id)}
+                      disablePadding
+                    >
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <Checkbox
+                            edge="start"
+                            checked={location.id === locationId}
+                            inputProps={{ 'aria-labelledby': labelId }}
+                          />
+                        </ListItemIcon>
+                        <ListItemText id={labelId} primary={location.name} />
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                })}
             </List>
           </Paper>
           <Paper>
