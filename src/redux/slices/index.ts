@@ -78,6 +78,7 @@ export {
   rewardSelector,
   filterRewards,
   createRewards,
+  getRewardsByUserId,
   resetRewardMessage,
 } from './reward.slice';
 
@@ -116,3 +117,12 @@ export {
   changePasswordTablet,
   resetTabletMessage,
 } from './tablet.slice';
+
+export {
+  default as transactionReducer,
+  transactionSelector,
+  resetTransactionMessage,
+  updateTransaction,
+  deleteTransaction,
+  getTransactions,
+} from './transaction.slice';

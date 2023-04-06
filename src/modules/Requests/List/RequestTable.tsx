@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import {
   Table,
@@ -10,98 +10,34 @@ import {
 } from '@mui/material';
 import { UIChip, UIFlexColumnBox, UIFlexWrapBox } from '@/components/UI';
 import { getColor } from '@/libs/data-helper';
-import { useAppToast } from '@/providers';
-import { RequestItemType } from '@/types';
+import { TransactionType, UserType } from '@/types';
 import RequestsPagination from './Pagination';
 import { StyledRequestTableRow, StyledRequestTableCell } from './ui';
+import { format } from 'date-fns';
+import { useAuth } from '@/hooks';
+import { TransactionStatus } from '@/constants';
 
 interface RequestTableProps {
-  requestsData: RequestItemType[];
+  requestsData: TransactionType.Data[];
+  onAction: (value: TransactionType.Param) => void;
 }
+type Order = 'asc' | 'desc';
 
-const RequestTable = ({ requestsData }: RequestTableProps) => {
+const RequestTable = ({ requestsData, onAction }: RequestTableProps) => {
   const router = useRouter();
-  const showToast = useAppToast();
-  const [isActions, setActions] = useState<'accept' | 'decline'>();
-  type Order = 'asc' | 'desc';
+  const { me } = useAuth();
+
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof RequestItemType>('id');
-
-  function stableSort<T>(
-    array: readonly T[],
-    comparator: (a: T, b: T) => number
-  ) {
-    const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) {
-        return order;
-      }
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-  }
-
-  function getComparator<Key extends keyof RequestItemType>(
-    order: Order,
-    orderBy: Key
-  ): (a: RequestItemType, b: RequestItemType) => number {
-    return order === 'desc'
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  }
-
-  function descendingComparator(
-    a: RequestItemType,
-    b: RequestItemType,
-    orderBy: keyof RequestItemType
-  ) {
-    if (orderBy === 'user') {
-      if (
-        `${b.user.firstName} ${b.user.lastName}` <
-        `${a.user.firstName} ${a.user.lastName}`
-      ) {
-        return -1;
-      }
-      if (
-        `${b.user.firstName} ${b.user.lastName}` >
-        `${a.user.firstName} ${a.user.lastName}`
-      ) {
-        return 1;
-      }
-    }
-    if (orderBy === 'location') {
-      if (b.location.name < a.location.name) {
-        return -1;
-      }
-      if (b.location.name > a.location.name) {
-        return 1;
-      }
-    }
-    if (orderBy === 'item') {
-      if (b.item.product.name < a.item.product.name) {
-        return -1;
-      }
-      if (b.item.product.name > a.item.product.name) {
-        return 1;
-      }
-    }
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
-  }
+  const [orderBy, setOrderBy] = useState<keyof TransactionType.Data>('id');
 
   const createSortHandler =
-    (property: keyof RequestItemType) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof TransactionType.Data) =>
+    (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof RequestItemType
+    property: keyof TransactionType.Data
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -125,7 +61,7 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
               fontSize: 12,
               fontWeight: 500,
               textTransform: 'capitalize',
-              width: 40,
+              width: 58,
             }}
           >
             {key}:
@@ -151,27 +87,15 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
                 my: '4px',
               }}
             >
-              {items[key]}
+              {key === 'updatedAt'
+                ? format(new Date(items[key]), 'yyyy-MM-dd')
+                : items[key]}
             </Typography>
           )}
         </UIFlexWrapBox>
       );
     });
   };
-
-  useEffect(() => {
-    if (isActions === 'accept') {
-      showToast({
-        severity: 'success',
-        message: 'Accepted',
-      });
-    } else if (isActions === 'decline') {
-      showToast({
-        severity: 'info',
-        message: 'Declined',
-      });
-    }
-  }, [isActions]);
 
   return (
     <>
@@ -187,20 +111,12 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
                 ID
               </TableSortLabel>
             </StyledRequestTableCell>
+            <StyledRequestTableCell>Info</StyledRequestTableCell>
             <StyledRequestTableCell>
               <TableSortLabel
-                active={orderBy === 'item'}
+                active={orderBy === 'createdAt'}
                 direction={order}
-                onClick={createSortHandler('item')}
-              >
-                Info
-              </TableSortLabel>
-            </StyledRequestTableCell>
-            <StyledRequestTableCell>
-              <TableSortLabel
-                active={orderBy === 'requestedAt'}
-                direction={order}
-                onClick={createSortHandler('requestedAt')}
+                onClick={createSortHandler('createdAt')}
               >
                 Requested at
               </TableSortLabel>
@@ -238,18 +154,15 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
         <TableBody>
           {requestsData &&
             requestsData.length > 0 &&
-            stableSort<RequestItemType>(
-              requestsData,
-              getComparator(order, orderBy)
-            ).map((request, index) => {
+            requestsData?.map((request, index) => {
               return (
                 <StyledRequestTableRow key={`request-${index}`}>
                   <StyledRequestTableCell>#{request.id}</StyledRequestTableCell>
                   <StyledRequestTableCell>
-                    {renderItem(request.item.product)}
+                    {renderItem(request.reward.product)}
                   </StyledRequestTableCell>
                   <StyledRequestTableCell sx={{ color: '#ABACAC !important' }}>
-                    {request.requestedAt}
+                    {format(new Date(request.createdAt), 'yyyy-MM-dd')}
                   </StyledRequestTableCell>
                   <StyledRequestTableCell>
                     <Button
@@ -284,7 +197,11 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
                         size="small"
                         sx={{ color: '#FFFFFF', background: '#11918D' }}
                         onClick={() => {
-                          setActions('accept');
+                          onAction({
+                            transactionId: request.id,
+                            status: TransactionStatus.ACCEPTED,
+                            assignee: me as UserType.User,
+                          });
                         }}
                       >
                         Accept
@@ -297,7 +214,11 @@ const RequestTable = ({ requestsData }: RequestTableProps) => {
                           color: '#11918D',
                         }}
                         onClick={() => {
-                          setActions('decline');
+                          onAction({
+                            transactionId: request.id,
+                            status: TransactionStatus.DECLINED,
+                            assignee: me as UserType.User,
+                          });
                         }}
                       >
                         Decline

@@ -1,8 +1,8 @@
 import { format } from 'date-fns';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography, Divider } from '@mui/material';
 import { Print } from '@mui/icons-material';
 import { UIFlexSpaceBox, UIActionButton, UIImage } from '@/components/UI';
-import { AwardType, TransactionsProps } from '@/types';
+import { TransactionType } from '@/types';
 import { useAppToast } from '@/providers';
 import DetailTable from './DetailTable';
 import {
@@ -14,17 +14,18 @@ import {
   StyledStatusCol,
   StyledOrderModalHeading,
 } from './ui';
+import { formatPhoneNumber } from '@/libs/data-helper';
 
 export type TransactionDetailProps = {
-  transactionItem: AwardType;
+  transaction: TransactionType.Data;
 };
-const TransactionDetail = ({ transactionItem }: TransactionDetailProps) => {
+const TransactionDetail = ({ transaction }: TransactionDetailProps) => {
   const appToast = useAppToast();
   return (
     <Box>
-      <UIFlexSpaceBox sx={{ mb: '30px', mt: 4 }}>
+      <UIFlexSpaceBox sx={{ alignItems: 'center', gap: '12px' }}>
         <StyledOrderModalHeading>
-          Transactions #{transactionItem.id} Details
+          Transactions #{transaction.id} Details
         </StyledOrderModalHeading>
         <UIActionButton
           icon={<Print />}
@@ -38,13 +39,14 @@ const TransactionDetail = ({ transactionItem }: TransactionDetailProps) => {
           }}
         />
       </UIFlexSpaceBox>
+      <Divider sx={{ mt: '18px', mb: '30px' }} />
       <StyledDetailBox component="div">
         <StyledDetailBoxHeader component="div">
           <UIImage src={'images/icons/logo.svg'} width={150} height={150} />
 
           <StyledStatusCol component="div">
-            <StyledLabel variant="h6">{transactionItem.status}</StyledLabel>
-            <Typography>#{transactionItem.id}</Typography>
+            <StyledLabel variant="h6">{transaction.status}</StyledLabel>
+            <Typography>#{transaction.id}</Typography>
           </StyledStatusCol>
         </StyledDetailBoxHeader>
 
@@ -52,24 +54,21 @@ const TransactionDetail = ({ transactionItem }: TransactionDetailProps) => {
           <Grid item xs={6}>
             <StyledGridBox component="div">
               <Typography variant="h5">Customer</Typography>
-              <Typography>{`${
-                transactionItem.userLocation?.user?.firstName ?? '-'
-              } ${
-                transactionItem.userLocation?.user?.lastName ?? '-'
+              <Typography>{`${transaction?.user?.firstName ?? '-'} ${
+                transaction?.user?.lastName ?? '-'
               }`}</Typography>
               <Typography>
-                {transactionItem?.userLocation?.location?.address?.address1 ??
-                  '-'}
+                {transaction?.location?.address?.address1 ?? '-'}
               </Typography>
               <Typography>
-                Phone: {transactionItem?.userLocation?.user?.phone ?? '-'}
+                Phone: {formatPhoneNumber(transaction?.user?.phone) ?? '-'}
               </Typography>
 
               <Box component="div">
                 <Typography variant="h5">Date Create</Typography>
                 <Typography>
-                  {transactionItem?.createdAt
-                    ? format(new Date(transactionItem.createdAt), 'yyyy-MM-dd')
+                  {transaction?.createdAt
+                    ? format(new Date(transaction.createdAt), 'yyyy-MM-dd')
                     : '-'}
                 </Typography>
               </Box>
@@ -79,21 +78,21 @@ const TransactionDetail = ({ transactionItem }: TransactionDetailProps) => {
           <Grid item xs={6}>
             <StyledGridBox component="div">
               <Typography variant="h5">Assignee</Typography>
-              <Typography>{`${transactionItem?.assignee?.firstName ?? '-'} ${
-                transactionItem?.assignee?.lastName ?? '-'
+              <Typography>{`${transaction?.assignee?.firstName ?? '-'} ${
+                transaction?.assignee?.lastName ?? '-'
               }`}</Typography>
               <Typography>
-                {transactionItem?.assignee?.address?.address1 ?? '-'}
+                {transaction?.assignee?.address?.address1 ?? '-'}
               </Typography>
               <Typography>
-                Email: {transactionItem?.assignee?.email ?? '-'}
+                Email: {transaction?.assignee?.email ?? '-'}
               </Typography>
 
               <Box component="div">
                 <Typography variant="h5">Date Accepted</Typography>
                 <Typography>
-                  {transactionItem?.updatedAt
-                    ? format(new Date(transactionItem.updatedAt), 'yyyy-MM-dd')
+                  {transaction?.acceptedAt
+                    ? format(new Date(transaction.acceptedAt), 'yyyy-MM-dd')
                     : '-'}
                 </Typography>
               </Box>
@@ -101,7 +100,7 @@ const TransactionDetail = ({ transactionItem }: TransactionDetailProps) => {
           </Grid>
 
           <Grid item xs={12}>
-            <DetailTable transactionItem={transactionItem} />
+            <DetailTable transaction={transaction} />
           </Grid>
         </StyledDetailGrid>
       </StyledDetailBox>

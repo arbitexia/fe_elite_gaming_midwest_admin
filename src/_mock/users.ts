@@ -7,6 +7,11 @@ export const menuActions = [
   { label: 'Delete', color: '#fb020299', action: MenuAction.DELETE },
 ];
 
+export const menuTransactionActions = [
+  { label: 'View more', color: '#28B446', action: MenuAction.VIEW },
+  { label: 'Delete', color: '#fb020299', action: MenuAction.DELETE },
+];
+
 export const menuTabletActions = [
   {
     label: 'Change password',

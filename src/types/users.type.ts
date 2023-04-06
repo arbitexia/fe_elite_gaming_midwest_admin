@@ -22,6 +22,7 @@ export declare namespace UserType {
     firstLogin?: object;
     locationId?: number;
     userLocations?: UserLocationsType[];
+    coupon?: number;
     createdAt?: string;
     updatedAt?: string;
   };

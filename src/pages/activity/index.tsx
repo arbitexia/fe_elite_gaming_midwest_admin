@@ -7,7 +7,7 @@ import {
 import { DashboardLayout } from '@/layouts';
 import { ActivityFilterType, ExportActivityType } from '@/types';
 import { Divider } from '@mui/material';
-import { useActivity } from '@/hooks/activity';
+import { useActivity } from '@/hooks';
 import { CSVLink } from 'react-csv';
 import { format } from 'date-fns';
 

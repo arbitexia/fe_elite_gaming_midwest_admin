@@ -37,11 +37,7 @@ export type { ReduxJson } from './redux.type';
 export type { RequestItemType } from './requests.type';
 export type { Reward } from './reward.type';
 export type { RoleType } from './role.type';
-export type {
-  TransactionType,
-  TransactionsProps,
-  TransactionFilterType,
-} from './transactions.type';
+
 export type {
   UserType,
   GetUserParam,
@@ -56,3 +52,4 @@ export type {
 } from './config.type';
 
 export type { TabletType } from './tablet.type';
+export type { TransactionType } from './transaction.type';

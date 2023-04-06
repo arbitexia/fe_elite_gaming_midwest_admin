@@ -6,8 +6,16 @@ import {
   StyledTransactionTableCell,
 } from './ui';
 import { userTransactionData } from '@/_mock/users';
-
-const UserDetailTransactionCard = () => {
+import { TransactionType } from '@/types';
+import { useRouter } from 'next/router';
+import { format } from 'date-fns';
+type UserDetailTransactionCardProps = {
+  transactions: TransactionType.Data[];
+};
+const UserDetailTransactionCard = ({
+  transactions,
+}: UserDetailTransactionCardProps) => {
+  const router = useRouter();
   return (
     <StyledUserDetailCard>
       <UIFlexSpaceBox>
@@ -22,7 +30,9 @@ const UserDetailTransactionCard = () => {
         >
           Transactions
         </Typography>
-        <StyledUserRequestButton>All Transactions</StyledUserRequestButton>
+        <StyledUserRequestButton onClick={() => router.push('/transactions')}>
+          All Transactions
+        </StyledUserRequestButton>
       </UIFlexSpaceBox>
       <Table
         size="small"
@@ -33,11 +43,11 @@ const UserDetailTransactionCard = () => {
         }}
       >
         <TableBody>
-          {userTransactionData.map((data) => {
+          {transactions?.map((data) => {
             return (
               <TableRow key={data.id}>
                 <StyledTransactionTableCell sx={{ color: '#06251F' }}>
-                  {data.createdAt}
+                  {format(new Date(data.createdAt), 'yyyy-MM-dd')}
                 </StyledTransactionTableCell>
                 <StyledTransactionTableCell
                   align="right"

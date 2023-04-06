@@ -11,6 +11,7 @@ export {
   RewardStatus,
   UserRole,
   UserStatus,
+  TransactionStatus,
 } from './enum';
 export { productStatus } from './product';
 export { formats, modules } from './quill';

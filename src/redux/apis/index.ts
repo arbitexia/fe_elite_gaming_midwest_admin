@@ -9,4 +9,5 @@ export * as rewardApi from './reward.api';
 export * as activityApi from './activity.api';
 export * as configApi from './config.api';
 export * as tabletApi from './tablet.api';
+export * as transactionApi from './transaction.api';
 export { jwtAxios, setupJwt } from './axios.api';

@@ -1,9 +1,8 @@
 import { TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import { TransactionsProps } from '@/types';
 import { StyledTable, TableHeadCell } from './ui';
 import { TransactionDetailProps } from './Detail';
 
-const DetailTable = ({ transactionItem }: TransactionDetailProps) => {
+const DetailTable = ({ transaction }: TransactionDetailProps) => {
   return (
     <StyledTable>
       <TableHead>
@@ -17,22 +16,22 @@ const DetailTable = ({ transactionItem }: TransactionDetailProps) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        <TableRow key={transactionItem.id}>
+        <TableRow key={transaction.id}>
           <TableCell component="th" scope="row">
-            {transactionItem.id}
+            {transaction.id}
           </TableCell>
           <TableCell align="left">
-            {transactionItem?.product?.name ?? '-'}
+            {transaction?.reward?.product?.name ?? '-'}
           </TableCell>
           <TableCell align="left">
-            {transactionItem?.product?.short ?? '-'}
+            {transaction?.reward?.product?.short ?? '-'}
           </TableCell>
-          <TableCell>{transactionItem?.userLocation?.location?.name}</TableCell>
+          <TableCell>{transaction?.location?.name}</TableCell>
           <TableCell align="right">
-            {transactionItem?.product?.point} Point
+            {transaction?.reward?.product?.point} Point
           </TableCell>
           <TableCell align="right">
-            {transactionItem?.product?.status}
+            {transaction?.reward?.product?.status}
           </TableCell>
         </TableRow>
       </TableBody>

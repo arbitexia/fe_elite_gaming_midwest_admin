@@ -28,6 +28,7 @@ import {
   activityReducer,
   configReducer,
   tabletReducer,
+  transactionReducer,
 } from './slices';
 
 const combinedReducer = combineReducers({
@@ -43,6 +44,7 @@ const combinedReducer = combineReducers({
   activity: activityReducer,
   config: configReducer,
   tablet: tabletReducer,
+  transaction: transactionReducer,
 });
 
 const createStore = () => {
@@ -63,6 +65,7 @@ const createStore = () => {
       'activity',
       'config',
       'tablet',
+      'transaction',
     ],
   };
 

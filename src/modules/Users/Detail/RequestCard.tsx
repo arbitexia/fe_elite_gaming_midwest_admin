@@ -8,8 +8,15 @@ import {
 } from './ui';
 import { userRequestData } from '@/_mock/users';
 import { getColor } from '@/libs/data-helper';
+import { TransactionType } from '@/types';
+import { format } from 'date-fns';
+import { useRouter } from 'next/router';
 
-const UserDetailRequestCard = () => {
+type UserDetailRequestCardProps = {
+  requests: TransactionType.Data[];
+};
+const UserDetailRequestCard = ({ requests }: UserDetailRequestCardProps) => {
+  const router = useRouter();
   return (
     <StyledUserDetailCard>
       <UIFlexSpaceBox>
@@ -24,7 +31,9 @@ const UserDetailRequestCard = () => {
         >
           Recent Request
         </Typography>
-        <StyledUserRequestButton>View more</StyledUserRequestButton>
+        <StyledUserRequestButton onClick={() => router.push('/requests')}>
+          View more
+        </StyledUserRequestButton>
       </UIFlexSpaceBox>
       <Table
         size="small"
@@ -35,22 +44,24 @@ const UserDetailRequestCard = () => {
         }}
       >
         <TableBody>
-          {userRequestData.map((data) => {
+          {requests?.map((data, index) => {
             return (
-              <StyledRequestTableRow key={data.id}>
+              <StyledRequestTableRow key={index}>
                 <StyledRequestTableCell>#{data.id}</StyledRequestTableCell>
                 <StyledRequestTableCell>
-                  {data.rewardName}
+                  {data.reward.product.name}
                 </StyledRequestTableCell>
-                <StyledRequestTableCell>{data.location}</StyledRequestTableCell>
                 <StyledRequestTableCell>
-                  {data.point} points
+                  {data.location.name}
+                </StyledRequestTableCell>
+                <StyledRequestTableCell>
+                  {data.reward.product.point} points
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
                   <UIChip label={data.status} color={getColor(data.status)} />
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
-                  {data.createdAt}
+                  {format(new Date(data.createdAt), 'yyyy-MM-dd')}
                 </StyledRequestTableCell>
               </StyledRequestTableRow>
             );

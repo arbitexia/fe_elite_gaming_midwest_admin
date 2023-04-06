@@ -1,4 +1,4 @@
-import { UserType, Location, Reward, RequestItemType } from '@/types';
+import { UserType } from '@/types';
 import { ActivityModel, ActivityType } from '@/constants';
 
 export type ActivityItemType = {
@@ -23,9 +23,10 @@ export type ExportActivityType = {
 
 export type ActivityFilterType = {
   filterBy: {
-    modelType: string;
+    modelType?: string;
     search?: string;
     sort?: string;
+    userId?: number;
   };
   cursor: {
     page: number;

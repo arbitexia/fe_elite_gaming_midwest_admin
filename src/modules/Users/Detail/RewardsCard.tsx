@@ -6,10 +6,16 @@ import {
   StyledRewardsTableCell,
   StyledRequestTableRow,
 } from './ui';
-import { rewardsData } from '@/_mock/rewards';
 import { MoreHoriz } from '@mui/icons-material';
+import { Reward } from '@/types';
+import { format } from 'date-fns';
+import { useRouter } from 'next/router';
 
-const UserDetailRewardsCard = () => {
+type UserDetailRewardsCardProps = {
+  rewards: Reward.Data[];
+};
+const UserDetailRewardsCard = ({ rewards }: UserDetailRewardsCardProps) => {
+  const router = useRouter();
   return (
     <StyledUserDetailCard>
       <UIFlexSpaceBox>
@@ -22,9 +28,11 @@ const UserDetailRewardsCard = () => {
             color: '#222B35',
           }}
         >
-          Avaliable Rewards
+          Available Rewards
         </Typography>
-        <StyledUserRequestButton>All Rewards</StyledUserRequestButton>
+        <StyledUserRequestButton onClick={() => router.push('/rewards')}>
+          All Rewards
+        </StyledUserRequestButton>
       </UIFlexSpaceBox>
       <Table
         size="small"
@@ -35,12 +43,12 @@ const UserDetailRewardsCard = () => {
         }}
       >
         <TableBody>
-          {rewardsData.map((data, index) => {
+          {rewards?.map((data, index) => {
             if (index >= 4) return null;
             return (
               <StyledRequestTableRow key={data.id}>
                 <StyledRewardsTableCell>
-                  {data.product.createdAt}
+                  {format(new Date(data?.createdAt ?? ''), 'yyyy-MM-dd')}
                 </StyledRewardsTableCell>
                 <StyledRewardsTableCell>
                   <Box>

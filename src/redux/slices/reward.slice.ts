@@ -11,6 +11,7 @@ const initialState: ReduxJson.RewardState = {
   message: null,
   error: null,
   rewards: [],
+  availableRewards: [],
   pageInfo: null,
 };
 
@@ -34,6 +35,19 @@ export const createRewards = createAsyncThunk<
 >('rewards/createRewards', async (body: Reward.Body, thunkAPI) => {
   try {
     return await rewardApi.create(body);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
+export const getRewardsByUserId = createAsyncThunk<
+  Reward.Data[],
+  { userId: number },
+  { dispatch: AppDispatch; state: RootState }
+>('rewards/getRewardsByUserId', async (param: { userId: number }, thunkAPI) => {
+  try {
+    return await rewardApi.getByUserId(param);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
@@ -90,7 +104,27 @@ export const rewardSlice = createSlice({
       .addCase(createRewards.fulfilled, (state) => {
         state.loading = false;
         state.status = ResponseStatus.SUCCESS;
-      });
+      })
+      .addCase(getRewardsByUserId.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(getRewardsByUserId.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(
+        getRewardsByUserId.fulfilled,
+        (state, { payload }: PayloadAction<Reward.Data[]>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.availableRewards = payload;
+        }
+      );
   },
 });
 

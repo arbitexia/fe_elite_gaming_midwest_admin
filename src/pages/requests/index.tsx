@@ -2,29 +2,30 @@ import { useState, useEffect } from 'react';
 import { Divider } from '@mui/material';
 import { RequestsHeader, RequestTable } from '@/modules/Requests';
 import { DashboardLayout } from '@/layouts';
-import { requestsData } from '@/_mock/requests';
-import { RequestItemType } from '@/types';
+import { TransactionType } from '@/types';
+import { useTransaction } from '@/hooks';
+import { TransactionStatus } from '@/constants';
 
 const Requests = () => {
-  const [requestList, setRequestList] = useState<RequestItemType[]>([]);
+  const { transactions, onGetTransactions, onUpdateTransaction } =
+    useTransaction();
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
-    setRequestList(() => {
-      return requestsData.filter((item) => {
-        const userName = `${item.user.firstName} ${item.user.lastName}`;
-        return (
-          item.location.name
-            .toLowerCase()
-            .includes(searchValue.toLowerCase()) ||
-          userName.toLowerCase().includes(searchValue.toLowerCase()) ||
-          item.item.product.name
-            .toLowerCase()
-            .includes(searchValue.toLowerCase())
-        );
-      });
-    });
+    fetchTransaction();
   }, [searchValue]);
+
+  const fetchTransaction = async () => {
+    await onGetTransactions({
+      filterBy: { search: searchValue, status: TransactionStatus.WAITING },
+      cursor: { page: 0, size: 1000 },
+    });
+  };
+
+  const handleAction = async (data: TransactionType.Param) => {
+    await onUpdateTransaction(data);
+    await fetchTransaction();
+  };
   return (
     <DashboardLayout title="Locations">
       <RequestsHeader
@@ -32,7 +33,7 @@ const Requests = () => {
         onValueChange={(value) => setSearchValue(value)}
       />
       <Divider sx={{ my: '30px' }} />
-      <RequestTable requestsData={requestList} />
+      <RequestTable requestsData={transactions} onAction={handleAction} />
     </DashboardLayout>
   );
 };

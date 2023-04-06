@@ -5,54 +5,41 @@ import {
   TransactionsPagination,
 } from '@/modules/Transactions';
 import { DashboardLayout } from '@/layouts';
-import { GetAwardsParam } from '@/types';
 import { Divider } from '@mui/material';
-import { useAward } from '@/hooks/award';
+import { useTransaction } from '@/hooks';
+import { TransactionStatus } from '@/constants';
 
 const TransactionsPage = () => {
-  const { awards, onGetAwards, pageInfo } = useAward();
+  const { transactions, pageInfo, onGetTransactions, onDeleteTransaction } =
+    useTransaction();
   const [searchValue, setSearchValue] = useState('');
   const [searchType, setSearchType] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  useEffect(() => {
-    const loadAwards = async () => {
-      try {
-        await fetchAwards({
-          filterBy: {
-            search: searchValue,
-          },
-          cursor: { page, size: rowsPerPage },
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    loadAwards();
+  useEffect(() => {
+    fetchTransactions();
   }, [page, rowsPerPage, searchValue]);
 
-  const fetchAwards = async (filter: GetAwardsParam) => {
-    await onGetAwards(filter);
+  const fetchTransactions = async () => {
+    try {
+      await onGetTransactions({
+        filterBy: {
+          search: searchValue,
+          status: TransactionStatus.ACCEPTED,
+        },
+        cursor: { page, size: rowsPerPage },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
-  // useEffect(() => {
-  //   setTransactionList(() => {
-  //     return transactionData.filter((item) => {
-  //       const customer = `${item.user.firstName} ${item.user.lastName}`;
-  //       const assignee = `${item.assignee.firstName} ${item.assignee.lastName}`;
 
-  //       return (
-  //         (customer.toLowerCase().includes(searchValue.toLowerCase()) ||
-  //           assignee.toLowerCase().includes(searchValue.toLowerCase()) ||
-  //           item.reward.product.name
-  //             .toLowerCase()
-  //             .includes(searchValue.toLowerCase())) &&
-  //         (searchType === 0 ||
-  //           item.type === transactionsType[searchType - 1].value)
-  //       );
-  //     });
-  //   });
-  // }, [searchValue, searchType]);
+  const handleDelete = async (transactionId: number) => {
+    await onDeleteTransaction({ id: transactionId });
+    await fetchTransactions();
+  };
+
   return (
     <DashboardLayout title="Transactions">
       <TransactionsHeader
@@ -62,7 +49,10 @@ const TransactionsPage = () => {
         onTypeChange={(value: number) => setSearchType(value)}
       />
       <Divider sx={{ mt: '30px' }} />
-      <TransactionsTable transactionTableData={awards} />
+      <TransactionsTable
+        transactionTableData={transactions}
+        onDelete={handleDelete}
+      />
       <TransactionsPagination
         page={page}
         rowsPerPage={rowsPerPage}

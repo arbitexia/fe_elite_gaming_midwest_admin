@@ -10,9 +10,13 @@ import { PointType } from '@/types';
 
 interface UserDetailPointsCardProps {
   points: PointType[];
+  onLoadMore: () => void;
 }
 
-const UserDetailPointsCard = ({ points }: UserDetailPointsCardProps) => {
+const UserDetailPointsCard = ({
+  points,
+  onLoadMore,
+}: UserDetailPointsCardProps) => {
   return (
     <StyledUserDetailCard>
       <UIFlexSpaceBox>
@@ -27,7 +31,9 @@ const UserDetailPointsCard = ({ points }: UserDetailPointsCardProps) => {
         >
           Points
         </Typography>
-        <StyledUserRequestButton>Load more</StyledUserRequestButton>
+        <StyledUserRequestButton onClick={onLoadMore}>
+          Load more
+        </StyledUserRequestButton>
       </UIFlexSpaceBox>
       <Table
         size="small"
