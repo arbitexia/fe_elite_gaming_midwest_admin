@@ -1,5 +1,5 @@
 import { Typography, Table, TableBody } from '@mui/material';
-import { UIFlexSpaceBox } from '@/components/UI';
+import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import {
   StyledUserDetailCard,
   StyledUserRequestButton,
@@ -35,6 +35,13 @@ const UserDetailPointsCard = ({
           Load more
         </StyledUserRequestButton>
       </UIFlexSpaceBox>
+      {points.length === 0 && (
+        <UIFlexCenterBox>
+          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+            No Data Found
+          </Typography>
+        </UIFlexCenterBox>
+      )}
       <Table
         size="small"
         sx={{

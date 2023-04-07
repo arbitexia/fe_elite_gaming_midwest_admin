@@ -1,11 +1,10 @@
 import { Typography, Table, TableBody, TableRow } from '@mui/material';
-import { UIFlexSpaceBox } from '@/components/UI';
+import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import {
   StyledUserDetailCard,
   StyledUserRequestButton,
   StyledTransactionTableCell,
 } from './ui';
-import { userTransactionData } from '@/_mock/users';
 import { TransactionType } from '@/types';
 import { useRouter } from 'next/router';
 import { format } from 'date-fns';
@@ -34,6 +33,13 @@ const UserDetailTransactionCard = ({
           All Transactions
         </StyledUserRequestButton>
       </UIFlexSpaceBox>
+      {transactions.length === 0 && (
+        <UIFlexCenterBox>
+          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+            No Data Found
+          </Typography>
+        </UIFlexCenterBox>
+      )}
       <Table
         size="small"
         sx={{

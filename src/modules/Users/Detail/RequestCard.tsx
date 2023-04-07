@@ -1,12 +1,11 @@
 import { Typography, Table, TableBody } from '@mui/material';
-import { UIChip, UIFlexSpaceBox } from '@/components/UI';
+import { UIChip, UIFlexCenterBox, UIFlexSpaceBox } from '@/components/UI';
 import {
   StyledUserDetailCard,
   StyledUserRequestButton,
   StyledRequestTableCell,
   StyledRequestTableRow,
 } from './ui';
-import { userRequestData } from '@/_mock/users';
 import { getColor } from '@/libs/data-helper';
 import { TransactionType } from '@/types';
 import { format } from 'date-fns';
@@ -29,12 +28,20 @@ const UserDetailRequestCard = ({ requests }: UserDetailRequestCardProps) => {
             color: '#222B35',
           }}
         >
-          Recent Request
+          Recent Requests
         </Typography>
         <StyledUserRequestButton onClick={() => router.push('/requests')}>
           View more
         </StyledUserRequestButton>
       </UIFlexSpaceBox>
+      {requests.length === 0 && (
+        <UIFlexCenterBox>
+          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+            No Data Found
+          </Typography>
+        </UIFlexCenterBox>
+      )}
+
       <Table
         size="small"
         sx={{

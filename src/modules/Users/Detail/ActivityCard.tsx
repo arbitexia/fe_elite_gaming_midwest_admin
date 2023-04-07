@@ -13,7 +13,7 @@ import {
   CreditScore,
 } from '@mui/icons-material';
 import { format } from 'date-fns';
-import { UIFlexSpaceBox } from '@/components/UI';
+import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import { StyledUserDetailCard, StyledUserRequestButton } from './ui';
 import { ActivityItemType } from '@/types';
 import { useRouter } from 'next/router';
@@ -77,6 +77,13 @@ const UserDetailActivityCard = ({
           View more
         </StyledUserRequestButton>
       </UIFlexSpaceBox>
+      {activities.length === 0 && (
+        <UIFlexCenterBox>
+          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+            No Data Found
+          </Typography>
+        </UIFlexCenterBox>
+      )}
       <Timeline
         sx={{
           display: 'flex',
