@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ResponseStatus } from '@/constants';
-import { authApi } from '@/redux/apis';
+import { authApi, userApi } from '@/redux/apis';
 import { RootState, AppDispatch } from '@/redux/store';
 import {
   ReduxJson,
@@ -12,6 +12,8 @@ import {
   RegisterType,
   ResetPasswordParams,
   ResetPasswordType,
+  UserType,
+  UpdateUserParam,
 } from '@/types';
 
 // Initial state
@@ -72,6 +74,19 @@ export const resetPassword = createAsyncThunk<
 >('auth/resetPassword', async (params: ResetPasswordParams, thunkAPI) => {
   try {
     return await authApi.resetPassword(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
+export const updateProfile = createAsyncThunk<
+  UserType.User,
+  UpdateUserParam,
+  { dispatch: AppDispatch; state: RootState }
+>('user/updateProfile', async (params: UpdateUserParam, thunkAPI) => {
+  try {
+    return await userApi.updateUser(params);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
@@ -187,6 +202,26 @@ export const authSlice = createSlice({
         }
       )
       .addCase(forgotPassword.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(updateProfile.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        updateProfile.fulfilled,
+        (state, { payload }: PayloadAction<UserType.User>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.user = payload;
+        }
+      )
+      .addCase(updateProfile.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;

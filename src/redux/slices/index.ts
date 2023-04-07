@@ -33,6 +33,7 @@ export {
   default as authReducer,
   authSelector,
   createNewUser,
+  updateProfile,
   authorize,
   forgotPassword,
   resetPassword,

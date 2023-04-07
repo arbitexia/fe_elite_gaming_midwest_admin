@@ -1,9 +1,8 @@
 import { useFormik } from 'formik';
-import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
-import { userStatus } from '@/_mock/users';
-import { UIFlexWrapBox, UIFlexSpaceBox } from '@/components/UI';
-import { UserRole } from '@/constants';
-import { UserType } from '@/types';
+import { Box, Divider, Typography, Stack } from '@mui/material';
+import { UIFlexWrapBox } from '@/components/UI';
+import { UserStatus } from '@/constants';
+import { UpdateUserParam, UserType } from '@/types';
 import ProfileHeader from './Header';
 import {
   StyledUserInfoTitle,
@@ -14,21 +13,37 @@ import {
   StyledUserInfoCardStatus,
   StyledUserEditTextField,
 } from './ui';
+import { format } from 'date-fns';
 
 interface ProfileEditProps {
   user: UserType.User;
+  onEdit: (value: UpdateUserParam) => void;
 }
 
-const ProfileEdit = ({ user }: ProfileEditProps) => {
-  const userFormik = useFormik({
+const ProfileEdit = ({ user, onEdit }: ProfileEditProps) => {
+  const profileFormik = useFormik({
     initialValues: user,
     onSubmit: async (values) => {
+      const dataToSave: UpdateUserParam = {
+        userId: Number(user.id),
+        input: {
+          id: Number(user.id),
+          firstName: values.firstName,
+          lastName: values.lastName,
+          userName: `${values.firstName}${values.lastName}`,
+          email: values.email,
+          phone: values.phone,
+          address: values.address,
+          birthday: values.birthday,
+          status: UserStatus.ACTIVATED,
+        },
+      };
       console.log(values);
-      // await authorize({ variables: { ...values } });
+      // onEdit(dataToSave);
     },
   });
   return (
-    <Box component="form" onSubmit={userFormik.handleSubmit}>
+    <Box component="form" onSubmit={profileFormik.handleSubmit}>
       <ProfileHeader />
       <StyledUserInfoCard>
         <StyledUserInfoCardHeader />
@@ -100,93 +115,66 @@ const ProfileEdit = ({ user }: ProfileEditProps) => {
           </Box>
 
           <Box flex="1">
-            <UIFlexSpaceBox
-              sx={{
-                alignItems: 'flex-end',
-              }}
-            >
-              <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                <StyledUserInfoTitle sx={{ width: 'auto' }}>
-                  FirstName:{' '}
-                </StyledUserInfoTitle>
+            <UIFlexWrapBox>
+              <UIFlexWrapBox sx={{ width: '49%', alignItems: 'center' }}>
+                <StyledUserInfoTitle>FirstName: </StyledUserInfoTitle>
                 <StyledUserEditTextField
                   name="firstName"
-                  value={userFormik.values.firstName}
-                  onChange={userFormik.handleChange}
+                  value={profileFormik.values.firstName}
+                  onChange={profileFormik.handleChange}
                 />
               </UIFlexWrapBox>
-              <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                <StyledUserInfoTitle sx={{ width: 'auto' }}>
-                  LastName:{' '}
-                </StyledUserInfoTitle>
+              <UIFlexWrapBox sx={{ width: '49%', alignItems: 'center' }}>
+                <StyledUserInfoTitle>LastName: </StyledUserInfoTitle>
                 <StyledUserEditTextField
                   name="lastName"
-                  value={userFormik.values.lastName}
-                  onChange={userFormik.handleChange}
+                  value={profileFormik.values.lastName}
+                  onChange={profileFormik.handleChange}
                 />
               </UIFlexWrapBox>
-              <UIFlexWrapBox
-                sx={{
-                  alignItems: 'flex-end',
-                }}
-              >
-                <StyledUserEditTextField
-                  name="status"
-                  onChange={userFormik.handleChange}
-                  value={userFormik.values.status}
-                  select
-                >
-                  {userStatus.map((item) => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.value}
-                      </MenuItem>
-                    );
-                  })}
-                </StyledUserEditTextField>
-              </UIFlexWrapBox>
-            </UIFlexSpaceBox>
+            </UIFlexWrapBox>
             <Divider sx={{ mt: '25px' }} />
             <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
               <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Phonenumber:</StyledUserInfoTitle>
+                  <StyledUserInfoTitle>Phone number:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="phone"
-                    value={userFormik.values.phone}
-                    onChange={userFormik.handleChange}
+                    type="number"
+                    value={profileFormik.values.phone}
+                    onChange={profileFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Email:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="email"
-                    value={userFormik.values.email}
-                    onChange={userFormik.handleChange}
+                    value={profileFormik.values.email}
+                    onChange={profileFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Address1:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="address.address1"
-                    value={userFormik.values.address?.address1}
-                    onChange={userFormik.handleChange}
+                    value={profileFormik.values.address?.address1 ?? ''}
+                    onChange={profileFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>City:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="address.city"
-                    value={userFormik.values.address?.city}
-                    onChange={userFormik.handleChange}
+                    value={profileFormik.values.address?.city ?? ''}
+                    onChange={profileFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>ZipCode:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="address.zipcode"
-                    value={userFormik.values.address?.zipcode}
-                    onChange={userFormik.handleChange}
+                    value={profileFormik.values.address?.zipcode ?? ''}
+                    onChange={profileFormik.handleChange}
                   />
                 </UIFlexWrapBox>
               </Stack>
@@ -195,49 +183,37 @@ const ProfileEdit = ({ user }: ProfileEditProps) => {
                   <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="birthday"
-                    value={userFormik.values.birthday}
-                    onChange={userFormik.handleChange}
+                    value={
+                      format(
+                        new Date(profileFormik.values.birthday),
+                        'yyyy-MM-dd'
+                      ) ?? ''
+                    }
+                    onChange={profileFormik.handleChange}
                   />
-                </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>User role:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="role"
-                    value={userFormik.values.roleId}
-                    onChange={userFormik.handleChange}
-                    select
-                  >
-                    {Object.values(UserRole).map((item, index) => {
-                      return (
-                        <MenuItem key={item} value={index + 1}>
-                          {item}
-                        </MenuItem>
-                      );
-                    })}
-                  </StyledUserEditTextField>
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Address2:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="address.address2"
-                    value={userFormik.values.address?.address2}
-                    onChange={userFormik.handleChange}
+                    value={profileFormik.values.address?.address2 ?? ''}
+                    onChange={profileFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>State:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="address.state"
-                    value={userFormik.values.address?.state}
-                    onChange={userFormik.handleChange}
+                    value={profileFormik.values.address?.state ?? ''}
+                    onChange={profileFormik.handleChange}
                   />
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Country:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="address.country"
-                    value={userFormik.values.address?.country}
-                    onChange={userFormik.handleChange}
+                    value={profileFormik.values.address?.country ?? ''}
+                    onChange={profileFormik.handleChange}
                   />
                 </UIFlexWrapBox>
               </Stack>

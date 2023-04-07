@@ -5,6 +5,7 @@ import { useAppToast } from '@/providers';
 import {
   createNewUser,
   updateUser,
+  updateProfile,
   authorize,
   forgotPassword,
   resetPassword,
@@ -51,6 +52,10 @@ export const useAuth = (callbackFunc?: useAuthProps) => {
     await dispatch(updateUser(param));
   };
 
+  const onUpdateProfile = async (param: UpdateUserParam) => {
+    await dispatch(updateProfile(param));
+  };
+
   const onLogin = async (identifier: string, password: string) => {
     await dispatch(authorize({ identifier, password }));
   };
@@ -71,6 +76,7 @@ export const useAuth = (callbackFunc?: useAuthProps) => {
     onLogin,
     onForgotPassword,
     onResetPassword,
+    onUpdateProfile,
     onLogout: () => {
       dispatch(logout());
       router.push('/');
