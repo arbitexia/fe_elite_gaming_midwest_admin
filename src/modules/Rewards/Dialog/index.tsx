@@ -19,6 +19,7 @@ import { useLocation, useProduct, useReward } from '@/hooks';
 import { UIDefaultTextField, UIFlexWrapBox } from '@/components/UI';
 import { Reward } from '@/types';
 import { LocationStatus } from '@/constants/enum';
+import { useAppToast } from '@/providers';
 
 const RewardCreateDialog = ({
   isOpenCreateDlg,
@@ -27,6 +28,7 @@ const RewardCreateDialog = ({
   isOpenCreateDlg: boolean;
   closeDlg: () => void;
 }) => {
+  const appToast = useAppToast();
   const { locations, onGetLocations } = useLocation();
   const { products, onGetProducts } = useProduct();
   const { onCreateRewards } = useReward();
@@ -82,6 +84,11 @@ const RewardCreateDialog = ({
       };
       onCreateRewards(body);
     }
+    appToast({
+      severity: 'success',
+      message: 'New reward item has been added!',
+    });
+
     closeDlg();
     resetValues();
   };

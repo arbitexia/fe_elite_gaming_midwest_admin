@@ -53,7 +53,7 @@ const UserDetailTransactionCard = ({
             return (
               <TableRow key={data.id}>
                 <StyledTransactionTableCell sx={{ color: '#06251F' }}>
-                  {format(new Date(data.createdAt), 'yyyy-MM-dd')}
+                  {format(new Date(data.createdAt), 'yyyy-MM-dd hh:mm')}
                 </StyledTransactionTableCell>
                 <StyledTransactionTableCell
                   align="right"

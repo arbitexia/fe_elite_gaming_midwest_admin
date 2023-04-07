@@ -1,4 +1,6 @@
+import { format } from 'date-fns';
 import { Typography, Table, TableBody } from '@mui/material';
+import Link from 'next/link';
 import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import {
   StyledUserDetailCard,
@@ -51,18 +53,31 @@ const UserDetailPointsCard = ({
         }}
       >
         <TableBody>
-          {points.map((data) => {
+          {points.map((data, index) => {
             return (
               <StyledRequestTableRow key={data.id}>
-                <StyledUserTableCell>#{data.id}</StyledUserTableCell>
+                <StyledUserTableCell>#{index + 1}</StyledUserTableCell>
+                <StyledUserTableCell sx={{ color: '#06251F', fontWeight: 500 }}>
+                  <Link
+                    href={`/locations/${data.userLocation?.location?.id}`}
+                    legacyBehavior
+                  >
+                    <a target="_blank" rel="noopener noreferrer">
+                      {data.userLocation?.location?.name ?? ''}
+                    </a>
+                  </Link>
+                </StyledUserTableCell>
                 <StyledUserTableCell sx={{ color: '#008A83', fontWeight: 500 }}>
                   {data.point} points
                 </StyledUserTableCell>
-                <StyledUserTableCell sx={{ color: '#06251F' }}>
-                  {data.userLocation?.location?.name ?? ''}
-                </StyledUserTableCell>
-                <StyledUserTableCell sx={{ fontWeight: 500 }}>
-                  {data.updatedAt}
+                <StyledUserTableCell>
+                  <Typography
+                    component="p"
+                    variant="caption"
+                    sx={{ fontWeight: 700 }}
+                  >
+                    {format(new Date(data.createdAt), 'dd MMM KK:mm aa')}
+                  </Typography>
                 </StyledUserTableCell>
               </StyledRequestTableRow>
             );

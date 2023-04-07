@@ -10,6 +10,7 @@ import { getColor } from '@/libs/data-helper';
 import { TransactionType } from '@/types';
 import { format } from 'date-fns';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 type UserDetailRequestCardProps = {
   requests: TransactionType.Data[];
@@ -56,10 +57,21 @@ const UserDetailRequestCard = ({ requests }: UserDetailRequestCardProps) => {
               <StyledRequestTableRow key={index}>
                 <StyledRequestTableCell>#{data.id}</StyledRequestTableCell>
                 <StyledRequestTableCell>
-                  {data.reward.product.name}
+                  <Link
+                    href={`/products/${data.reward.product.id}`}
+                    legacyBehavior
+                  >
+                    <a target="_blank" rel="noopener noreferrer">
+                      {data.reward.product.name}
+                    </a>
+                  </Link>
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
-                  {data.location.name}
+                  <Link href={`/locations/${data.location.id}`} legacyBehavior>
+                    <a target="_blank" rel="noopener noreferrer">
+                      {data.location.name}
+                    </a>
+                  </Link>
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
                   {data.reward.product.point} points
@@ -68,7 +80,7 @@ const UserDetailRequestCard = ({ requests }: UserDetailRequestCardProps) => {
                   <UIChip label={data.status} color={getColor(data.status)} />
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
-                  {format(new Date(data.createdAt), 'yyyy-MM-dd')}
+                  {format(new Date(data.createdAt), 'dd MMM KK:mm aa')}
                 </StyledRequestTableCell>
               </StyledRequestTableRow>
             );
