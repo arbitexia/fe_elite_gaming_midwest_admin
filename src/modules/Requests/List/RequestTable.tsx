@@ -11,7 +11,6 @@ import {
 import { UIChip, UIFlexColumnBox, UIFlexWrapBox } from '@/components/UI';
 import { getColor } from '@/libs/data-helper';
 import { TransactionType, UserType } from '@/types';
-import RequestsPagination from './Pagination';
 import { StyledRequestTableRow, StyledRequestTableCell } from './ui';
 import { format } from 'date-fns';
 import { useAuth } from '@/hooks';
@@ -245,7 +244,6 @@ const RequestTable = ({ requestsData, onAction }: RequestTableProps) => {
           </Typography>
         </UIFlexColumnBox>
       )}
-      <RequestsPagination />
     </>
   );
 };

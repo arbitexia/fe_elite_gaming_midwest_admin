@@ -5,25 +5,35 @@ import { DashboardLayout } from '@/layouts';
 import { TransactionType } from '@/types';
 import { useTransaction } from '@/hooks';
 import { TransactionStatus } from '@/constants';
+import RequestsPagination from '@/modules/Requests/List/Pagination';
+import { useAppToast } from '@/providers';
 
 const Requests = () => {
-  const { transactions, onGetTransactions, onUpdateTransaction } =
+  const { transactions, onGetTransactions, pageInfo, onUpdateTransaction } =
     useTransaction();
+  const appToast = useAppToast();
   const [searchValue, setSearchValue] = useState('');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     fetchTransaction();
-  }, [searchValue]);
+  }, [searchValue, page, rowsPerPage]);
 
   const fetchTransaction = async () => {
     await onGetTransactions({
       filterBy: { search: searchValue, status: TransactionStatus.WAITING },
-      cursor: { page: 0, size: 1000 },
+      cursor: { page: page, size: rowsPerPage },
     });
   };
 
   const handleAction = async (data: TransactionType.Param) => {
     await onUpdateTransaction(data);
+    appToast({
+      severity: 'success',
+      message:
+        data.status === TransactionStatus.ACCEPTED ? 'Accepted!' : 'Declined!',
+    });
     await fetchTransaction();
   };
   return (
@@ -34,6 +44,13 @@ const Requests = () => {
       />
       <Divider sx={{ my: '30px' }} />
       <RequestTable requestsData={transactions} onAction={handleAction} />
+      <RequestsPagination
+        page={page}
+        rowsPerPage={rowsPerPage}
+        total={pageInfo?.total ?? 0}
+        setPage={setPage}
+        setRowsPerPage={setRowsPerPage}
+      />
     </DashboardLayout>
   );
 };
