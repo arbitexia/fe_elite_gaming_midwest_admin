@@ -16,7 +16,7 @@ export type PointType = {
   userLocationId: number;
   userLocation?: UserLocation;
   point: number;
-  createdAt?: string;
+  createdAt: string;
   updatedAt?: string;
 };
 

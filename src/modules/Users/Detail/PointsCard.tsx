@@ -1,5 +1,7 @@
+import { format } from 'date-fns';
 import { Typography, Table, TableBody } from '@mui/material';
-import { UIFlexSpaceBox } from '@/components/UI';
+import Link from 'next/link';
+import { UIFlexSpaceBox, UIFlexCenterBox } from '@/components/UI';
 import {
   StyledUserDetailCard,
   StyledUserRequestButton,
@@ -35,6 +37,13 @@ const UserDetailPointsCard = ({
           Load more
         </StyledUserRequestButton>
       </UIFlexSpaceBox>
+      {points.length === 0 && (
+        <UIFlexCenterBox>
+          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+            No Data Found
+          </Typography>
+        </UIFlexCenterBox>
+      )}
       <Table
         size="small"
         sx={{
@@ -44,18 +53,31 @@ const UserDetailPointsCard = ({
         }}
       >
         <TableBody>
-          {points.map((data) => {
+          {points.map((data, index) => {
             return (
               <StyledRequestTableRow key={data.id}>
-                <StyledUserTableCell>#{data.id}</StyledUserTableCell>
+                <StyledUserTableCell>#{index + 1}</StyledUserTableCell>
+                <StyledUserTableCell sx={{ color: '#06251F', fontWeight: 500 }}>
+                  <Link
+                    href={`/locations/${data.userLocation?.location?.id}`}
+                    legacyBehavior
+                  >
+                    <a target="_blank" rel="noopener noreferrer">
+                      {data.userLocation?.location?.name ?? ''}
+                    </a>
+                  </Link>
+                </StyledUserTableCell>
                 <StyledUserTableCell sx={{ color: '#008A83', fontWeight: 500 }}>
                   {data.point} points
                 </StyledUserTableCell>
-                <StyledUserTableCell sx={{ color: '#06251F' }}>
-                  {data.userLocation?.location?.name ?? ''}
-                </StyledUserTableCell>
-                <StyledUserTableCell sx={{ fontWeight: 500 }}>
-                  {data.updatedAt}
+                <StyledUserTableCell>
+                  <Typography
+                    component="p"
+                    variant="caption"
+                    sx={{ fontWeight: 700 }}
+                  >
+                    {format(new Date(data.createdAt), 'dd MMM KK:mm aa')}
+                  </Typography>
                 </StyledUserTableCell>
               </StyledRequestTableRow>
             );
