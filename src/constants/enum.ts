@@ -86,3 +86,9 @@ export enum LocationStatus {
   OPEN = 'OPEN',
   CLOSED = 'CLOSED',
 }
+
+export enum TransactionStatus {
+  ACCEPTED = 'ACCEPTED',
+  DECLINED = 'DECLINED',
+  WAITING = 'WAITING',
+}

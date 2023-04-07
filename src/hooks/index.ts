@@ -8,3 +8,5 @@ export { useUser } from './user';
 export { useReward } from './reward';
 export { useConfig } from './config';
 export { useTablet } from './tablet';
+export { useActivity } from './activity';
+export { useTransaction } from './transaction';

@@ -11,6 +11,7 @@ import { Reward } from './reward.type';
 import { ActivityItemType } from './activity.type';
 import { ConfigType } from './config.type';
 import { TabletType } from './tablet.type';
+import { TransactionType } from './transaction.type';
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
     loading: boolean;
@@ -98,6 +99,7 @@ export declare namespace ReduxJson {
     message: string | null;
     error: string | null;
     rewards: Reward.DataList[];
+    availableRewards: Reward.Data[];
     pageInfo: CommonType.PageInfo | null;
   };
 
@@ -125,5 +127,14 @@ export declare namespace ReduxJson {
     pageInfo: CommonType.PageInfo | null;
     message: string | null;
     error: string | null;
+  };
+
+  export type TransactionState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    message: string | null;
+    error: string | null;
+    transactions: TransactionType.Data[];
+    pageInfo: CommonType.PageInfo | null;
   };
 }

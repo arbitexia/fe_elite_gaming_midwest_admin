@@ -10,9 +10,9 @@ import { styled } from '@mui/system';
 
 export const StyledOrderModalHeading = styled(Typography)({
   fontWeight: 600,
-  fontSize: 24,
-  lineHeight: '17px',
-  color: '#06251F',
+  fontSize: 36,
+  lineHeight: '54px',
+  color: '#89C8C6',
 });
 
 export const StyledDetailBox = styled(Box)({

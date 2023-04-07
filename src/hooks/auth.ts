@@ -24,7 +24,7 @@ export interface useAuthProps {
 export const useAuth = (callbackFunc?: useAuthProps) => {
   const appToast = useAppToast();
   const router = useRouter();
-  const { message, error, loading, accessToken, status } =
+  const { message, error, loading, accessToken, status, user, role } =
     useAppSelector(authSelector);
   const dispatch = useAppDispatch();
 
@@ -65,6 +65,7 @@ export const useAuth = (callbackFunc?: useAuthProps) => {
   return {
     isAuthenticated: accessToken ? true : false,
     accessToken: accessToken,
+    me: user,
     onCreateNewUser,
     onUpdateUser,
     onLogin,

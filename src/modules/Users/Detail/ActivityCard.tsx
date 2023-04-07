@@ -15,7 +15,8 @@ import {
 import { format } from 'date-fns';
 import { UIFlexSpaceBox } from '@/components/UI';
 import { StyledUserDetailCard, StyledUserRequestButton } from './ui';
-import { guestActivityData } from '@/_mock/users';
+import { ActivityItemType } from '@/types';
+import { useRouter } from 'next/router';
 
 type SvgIconComponent = typeof SvgIcon;
 
@@ -29,6 +30,13 @@ interface ActiveIconProps {
   QUOTE: ActivityType;
   INVITATION: ActivityType;
   PAYMENT: ActivityType;
+  USER: ActivityType;
+  REWARD: ActivityType;
+  PRODUCT: ActivityType;
+  ASSET: ActivityType;
+  POINT: ActivityType;
+  LOCATION: ActivityType;
+  GALLERY: ActivityType;
 }
 
 const activityIcons: ActiveIconProps = {
@@ -36,9 +44,21 @@ const activityIcons: ActiveIconProps = {
   QUOTE: { icon: IntegrationInstructions, color: '#E53E3E' },
   INVITATION: { icon: Notifications, color: '#4FD1C5' },
   PAYMENT: { icon: CreditScore, color: '#F6AD55' },
+  USER: { icon: CreditScore, color: '#F6AD55' },
+  REWARD: { icon: CreditScore, color: '#F6AD55' },
+  PRODUCT: { icon: ShoppingCart, color: '#4299E1' },
+  ASSET: { icon: CreditScore, color: '#F6AD55' },
+  POINT: { icon: CreditScore, color: '#F6AD55' },
+  LOCATION: { icon: CreditScore, color: '#F6AD55' },
+  GALLERY: { icon: CreditScore, color: '#F6AD55' },
 };
-
-const UserDetailActivityCard = () => {
+type UserDetailActivityCardProps = {
+  activities: ActivityItemType[];
+};
+const UserDetailActivityCard = ({
+  activities,
+}: UserDetailActivityCardProps) => {
+  const router = useRouter();
   return (
     <StyledUserDetailCard>
       <UIFlexSpaceBox>
@@ -53,7 +73,9 @@ const UserDetailActivityCard = () => {
         >
           Activities
         </Typography>
-        <StyledUserRequestButton>View more</StyledUserRequestButton>
+        <StyledUserRequestButton onClick={() => router.push('/activity')}>
+          View more
+        </StyledUserRequestButton>
       </UIFlexSpaceBox>
       <Timeline
         sx={{
@@ -74,18 +96,20 @@ const UserDetailActivityCard = () => {
           },
         }}
       >
-        {guestActivityData.map((activity, index) => {
+        {activities?.map((activity, index) => {
           const Icon =
-            activityIcons[activity.model as keyof ActiveIconProps].icon;
+            activityIcons[activity.model as keyof ActiveIconProps]?.icon ??
+            CreditScore;
+
           return (
             <TimelineItem key={index}>
-              {index === guestActivityData.length - 1 ? (
+              {index === activities.length - 1 ? (
                 <Icon
                   fontSize="small"
                   sx={{
                     color:
                       activityIcons[activity.model as keyof ActiveIconProps]
-                        .color,
+                        ?.color ?? 'red',
                   }}
                 />
               ) : (
@@ -95,7 +119,7 @@ const UserDetailActivityCard = () => {
                     sx={{
                       color:
                         activityIcons[activity.model as keyof ActiveIconProps]
-                          .color,
+                          ?.color ?? 'red',
                     }}
                   />
                   <TimelineConnector />
@@ -114,7 +138,7 @@ const UserDetailActivityCard = () => {
                     letterSpacing: '0.1px',
                   }}
                 >
-                  {activity.sentence}
+                  {activity.type}
                 </Typography>
                 <Typography
                   sx={{
@@ -125,7 +149,7 @@ const UserDetailActivityCard = () => {
                     textTransform: 'uppercase',
                   }}
                 >
-                  {format(new Date(), 'dd MMM KK:mm aa')}
+                  {format(new Date(activity.createdAt), 'dd MMM KK:mm aa')}
                 </Typography>
               </TimelineContent>
             </TimelineItem>

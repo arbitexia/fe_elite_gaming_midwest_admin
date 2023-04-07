@@ -9,11 +9,11 @@ import {
   TableSortLabel,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
-import { menuActions } from '@/_mock/users';
+import { menuTransactionActions } from '@/_mock/users';
 import { UIChip } from '@/components/UI';
 import { MenuAction } from '@/constants';
 import { getColor } from '@/libs/data-helper';
-import { AwardType, TransactionType } from '@/types';
+import { TransactionType } from '@/types';
 import {
   StyledTableRow,
   StyledTableCell,
@@ -22,55 +22,48 @@ import {
   StyledOptionMenuItem,
 } from './ui';
 import { format } from 'date-fns';
+import ConfirmModal from '@/components/App/Modal/ConfirmModal';
 
 type TransactionsTableProps = {
-  transactionTableData: AwardType[];
+  transactionTableData: TransactionType.Data[];
+  onDelete: (id: number) => void;
 };
+type Order = 'asc' | 'desc';
 
 const TransactionsTable = ({
   transactionTableData,
+  onDelete,
 }: TransactionsTableProps) => {
   const router = useRouter();
+
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);
+  const [deleteId, setDeleteId] = useState<number>();
+
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
 
   const handleNavBtnClick = (key: string) => {
     if (key === MenuAction.DELETE) {
-      //TODO Delete Action
+      setDeleteId(
+        parseInt(anchorElOptionsMenu?.getAttribute('data-key') ?? '0')
+      );
     } else
       router.push(
-        `${router.asPath}${
-          key === MenuAction.EDIT ? '/edit' : ''
-        }/${anchorElOptionsMenu?.getAttribute('data-key')}`
+        `${router.asPath}/${anchorElOptionsMenu?.getAttribute('data-key')}`
       );
   };
-  type Order = 'asc' | 'desc';
-  const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof TransactionType>('id');
 
-  function stableSort<T>(
-    array: readonly T[],
-    comparator: (a: T, b: T) => number
-  ) {
-    const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) {
-        return order;
-      }
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-  }
+  const [order, setOrder] = useState<Order>('asc');
+  const [orderBy, setOrderBy] = useState<keyof TransactionType.Data>('id');
 
   const createSortHandler =
-    (property: keyof TransactionType) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof TransactionType.Data) =>
+    (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof TransactionType
+    property: keyof TransactionType.Data
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -157,58 +150,71 @@ const TransactionsTable = ({
         </StyledTableRow>
       </TableHead>
       <TableBody>
-        {transactionTableData?.map((transactionItem) => {
-          return (
-            <StyledTableRow
-              key={transactionItem.id}
-              data-key={transactionItem.id}
-              sx={{ position: 'relative' }}
-            >
-              <StyledTableCell
-                onClick={() =>
-                  router.push(`${router.asPath}/${transactionItem.id}`)
-                }
-                sx={{ cursor: 'pointer', pl: '30px' }}
+        {transactionTableData?.length > 0 ? (
+          transactionTableData.map((transactionItem) => {
+            return (
+              <StyledTableRow
+                key={transactionItem.id}
+                data-key={transactionItem.id}
+                sx={{ position: 'relative' }}
               >
-                #{transactionItem.id}
-              </StyledTableCell>
-              <StyledTableCell>
-                {`${transactionItem?.userLocation?.user?.firstName} ${transactionItem.userLocation?.user?.lastName}`}
-              </StyledTableCell>
-
-              <StyledTableCell>{transactionItem.product?.name}</StyledTableCell>
-              <StyledTableCell>
-                {transactionItem.product?.amount}
-              </StyledTableCell>
-              <StyledTableCell>
-                {transactionItem?.note ?? 'Point'}
-              </StyledTableCell>
-              <StyledTableCell>{`${transactionItem.assignee?.firstName} ${transactionItem.assignee?.lastName}`}</StyledTableCell>
-              <StyledTableCell align="center">
-                <UIChip
-                  label={transactionItem.status}
-                  color={getColor(transactionItem.status)}
-                />
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {format(
-                  new Date(transactionItem?.createdAt ?? '1900-12-12'),
-                  'yyyy-MM-dd'
-                )}
-              </StyledTableCell>
-              <StyledTableCell>
-                <IconButton
-                  data-key={transactionItem.id}
-                  onClick={(event: React.MouseEvent<HTMLElement>) => {
-                    setAnchorElOptionsMenu(event.currentTarget);
-                  }}
+                <StyledTableCell
+                  onClick={() =>
+                    router.push(`${router.asPath}/${transactionItem.id}`)
+                  }
+                  sx={{ cursor: 'pointer', pl: '30px' }}
                 >
-                  <MoreHorizIcon sx={{ color: '#83A9A8' }} />
-                </IconButton>
-              </StyledTableCell>
-            </StyledTableRow>
-          );
-        })}
+                  #{transactionItem.id}
+                </StyledTableCell>
+                <StyledTableCell>
+                  {`${transactionItem?.user?.firstName} ${transactionItem?.user?.lastName}`}
+                </StyledTableCell>
+
+                <StyledTableCell>
+                  {transactionItem?.reward?.product?.name}
+                </StyledTableCell>
+                <StyledTableCell>
+                  {transactionItem?.reward?.product?.amount}
+                </StyledTableCell>
+                <StyledTableCell>{transactionItem?.type}</StyledTableCell>
+                <StyledTableCell>{`${transactionItem.assignee?.firstName} ${transactionItem.assignee?.lastName}`}</StyledTableCell>
+                <StyledTableCell align="center">
+                  <UIChip
+                    label={transactionItem.status}
+                    color={getColor(transactionItem.status)}
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {format(
+                    new Date(transactionItem?.createdAt ?? '1900-12-12'),
+                    'yyyy-MM-dd'
+                  )}
+                </StyledTableCell>
+                <StyledTableCell>
+                  <IconButton
+                    data-key={transactionItem.id}
+                    onClick={(event: React.MouseEvent<HTMLElement>) => {
+                      setAnchorElOptionsMenu(event.currentTarget);
+                    }}
+                  >
+                    <MoreHorizIcon sx={{ color: '#83A9A8' }} />
+                  </IconButton>
+                </StyledTableCell>
+              </StyledTableRow>
+            );
+          })
+        ) : (
+          <StyledTableRow
+            sx={{
+              position: 'relative',
+              backgroundColor: 'transparent !important',
+            }}
+          >
+            <StyledTableCell colSpan={8} sx={{ textAlign: 'center' }}>
+              No Data
+            </StyledTableCell>
+          </StyledTableRow>
+        )}
       </TableBody>
 
       <StyledOptionMenu
@@ -226,7 +232,7 @@ const TransactionsTable = ({
           setAnchorElOptionsMenu(null);
         }}
       >
-        {menuActions.map((item, index) => {
+        {menuTransactionActions.map((item, index) => {
           return (
             <div key={index}>
               {index === 2 && <Divider />}
@@ -249,6 +255,19 @@ const TransactionsTable = ({
           );
         })}
       </StyledOptionMenu>
+
+      <ConfirmModal
+        open={!!deleteId}
+        onClose={() => {
+          setDeleteId(undefined);
+        }}
+        title="Delete"
+        content="Are you sure you want to remove this transaction?"
+        onAction={() => {
+          onDelete && onDelete(deleteId ?? 0);
+          setDeleteId(undefined);
+        }}
+      />
     </Table>
   );
 };

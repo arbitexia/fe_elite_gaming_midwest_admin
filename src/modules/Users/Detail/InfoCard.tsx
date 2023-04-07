@@ -94,7 +94,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                   <StyledUserInfoValue
                     sx={{ fontWeight: 600, fontSize: 20, marginTop: '-5px' }}
                   >
-                    $11231
+                    ${user?.coupon ?? 0}
                   </StyledUserInfoValue>
                 </Stack>
               </Stack>

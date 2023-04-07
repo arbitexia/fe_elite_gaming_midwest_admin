@@ -16,3 +16,10 @@ export const create = async (body: Reward.Body) => {
   });
   return res.data;
 };
+
+export const getByUserId = async (param: { userId: number }) => {
+  const res = await jwtAxios.get(`/rewards/user/${param.userId}`, {
+    headers: getAuthorizeHeader(),
+  });
+  return res.data;
+};
