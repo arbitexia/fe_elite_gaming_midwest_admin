@@ -18,7 +18,7 @@ import {
   PermIdentity as PermIdentityIcon,
   PhoneOutlined as PhoneOutlinedIcon,
   InventoryOutlined as InventoryOutlinedIcon,
-  EMobiledata as EMobiledataIcon,
+  SmartToy as SmartToyIcon,
   DriveFileRenameOutline as DriveFileRenameOutlineIcon,
 } from '@mui/icons-material';
 import { formatPhoneNumber, getColor } from '@/libs/data-helper';
@@ -129,7 +129,7 @@ const renderLocation = (location: Location.Data) => (
       </Typography>
     </UIFlexWrapBox>
     <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-      <EMobiledataIcon sx={{ fontSize: '14px' }} />
+      <SmartToyIcon sx={{ fontSize: '14px' }} />
       <Typography variant="caption">{location.type}</Typography>
     </UIFlexWrapBox>
 
