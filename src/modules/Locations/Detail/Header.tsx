@@ -7,7 +7,6 @@ import {
   DialogContent,
   DialogActions,
   Typography,
-  Divider,
 } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import {

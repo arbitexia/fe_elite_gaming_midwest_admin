@@ -38,8 +38,7 @@ const ProfileEdit = ({ user, onEdit }: ProfileEditProps) => {
           status: UserStatus.ACTIVATED,
         },
       };
-      console.log(values);
-      // onEdit(dataToSave);
+      onEdit(dataToSave);
     },
   });
   return (
@@ -186,7 +185,7 @@ const ProfileEdit = ({ user, onEdit }: ProfileEditProps) => {
                     value={
                       format(
                         new Date(profileFormik.values.birthday),
-                        'yyyy-MM-dd'
+                        'yyyy-MM-dd hh:mm'
                       ) ?? ''
                     }
                     onChange={profileFormik.handleChange}

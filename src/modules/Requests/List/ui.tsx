@@ -69,7 +69,6 @@ export const StyledRequestTableCell = styled(TableCell)({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     height: '80px',
-    fontWeight: 500,
-    color: 'rgba(0, 0, 0, 0.3)',
+    color: '#000 !important',
   },
 });
