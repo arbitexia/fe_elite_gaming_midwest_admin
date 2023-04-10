@@ -83,7 +83,7 @@ const RewardDetailTable = ({ rewards }: IRewardDetailTable) => {
                 </UIListTableCell>
                 <UIListTableCell>
                   {reward.createdAt
-                    ? format(new Date(reward.createdAt), 'yyyy-MM-dd')
+                    ? format(new Date(reward.createdAt), 'yyyy-MM-dd yy:mm')
                     : ''}
                 </UIListTableCell>
               </UIListTableRow>

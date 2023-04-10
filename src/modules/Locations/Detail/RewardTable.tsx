@@ -111,7 +111,10 @@ const LocationDetailRewardTable = () => {
                 </UITableCell>
                 <UITableCell sx={{ color: '#B3B3B3 !important' }}>
                   {item.product.createdAt
-                    ? format(new Date(item.product.createdAt), 'yyyy-MM-dd')
+                    ? format(
+                        new Date(item.product.createdAt),
+                        'yyyy-MM-dd hh:mm'
+                      )
                     : ''}
                 </UITableCell>
                 <UITableCell>
