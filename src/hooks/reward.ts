@@ -5,6 +5,7 @@ import {
   rewardSelector,
   filterRewards,
   createRewards,
+  deleteReward,
   getRewardsByUserId,
   resetRewardMessage,
 } from '@/redux/slices';
@@ -51,12 +52,17 @@ export const useReward = () => {
     return payload;
   };
 
+  const onDeleteReward = async (param: Reward.Param) => {
+    await dispatch(deleteReward(param));
+  };
+
   return {
     pageInfo,
     rewards,
     availableRewards,
     onFilterRewards,
     onCreateRewards,
+    onDeleteReward,
     onRewardsByUserId,
   };
 };

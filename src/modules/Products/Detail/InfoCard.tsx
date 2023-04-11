@@ -49,17 +49,13 @@ const ProductsDetailInfoCard = ({ productItem }: IProductsDetailInfoCard) => {
       <Box
         sx={{
           width: '100%',
-          height: '350px',
           paddingTop: '20px',
-          '.quill': { height: '250px', marginTop: '20px' },
         }}
       >
         <UIInfoTitle>Description:</UIInfoTitle>
-        <UIInfoValue          
-          dangerouslySetInnerHTML={{
-            __html: productItem.description ?? '',
-          }}
-        />
+        <UIInfoValue sx={{ mt: 1 }}>
+          {productItem?.description ?? ''}
+        </UIInfoValue>
       </Box>
     </UICardBox>
   );

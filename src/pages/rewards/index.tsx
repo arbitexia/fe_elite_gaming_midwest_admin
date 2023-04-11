@@ -9,29 +9,31 @@ import {
   RewardCard,
 } from '@/modules/Rewards';
 import { Reward } from '@/types';
+import RewardDetailTable from '@/modules/Rewards/List/RewardDetailTable';
 
 const Rewards = () => {
   const router = useRouter();
-  const { rewards, onFilterRewards } = useReward();
+  const { rewards, onFilterRewards, onDeleteReward } = useReward();
   const [searchValue, setSearchValue] = useState('');
   const [isOpenCreateDlg, setIsOpenCreateDlg] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchRewards = async () => {
-      try {
-        await filterRewards({
-          filterBy: { search: searchValue },
-          cursor: { page: 0, size: 1000 },
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchRewards();
   }, [router, searchValue]);
 
-  const filterRewards = async (filter: Reward.Filter) => {
-    await onFilterRewards(filter);
+  const fetchRewards = async () => {
+    try {
+      await onFilterRewards({
+        filterBy: { search: searchValue },
+        cursor: { page: 0, size: 1000 },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleDelete = async (rewardId: number) => {
+    await onDeleteReward({ id: rewardId });
+    await fetchRewards();
   };
   return (
     <DashboardLayout title="Rewards">
@@ -41,14 +43,11 @@ const Rewards = () => {
         onOpenDlg={() => setIsOpenCreateDlg(true)}
       />
       <Divider sx={{ mt: '18px', mb: '30px' }} />
-      <RewardCard rewards={rewards} />
+      <RewardCard rewards={rewards} onDelete={handleDelete} />
       <RewardCreateDialog
         isOpenCreateDlg={isOpenCreateDlg}
         closeDlg={async () => {
-          await filterRewards({
-            filterBy: { search: searchValue },
-            cursor: { page: 0, size: 1000 },
-          });
+          await fetchRewards();
           setIsOpenCreateDlg(false);
         }}
       />

@@ -79,6 +79,7 @@ export {
   rewardSelector,
   filterRewards,
   createRewards,
+  deleteReward,
   getRewardsByUserId,
   resetRewardMessage,
 } from './reward.slice';

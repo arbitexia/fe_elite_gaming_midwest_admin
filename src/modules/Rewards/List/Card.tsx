@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Check as CheckIcon } from '@mui/icons-material';
 import { Box, Divider } from '@mui/material';
 import {
+  UIActionButton,
   UICardBox,
+  UIDefaultButton,
   UIFlexCenterBox,
   UIFlexSpaceBox,
   UIFlexWrapBox,
   UIInfoValue,
+  UIViewButton,
 } from '@/components/UI';
 import { Reward } from '@/types';
 import {
@@ -23,10 +26,12 @@ import RewardDetailTable from './RewardDetailTable';
 
 export type RewardsCardProp = {
   rewards: Reward.DataList[];
+  onDelete: (rewardId: number) => void;
 };
 
-const RewardCard = ({ rewards }: RewardsCardProp) => {
+const RewardCard = ({ rewards, onDelete }: RewardsCardProp) => {
   const [selectedReward, setSelectedReward] = useState<Reward.DataList>();
+  const [readMore, setReadMore] = useState(false);
   useEffect(() => {
     if (rewards && rewards.length > 0) {
       setSelectedReward(rewards[0]);
@@ -76,11 +81,32 @@ const RewardCard = ({ rewards }: RewardsCardProp) => {
           <StyledInfoTitle sx={{ mt: '8px' }}>State:</StyledInfoTitle>
           <StyledInfoValue>{selectedReward?.status}</StyledInfoValue>
           <StyledInfoTitle sx={{ mt: '8px' }}>Description:</StyledInfoTitle>
-          <StyledInfoValue
-            dangerouslySetInnerHTML={{
-              __html: selectedReward?.description ?? '',
-            }}
-          />
+
+          {readMore ? (
+            <UIFlexWrapBox>
+              <StyledInfoValue>{selectedReward?.description}</StyledInfoValue>
+              <StyledInfoTitle
+                sx={{ textDecorationLine: 'underline', cursor: 'pointer' }}
+                onClick={() => setReadMore(false)}
+              >
+                Read less
+              </StyledInfoTitle>
+            </UIFlexWrapBox>
+          ) : (selectedReward?.description?.length ?? 0) > 40 ? (
+            <UIFlexWrapBox>
+              <StyledInfoValue>
+                {`${selectedReward?.description?.substring(0, 30)} ...`}
+              </StyledInfoValue>
+              <StyledInfoTitle
+                sx={{ textDecorationLine: 'underline', cursor: 'pointer' }}
+                onClick={() => setReadMore(true)}
+              >
+                Read more
+              </StyledInfoTitle>
+            </UIFlexWrapBox>
+          ) : (
+            <StyledInfoValue>{selectedReward?.description}</StyledInfoValue>
+          )}
         </UICardBox>
         <Box
           sx={{
@@ -120,7 +146,10 @@ const RewardCard = ({ rewards }: RewardsCardProp) => {
       />
       <StyledRightWrapBox sx={{ overflowY: 'auto', maxHeight: '700px' }}>
         {selectedReward?.reward && (
-          <RewardDetailTable rewards={selectedReward.reward} />
+          <RewardDetailTable
+            rewards={selectedReward.reward}
+            onDelete={onDelete}
+          />
         )}
       </StyledRightWrapBox>
     </UIFlexWrapBox>

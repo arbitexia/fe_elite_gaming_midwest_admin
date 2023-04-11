@@ -7,6 +7,7 @@ import {
   UIFlexWrapBox,
   UIEditTextField,
   UIInfoTitle,
+  UIFlexSpaceBox,
 } from '@/components/UI';
 import { formats, modules } from '@/constants';
 import { Product } from '@/types';
@@ -51,84 +52,66 @@ const ProductsDetailInfoEditCard = ({
       >
         Information:
       </Typography>
-      <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
-        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>Name:</UIInfoTitle>
-            <Box>
-              <UIEditTextField
-                name="name"
-                value={productFormik.values.name}
-                onChange={productFormik.handleChange}
-                fullWidth
-              />
-            </Box>
-          </UIFlexWrapBox>
-        </Stack>
-        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>Amount:</UIInfoTitle>
-            <Box>
-              <UIEditTextField
-                name="amount"
-                value={productFormik.values.amount}
-                onChange={productFormik.handleChange}
-                fullWidth
-                type="number"
-              />
-            </Box>
-          </UIFlexWrapBox>
-        </Stack>
-      </UIFlexWrapBox>
-      <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
-        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>Points:</UIInfoTitle>
-            <Box>
-              <UIEditTextField
-                name="point"
-                value={productFormik.values.point}
-                onChange={productFormik.handleChange}
-                fullWidth
-                type="number"
-              />
-            </Box>
-          </UIFlexWrapBox>
-        </Stack>
-        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>Short:</UIInfoTitle>
-            <Box>
-              <UIEditTextField
-                name="short"
-                value={productFormik.values.short}
-                onChange={productFormik.handleChange}
-                fullWidth
-              />
-            </Box>
-          </UIFlexWrapBox>
-        </Stack>
-      </UIFlexWrapBox>
-      <Box
-        sx={{
-          width: '100%',
-          height: '350px',
-          paddingTop: '20px',
-          '.quill': { height: '220px', marginTop: '20px' },
-        }}
-      >
+      <UIFlexSpaceBox sx={{ paddingTop: '20px' }}>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <UIInfoTitle>Name:</UIInfoTitle>
+          <Box>
+            <UIEditTextField
+              name="name"
+              value={productFormik.values.name}
+              onChange={productFormik.handleChange}
+              fullWidth
+            />
+          </Box>
+        </UIFlexWrapBox>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <UIInfoTitle>Amount:</UIInfoTitle>
+          <Box>
+            <UIEditTextField
+              name="amount"
+              value={productFormik.values.amount}
+              onChange={productFormik.handleChange}
+              fullWidth
+              type="number"
+            />
+          </Box>
+        </UIFlexWrapBox>
+      </UIFlexSpaceBox>
+      <UIFlexSpaceBox sx={{ paddingTop: '20px' }}>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <UIInfoTitle>Points:</UIInfoTitle>
+          <Box>
+            <UIEditTextField
+              name="point"
+              value={productFormik.values.point}
+              onChange={productFormik.handleChange}
+              fullWidth
+              type="number"
+            />
+          </Box>
+        </UIFlexWrapBox>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <UIInfoTitle>Short:</UIInfoTitle>
+          <Box>
+            <UIEditTextField
+              name="short"
+              value={productFormik.values.short}
+              onChange={productFormik.handleChange}
+              fullWidth
+            />
+          </Box>
+        </UIFlexWrapBox>
+      </UIFlexSpaceBox>
+      <Box sx={{ paddingTop: '20px' }}>
         <UIInfoTitle>Description:</UIInfoTitle>
-        <ReactQuill
-          theme="snow"
-          value={desc}
-          placeholder={productFormik.values.description}
-          onChange={(data) => {
-            setDesc(data);
-            productFormik.setFieldValue('description', data);
-          }}
-          modules={modules}
-          formats={formats}
-        />
+        <UIFlexWrapBox sx={{ mt: 1 }}>
+          <UIEditTextField
+            name="description"
+            value={productFormik.values.description}
+            onChange={productFormik.handleChange}
+            fullWidth
+          />
+        </UIFlexWrapBox>
       </Box>
     </UICardBox>
   );

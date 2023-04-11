@@ -99,12 +99,9 @@ const LocationsDetailInfoCard = ({
       </UIFlexWrapBox>
       <Box sx={{ mt: 2 }}>
         <UIInfoTitle>Description:</UIInfoTitle>
-        <UIInfoValue
-          sx={{ height: '100px' }}
-          dangerouslySetInnerHTML={{
-            __html: locationItem.description ?? '',
-          }}
-        />
+        <UIInfoValue sx={{ height: '100px', mt: 1 }}>
+          {locationItem?.description}
+        </UIInfoValue>
       </Box>
       <Box
         ref={mapNode}
