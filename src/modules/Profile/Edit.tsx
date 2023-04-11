@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { Box, Divider, Typography, Stack } from '@mui/material';
 import { UIFlexWrapBox } from '@/components/UI';
@@ -14,6 +15,11 @@ import {
   StyledUserEditTextField,
 } from './ui';
 import { format } from 'date-fns';
+import { convertMBtoBytes } from '@/libs/data-helper';
+import { useAppToast } from '@/providers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { Moment } from 'moment';
 
 interface ProfileEditProps {
   user: UserType.User;
@@ -21,6 +27,10 @@ interface ProfileEditProps {
 }
 
 const ProfileEdit = ({ user, onEdit }: ProfileEditProps) => {
+  const [uploadPhoto, setUploadPhoto] = useState<File>();
+  const [selectedFile, setSelectedFile] = useState<string>();
+  const appToast = useAppToast();
+
   const profileFormik = useFormik({
     initialValues: user,
     onSubmit: async (values) => {
@@ -37,10 +47,29 @@ const ProfileEdit = ({ user, onEdit }: ProfileEditProps) => {
           birthday: values.birthday,
           status: UserStatus.ACTIVATED,
         },
+        uploadPhoto,
       };
       onEdit(dataToSave);
     },
   });
+
+  const onAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const reader = new FileReader();
+    const file = e.target.files ? e.target.files[0] : null;
+    if (!file) return;
+    // Restrict user to upload file less than 3.1MB
+    if (file.size > convertMBtoBytes(3.1)) {
+      appToast('error', 'File size is too large');
+      return;
+    }
+    reader.onloadend = async () => {
+      setUploadPhoto(file);
+      setSelectedFile(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <Box component="form" onSubmit={profileFormik.handleSubmit}>
       <ProfileHeader />
@@ -69,7 +98,10 @@ const ProfileEdit = ({ user, onEdit }: ProfileEditProps) => {
                 overflow: 'hidden',
               }}
             >
-              <StyledUserInfoAvatar src={user.avatar?.url} alt="avatar" />
+              <StyledUserInfoAvatar
+                src={selectedFile ?? user.avatar?.url}
+                alt="avatar"
+              />
               <label htmlFor="photo-upload">
                 <Typography
                   sx={{
@@ -91,7 +123,7 @@ const ProfileEdit = ({ user, onEdit }: ProfileEditProps) => {
                 </Typography>
                 <input
                   id="photo-upload"
-                  // onChange={onAvatarChange}
+                  onChange={onAvatarChange}
                   type="file"
                   accept="image/png, image/gif, image/jpeg"
                 />
@@ -152,15 +184,15 @@ const ProfileEdit = ({ user, onEdit }: ProfileEditProps) => {
                     onChange={profileFormik.handleChange}
                   />
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                {/* <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Address1:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="address.address1"
                     value={profileFormik.values.address?.address1 ?? ''}
                     onChange={profileFormik.handleChange}
                   />
-                </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                </UIFlexWrapBox> */}
+                {/* <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>City:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="address.city"
@@ -175,12 +207,12 @@ const ProfileEdit = ({ user, onEdit }: ProfileEditProps) => {
                     value={profileFormik.values.address?.zipcode ?? ''}
                     onChange={profileFormik.handleChange}
                   />
-                </UIFlexWrapBox>
+                </UIFlexWrapBox> */}
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
+                  {/* <StyledUserEditTextField
                     name="birthday"
                     value={
                       format(
@@ -189,9 +221,29 @@ const ProfileEdit = ({ user, onEdit }: ProfileEditProps) => {
                       ) ?? ''
                     }
                     onChange={profileFormik.handleChange}
-                  />
+                  /> */}
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <MobileDatePicker
+                      inputFormat="MM/DD/YYYY"
+                      value={profileFormik.values.birthday}
+                      onChange={(value: Moment | null) => {
+                        profileFormik.setFieldValue(
+                          'birthday',
+                          value ? value.format('MM/DD/YYYY') : ''
+                        );
+                      }}
+                      renderInput={(params) => {
+                        return (
+                          <StyledUserEditTextField
+                            {...params}
+                            placeholder="Birthday"
+                          />
+                        );
+                      }}
+                    />
+                  </LocalizationProvider>
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                {/* <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Address2:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="address.address2"
@@ -206,15 +258,15 @@ const ProfileEdit = ({ user, onEdit }: ProfileEditProps) => {
                     value={profileFormik.values.address?.state ?? ''}
                     onChange={profileFormik.handleChange}
                   />
-                </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                </UIFlexWrapBox> */}
+                {/* <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Country:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="address.country"
                     value={profileFormik.values.address?.country ?? ''}
                     onChange={profileFormik.handleChange}
                   />
-                </UIFlexWrapBox>
+                </UIFlexWrapBox> */}
               </Stack>
             </UIFlexWrapBox>
           </Box>
