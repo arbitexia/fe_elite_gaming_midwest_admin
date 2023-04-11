@@ -33,6 +33,7 @@ type UIActionButtonProps = {
   icon: React.ReactNode | React.ReactNode[];
   color: string;
   title: string;
+  size?: number;
 };
 
 export const UIActionButton = ({
@@ -40,10 +41,13 @@ export const UIActionButton = ({
   icon,
   color,
   title,
+  size,
 }: UIActionButtonProps) => {
   return (
     <Button onClick={handleClick} sx={{ marginLeft: 3, textTransform: 'none' }}>
-      <SvgIcon sx={{ color: { color }, width: '17px', height: '17px' }}>
+      <SvgIcon
+        sx={{ color: { color }, width: size ?? '17px', height: size ?? '17px' }}
+      >
         {icon}
       </SvgIcon>
       <Typography

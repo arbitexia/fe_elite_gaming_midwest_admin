@@ -1,4 +1,3 @@
-import { Stack } from '@mui/material';
 import { UserDetailInfoEditCard } from '@/modules/Users';
 import { DashboardLayout } from '@/layouts';
 import { UserType } from '@/types';

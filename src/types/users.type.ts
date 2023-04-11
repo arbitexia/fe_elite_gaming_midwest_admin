@@ -63,6 +63,7 @@ export type GetUserParam = {
 export type UpdateUserParam = {
   userId: number;
   input: UserType.User;
+  uploadPhoto?: File;
 };
 
 export type UserLocationsType = {

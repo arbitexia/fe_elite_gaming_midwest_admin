@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
@@ -6,9 +7,10 @@ import {
   UIFlexWrapBox,
   UIFlexSpaceBox,
   UIEditTextField,
+  UIActionButton,
 } from '@/components/UI';
 import { UserRole } from '@/constants/enum';
-import { useAuth } from '@/hooks';
+import { useAsset, useAuth } from '@/hooks';
 import { UpdateUserParam, UserType } from '@/types';
 
 import {
@@ -21,7 +23,17 @@ import {
   StyledUserEditTextField,
 } from './ui';
 import { UsersDetailHeader } from '@/modules/Users';
-import { phoneNumberToString } from '@/libs/data-helper';
+import {
+  convertMBtoBytes,
+  formatPhoneNumber,
+  phoneNumberToString,
+} from '@/libs/data-helper';
+import { useAppToast } from '@/providers';
+import { Delete } from '@mui/icons-material';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { Moment } from 'moment';
+
 interface UsersDetailHeaderProps {
   user: UserType.User;
 }
@@ -29,28 +41,59 @@ interface UsersDetailHeaderProps {
 const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
   const router = useRouter();
   const { slug } = router.query;
+  const [uploadPhoto, setUploadPhoto] = useState<File>();
+  const [selectedFile, setSelectedFile] = useState<string>();
+  const appToast = useAppToast();
+
   const { onCreateNewUser, onUpdateUser } = useAuth({
     handleRegisterUserSuccess: () => {
       router.push('/users/customers');
     },
   });
+  const { onCreateAsset } = useAsset();
   const userFormik = useFormik({
     initialValues: { ...user, birthday: '1991-10-10' },
     onSubmit: async (values) => {
+      const assetData = uploadPhoto
+        ? await onCreateAsset(uploadPhoto)
+        : undefined;
       if (user?.id) {
         const dataToUpdate: UpdateUserParam = {
           userId: user.id,
-          input: values,
+          input: { ...values, avatar: assetData },
         };
-        onUpdateUser(dataToUpdate);
+        await onUpdateUser(dataToUpdate);
+        appToast({ severity: 'success', message: 'Success!' });
         router.push(`/users/${slug}`);
       } else {
-        onCreateNewUser({
-          user: { ...values, phone: phoneNumberToString(values.phone) },
+        await onCreateNewUser({
+          user: {
+            ...values,
+            phone: phoneNumberToString(values.phone),
+            avatar: assetData,
+          },
         });
       }
     },
   });
+
+  const onAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const reader = new FileReader();
+    const file = e.target.files ? e.target.files[0] : null;
+    if (!file) return;
+    // Restrict user to upload file less than 3.1MB
+    if (file.size > convertMBtoBytes(3.1)) {
+      appToast('error', 'File size is too large');
+      return;
+    }
+    reader.onloadend = async () => {
+      setUploadPhoto(file);
+      setSelectedFile(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <Box component="form" onSubmit={userFormik.handleSubmit}>
       <UsersDetailHeader user={user} />
@@ -80,7 +123,23 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                 overflow: 'hidden',
               }}
             >
-              <StyledUserInfoAvatar src={user.avatar?.url} alt="avatar" />
+              <StyledUserInfoAvatar
+                src={selectedFile ?? user.avatar?.url}
+                alt="avatar"
+              />
+              {selectedFile && (
+                <Box
+                  sx={{ position: 'absolute', zIndex: 3, right: -12, top: 8 }}
+                >
+                  <UIActionButton
+                    icon={<Delete />}
+                    color="#F14336"
+                    title=""
+                    handleClick={() => setSelectedFile(undefined)}
+                    size={24}
+                  />
+                </Box>
+              )}
               <label htmlFor="photo-upload">
                 <Typography
                   sx={{
@@ -102,7 +161,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                 </Typography>
                 <input
                   id="photo-upload"
-                  // onChange={onAvatarChange}
+                  onChange={onAvatarChange}
                   type="file"
                   accept="image/png, image/gif, image/jpeg"
                 />
@@ -188,7 +247,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                   <StyledUserInfoTitle>Phone:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="phone"
-                    value={userFormik.values.phone}
+                    value={formatPhoneNumber(userFormik.values.phone)}
                     onChange={userFormik.handleChange}
                     disabled={user?.id > 0 ? true : false}
                   />
@@ -201,7 +260,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                {/* <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Address1:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="address.address1"
@@ -224,16 +283,36 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                     value={userFormik.values.address?.zipcode}
                     onChange={userFormik.handleChange}
                   />
-                </UIFlexWrapBox>
+                </UIFlexWrapBox> */}
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
+                  {/* <StyledUserEditTextField
                     name="birthday"
                     value={userFormik.values.birthday}
                     onChange={userFormik.handleChange}
-                  />
+                  /> */}
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <MobileDatePicker
+                      inputFormat="MM/DD/YYYY"
+                      value={userFormik.values.birthday}
+                      onChange={(value: Moment | null) => {
+                        userFormik.setFieldValue(
+                          'birthday',
+                          value ? value.format('MM/DD/YYYY') : ''
+                        );
+                      }}
+                      renderInput={(params) => {
+                        return (
+                          <StyledUserEditTextField
+                            {...params}
+                            placeholder="Birthday"
+                          />
+                        );
+                      }}
+                    />
+                  </LocalizationProvider>
                 </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>User role:</StyledUserInfoTitle>
@@ -252,7 +331,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                     })}
                   </StyledUserEditTextField>
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                {/* <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Address2:</StyledUserInfoTitle>
                   <StyledUserEditTextField
                     name="address.address2"
@@ -275,7 +354,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                     value={userFormik.values.address?.country}
                     onChange={userFormik.handleChange}
                   />
-                </UIFlexWrapBox>
+                </UIFlexWrapBox> */}
               </Stack>
             </UIFlexWrapBox>
           </Box>

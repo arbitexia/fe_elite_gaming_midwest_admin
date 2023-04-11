@@ -33,6 +33,7 @@ import {
   NotificationMenuItem,
   NotificationMenuContainer,
 } from './ui';
+import { UserType } from '@/types';
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
@@ -48,7 +49,7 @@ const dropdownMenuItems = ['Profile', 'Logout'];
 export default function AppNavbar(props: Props) {
   const { window } = props;
   const router = useRouter();
-  const { isAuthenticated, onLogout } = useAuth();
+  const { isAuthenticated, onLogout, me } = useAuth({});
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorElNotifications, setAnchorElNotifications] =
     useState<null | HTMLElement>(null);
@@ -146,7 +147,7 @@ export default function AppNavbar(props: Props) {
                 >
                   <Avatar
                     sx={{ height: 36, width: 36, background: '#83A9A8' }}
-                    src={''}
+                    src={(me as UserType.User)?.avatar?.url}
                     alt={'avatar'}
                   />
                   <Typography
@@ -157,7 +158,8 @@ export default function AppNavbar(props: Props) {
                       px: '10px',
                     }}
                   >
-                    Administrator
+                    {/* Administrator */}
+                    {(me as UserType.User)?.userName}
                   </Typography>
                   <ExpandMoreOutlinedIcon
                     sx={{ color: '#83A9A8', marginRight: '15px' }}
