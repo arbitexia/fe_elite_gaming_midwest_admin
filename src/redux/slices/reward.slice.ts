@@ -54,6 +54,19 @@ export const getRewardsByUserId = createAsyncThunk<
   }
 });
 
+export const deleteReward = createAsyncThunk<
+  CommonType.Message,
+  Reward.Param,
+  { dispatch: AppDispatch; state: RootState }
+>('rewards/deleteReward', async (param: Reward.Param, thunkAPI) => {
+  try {
+    return await rewardApi.deleteById(param);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
 export const rewardSlice = createSlice({
   name: 'reward',
   initialState,
@@ -124,7 +137,27 @@ export const rewardSlice = createSlice({
           state.status = ResponseStatus.SUCCESS;
           state.availableRewards = payload;
         }
-      );
+      )
+      .addCase(deleteReward.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        deleteReward.fulfilled,
+        (state, { payload }: PayloadAction<CommonType.Message>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.message = payload.message;
+        }
+      )
+      .addCase(deleteReward.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      });
   },
 });
 

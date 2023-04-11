@@ -6,9 +6,9 @@ import {
   TableBody,
   TableRow,
   Typography,
-  IconButton,
+  // IconButton,
 } from '@mui/material';
-import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
+// import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import {
   UICardBox,
   UIChip,
@@ -44,28 +44,7 @@ const LocationDetailRewardTable = () => {
   const getRewardsByLocationId = async (filter: Reward.Filter) => {
     await onFilterRewards(filter);
   };
-
-  // const getSpecTableCell = (specifications: any) => {
-  //   return Object.keys(specifications).map((key, index) => {
-  //     return (
-  //       <UIFlexWrapBox key={index}>
-  //         <Typography
-  //           sx={{
-  //             color: 'rgba(0, 0, 0, 0.3)',
-  //             fontSize: 12,
-  //             fontWeight: 500,
-  //             textTransform: 'capitalize',
-  //           }}
-  //         >
-  //           {key}:
-  //         </Typography>
-  //         <Typography sx={{ color: '#06251F', fontSize: 14, fontWeight: 500 }}>
-  //           {specifications[key]}
-  //         </Typography>
-  //       </UIFlexWrapBox>
-  //     );
-  //   });
-  // };
+  const rewardsByLocation = rewards?.[0]?.reward ?? [];
   return (
     <UICardBox sx={{ marginTop: '30px' }}>
       <Typography
@@ -87,49 +66,64 @@ const LocationDetailRewardTable = () => {
             <UITableCell>Points</UITableCell>
             <UITableCell>Status</UITableCell>
             <UITableCell>Due Date</UITableCell>
-            <UITableCell></UITableCell>
+            {/* <UITableCell></UITableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rewards?.[0]?.reward?.map((item: Reward.Data) => {
-            return (
-              <UITableRow key={item.id}>
-                <UITableCell
-                  onClick={() => router.push(`locations/${item.id}`)}
-                  sx={{ cursor: 'pointer' }}
-                >
-                  #{item.id}
-                </UITableCell>
-                <UITableCell>{item.product.name}</UITableCell>
-                <UITableCell>{item.product.short}</UITableCell>
-                <UITableCell>{item.product.point}</UITableCell>
-                <UITableCell>
-                  <UIChip
-                    label={item.product.status}
-                    color={getColor(item.product.status)}
-                  />
-                </UITableCell>
-                <UITableCell sx={{ color: '#B3B3B3 !important' }}>
-                  {item.product.createdAt
-                    ? format(
-                        new Date(item.product.createdAt),
-                        'yyyy-MM-dd hh:mm'
-                      )
-                    : ''}
-                </UITableCell>
-                <UITableCell>
-                  <IconButton
-                    data-key={item.id}
-                    // onClick={(event: React.MouseEvent<HTMLElement>) => {
-                    //   setAnchorElOptionsMenu(event.currentTarget);
-                    // }}
+          {rewardsByLocation.length > 0 ? (
+            rewardsByLocation.map((item: Reward.Data) => {
+              return (
+                <UITableRow key={item.id}>
+                  <UITableCell
+                    onClick={() => router.push(`locations/${item.id}`)}
+                    sx={{ cursor: 'pointer' }}
                   >
-                    <MoreHorizIcon sx={{ color: 'rgba(137, 200, 198, 0.5)' }} />
-                  </IconButton>
-                </UITableCell>
-              </UITableRow>
-            );
-          })}
+                    #{item.id}
+                  </UITableCell>
+                  <UITableCell>{item.product.name}</UITableCell>
+                  <UITableCell>{item.product.short}</UITableCell>
+                  <UITableCell>{item.product.point}</UITableCell>
+                  <UITableCell>
+                    <UIChip
+                      label={item.product.status}
+                      color={getColor(item.product.status)}
+                    />
+                  </UITableCell>
+                  <UITableCell sx={{ color: '#B3B3B3 !important' }}>
+                    {item.product.createdAt
+                      ? format(
+                          new Date(item.product.createdAt),
+                          'yyyy-MM-dd hh:mm'
+                        )
+                      : ''}
+                  </UITableCell>
+                  {/* <UITableCell>
+                    <IconButton
+                      data-key={item.id}
+                      // onClick={(event: React.MouseEvent<HTMLElement>) => {
+                      //   setAnchorElOptionsMenu(event.currentTarget);
+                      // }}
+                    >
+                      <MoreHorizIcon
+                        sx={{ color: 'rgba(137, 200, 198, 0.5)' }}
+                      />
+                    </IconButton>
+                  </UITableCell> */}
+                </UITableRow>
+              );
+            })
+          ) : (
+            <UITableRow
+              sx={{
+                position: 'relative',
+                backgroundColor: 'transparent !important',
+              }}
+            >
+              <UITableCell colSpan={6} sx={{ textAlign: 'center' }}>
+                No Data
+              </UITableCell>
+            </UITableRow>
+          )}
         </TableBody>
       </UITable>
       <RewardsPagination

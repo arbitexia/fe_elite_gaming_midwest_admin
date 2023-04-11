@@ -31,7 +31,7 @@ export const UIFlexColumnBox = styled(Box)(({ theme }) => ({
 }));
 
 export const UICardBox = styled(Box)({
-  padding: '30px 30px',
+  padding: '30px 40px',
   background: '#FFFFFF',
   border: '1px solid #F3F3F3',
   boxShadow: '5px 6px 30px -15px rgba(25, 42, 89, 0.2)',

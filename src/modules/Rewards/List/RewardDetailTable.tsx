@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { format } from 'date-fns';
-import { Table, TableHead, TableBody, Box, Divider } from '@mui/material';
+import { Table, TableHead, TableBody, Box, IconButton } from '@mui/material';
 import { Reward } from '@/types';
 import {
   UIChip,
@@ -11,27 +11,26 @@ import {
   UIOptionMenuItem,
 } from '@/components/UI';
 import { getColor } from '@/libs/data-helper';
-import { menuActions } from '@/_mock/users';
+import { menuRewardActions } from '@/_mock/users';
 import { MenuAction } from '@/constants';
 import ConfirmModal from '@/components/App/Modal/ConfirmModal';
+import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 
-interface IRewardDetailTable {
+type RewardDetailTableProps = {
   rewards: Reward.Data[];
-}
+  onDelete: (rewardId: number) => void;
+};
 
-const RewardDetailTable = ({ rewards }: IRewardDetailTable) => {
+const RewardDetailTable = ({ rewards, onDelete }: RewardDetailTableProps) => {
   const [deleteId, setDeleteId] = useState<number>();
-
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
-  console.log(isOptionsMenuOpen);
 
   const handleNavBtnClick = (key: string) => {
     const selectedId = parseInt(
       anchorElOptionsMenu?.getAttribute('data-key') ?? '0'
     );
-    // const selectedItem = rewards.find((t) => t.id === selectedId);
     if (key === MenuAction.DELETE) {
       setDeleteId(selectedId);
     }
@@ -47,6 +46,7 @@ const RewardDetailTable = ({ rewards }: IRewardDetailTable) => {
           <UIListTableCell>Point</UIListTableCell>
           <UIListTableCell>Status</UIListTableCell>
           <UIListTableCell>Due Date</UIListTableCell>
+          <UIListTableCell />
         </UIListTableRow>
       </TableHead>
       <TableBody>
@@ -86,6 +86,16 @@ const RewardDetailTable = ({ rewards }: IRewardDetailTable) => {
                     ? format(new Date(reward.createdAt), 'yyyy-MM-dd yy:mm')
                     : ''}
                 </UIListTableCell>
+                <UIListTableCell>
+                  <IconButton
+                    data-key={reward.id}
+                    onClick={(event: React.MouseEvent<HTMLElement>) => {
+                      setAnchorElOptionsMenu(event.currentTarget);
+                    }}
+                  >
+                    <MoreHorizIcon sx={{ color: '#83A9A8' }} />
+                  </IconButton>
+                </UIListTableCell>
               </UIListTableRow>
             );
           })
@@ -118,22 +128,15 @@ const RewardDetailTable = ({ rewards }: IRewardDetailTable) => {
           setAnchorElOptionsMenu(null);
         }}
       >
-        {menuActions.map((item, index) => {
+        {menuRewardActions.map((item, index) => {
           return (
             <div key={index}>
-              {index === 2 && <Divider />}
               <UIOptionMenuItem
                 disableRipple
                 disableTouchRipple
                 onClick={() => handleNavBtnClick(item.action)}
               >
-                <UIOptionMenuItemText
-                  key={index}
-                  sx={{
-                    color: item.color,
-                    textDecorationLine: index === 0 ? 'underline' : 'none',
-                  }}
-                >
+                <UIOptionMenuItemText key={index} sx={{ color: item.color }}>
                   {item.label}
                 </UIOptionMenuItemText>
               </UIOptionMenuItem>
@@ -149,7 +152,7 @@ const RewardDetailTable = ({ rewards }: IRewardDetailTable) => {
         title="Delete"
         content="Are you sure you want to remove this reward?"
         onAction={() => {
-          // onDeleteTablet(deleteId ?? 0);
+          onDelete(deleteId ?? 0);
           setDeleteId(undefined);
         }}
       />

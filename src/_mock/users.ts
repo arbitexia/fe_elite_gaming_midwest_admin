@@ -22,6 +22,10 @@ export const menuTabletActions = [
   { label: 'Delete', color: '#fb020299', action: MenuAction.DELETE },
 ];
 
+export const menuRewardActions = [
+  { label: 'Delete', color: '#fb020299', action: MenuAction.DELETE },
+];
+
 export const profileData: UserType.User = {
   id: 1,
   firstName: 'Esthera',

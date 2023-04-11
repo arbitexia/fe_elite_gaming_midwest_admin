@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import dynamic from 'next/dynamic';
 import { FormikProps } from 'formik';
 import mapboxgl from 'mapbox-gl';
 import { Typography, Stack, Box, MenuItem } from '@mui/material';
 import { locationStatus, locationType } from '@/_mock/locations';
-import { formats, modules } from '@/constants';
+
 import {
   UICardBox,
   UIFlexWrapBox,
@@ -15,13 +14,6 @@ import {
 import { Location } from '@/types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import 'react-quill/dist/quill.snow.css';
-
-const ReactQuill = dynamic(
-  () => {
-    return import('react-quill');
-  },
-  { loading: () => null, ssr: false }
-);
 
 const accessToken =
   'pk.eyJ1Ijoic2FoaWx0aGFrYXJlNTIxIiwiYSI6ImNrbjVvMTkzNDA2MXQydnM2OHJ6aHJvbXEifQ.z5aEqRBTtDMWoxVzf3aGsg';
@@ -34,12 +26,7 @@ const LocationsDetailInfoEditCard = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState<mapboxgl.Map>();
   const mapNode = useRef(null);
-  const [desc, setDesc] = useState('');
-  useEffect(() => {
-    if (locationFormik.values.description) {
-      setDesc(locationFormik.values.description);
-    }
-  }, [locationFormik.values.description]);
+
   useEffect(() => {
     const node = mapNode.current;
     if (typeof window === 'undefined' || node === null) return;
@@ -219,23 +206,19 @@ const LocationsDetailInfoEditCard = ({
       <Box
         sx={{
           width: '100%',
-          height: '350px',
           paddingTop: '20px',
-          '.quill': { height: '250px', marginTop: '20px' },
         }}
       >
         <UIInfoTitle>Description:</UIInfoTitle>
-        <ReactQuill
-          theme="snow"
-          value={desc}
-          placeholder={'Enter the description'}
-          onChange={(data) => {
-            setDesc(data);
-            locationFormik.setFieldValue('description', data);
-          }}
-          modules={modules}
-          formats={formats}
-        />
+        <Box>
+          <UIEditTextField
+            sx={{ marginTop: '8px' }}
+            name="description"
+            value={locationFormik.values.description ?? ''}
+            onChange={locationFormik.handleChange}
+            fullWidth
+          />
+        </Box>
       </Box>
       <Box
         ref={mapNode}

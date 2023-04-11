@@ -23,3 +23,10 @@ export const getByUserId = async (param: { userId: number }) => {
   });
   return res.data;
 };
+
+export const deleteById = async (param: Reward.Param) => {
+  const res = await jwtAxios.delete(`/rewards/${param.id}`, {
+    headers: getAuthorizeHeader(),
+  });
+  return res.data;
+};
