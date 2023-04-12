@@ -173,9 +173,7 @@ const TransactionsTable = ({
                 <StyledTableCell>
                   {transactionItem?.reward?.product?.name}
                 </StyledTableCell>
-                <StyledTableCell>
-                  {transactionItem?.reward?.product?.amount}
-                </StyledTableCell>
+                <StyledTableCell>{transactionItem?.amount}</StyledTableCell>
                 <StyledTableCell>{transactionItem?.type}</StyledTableCell>
                 <StyledTableCell>{`${transactionItem.assignee?.firstName} ${transactionItem.assignee?.lastName}`}</StyledTableCell>
                 <StyledTableCell align="center">

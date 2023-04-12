@@ -80,6 +80,7 @@ export {
   filterRewards,
   createRewards,
   deleteReward,
+  updateRewards,
   getRewardsByUserId,
   resetRewardMessage,
 } from './reward.slice';

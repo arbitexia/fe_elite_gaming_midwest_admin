@@ -7,7 +7,7 @@ export const rewardsData: Reward.Data[] = [
     product: {
       id: 1,
       name: 'AirPods 2',
-      point: 12000,
+      // point: 12000,
       short: '128gb RAM $600',
       description: '',
       amount: 3,
@@ -36,7 +36,7 @@ export const rewardsData: Reward.Data[] = [
     product: {
       id: 2,
       name: 'Marshal V6',
-      point: 19000,
+      // point: 19000,
       short: '128gb RAM $600',
       description: '',
       amount: 3,
@@ -65,7 +65,7 @@ export const rewardsData: Reward.Data[] = [
     product: {
       id: 3,
       name: 'AppleWatch 8',
-      point: 23000,
+      // point: 23000,
       short: '128gb RAM $600',
       description: '',
       amount: 3,
@@ -94,7 +94,7 @@ export const rewardsData: Reward.Data[] = [
     product: {
       id: 4,
       name: 'iPhone 14 pro',
-      point: 30000,
+      // point: 30000,
       short: '128gb RAM $600',
       description: '',
       amount: 3,
@@ -123,7 +123,7 @@ export const rewardsData: Reward.Data[] = [
     product: {
       id: 5,
       name: 'AirPods 2',
-      point: 32000,
+      // point: 32000,
       short: '128gb RAM $600',
       description: '',
       amount: 3,
@@ -152,7 +152,7 @@ export const rewardsData: Reward.Data[] = [
     product: {
       id: 6,
       name: 'Marshal V6',
-      point: 39000,
+      // point: 39000,
       short: '128gb RAM $600',
       description: '',
       amount: 3,
@@ -181,7 +181,7 @@ export const rewardsData: Reward.Data[] = [
     product: {
       id: 7,
       name: 'AppleWatch 8',
-      point: 43000,
+      // point: 43000,
       short: '128gb RAM $600',
       description: '',
       amount: 3,
@@ -210,7 +210,7 @@ export const rewardsData: Reward.Data[] = [
     product: {
       id: 8,
       name: 'iPhone 14 pro',
-      point: 50000,
+      // point: 50000,
       short: '128gb RAM $600',
       description: '',
       amount: 3,
@@ -239,7 +239,7 @@ export const rewardsData: Reward.Data[] = [
     product: {
       id: 9,
       name: 'iPhone 14 pro',
-      point: 60000,
+      // point: 60000,
       short: '128gb RAM $600',
       description: '',
       amount: 3,

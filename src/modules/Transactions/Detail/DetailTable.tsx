@@ -27,9 +27,7 @@ const DetailTable = ({ transaction }: TransactionDetailProps) => {
             {transaction?.reward?.product?.short ?? '-'}
           </TableCell>
           <TableCell>{transaction?.location?.name}</TableCell>
-          <TableCell align="right">
-            {transaction?.reward?.product?.point} Point
-          </TableCell>
+          <TableCell align="right">{transaction?.amount} Point</TableCell>
           <TableCell align="right">
             {transaction?.reward?.product?.status}
           </TableCell>

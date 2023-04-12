@@ -51,11 +51,6 @@ const renderProduct = (product: Product.Data) => (
       </Typography>
     </UIFlexWrapBox>
     <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-      <GrainIcon sx={{ fontSize: '14px' }} />
-      <Typography variant="caption">{product.point} points</Typography>
-    </UIFlexWrapBox>
-
-    <UIFlexWrapBox sx={{ alignItems: 'center' }}>
       <LoyaltyIcon sx={{ fontSize: '14px' }} />
       <Typography variant="caption">{product.status}</Typography>
     </UIFlexWrapBox>
@@ -206,6 +201,17 @@ const RequestTable = ({ requestsData, onAction }: RequestTableProps) => {
               Game Place
             </TableSortLabel>
           </StyledRequestTableCell>
+
+          <StyledRequestTableCell>
+            <TableSortLabel
+              active={orderBy === 'amount'}
+              direction={order}
+              onClick={createSortHandler('amount')}
+            >
+              Amount
+            </TableSortLabel>
+          </StyledRequestTableCell>
+
           <StyledRequestTableCell>
             <TableSortLabel
               active={orderBy === 'status'}
@@ -238,10 +244,14 @@ const RequestTable = ({ requestsData, onAction }: RequestTableProps) => {
                   {renderUser(request.user)}
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
-                  {renderProduct(request.reward.product)}
+                  {request.reward?.product &&
+                    renderProduct(request.reward.product)}
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
                   {renderLocation(request.location)}
+                </StyledRequestTableCell>
+                <StyledRequestTableCell>
+                  {request.amount}
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
                   <UIChip

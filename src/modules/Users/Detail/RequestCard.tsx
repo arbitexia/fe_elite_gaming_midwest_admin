@@ -58,11 +58,11 @@ const UserDetailRequestCard = ({ requests }: UserDetailRequestCardProps) => {
                 <StyledRequestTableCell>#{data.id}</StyledRequestTableCell>
                 <StyledRequestTableCell>
                   <Link
-                    href={`/products/${data.reward.product.id}`}
+                    href={`/products/${data.reward.product?.id}`}
                     legacyBehavior
                   >
                     <a target="_blank" rel="noopener noreferrer">
-                      {data.reward.product.name}
+                      {data.reward.product?.name}
                     </a>
                   </Link>
                 </StyledRequestTableCell>
@@ -74,7 +74,7 @@ const UserDetailRequestCard = ({ requests }: UserDetailRequestCardProps) => {
                   </Link>
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
-                  {data.reward.product.point} points
+                  {data.reward?.point} points
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
                   <UIChip label={data.status} color={getColor(data.status)} />

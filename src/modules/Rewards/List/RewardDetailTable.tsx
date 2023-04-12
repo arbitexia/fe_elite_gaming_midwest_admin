@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { format } from 'date-fns';
-import { Table, TableHead, TableBody, Box, IconButton } from '@mui/material';
+import {
+  Table,
+  TableHead,
+  TableBody,
+  Box,
+  IconButton,
+  Divider,
+} from '@mui/material';
 import { Reward } from '@/types';
 import {
   UIChip,
@@ -15,16 +22,24 @@ import { menuRewardActions } from '@/_mock/users';
 import { MenuAction } from '@/constants';
 import ConfirmModal from '@/components/App/Modal/ConfirmModal';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
+import { RewardEditDialog } from '@/modules/Rewards';
 
 type RewardDetailTableProps = {
   rewards: Reward.Data[];
   onDelete: (rewardId: number) => void;
+  onEdit: (value: Reward.Data) => void;
 };
 
-const RewardDetailTable = ({ rewards, onDelete }: RewardDetailTableProps) => {
+const RewardDetailTable = ({
+  rewards,
+  onDelete,
+  onEdit,
+}: RewardDetailTableProps) => {
   const [deleteId, setDeleteId] = useState<number>();
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);
+  const [selectedReward, setSelectedReward] = useState<Reward.Data>();
+
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
 
   const handleNavBtnClick = (key: string) => {
@@ -33,6 +48,9 @@ const RewardDetailTable = ({ rewards, onDelete }: RewardDetailTableProps) => {
     );
     if (key === MenuAction.DELETE) {
       setDeleteId(selectedId);
+    }
+    if (key === MenuAction.EDIT) {
+      setSelectedReward(rewards.find((obj) => obj.id === selectedId));
     }
   };
 
@@ -44,6 +62,7 @@ const RewardDetailTable = ({ rewards, onDelete }: RewardDetailTableProps) => {
           <UIListTableCell>Name</UIListTableCell>
           <UIListTableCell>Detail</UIListTableCell>
           <UIListTableCell>Point</UIListTableCell>
+          <UIListTableCell>Coupon</UIListTableCell>
           <UIListTableCell>Status</UIListTableCell>
           <UIListTableCell>Due Date</UIListTableCell>
           <UIListTableCell />
@@ -52,7 +71,7 @@ const RewardDetailTable = ({ rewards, onDelete }: RewardDetailTableProps) => {
       <TableBody>
         {rewards && rewards.length > 0 ? (
           rewards?.map((reward, index) => {
-            const { product } = reward;
+            const { product, point, coupon } = reward;
             return (
               <UIListTableRow key={`reward-${index}`}>
                 <UIListTableCell>
@@ -68,17 +87,18 @@ const RewardDetailTable = ({ rewards, onDelete }: RewardDetailTableProps) => {
                     sx={{ borderRadius: '6px', objectFit: 'cover' }}
                   />
                 </UIListTableCell>
-                <UIListTableCell>{product.name}</UIListTableCell>
+                <UIListTableCell>{product?.name}</UIListTableCell>
                 <UIListTableCell
                   sx={{ color: 'rgba(0, 0, 0, 0.3) !important' }}
                 >
-                  {product.short}
+                  {product?.short}
                 </UIListTableCell>
-                <UIListTableCell>{product.point}</UIListTableCell>
+                <UIListTableCell>{point}</UIListTableCell>
+                <UIListTableCell>{coupon}</UIListTableCell>
                 <UIListTableCell>
                   <UIChip
-                    label={product.status}
-                    color={getColor(product.status)}
+                    label={product?.status}
+                    color={getColor(product?.status ?? 'error')}
                   />
                 </UIListTableCell>
                 <UIListTableCell>
@@ -106,7 +126,7 @@ const RewardDetailTable = ({ rewards, onDelete }: RewardDetailTableProps) => {
               backgroundColor: 'transparent !important',
             }}
           >
-            <UIListTableCell colSpan={6} sx={{ textAlign: 'center' }}>
+            <UIListTableCell colSpan={7} sx={{ textAlign: 'center' }}>
               No Data
             </UIListTableCell>
           </UIListTableRow>
@@ -131,6 +151,7 @@ const RewardDetailTable = ({ rewards, onDelete }: RewardDetailTableProps) => {
         {menuRewardActions.map((item, index) => {
           return (
             <div key={index}>
+              {index === 1 && <Divider />}
               <UIOptionMenuItem
                 disableRipple
                 disableTouchRipple
@@ -155,6 +176,14 @@ const RewardDetailTable = ({ rewards, onDelete }: RewardDetailTableProps) => {
           onDelete(deleteId ?? 0);
           setDeleteId(undefined);
         }}
+      />
+      <RewardEditDialog
+        open={!!selectedReward}
+        onClose={() => {
+          setSelectedReward(undefined);
+        }}
+        selectedReward={selectedReward}
+        onEdit={onEdit}
       />
     </Table>
   );

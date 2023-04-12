@@ -23,6 +23,7 @@ export const menuTabletActions = [
 ];
 
 export const menuRewardActions = [
+  { label: 'Edit', color: '#667180', action: MenuAction.EDIT },
   { label: 'Delete', color: '#fb020299', action: MenuAction.DELETE },
 ];
 

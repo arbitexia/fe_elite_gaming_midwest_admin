@@ -2,14 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Check as CheckIcon } from '@mui/icons-material';
 import { Box, Divider } from '@mui/material';
 import {
-  UIActionButton,
   UICardBox,
-  UIDefaultButton,
   UIFlexCenterBox,
   UIFlexSpaceBox,
   UIFlexWrapBox,
   UIInfoValue,
-  UIViewButton,
 } from '@/components/UI';
 import { Reward } from '@/types';
 import {
@@ -27,11 +24,13 @@ import RewardDetailTable from './RewardDetailTable';
 export type RewardsCardProp = {
   rewards: Reward.DataList[];
   onDelete: (rewardId: number) => void;
+  onEdit: (value: Reward.Data) => void;
 };
 
-const RewardCard = ({ rewards, onDelete }: RewardsCardProp) => {
+const RewardCard = ({ rewards, onDelete, onEdit }: RewardsCardProp) => {
   const [selectedReward, setSelectedReward] = useState<Reward.DataList>();
   const [readMore, setReadMore] = useState(false);
+
   useEffect(() => {
     if (rewards && rewards.length > 0) {
       setSelectedReward(rewards[0]);
@@ -149,6 +148,7 @@ const RewardCard = ({ rewards, onDelete }: RewardsCardProp) => {
           <RewardDetailTable
             rewards={selectedReward.reward}
             onDelete={onDelete}
+            onEdit={onEdit}
           />
         )}
       </StyledRightWrapBox>

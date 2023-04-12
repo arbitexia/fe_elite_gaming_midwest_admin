@@ -32,7 +32,6 @@ const ProductEdit = () => {
         input: {
           name: values.name,
           amount: values.amount,
-          point: values.point,
           status: values.status,
           short: values.short,
           description: values.description,

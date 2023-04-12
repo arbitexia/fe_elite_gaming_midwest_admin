@@ -10,10 +10,13 @@ import {
 } from '@/modules/Rewards';
 import { Reward } from '@/types';
 import RewardDetailTable from '@/modules/Rewards/List/RewardDetailTable';
+import { useAppToast } from '@/providers';
 
 const Rewards = () => {
   const router = useRouter();
-  const { rewards, onFilterRewards, onDeleteReward } = useReward();
+  const { rewards, onFilterRewards, onDeleteReward, onUpdateRewards } =
+    useReward();
+  const appToast = useAppToast();
   const [searchValue, setSearchValue] = useState('');
   const [isOpenCreateDlg, setIsOpenCreateDlg] = useState<boolean>(false);
 
@@ -35,6 +38,14 @@ const Rewards = () => {
     await onDeleteReward({ id: rewardId });
     await fetchRewards();
   };
+  const handleEdit = async (value: Reward.Data) => {
+    await onUpdateRewards(value);
+    await fetchRewards();
+    appToast({
+      severity: 'success',
+      message: 'The reward has been updated!',
+    });
+  };
   return (
     <DashboardLayout title="Rewards">
       <RewardsListHeader
@@ -43,7 +54,11 @@ const Rewards = () => {
         onOpenDlg={() => setIsOpenCreateDlg(true)}
       />
       <Divider sx={{ mt: '18px', mb: '30px' }} />
-      <RewardCard rewards={rewards} onDelete={handleDelete} />
+      <RewardCard
+        rewards={rewards}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+      />
       <RewardCreateDialog
         isOpenCreateDlg={isOpenCreateDlg}
         closeDlg={async () => {

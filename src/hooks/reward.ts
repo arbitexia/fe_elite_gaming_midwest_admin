@@ -5,6 +5,7 @@ import {
   rewardSelector,
   filterRewards,
   createRewards,
+  updateRewards,
   deleteReward,
   getRewardsByUserId,
   resetRewardMessage,
@@ -52,6 +53,13 @@ export const useReward = () => {
     return payload;
   };
 
+  const onUpdateRewards = async (params: Reward.Data): Promise<Reward.Data> => {
+    const { payload } = (await dispatch(
+      updateRewards(params)
+    )) as PayloadAction<Reward.Data>;
+    return payload;
+  };
+
   const onDeleteReward = async (param: Reward.Param) => {
     await dispatch(deleteReward(param));
   };
@@ -62,6 +70,7 @@ export const useReward = () => {
     availableRewards,
     onFilterRewards,
     onCreateRewards,
+    onUpdateRewards,
     onDeleteReward,
     onRewardsByUserId,
   };

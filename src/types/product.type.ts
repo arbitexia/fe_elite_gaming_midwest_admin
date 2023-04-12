@@ -5,7 +5,6 @@ export declare namespace Product {
     id: number;
     name: string;
     amount: number;
-    point: number;
     status: string;
     short: string;
     description: string;
@@ -20,7 +19,6 @@ export declare namespace Product {
     input: {
       name?: string;
       amount?: number;
-      point?: number;
       status?: string;
       short?: string;
       description?: string;
@@ -29,8 +27,6 @@ export declare namespace Product {
 
   type Filter = {
     filterBy: {
-      pointFrom?: number;
-      pointTo?: number;
       search: string;
       sort?: string;
     };

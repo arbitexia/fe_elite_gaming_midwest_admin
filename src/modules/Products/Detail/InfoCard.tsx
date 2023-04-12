@@ -37,10 +37,6 @@ const ProductsDetailInfoCard = ({ productItem }: IProductsDetailInfoCard) => {
         </Stack>
         <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
           <UIFlexWrapBox>
-            <UIInfoTitle>Point:</UIInfoTitle>
-            <UIInfoValue>{productItem.point}</UIInfoValue>
-          </UIFlexWrapBox>
-          <UIFlexWrapBox>
             <UIInfoTitle>Short:</UIInfoTitle>
             <UIInfoValue>{productItem.short}</UIInfoValue>
           </UIFlexWrapBox>

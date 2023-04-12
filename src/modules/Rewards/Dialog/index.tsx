@@ -53,8 +53,6 @@ const RewardCreateDialog = ({
     onGetProducts({
       filterBy: {
         search: searchProductVal,
-        pointFrom: 0,
-        pointTo: 100000000,
       },
       cursor: { page: 0, size: 1000 },
     });
