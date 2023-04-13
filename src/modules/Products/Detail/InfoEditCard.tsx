@@ -77,31 +77,17 @@ const ProductsDetailInfoEditCard = ({
           </Box>
         </UIFlexWrapBox>
       </UIFlexSpaceBox>
-      <UIFlexSpaceBox sx={{ paddingTop: '20px' }}>
-        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-          <UIInfoTitle>Points:</UIInfoTitle>
-          <Box>
-            <UIEditTextField
-              name="point"
-              value={productFormik.values.point}
-              onChange={productFormik.handleChange}
-              fullWidth
-              type="number"
-            />
-          </Box>
+      <Box sx={{ paddingTop: '20px' }}>
+        <UIInfoTitle>Short:</UIInfoTitle>
+        <UIFlexWrapBox sx={{ mt: 1 }}>
+          <UIEditTextField
+            name="short"
+            value={productFormik.values.short}
+            onChange={productFormik.handleChange}
+            fullWidth
+          />
         </UIFlexWrapBox>
-        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-          <UIInfoTitle>Short:</UIInfoTitle>
-          <Box>
-            <UIEditTextField
-              name="short"
-              value={productFormik.values.short}
-              onChange={productFormik.handleChange}
-              fullWidth
-            />
-          </Box>
-        </UIFlexWrapBox>
-      </UIFlexSpaceBox>
+      </Box>
       <Box sx={{ paddingTop: '20px' }}>
         <UIInfoTitle>Description:</UIInfoTitle>
         <UIFlexWrapBox sx={{ mt: 1 }}>

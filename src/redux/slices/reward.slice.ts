@@ -67,6 +67,19 @@ export const deleteReward = createAsyncThunk<
   }
 });
 
+export const updateRewards = createAsyncThunk<
+  Reward.Data,
+  Reward.Data,
+  { dispatch: AppDispatch; state: RootState }
+>('rewards/updateRewards', async (params: Reward.Data, thunkAPI) => {
+  try {
+    return await rewardApi.updateReward(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
 export const rewardSlice = createSlice({
   name: 'reward',
   initialState,
@@ -157,6 +170,22 @@ export const rewardSlice = createSlice({
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;
         state.message = null;
+      })
+      .addCase(updateRewards.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(updateRewards.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(updateRewards.fulfilled, (state) => {
+        state.loading = false;
+        state.status = ResponseStatus.SUCCESS;
       });
   },
 });

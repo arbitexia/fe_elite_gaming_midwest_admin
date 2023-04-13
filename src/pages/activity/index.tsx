@@ -60,7 +60,7 @@ const ActivityPage = () => {
     const details: ExportActivityType[] = activities.map((obj) => {
       return {
         id: obj.id,
-        user: `${obj.user.firstName} ${obj.user.lastName}`,
+        user: `${obj.user?.firstName ?? ''} ${obj.user?.lastName ?? ''}`,
         date: format(new Date(obj.createdAt), 'yyyy-MM-dd'),
         model: obj.model,
         victimId: obj.victimId,

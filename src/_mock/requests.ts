@@ -8,7 +8,6 @@ export const requestsData: RequestItemType[] = [
       product: {
         id: 6,
         name: 'Marshal V6',
-        point: 39000,
         short: '128gb RAM $600',
         description: '',
         amount: 3,
@@ -76,7 +75,6 @@ export const requestsData: RequestItemType[] = [
       product: {
         id: 2,
         name: 'Marshal V6',
-        point: 19000,
         short: '128gb RAM $600',
         description: '',
         amount: 3,

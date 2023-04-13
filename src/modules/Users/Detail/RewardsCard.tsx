@@ -67,12 +67,12 @@ const UserDetailRewardsCard = ({ rewards }: UserDetailRewardsCardProps) => {
                         paddingBottom: '5px',
                       }}
                     >
-                      {data.product.name}
+                      {data.product?.name}
                     </Typography>
                     <Typography
                       sx={{ fontSize: 12, fontWeight: 500, color: '#008A83' }}
                     >
-                      {data.product.point} points
+                      {data?.point} points
                     </Typography>
                   </Box>
                 </StyledRewardsTableCell>

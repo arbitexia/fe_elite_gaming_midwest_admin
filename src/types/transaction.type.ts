@@ -2,6 +2,7 @@ import { TransactionStatus } from '@/constants';
 import { Location } from './location.type';
 import { Reward } from './reward.type';
 import { UserType } from './users.type';
+import { PointType } from './point.type';
 
 export declare namespace TransactionType {
   type Data = {
@@ -10,6 +11,8 @@ export declare namespace TransactionType {
     reward: Reward.Data;
     location: Location.Data;
     assignee: UserType.User;
+    pointId?: number;
+    point?: PointType;
     type: string;
     status: string;
     amount: number;

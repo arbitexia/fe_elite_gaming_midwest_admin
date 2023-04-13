@@ -30,3 +30,10 @@ export const deleteById = async (param: Reward.Param) => {
   });
   return res.data;
 };
+
+export const updateReward = async (params: Reward.Data) => {
+  const res = await jwtAxios.put(`/rewards/${params.id}`, params, {
+    headers: getAuthorizeHeader(),
+  });
+  return res.data;
+};

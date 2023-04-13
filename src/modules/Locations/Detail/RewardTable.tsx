@@ -80,17 +80,17 @@ const LocationDetailRewardTable = () => {
                   >
                     #{item.id}
                   </UITableCell>
-                  <UITableCell>{item.product.name}</UITableCell>
-                  <UITableCell>{item.product.short}</UITableCell>
-                  <UITableCell>{item.product.point}</UITableCell>
+                  <UITableCell>{item.product?.name}</UITableCell>
+                  <UITableCell>{item.product?.short}</UITableCell>
+                  <UITableCell>{item.point}</UITableCell>
                   <UITableCell>
                     <UIChip
-                      label={item.product.status}
-                      color={getColor(item.product.status)}
+                      label={item.product?.status}
+                      color={getColor(item.product?.status ?? 'error')}
                     />
                   </UITableCell>
                   <UITableCell sx={{ color: '#B3B3B3 !important' }}>
-                    {item.product.createdAt
+                    {item.product?.createdAt
                       ? format(
                           new Date(item.product.createdAt),
                           'yyyy-MM-dd hh:mm'

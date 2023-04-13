@@ -181,15 +181,7 @@ const ProductsTable = ({
               Detail
             </TableSortLabel>
           </UIListTableCell>
-          <UIListTableCell>
-            <TableSortLabel
-              active={orderBy === 'point'}
-              direction={order}
-              onClick={createSortHandler('point')}
-            >
-              Points
-            </TableSortLabel>
-          </UIListTableCell>
+
           <UIListTableCell align="center">
             <TableSortLabel
               active={orderBy === 'status'}
@@ -312,7 +304,6 @@ const ProductsTable = ({
               </UIListTableCell>
               <UIListTableCell>{productItem.name}</UIListTableCell>
               <UIListTableCell>{productItem.short}</UIListTableCell>
-              <UIListTableCell>{productItem.point}</UIListTableCell>
               <UIListTableCell align="center">
                 <UIChip
                   label={productItem.status}
