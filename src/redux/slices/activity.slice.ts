@@ -32,6 +32,19 @@ export const filterActivities = createAsyncThunk<
   }
 });
 
+export const deleteActivity = createAsyncThunk<
+  string,
+  { id: number },
+  { dispatch: AppDispatch; state: RootState }
+>('activity/deleteActivity', async (param: { id: number }, thunkAPI) => {
+  try {
+    return await activityApi.deleteActivity(param);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
 export const activitySlice = createSlice({
   name: 'activity',
   initialState,
@@ -66,7 +79,23 @@ export const activitySlice = createSlice({
           state.activities = payload.data;
           state.pageInfo = payload.pageInfo;
         }
-      );
+      )
+      .addCase(deleteActivity.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+      })
+      .addCase(deleteActivity.fulfilled, (state) => {
+        state.loading = false;
+        state.status = ResponseStatus.SUCCESS;
+        state.error = null;
+        state.message = 'Activity has been deleted!';
+      })
+      .addCase(deleteActivity.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      });
   },
 });
 

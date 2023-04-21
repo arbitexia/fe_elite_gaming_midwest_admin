@@ -12,6 +12,7 @@ import { ActivityItemType } from './activity.type';
 import { ConfigType } from './config.type';
 import { TabletType } from './tablet.type';
 import { TransactionType } from './transaction.type';
+import { EmailTemplateType } from './emailTemplate.type';
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
     loading: boolean;
@@ -135,6 +136,15 @@ export declare namespace ReduxJson {
     message: string | null;
     error: string | null;
     transactions: TransactionType.Data[];
+    pageInfo: CommonType.PageInfo | null;
+  };
+
+  export type EmailTemplateState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    message: string | null;
+    error: string | null;
+    emailTemplates: EmailTemplateType.Data[];
     pageInfo: CommonType.PageInfo | null;
   };
 }

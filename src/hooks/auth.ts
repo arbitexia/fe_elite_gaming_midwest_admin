@@ -9,12 +9,13 @@ import {
   authorize,
   forgotPassword,
   resetPassword,
+  changePasswordUser,
   authSelector,
   clearAuthMessage,
   logout,
 } from '@/redux/slices';
 import { useAppDispatch, useAppSelector } from './redux';
-import { RegisterType, UpdateUserParam } from '@/types';
+import { RegisterType, UpdateUserParam, UserType } from '@/types';
 
 export interface useAuthProps {
   handleAuthResetSuccess?: () => void;
@@ -67,6 +68,10 @@ export const useAuth = (callbackFunc?: useAuthProps) => {
   const onResetPassword = async (token: string, password: string) => {
     await dispatch(resetPassword({ token, password }));
   };
+
+  const onChangePasswordUser = async (param: UserType.ChangePasswordParam) => {
+    await dispatch(changePasswordUser(param));
+  };
   return {
     isAuthenticated: accessToken ? true : false,
     accessToken: accessToken,
@@ -77,6 +82,7 @@ export const useAuth = (callbackFunc?: useAuthProps) => {
     onForgotPassword,
     onResetPassword,
     onUpdateProfile,
+    onChangePasswordUser,
     onLogout: () => {
       dispatch(logout());
       router.push('/');

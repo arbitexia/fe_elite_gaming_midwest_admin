@@ -29,7 +29,7 @@ interface ActiveIconProps {
   ORDER: ActivityType;
   QUOTE: ActivityType;
   INVITATION: ActivityType;
-  PAYMENT: ActivityType;
+  TRANSACTION: ActivityType;
   USER: ActivityType;
   REWARD: ActivityType;
   PRODUCT: ActivityType;
@@ -43,12 +43,12 @@ const activityIcons: ActiveIconProps = {
   ORDER: { icon: ShoppingCart, color: '#4299E1' },
   QUOTE: { icon: IntegrationInstructions, color: '#E53E3E' },
   INVITATION: { icon: Notifications, color: '#4FD1C5' },
-  PAYMENT: { icon: CreditScore, color: '#F6AD55' },
+  TRANSACTION: { icon: CreditScore, color: '#F6AD55' },
   USER: { icon: CreditScore, color: '#F6AD55' },
   REWARD: { icon: CreditScore, color: '#F6AD55' },
   PRODUCT: { icon: ShoppingCart, color: '#4299E1' },
   ASSET: { icon: CreditScore, color: '#F6AD55' },
-  POINT: { icon: CreditScore, color: '#F6AD55' },
+  POINT: { icon: ShoppingCart, color: '#4299E1' },
   LOCATION: { icon: CreditScore, color: '#F6AD55' },
   GALLERY: { icon: CreditScore, color: '#F6AD55' },
 };
@@ -145,7 +145,7 @@ const UserDetailActivityCard = ({
                     letterSpacing: '0.1px',
                   }}
                 >
-                  {activity.type}
+                  {activity.model} - {activity.type}
                 </Typography>
                 <Typography
                   sx={{

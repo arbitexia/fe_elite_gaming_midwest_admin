@@ -7,6 +7,9 @@ export enum ActivityType {
   CREATE = 'CREATE',
   UPDATE = 'UPDATE',
   DELETE = 'DELETE',
+  REQUEST = 'DECLINE',
+  ACCEPT = 'ACCEPT',
+  DECLINE = 'DECLINE',
 }
 
 export enum ActivityModel {
@@ -17,6 +20,12 @@ export enum ActivityModel {
   POINT = 'POINT',
   LOCATION = 'LOCATION',
   GALLERY = 'GALLERY',
+  TRANSACTION = 'TRANSACTION',
+  TABLET = 'TABLET',
+  VERIFICATION = 'VERIFICATION',
+  EMAIL_TEMPLATE = 'EMAIL_TEMPLATE',
+  ROLE = 'ROLE',
+  USE_LOCATION = 'USE_LOCATION',
 }
 
 export enum Assets {
@@ -91,4 +100,15 @@ export enum TransactionStatus {
   ACCEPTED = 'ACCEPTED',
   DECLINED = 'DECLINED',
   WAITING = 'WAITING',
+}
+
+export enum EmailTemplateStatusEnum {
+  PENDING = 'PENDING',
+  PUBLISHED = 'PUBLISHED',
+  ARCHIVED = 'ARCHIVED',
+}
+
+export enum EmailTemplateTypeEnum {
+  DEFAULT = 'DEFAULT',
+  DYNAMIC = 'DYNAMIC',
 }

@@ -10,16 +10,9 @@ export const getActivities = async (params: ActivityFilterType) => {
   return response.data;
 };
 
-// export const createActivity = async (params: Product.Body) => {
-//   const response = await jwtAxios.post(`/products`, params, {
-//     headers: getAuthorizeHeader(),
-//   });
-//   return response.data;
-// };
-
-// export const updateActivity = async (params: Product.Param & Product.Body) => {
-//   const response = await jwtAxios.put(`/products/${params.id}`, params, {
-//     headers: getAuthorizeHeader(),
-//   });
-//   return response.data;
-// };
+export const deleteActivity = async (param: { id: number }) => {
+  const response = await jwtAxios.delete(`/activity/${param.id}`, {
+    headers: getAuthorizeHeader(),
+  });
+  return response.data;
+};

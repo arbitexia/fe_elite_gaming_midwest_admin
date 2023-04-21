@@ -20,7 +20,7 @@ interface ProfileHeaderProps {
 const ProfileInfo = ({ user }: ProfileHeaderProps) => {
   return (
     <Box>
-      <ProfileHeader />
+      {/* <ProfileHeader /> */}
       <StyledUserInfoCard sx={{ height: '360px' }}>
         <StyledUserInfoCardHeader />
         <StyledUserInfoCardContent>

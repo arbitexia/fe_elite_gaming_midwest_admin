@@ -1,5 +1,6 @@
+import React, { useState } from 'react';
 import { Stack } from '@mui/material';
-import { ProfileEdit } from '@/modules/Profile';
+import { ChangePasswordDialog, ProfileEdit } from '@/modules/Profile';
 import { DashboardLayout } from '@/layouts';
 
 import { profileData } from '@/_mock/users';
@@ -9,9 +10,10 @@ import { useAppToast } from '@/providers';
 
 const ProfilePage = () => {
   const appToast = useAppToast();
-  const { me } = useAuth({});
-  const { onUpdateProfile } = useAuth({});
+  const { me, onUpdateProfile } = useAuth({});
   const { onCreateAsset } = useAsset();
+  const [openModal, setOpenModal] = useState(false);
+
   const handleEdit = async (value: UpdateUserParam) => {
     try {
       if (value?.uploadPhoto) {
@@ -35,9 +37,20 @@ const ProfilePage = () => {
     <DashboardLayout title="Profile">
       {profileData && (
         <Stack direction="column" spacing={2.5} paddingTop={4}>
-          <ProfileEdit user={me as UserType.User} onEdit={handleEdit} />
+          <ProfileEdit
+            user={me as UserType.User}
+            onEdit={handleEdit}
+            onChangePassword={() => setOpenModal(true)}
+          />
         </Stack>
       )}
+      <ChangePasswordDialog
+        open={openModal}
+        title={'Change password'}
+        onClose={() => {
+          setOpenModal(false);
+        }}
+      />
     </DashboardLayout>
   );
 };

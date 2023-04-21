@@ -37,6 +37,7 @@ export {
   authorize,
   forgotPassword,
   resetPassword,
+  changePasswordUser,
   getReturnMessage,
   getMe,
   getRole,
@@ -99,6 +100,7 @@ export {
   default as activityReducer,
   activitySelector,
   filterActivities,
+  deleteActivity,
   resetActivityMessage,
 } from './activity.slice';
 
@@ -129,3 +131,13 @@ export {
   deleteTransaction,
   getTransactions,
 } from './transaction.slice';
+
+export {
+  default as emailTemplateReducer,
+  emailTemplateSelector,
+  getEmailTemplates,
+  getEmailTemplateById,
+  createEmailTemplate,
+  deleteEmailTemplate,
+  resetEmailTemplateMessage,
+} from './emailTemplate.slice';
