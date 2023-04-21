@@ -18,7 +18,7 @@ export declare namespace TabletType {
       search?: string;
       sort?: string;
     };
-    cursor: {
+    cursor?: {
       page: number;
       size: number;
     };

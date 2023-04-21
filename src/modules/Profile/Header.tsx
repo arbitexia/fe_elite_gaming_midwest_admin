@@ -2,7 +2,10 @@ import { Box, Typography, Stack } from '@mui/material';
 import { Replay as ReplayIcon } from '@mui/icons-material';
 import { UIActionButton, UIDefaultButton } from '@/components/UI';
 
-const ProfileHeader = () => {
+type ProfileHeaderProps = {
+  onChangePassword: () => void;
+};
+const ProfileHeader = ({ onChangePassword }: ProfileHeaderProps) => {
   return (
     <Box sx={{ mb: '20px' }}>
       <Typography
@@ -27,7 +30,7 @@ const ProfileHeader = () => {
             icon={<ReplayIcon />}
             color="#667180"
             title="Change password"
-            handleClick={() => console.log('ActionButton')}
+            handleClick={onChangePassword}
           />
           <UIDefaultButton sx={{ marginLeft: '8px' }} type="submit">
             Save

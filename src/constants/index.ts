@@ -12,6 +12,8 @@ export {
   UserRole,
   UserStatus,
   TransactionStatus,
+  EmailTemplateStatusEnum,
+  EmailTemplateTypeEnum,
 } from './enum';
 export { productStatus } from './product';
 export { formats, modules } from './quill';

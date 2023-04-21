@@ -5,13 +5,12 @@ import {
   Table,
   TableHead,
   TableBody,
-  Checkbox,
   IconButton,
   Divider,
   TableSortLabel,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
-import { menuTabletActions } from '@/_mock/users';
+import { menuActions } from '@/_mock/users';
 import {
   UIChip,
   UIOptionMenuItemText,
@@ -20,87 +19,65 @@ import {
   UIListTableCell,
   UIListTableRow,
 } from '@/components/UI';
-import { MenuAction } from '@/constants';
-import { getColor } from '@/libs/data-helper';
-import { TabletType } from '@/types';
-import { useTablet } from '@/hooks';
-import ConfirmModal from '@/components/App/Modal/ConfirmModal';
 
-type TabletsTableProps = {
-  tabletsTableData: TabletType.Data[];
-  onAction: (value: TabletType.Data, type: 'edit' | 'change_password') => void;
+import { EmailTemplateType } from '@/types';
+import { EmailTemplateTypeEnum, MenuAction } from '@/constants';
+import { AppConfirmModal, AppAlertModal } from '@/components/App';
+
+type EmailTemplateTableProps = {
+  emailTemplateData: EmailTemplateType.Data[];
+  onAction: (
+    value: EmailTemplateType.Data,
+    type: 'Edit' | 'View' | 'Delete'
+  ) => void;
   onSort: (value: string) => void;
 };
 
 type Order = 'asc' | 'desc';
 
-const TabletsTable = ({
-  tabletsTableData,
+const EmailTemplateTable = ({
+  emailTemplateData,
   onAction,
   onSort,
-}: TabletsTableProps) => {
+}: EmailTemplateTableProps) => {
   const router = useRouter();
-  const { onDeleteTablet } = useTablet();
-  const [selected, setSelected] = useState<readonly string[]>([]);
+
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
 
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof TabletType.Data>('id');
-  const [deleteId, setDeleteId] = useState<number>();
+  const [orderBy, setOrderBy] = useState<keyof EmailTemplateType.Data>('id');
+  const [selectedItem, setSelectedItem] = useState<EmailTemplateType.Data>();
+  const [openAlertModal, setOpenAlertModal] = useState(false);
 
   const handleClickMenuAction = (key: string) => {
     const selectedId = parseInt(
       anchorElOptionsMenu?.getAttribute('data-key') ?? '0'
     );
-    const selectedItem = tabletsTableData.find((t) => t.id === selectedId);
+    const filteredItem = emailTemplateData.find((t) => t.id === selectedId);
     if (key === MenuAction.EDIT) {
-      selectedItem && onAction(selectedItem, 'edit');
+      filteredItem && onAction(filteredItem, 'Edit');
     } else if (key === MenuAction.DELETE) {
-      setDeleteId(selectedId);
+      if (filteredItem?.type === EmailTemplateTypeEnum.DEFAULT) {
+        setOpenAlertModal(true);
+        return;
+      }
+      setSelectedItem(filteredItem);
     } else {
-      selectedItem && onAction(selectedItem, 'change_password');
+      filteredItem && onAction(filteredItem, 'View');
     }
   };
-
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = tabletsTableData.map((n) => n.id.toString());
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: readonly string[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
-  const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
   const createSortHandler =
-    (property: keyof TabletType.Data) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof EmailTemplateType.Data) =>
+    (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
+
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof TabletType.Data
+    property: keyof EmailTemplateType.Data
   ) => {
     const newOrder = orderBy === property && order === 'asc' ? 'desc' : 'asc';
     setOrder(newOrder);
@@ -113,24 +90,12 @@ const TabletsTable = ({
       <TableHead>
         <UIListTableRow>
           <UIListTableCell>
-            <Checkbox
-              indeterminate={
-                selected.length > 0 && selected.length < tabletsTableData.length
-              }
-              checked={
-                tabletsTableData.length > 0 &&
-                selected.length === tabletsTableData.length
-              }
-              onChange={handleSelectAllClick}
-            />
-          </UIListTableCell>
-          <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'id'}
               direction={order}
               onClick={createSortHandler('id')}
             >
-              Id
+              Template Id
             </TableSortLabel>
           </UIListTableCell>
           <UIListTableCell>
@@ -142,6 +107,15 @@ const TabletsTable = ({
               Name
             </TableSortLabel>
           </UIListTableCell>
+          <UIListTableCell>
+            <TableSortLabel
+              active={orderBy === 'subject'}
+              direction={order}
+              onClick={createSortHandler('subject')}
+            >
+              Subject
+            </TableSortLabel>
+          </UIListTableCell>
           <UIListTableCell align="center">
             <TableSortLabel
               active={orderBy === 'status'}
@@ -151,15 +125,17 @@ const TabletsTable = ({
               Status
             </TableSortLabel>
           </UIListTableCell>
+
           <UIListTableCell>
             <TableSortLabel
-              active={orderBy === 'location'}
+              active={orderBy === 'status'}
               direction={order}
-              onClick={createSortHandler('location')}
+              onClick={createSortHandler('status')}
             >
-              Location
+              Type
             </TableSortLabel>
           </UIListTableCell>
+
           <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'createdAt'}
@@ -173,49 +149,28 @@ const TabletsTable = ({
         </UIListTableRow>
       </TableHead>
       <TableBody>
-        {tabletsTableData?.length > 0 ? (
-          tabletsTableData?.map((tabletItem) => {
-            const isItemSelected = isSelected(tabletItem.id.toString());
-
+        {emailTemplateData?.length > 0 ? (
+          emailTemplateData?.map((item) => {
             return (
-              <UIListTableRow
-                key={tabletItem.id}
-                data-key={tabletItem.id}
-                role="checkbox"
-              >
-                <UIListTableCell>
-                  <Checkbox
-                    checked={isItemSelected}
-                    onClick={(event) =>
-                      handleClick(event, tabletItem.id.toString())
-                    }
-                  />
-                </UIListTableCell>
+              <UIListTableRow key={item.id} data-key={item.id} role="checkbox">
                 <UIListTableCell
-                  onClick={() =>
-                    router.push(`${router.asPath}/${tabletItem.id}`)
-                  }
+                  onClick={() => router.push(`${router.asPath}/${item.id}`)}
                   sx={{ cursor: 'pointer' }}
                 >
-                  #{tabletItem.id}
+                  #{item.id}
                 </UIListTableCell>
-                <UIListTableCell>{tabletItem.name}</UIListTableCell>
+                <UIListTableCell>{item.name}</UIListTableCell>
+                <UIListTableCell>{item.subject}</UIListTableCell>
                 <UIListTableCell align="center">
-                  <UIChip
-                    label={tabletItem.status}
-                    color={getColor(tabletItem.status ?? 'ACTIVATED')}
-                  />
+                  <UIChip label={item.status} color={'success'} />
                 </UIListTableCell>
-                <UIListTableCell>{tabletItem?.location?.name}</UIListTableCell>
+                <UIListTableCell>{item?.type}</UIListTableCell>
                 <UIListTableCell>
-                  {format(
-                    new Date(tabletItem.createdAt as string),
-                    'yyyy-MM-dd'
-                  )}
+                  {format(new Date(item.createdAt as string), 'yyyy-MM-dd')}
                 </UIListTableCell>
                 <UIListTableCell>
                   <IconButton
-                    data-key={tabletItem.id}
+                    data-key={item.id}
                     onClick={(event: React.MouseEvent<HTMLElement>) => {
                       setAnchorElOptionsMenu(event.currentTarget);
                     }}
@@ -254,7 +209,7 @@ const TabletsTable = ({
           setAnchorElOptionsMenu(null);
         }}
       >
-        {menuTabletActions.map((item, index) => {
+        {menuActions.map((item, index) => {
           return (
             <div key={index}>
               {index === 2 && <Divider />}
@@ -277,20 +232,29 @@ const TabletsTable = ({
           );
         })}
       </UIOptionMenu>
-      <ConfirmModal
-        open={!!deleteId}
+      <AppConfirmModal
+        open={!!selectedItem}
         onClose={() => {
-          setDeleteId(undefined);
+          setSelectedItem(undefined);
         }}
         title="Delete"
-        content="Are you sure you want to remove this tablet?"
+        content="Are you sure you want to remove this template?"
         onAction={() => {
-          onDeleteTablet(deleteId ?? 0);
-          setDeleteId(undefined);
+          selectedItem && onAction(selectedItem, 'Delete');
+          setSelectedItem(undefined);
         }}
+      />
+
+      <AppAlertModal
+        open={openAlertModal}
+        onClose={() => {
+          setOpenAlertModal(false);
+        }}
+        title="Wanning"
+        content="This template can't be removed because of the default template."
       />
     </Table>
   );
 };
 
-export default TabletsTable;
+export default EmailTemplateTable;

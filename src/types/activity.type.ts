@@ -6,7 +6,7 @@ export type ActivityItemType = {
   user: UserType.User;
   model: ActivityModel;
   victimId: number;
-  metadata: { status: string };
+  attributes: { status: string; description: string; body?: object };
   type: ActivityType;
   createdAt: string;
 };
@@ -15,8 +15,9 @@ export type ExportActivityType = {
   id: number;
   user: string;
   model: string;
-  victimId: number;
-  metadata: string;
+  status: string;
+  description: string;
+  body?: string;
   type: string;
   date: string;
 };

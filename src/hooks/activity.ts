@@ -4,6 +4,7 @@ import { useAppToast } from '@/providers';
 import {
   activitySelector,
   filterActivities,
+  deleteActivity,
   resetActivityMessage,
 } from '@/redux/slices';
 import { ActivityFilterType, ActivityItemType } from '@/types';
@@ -32,5 +33,9 @@ export const useActivity = () => {
     return payload;
   };
 
-  return { pageInfo, activities, onFilterActivities };
+  const onDeleteActivity = async (id: number) => {
+    await dispatch(deleteActivity({ id }));
+  };
+
+  return { pageInfo, activities, onFilterActivities, onDeleteActivity };
 };

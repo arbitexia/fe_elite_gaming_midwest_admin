@@ -24,9 +24,10 @@ import { Moment } from 'moment';
 interface ProfileEditProps {
   user: UserType.User;
   onEdit: (value: UpdateUserParam) => void;
+  onChangePassword: () => void;
 }
 
-const ProfileEdit = ({ user, onEdit }: ProfileEditProps) => {
+const ProfileEdit = ({ user, onEdit, onChangePassword }: ProfileEditProps) => {
   const [uploadPhoto, setUploadPhoto] = useState<File>();
   const [selectedFile, setSelectedFile] = useState<string>();
   const appToast = useAppToast();
@@ -72,7 +73,7 @@ const ProfileEdit = ({ user, onEdit }: ProfileEditProps) => {
 
   return (
     <Box component="form" onSubmit={profileFormik.handleSubmit}>
-      <ProfileHeader />
+      <ProfileHeader onChangePassword={onChangePassword} />
       <StyledUserInfoCard>
         <StyledUserInfoCardHeader />
         <StyledUserInfoCardContent>

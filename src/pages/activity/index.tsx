@@ -5,55 +5,42 @@ import {
   ActivityPagination,
 } from '@/modules/Activity';
 import { DashboardLayout } from '@/layouts';
-import { ActivityFilterType, ExportActivityType } from '@/types';
+import { ActivityItemType, ExportActivityType } from '@/types';
 import { Divider } from '@mui/material';
 import { useActivity } from '@/hooks';
 import { CSVLink } from 'react-csv';
 import { format } from 'date-fns';
 
 const ActivityPage = () => {
-  const { activities, onFilterActivities, pageInfo } = useActivity();
+  const { activities, onFilterActivities, pageInfo, onDeleteActivity } =
+    useActivity();
   const [searchValue, setSearchValue] = useState('');
   const [searchType, setSearchType] = useState('ALL');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [csvData, setCsvData] = useState<any[]>([]);
-
+  const [sort, setSort] = useState('id|desc');
   const csvLinkRef = useRef<
     CSVLink & HTMLAnchorElement & { link: HTMLAnchorElement }
   >(null);
 
   useEffect(() => {
-    const loadActivities = async () => {
-      try {
-        await fetchActivities({
-          filterBy: {
-            search: searchValue,
-            modelType: searchType,
-          },
-          cursor: { page, size: rowsPerPage },
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    fetchActivities();
+  }, [page, rowsPerPage, searchValue, searchType, sort]);
 
-    loadActivities();
-  }, [page, rowsPerPage, searchValue, searchType]);
-
-  const fetchActivities = async (filter: ActivityFilterType) => {
-    await onFilterActivities(filter);
-  };
-
-  const handleSort = async (sort: string) => {
-    await fetchActivities({
-      filterBy: {
-        search: searchValue,
-        modelType: searchType,
-        sort,
-      },
-      cursor: { page, size: rowsPerPage },
-    });
+  const fetchActivities = async () => {
+    try {
+      await onFilterActivities({
+        filterBy: {
+          search: searchValue,
+          modelType: searchType,
+          sort,
+        },
+        cursor: { page, size: rowsPerPage },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const generateTableData = () => {
@@ -61,11 +48,14 @@ const ActivityPage = () => {
       return {
         id: obj.id,
         user: `${obj.user?.firstName ?? ''} ${obj.user?.lastName ?? ''}`,
-        date: format(new Date(obj.createdAt), 'yyyy-MM-dd'),
+        date: format(new Date(obj.createdAt), 'yyyy-MM-dd yy:mm'),
         model: obj.model,
-        victimId: obj.victimId,
         type: obj.type,
-        metadata: JSON.stringify(obj.metadata).replaceAll(',', ' '),
+        status: obj.attributes.status,
+        description: obj.attributes.description,
+        ...(obj.attributes.body && {
+          body: JSON.stringify(obj.attributes?.body ?? '').replaceAll(',', ' '),
+        }),
       };
     });
     return details;
@@ -80,6 +70,14 @@ const ActivityPage = () => {
     });
   };
 
+  const handleDelete = async (value: ActivityItemType) => {
+    try {
+      await onDeleteActivity(value.id);
+      await fetchActivities();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <DashboardLayout title="Activities">
       <ActivityHeader
@@ -96,7 +94,11 @@ const ActivityPage = () => {
         ref={csvLinkRef}
       ></CSVLink>
       <Divider sx={{ mt: '30px' }} />
-      <ActivityTable activityTableData={activities} onSort={handleSort} />
+      <ActivityTable
+        activityTableData={activities}
+        onSort={setSort}
+        onDelete={handleDelete}
+      />
       <ActivityPagination
         page={page}
         rowsPerPage={rowsPerPage}

@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Stack } from '@mui/material';
 import { UserDetailInfoEditCard } from '@/modules/Users';
 import { DashboardLayout } from '@/layouts';
 import { useUser } from '@/hooks';

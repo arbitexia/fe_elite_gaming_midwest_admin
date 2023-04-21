@@ -14,6 +14,7 @@ import {
   ResetPasswordType,
   UserType,
   UpdateUserParam,
+  CommonType,
 } from '@/types';
 
 // Initial state
@@ -93,6 +94,21 @@ export const updateProfile = createAsyncThunk<
   }
 });
 
+export const changePasswordUser = createAsyncThunk<
+  CommonType.Message,
+  UserType.ChangePasswordParam,
+  { dispatch: AppDispatch; state: RootState }
+>(
+  'auth/changePassword',
+  async (params: UserType.ChangePasswordParam, thunkAPI) => {
+    try {
+      return await userApi.changePasswordUser(params);
+    } catch (error) {
+      const err = error as AxiosError;
+      return thunkAPI.rejectWithValue(err.response?.data);
+    }
+  }
+);
 // Actual Slice
 export const authSlice = createSlice({
   name: 'auth',
@@ -222,6 +238,26 @@ export const authSlice = createSlice({
         }
       )
       .addCase(updateProfile.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(changePasswordUser.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        changePasswordUser.fulfilled,
+        (state, { payload }: PayloadAction<CommonType.Message>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.message = payload.message;
+        }
+      )
+      .addCase(changePasswordUser.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;

@@ -42,6 +42,11 @@ export declare namespace UserType {
     createdAt?: string;
     updatedAt?: string;
   };
+  type ChangePasswordParam = {
+    userId?: number;
+    oldPassword: string;
+    password: string;
+  };
 }
 
 export type GetUsersParam = {

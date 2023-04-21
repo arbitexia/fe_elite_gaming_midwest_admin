@@ -45,11 +45,11 @@ export const StyledTableCell = styled(TableCell)({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     height: '80px',
-    color: 'rgba(0, 0, 0, 0.3)',
+    color: 'rgba(0, 0, 0, 0.7)',
     fontWeight: 400,
     '&:nth-of-type(1)': {
       fontWeight: 400,
-      color: 'rgba(0, 0, 0, 0.3)',
+      color: 'rgba(0, 0, 0, 0.7)',
     },
     '&:nth-of-type(4)': {
       fontWeight: 600,

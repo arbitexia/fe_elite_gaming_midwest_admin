@@ -10,3 +10,4 @@ export { useConfig } from './config';
 export { useTablet } from './tablet';
 export { useActivity } from './activity';
 export { useTransaction } from './transaction';
+export { useEmailTemplate } from './emailTemplate';

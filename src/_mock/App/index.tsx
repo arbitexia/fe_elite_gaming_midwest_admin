@@ -124,6 +124,11 @@ export const superSidebarItems: MenuItemObj[] = [
         route: 'config',
         isSelected: false,
       },
+      {
+        text: 'Email Template',
+        route: 'email_templates',
+        isSelected: false,
+      },
     ],
   },
 ];
