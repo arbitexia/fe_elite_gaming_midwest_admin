@@ -1,5 +1,7 @@
 import React from 'react';
 import { styled, Button, SvgIcon, Typography } from '@mui/material';
+import { SxProps } from '@mui/system';
+import { Theme } from '@emotion/react';
 
 export const UIDefaultButton = styled(Button)({
   boxShadow: 'none',
@@ -34,6 +36,7 @@ type UIActionButtonProps = {
   color: string;
   title: string;
   size?: number;
+  sx?: SxProps<Theme>;
 };
 
 export const UIActionButton = ({
@@ -42,9 +45,13 @@ export const UIActionButton = ({
   color,
   title,
   size,
+  sx,
 }: UIActionButtonProps) => {
   return (
-    <Button onClick={handleClick} sx={{ marginLeft: 3, textTransform: 'none' }}>
+    <Button
+      onClick={handleClick}
+      sx={{ marginLeft: 3, textTransform: 'none', ...sx }}
+    >
       <SvgIcon
         sx={{ color: { color }, width: size ?? '17px', height: size ?? '17px' }}
       >

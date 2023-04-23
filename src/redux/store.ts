@@ -30,6 +30,7 @@ import {
   tabletReducer,
   transactionReducer,
   emailTemplateReducer,
+  hashCodeReducer,
 } from './slices';
 
 const combinedReducer = combineReducers({
@@ -47,6 +48,7 @@ const combinedReducer = combineReducers({
   tablet: tabletReducer,
   transaction: transactionReducer,
   emailTemplate: emailTemplateReducer,
+  hashCode: hashCodeReducer,
 });
 
 const createStore = () => {
@@ -69,6 +71,7 @@ const createStore = () => {
       'tablet',
       'transaction',
       'emailTemplate',
+      'hashCode',
     ],
   };
 

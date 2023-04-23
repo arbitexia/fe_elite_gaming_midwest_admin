@@ -54,3 +54,4 @@ export type {
 export type { TabletType } from './tablet.type';
 export type { TransactionType } from './transaction.type';
 export type { EmailTemplateType } from './emailTemplate.type';
+export type { HashCodeType } from './hashCode.type';

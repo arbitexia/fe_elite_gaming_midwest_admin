@@ -4,6 +4,7 @@ import {
   getEmailTemplates,
   createEmailTemplate,
   deleteEmailTemplate,
+  sendTestEmail,
   resetEmailTemplateMessage,
   emailTemplateSelector,
 } from '@/redux/slices';
@@ -42,11 +43,16 @@ export const useEmailTemplate = () => {
     await dispatch(deleteEmailTemplate(id));
   };
 
+  const onSendTestEmail = async (body: EmailTemplateType.SendEmail) => {
+    await dispatch(sendTestEmail(body));
+  };
+
   return {
     emailTemplates,
     pageInfo,
     onGetEmailTemplates,
     onCreateEmailTemplate,
     onDeleteEmailTemplate,
+    onSendTestEmail,
   };
 };

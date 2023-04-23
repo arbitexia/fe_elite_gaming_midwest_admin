@@ -20,9 +20,15 @@ import {
 } from './ui';
 import { convertMBtoBytes } from '@/libs/data-helper';
 import { useAppToast } from '@/providers';
-import { emailTemplateStatus, emailTemplateType } from '@/_mock/emailTemplate';
-import { formats, modules } from '@/constants';
+import {
+  formats,
+  modules,
+  emailTemplateTypeOptions,
+  emailTemplateStatus,
+  emailTemplateCategories,
+} from '@/constants';
 import 'react-quill/dist/quill.snow.css';
+import HashCodeCard from './HashCodeCard';
 
 const ReactQuill = dynamic(
   () => {
@@ -42,12 +48,11 @@ const EditEmailTemplate = ({
   emailTemplate,
   onAction,
 }: EditEmailTemplateProps) => {
-  const [uploadPhoto, setUploadPhoto] = useState<File>();
-  const [selectedFile, setSelectedFile] = useState<string>();
+  const { onCreateAsset } = useAsset();
   const appToast = useAppToast();
 
-  const { onCreateAsset } = useAsset();
-
+  const [uploadPhoto, setUploadPhoto] = useState<File>();
+  const [selectedFile, setSelectedFile] = useState<string>();
   const [emailText, setEmailText] = useState('');
 
   const emailTemplateFormik = useFormik({
@@ -58,6 +63,7 @@ const EditEmailTemplate = ({
       type: '',
       subject: '',
       htmlBody: '',
+      category: '',
     },
     onSubmit: async (values) => {
       onAction({
@@ -188,7 +194,30 @@ const EditEmailTemplate = ({
                       width: '250px',
                     }}
                   >
-                    {emailTemplateType.map((item) => {
+                    {emailTemplateTypeOptions.map((item) => {
+                      return (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.value}
+                        </MenuItem>
+                      );
+                    })}
+                  </UIEditTextField>
+                </UIFlexWrapBox>
+              </Stack>
+
+              <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                  <StyledUserInfoTitle>Category:</StyledUserInfoTitle>
+                  <UIEditTextField
+                    name="category"
+                    value={emailTemplateFormik.values?.category ?? ''}
+                    onChange={emailTemplateFormik.handleChange}
+                    select
+                    sx={{
+                      width: '250px',
+                    }}
+                  >
+                    {emailTemplateCategories.map((item) => {
                       return (
                         <MenuItem key={item.id} value={item.id}>
                           {item.value}
@@ -223,6 +252,9 @@ const EditEmailTemplate = ({
           </Box>
         </StyledUserInfoCardContent>
       </StyledUserInfoCard>
+      <Box sx={{ mt: 3 }}>
+        <HashCodeCard />
+      </Box>
     </Box>
   );
 };

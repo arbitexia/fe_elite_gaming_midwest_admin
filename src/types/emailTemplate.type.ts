@@ -8,6 +8,7 @@ export declare namespace EmailTemplateType {
     htmlBody: string;
     status: string;
     type: string;
+    category: string;
     attachedFiles?: AssetType.Gallery[];
     createdAt?: string;
   };
@@ -22,6 +23,7 @@ export declare namespace EmailTemplateType {
       htmlBody: string;
       status: string;
       type: string;
+      category: string;
     };
   };
 
@@ -33,5 +35,11 @@ export declare namespace EmailTemplateType {
       page: number;
       size: number;
     };
+  };
+
+  type SendEmail = {
+    id?: number;
+    from?: string;
+    to: string;
   };
 }

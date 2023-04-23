@@ -139,5 +139,13 @@ export {
   getEmailTemplateById,
   createEmailTemplate,
   deleteEmailTemplate,
+  sendTestEmail,
   resetEmailTemplateMessage,
 } from './emailTemplate.slice';
+
+export {
+  default as hashCodeReducer,
+  getHashCodes,
+  resetHashCodeMessage,
+  hashCodeSelector,
+} from './hashCode.slice';

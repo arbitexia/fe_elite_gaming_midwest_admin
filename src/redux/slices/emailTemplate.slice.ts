@@ -72,6 +72,23 @@ export const deleteEmailTemplate = createAsyncThunk<
     return thunkAPI.rejectWithValue(err.response?.data);
   }
 });
+
+export const sendTestEmail = createAsyncThunk<
+  CommonType.Message,
+  EmailTemplateType.SendEmail,
+  { dispatch: AppDispatch; state: RootState }
+>(
+  'emailTemplate/sendTestEmail',
+  async (body: EmailTemplateType.SendEmail, thunkAPI) => {
+    try {
+      return await emailTemplateApi.sendTestEmail(body);
+    } catch (error) {
+      const err = error as AxiosError;
+      return thunkAPI.rejectWithValue(err.response?.data);
+    }
+  }
+);
+
 // Actual Slice
 export const emailTemplateSlice = createSlice({
   name: 'EmailTemplate',
@@ -160,6 +177,26 @@ export const emailTemplateSlice = createSlice({
         }
       )
       .addCase(deleteEmailTemplate.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(sendTestEmail.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        sendTestEmail.fulfilled,
+        (state, { payload }: PayloadAction<CommonType.Message>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.message = payload.message;
+        }
+      )
+      .addCase(sendTestEmail.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;
