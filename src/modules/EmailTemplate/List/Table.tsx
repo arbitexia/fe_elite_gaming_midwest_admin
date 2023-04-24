@@ -29,6 +29,7 @@ import { EmailTemplateTypeEnum, MenuAction } from '@/constants';
 import { AppConfirmModal, AppAlertModal } from '@/components/App';
 import TestEmailDialog from '../Dialog/TestEmail';
 import { useEmailTemplate } from '@/hooks';
+import { getColor } from '@/libs/data-helper';
 
 type EmailTemplateTableProps = {
   emailTemplateData: EmailTemplateType.Data[];
@@ -189,7 +190,7 @@ const EmailTemplateTable = ({
                 <UIListTableCell>{item.name}</UIListTableCell>
                 <UIListTableCell>{item.subject}</UIListTableCell>
                 <UIListTableCell align="center">
-                  <UIChip label={item.status} color={'success'} />
+                  <UIChip label={item.status} color={getColor(item.status)} />
                 </UIListTableCell>
                 <UIListTableCell>{item?.category}</UIListTableCell>
                 <UIListTableCell>{item?.type}</UIListTableCell>
@@ -228,7 +229,7 @@ const EmailTemplateTable = ({
               backgroundColor: 'transparent !important',
             }}
           >
-            <UIListTableCell colSpan={6} sx={{ textAlign: 'center' }}>
+            <UIListTableCell colSpan={8} sx={{ textAlign: 'center' }}>
               No Data
             </UIListTableCell>
           </UIListTableRow>

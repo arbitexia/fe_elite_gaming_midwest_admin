@@ -1,22 +1,37 @@
 import config from '@/config';
-import { RequestStatus, RewardStatus, UserStatus } from '@/constants/enum';
+import {
+  EmailTemplateStatusEnum,
+  RequestStatus,
+  RewardStatus,
+  TransactionStatus,
+  UserStatus,
+} from '@/constants/enum';
 
 export const getColor = (value: string) => {
   if (
     value === UserStatus.ACTIVATED ||
     value === RequestStatus.ACCEPTED ||
-    value === RewardStatus.AVAILABLE
-  )
+    value === RewardStatus.AVAILABLE ||
+    value === TransactionStatus.ACCEPTED ||
+    value === EmailTemplateStatusEnum.PUBLISHED
+  ) {
     return 'success';
-  else if (
+  } else if (
     value === UserStatus.DISABLED ||
     value === RequestStatus.DECLINED ||
-    value === RewardStatus.OUT
-  )
+    value === RewardStatus.OUT ||
+    value === TransactionStatus.DECLINED
+  ) {
     return 'error';
-  else if (value === UserStatus.ARCHIVED || value === RequestStatus.WAITING)
+  } else if (
+    value === UserStatus.ARCHIVED ||
+    value === RequestStatus.WAITING ||
+    value === TransactionStatus.WAITING
+  ) {
     return 'info';
-  else return 'default';
+  } else {
+    return 'default';
+  }
 };
 
 export const getHeader = () => {
