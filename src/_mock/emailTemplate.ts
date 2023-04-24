@@ -9,16 +9,6 @@ export const emailTemplateMockData: EmailTemplateType.Data[] = [
     status: 'ARCHIVED',
     type: 'default',
     createdAt: '14/06/2001',
+    category: '',
   },
-];
-
-export const emailTemplateStatus = [
-  { id: 'PENDING', value: 'PENDING' },
-  { id: 'PUBLISHED', value: 'PUBLISHED' },
-  { id: 'ARCHIVED', value: 'ARCHIVED' },
-];
-
-export const emailTemplateType = [
-  { id: 'DEFAULT', value: 'DEFAULT' },
-  { id: 'DYNAMIC', value: 'DYNAMIC' },
 ];

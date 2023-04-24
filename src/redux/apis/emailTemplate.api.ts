@@ -30,3 +30,10 @@ export const deleteEmailTemplate = async (id: number) => {
   });
   return response.data;
 };
+
+export const sendTestEmail = async (body: EmailTemplateType.SendEmail) => {
+  const response = await jwtAxios.post(`/send_test_email`, body, {
+    headers: getAuthorizeHeader(),
+  });
+  return response.data;
+};

@@ -11,4 +11,5 @@ export * as configApi from './config.api';
 export * as tabletApi from './tablet.api';
 export * as transactionApi from './transaction.api';
 export * as emailTemplateApi from './emailTemplate.api';
+export * as hashCodeApi from './hashCode.api';
 export { jwtAxios, setupJwt } from './axios.api';

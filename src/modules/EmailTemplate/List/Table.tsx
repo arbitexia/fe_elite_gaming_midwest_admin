@@ -9,8 +9,11 @@ import {
   Divider,
   TableSortLabel,
 } from '@mui/material';
-import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
-import { menuActions } from '@/_mock/users';
+import {
+  MoreHoriz as MoreHorizIcon,
+  Send as SendIcon,
+} from '@mui/icons-material';
+import { menuActions, menuRewardActions } from '@/_mock/users';
 import {
   UIChip,
   UIOptionMenuItemText,
@@ -18,11 +21,14 @@ import {
   UIOptionMenuItem,
   UIListTableCell,
   UIListTableRow,
+  UIActionButton,
 } from '@/components/UI';
 
 import { EmailTemplateType } from '@/types';
 import { EmailTemplateTypeEnum, MenuAction } from '@/constants';
 import { AppConfirmModal, AppAlertModal } from '@/components/App';
+import TestEmailDialog from '../Dialog/TestEmail';
+import { useEmailTemplate } from '@/hooks';
 
 type EmailTemplateTableProps = {
   emailTemplateData: EmailTemplateType.Data[];
@@ -41,7 +47,7 @@ const EmailTemplateTable = ({
   onSort,
 }: EmailTemplateTableProps) => {
   const router = useRouter();
-
+  const { onSendTestEmail } = useEmailTemplate();
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
@@ -50,6 +56,7 @@ const EmailTemplateTable = ({
   const [orderBy, setOrderBy] = useState<keyof EmailTemplateType.Data>('id');
   const [selectedItem, setSelectedItem] = useState<EmailTemplateType.Data>();
   const [openAlertModal, setOpenAlertModal] = useState(false);
+  const [openTestEmailModal, setOpenTestEmailModal] = useState(false);
 
   const handleClickMenuAction = (key: string) => {
     const selectedId = parseInt(
@@ -85,6 +92,16 @@ const EmailTemplateTable = ({
     onSort(`${property}|${newOrder}`);
   };
 
+  const handleTestEmailSend = async (value: string) => {
+    try {
+      if (selectedItem) {
+        await onSendTestEmail({ id: selectedItem.id, to: value });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Table>
       <TableHead>
@@ -95,7 +112,7 @@ const EmailTemplateTable = ({
               direction={order}
               onClick={createSortHandler('id')}
             >
-              Template Id
+              Id
             </TableSortLabel>
           </UIListTableCell>
           <UIListTableCell>
@@ -128,6 +145,16 @@ const EmailTemplateTable = ({
 
           <UIListTableCell>
             <TableSortLabel
+              active={orderBy === 'category'}
+              direction={order}
+              onClick={createSortHandler('category')}
+            >
+              Category
+            </TableSortLabel>
+          </UIListTableCell>
+
+          <UIListTableCell>
+            <TableSortLabel
               active={orderBy === 'status'}
               direction={order}
               onClick={createSortHandler('status')}
@@ -145,7 +172,7 @@ const EmailTemplateTable = ({
               Created At
             </TableSortLabel>
           </UIListTableCell>
-          <UIListTableCell />
+          <UIListTableCell>Action</UIListTableCell>
         </UIListTableRow>
       </TableHead>
       <TableBody>
@@ -164,9 +191,22 @@ const EmailTemplateTable = ({
                 <UIListTableCell align="center">
                   <UIChip label={item.status} color={'success'} />
                 </UIListTableCell>
+                <UIListTableCell>{item?.category}</UIListTableCell>
                 <UIListTableCell>{item?.type}</UIListTableCell>
                 <UIListTableCell>
                   {format(new Date(item.createdAt as string), 'yyyy-MM-dd')}
+                </UIListTableCell>
+                <UIListTableCell>
+                  <UIActionButton
+                    icon={<SendIcon />}
+                    color="#83A9A8"
+                    title="Test Email"
+                    handleClick={() => {
+                      setOpenTestEmailModal(true);
+                      setSelectedItem(item);
+                    }}
+                    sx={{ marginLeft: '0px !important' }}
+                  />
                 </UIListTableCell>
                 <UIListTableCell>
                   <IconButton
@@ -209,7 +249,7 @@ const EmailTemplateTable = ({
           setAnchorElOptionsMenu(null);
         }}
       >
-        {menuActions.map((item, index) => {
+        {menuRewardActions.map((item, index) => {
           return (
             <div key={index}>
               {index === 2 && <Divider />}
@@ -252,6 +292,15 @@ const EmailTemplateTable = ({
         }}
         title="Wanning"
         content="This template can't be removed because of the default template."
+      />
+      <TestEmailDialog
+        onClose={() => {
+          setOpenTestEmailModal(false);
+          setSelectedItem(undefined);
+        }}
+        open={openTestEmailModal}
+        title="Test Email"
+        onSend={handleTestEmailSend}
       />
     </Table>
   );
