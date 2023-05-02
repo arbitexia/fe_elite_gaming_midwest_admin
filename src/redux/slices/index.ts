@@ -141,6 +141,7 @@ export {
   deleteEmailTemplate,
   sendTestEmail,
   resetEmailTemplateMessage,
+  getSendinBlueEmails,
 } from './emailTemplate.slice';
 
 export {

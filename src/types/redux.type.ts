@@ -147,6 +147,8 @@ export declare namespace ReduxJson {
     error: string | null;
     emailTemplates: EmailTemplateType.Data[];
     pageInfo: CommonType.PageInfo | null;
+    sendinEmails: EmailTemplateType.SendinBlueEmail[] | null;
+    emailTemplate: EmailTemplateType.Data | null;
   };
 
   export type HashCodeState = {

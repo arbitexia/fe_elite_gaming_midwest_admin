@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
 import {
@@ -8,9 +8,8 @@ import {
   UIDefaultButton,
   UIInfoTitle,
 } from '@/components/UI';
-import { useAsset } from '@/hooks';
+
 import { EmailTemplateType } from '@/types';
-import dynamic from 'next/dynamic';
 import {
   StyledUserInfoTitle,
   StyledUserInfoCard,
@@ -18,27 +17,13 @@ import {
   StyledUserInfoCardContent,
   StyledUserInfoCardStatus,
 } from './ui';
-import { convertMBtoBytes } from '@/libs/data-helper';
-import { useAppToast } from '@/providers';
-import {
-  formats,
-  modules,
-  emailTemplateTypeOptions,
-  emailTemplateStatus,
-  emailTemplateCategories,
-} from '@/constants';
-import 'react-quill/dist/quill.snow.css';
-import HashCodeCard from './HashCodeCard';
 
-const ReactQuill = dynamic(
-  () => {
-    return import('react-quill');
-  },
-  { loading: () => null, ssr: false }
-);
+import { useAppToast } from '@/providers';
+import { emailTemplateStatus, emailTemplateCategories } from '@/constants';
 
 interface EditEmailTemplateProps {
   title: string;
+  sendinBlueEmailsOptions?: { id: number; value: string }[];
   emailTemplate?: EmailTemplateType.Data;
   onAction: (value: EmailTemplateType.Body) => void;
 }
@@ -46,23 +31,17 @@ interface EditEmailTemplateProps {
 const EditEmailTemplate = ({
   title,
   emailTemplate,
+  sendinBlueEmailsOptions,
   onAction,
 }: EditEmailTemplateProps) => {
-  const { onCreateAsset } = useAsset();
   const appToast = useAppToast();
-
-  const [uploadPhoto, setUploadPhoto] = useState<File>();
-  const [selectedFile, setSelectedFile] = useState<string>();
-  const [emailText, setEmailText] = useState('');
 
   const emailTemplateFormik = useFormik({
     initialValues: emailTemplate ?? {
       id: 0,
       name: '',
+      templateId: 0,
       status: '',
-      type: '',
-      subject: '',
-      htmlBody: '',
       category: '',
     },
     onSubmit: async (values) => {
@@ -72,28 +51,6 @@ const EditEmailTemplate = ({
     },
   });
 
-  useEffect(() => {
-    if (emailTemplateFormik.values.htmlBody) {
-      setEmailText(emailTemplateFormik.values.htmlBody);
-    }
-  }, [emailTemplateFormik.values.htmlBody]);
-
-  // const onAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   e.preventDefault();
-  //   const reader = new FileReader();
-  //   const file = e.target.files ? e.target.files[0] : null;
-  //   if (!file) return;
-  //   // Restrict user to upload file less than 3.1MB
-  //   if (file.size > convertMBtoBytes(3.1)) {
-  //     appToast('error', 'File size is too large');
-  //     return;
-  //   }
-  //   reader.onloadend = async () => {
-  //     setUploadPhoto(file);
-  //     setSelectedFile(reader.result as string);
-  //   };
-  //   reader.readAsDataURL(file);
-  // };
   return (
     <Box component="form" onSubmit={emailTemplateFormik.handleSubmit}>
       <UIFlexSpaceBox>
@@ -148,15 +105,24 @@ const EditEmailTemplate = ({
 
               <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Subject:</StyledUserInfoTitle>
+                  <StyledUserInfoTitle>Template ID:</StyledUserInfoTitle>
                   <UIEditTextField
-                    name="subject"
-                    value={emailTemplateFormik.values?.subject ?? ''}
+                    name="templateId"
                     onChange={emailTemplateFormik.handleChange}
+                    value={emailTemplateFormik.values?.templateId ?? ''}
+                    select
                     sx={{
                       width: '250px',
                     }}
-                  />
+                  >
+                    {sendinBlueEmailsOptions?.map((item) => {
+                      return (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.value}
+                        </MenuItem>
+                      );
+                    })}
+                  </UIEditTextField>
                 </UIFlexWrapBox>
               </Stack>
 
@@ -173,28 +139,6 @@ const EditEmailTemplate = ({
                     }}
                   >
                     {emailTemplateStatus.map((item) => {
-                      return (
-                        <MenuItem key={item.id} value={item.id}>
-                          {item.value}
-                        </MenuItem>
-                      );
-                    })}
-                  </UIEditTextField>
-                </UIFlexWrapBox>
-              </Stack>
-              <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Type:</StyledUserInfoTitle>
-                  <UIEditTextField
-                    name="type"
-                    value={emailTemplateFormik.values?.type ?? ''}
-                    onChange={emailTemplateFormik.handleChange}
-                    select
-                    sx={{
-                      width: '250px',
-                    }}
-                  >
-                    {emailTemplateTypeOptions.map((item) => {
                       return (
                         <MenuItem key={item.id} value={item.id}>
                           {item.value}
@@ -228,33 +172,9 @@ const EditEmailTemplate = ({
                 </UIFlexWrapBox>
               </Stack>
             </UIFlexWrapBox>
-
-            <Box
-              sx={{
-                width: '100%',
-                height: '350px',
-                paddingTop: '20px',
-                '.quill': { height: '250px', marginTop: '20px' },
-              }}
-            >
-              <UIInfoTitle sx={{ width: 'auto' }}>Email content:</UIInfoTitle>
-              <ReactQuill
-                theme="snow"
-                value={emailText}
-                onChange={(data) => {
-                  setEmailText(data);
-                  emailTemplateFormik.setFieldValue('htmlBody', data);
-                }}
-                modules={modules}
-                formats={formats}
-              />
-            </Box>
           </Box>
         </StyledUserInfoCardContent>
       </StyledUserInfoCard>
-      <Box sx={{ mt: 3 }}>
-        <HashCodeCard />
-      </Box>
     </Box>
   );
 };
