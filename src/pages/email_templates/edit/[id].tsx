@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { DashboardLayout } from '@/layouts';
 import { useEmailTemplate } from '@/hooks';
@@ -9,7 +9,12 @@ import { EditEmailTemplate } from '@/modules/EmailTemplate';
 const EditEmailTemplatePage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { emailTemplates, onCreateEmailTemplate } = useEmailTemplate();
+  const {
+    emailTemplates,
+    onCreateEmailTemplate,
+    onGetSendinBlueEmails,
+    sendinEmails,
+  } = useEmailTemplate();
 
   const [selectedEmailTemplate, setSelectedEmailTemplate] =
     useState<EmailTemplateType.Data>();
@@ -33,12 +38,30 @@ const EditEmailTemplatePage = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    const fetchSendinBlueEmails = async () => {
+      try {
+        await onGetSendinBlueEmails();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (!sendinEmails) {
+      fetchSendinBlueEmails();
+    }
+  }, [sendinEmails]);
+
   return (
     <DashboardLayout title="EmailTemplate">
       {selectedEmailTemplate && (
         <EditEmailTemplate
           title="Edit Email Template"
           emailTemplate={selectedEmailTemplate}
+          sendinBlueEmailsOptions={
+            sendinEmails?.map((obj) => {
+              return { id: obj.id, value: obj.name };
+            }) ?? []
+          }
           onAction={handleClickAction}
         />
       )}

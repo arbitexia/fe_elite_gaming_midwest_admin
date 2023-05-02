@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import { Box, Stack } from '@mui/material';
-import { useTablet } from '@/hooks';
 import {
   UIFlexWrapBox,
   UIFlexCenterBox,
@@ -11,26 +10,21 @@ import {
 } from '@/components/UI';
 import { AppModal } from '@/components/App';
 import { EmailTemplateType } from '@/types';
-import { useAppToast } from '@/providers';
 
 type TestEmailDialogProps = {
-  selectedTemplate?: EmailTemplateType.Data;
   title: string;
   open: boolean;
   onClose: () => void;
   onSend: (value: string) => void;
 };
 const TestEmailDialog = ({
-  selectedTemplate,
   title,
   open,
   onClose,
   onSend,
 }: TestEmailDialogProps) => {
-  const appToast = useAppToast();
-
   const initValues: EmailTemplateType.SendEmail = {
-    from: 'sean.wei@gate4dev.net',
+    from: 'Elitegame <rpat.upwork@gmail.com>',
     to: '',
   };
 

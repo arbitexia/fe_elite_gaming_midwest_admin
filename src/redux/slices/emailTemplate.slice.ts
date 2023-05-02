@@ -13,6 +13,8 @@ const initialState: ReduxJson.EmailTemplateState = {
   error: null,
   emailTemplates: [],
   pageInfo: null,
+  sendinEmails: [],
+  emailTemplate: null,
 };
 
 export const getEmailTemplates = createAsyncThunk<
@@ -33,16 +35,19 @@ export const getEmailTemplates = createAsyncThunk<
 
 export const getEmailTemplateById = createAsyncThunk<
   EmailTemplateType.Data,
-  number,
+  EmailTemplateType.Param,
   { dispatch: AppDispatch; state: RootState }
->('emailTemplate/getEmailTemplateById', async (params: number, thunkAPI) => {
-  try {
-    return await emailTemplateApi.getEmailTemplateById(params);
-  } catch (error) {
-    const err = error as AxiosError;
-    return thunkAPI.rejectWithValue(err.response?.data);
+>(
+  'emailTemplate/getEmailTemplateById',
+  async (params: EmailTemplateType.Param, thunkAPI) => {
+    try {
+      return await emailTemplateApi.getEmailTemplateById(params);
+    } catch (error) {
+      const err = error as AxiosError;
+      return thunkAPI.rejectWithValue(err.response?.data);
+    }
   }
-});
+);
 
 export const createEmailTemplate = createAsyncThunk<
   EmailTemplateType.Data,
@@ -88,6 +93,19 @@ export const sendTestEmail = createAsyncThunk<
     }
   }
 );
+
+export const getSendinBlueEmails = createAsyncThunk<
+  EmailTemplateType.SendinBlueEmail[],
+  string,
+  { dispatch: AppDispatch; state: RootState }
+>('sendinBlue/getEmailTemplates', async (_, thunkAPI) => {
+  try {
+    return await emailTemplateApi.getSendinBlueEmails();
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
 
 // Actual Slice
 export const emailTemplateSlice = createSlice({
@@ -136,10 +154,14 @@ export const emailTemplateSlice = createSlice({
         state.error = null;
         state.message = null;
       })
-      .addCase(getEmailTemplateById.fulfilled, (state) => {
-        state.loading = false;
-        state.status = ResponseStatus.SUCCESS;
-      })
+      .addCase(
+        getEmailTemplateById.fulfilled,
+        (state, { payload }: PayloadAction<EmailTemplateType.Data>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.emailTemplate = payload;
+        }
+      )
       .addCase(getEmailTemplateById.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
@@ -197,6 +219,29 @@ export const emailTemplateSlice = createSlice({
         }
       )
       .addCase(sendTestEmail.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(getSendinBlueEmails.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        getSendinBlueEmails.fulfilled,
+        (
+          state,
+          { payload }: PayloadAction<EmailTemplateType.SendinBlueEmail[]>
+        ) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.sendinEmails = payload;
+        }
+      )
+      .addCase(getSendinBlueEmails.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;

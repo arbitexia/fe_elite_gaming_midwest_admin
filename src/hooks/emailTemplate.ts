@@ -5,6 +5,8 @@ import {
   createEmailTemplate,
   deleteEmailTemplate,
   sendTestEmail,
+  getSendinBlueEmails,
+  getEmailTemplateById,
   resetEmailTemplateMessage,
   emailTemplateSelector,
 } from '@/redux/slices';
@@ -14,9 +16,15 @@ import { PayloadAction } from '@reduxjs/toolkit';
 
 export const useEmailTemplate = () => {
   const appToast = useAppToast();
-  const { emailTemplates, pageInfo, loading, message, error } = useAppSelector(
-    emailTemplateSelector
-  );
+  const {
+    emailTemplates,
+    pageInfo,
+    sendinEmails,
+    emailTemplate,
+    loading,
+    message,
+    error,
+  } = useAppSelector(emailTemplateSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -47,12 +55,24 @@ export const useEmailTemplate = () => {
     await dispatch(sendTestEmail(body));
   };
 
+  const onGetSendinBlueEmails = async () => {
+    await dispatch(getSendinBlueEmails(''));
+  };
+
+  const onGetEmailTemplateById = async (param: EmailTemplateType.Param) => {
+    await dispatch(getEmailTemplateById(param));
+  };
+
   return {
     emailTemplates,
+    emailTemplate,
     pageInfo,
+    sendinEmails,
     onGetEmailTemplates,
     onCreateEmailTemplate,
     onDeleteEmailTemplate,
+    onGetEmailTemplateById,
     onSendTestEmail,
+    onGetSendinBlueEmails,
   };
 };

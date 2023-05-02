@@ -1,15 +1,12 @@
-import { AssetType } from './asset.type';
-
 export declare namespace EmailTemplateType {
   type Data = {
     id: number;
     name: string;
-    subject: string;
-    htmlBody: string;
+    templateId: number;
+    subject?: string;
+    htmlBody?: string;
     status: string;
-    type: string;
     category: string;
-    attachedFiles?: AssetType.Gallery[];
     createdAt?: string;
   };
 
@@ -18,11 +15,9 @@ export declare namespace EmailTemplateType {
   type Body = {
     input: {
       id?: number;
+      templateId: number;
       name: string;
-      subject: string;
-      htmlBody: string;
       status: string;
-      type: string;
       category: string;
     };
   };
@@ -41,5 +36,12 @@ export declare namespace EmailTemplateType {
     id?: number;
     from?: string;
     to: string;
+  };
+
+  type SendinBlueEmail = {
+    id: number;
+    name: string;
+    subject: string;
+    htmlContent: string;
   };
 }

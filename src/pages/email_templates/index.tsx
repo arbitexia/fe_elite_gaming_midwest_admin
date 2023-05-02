@@ -45,6 +45,7 @@ const EmailTemplate = () => {
     } else if (type === 'Edit') {
       router.push(`/email_templates/edit/${value.id}`);
     } else {
+      router.push(`/email_templates/${value.id}`);
     }
   };
 

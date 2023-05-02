@@ -10,12 +10,12 @@ export const emailTemplateTypeOptions = [
 ];
 
 export const emailTemplateCategories = [
-  { id: 'CONFIRM_USER_REGISTER', value: 'CONFIRM_USER_REGISTER' },
-  { id: 'VERIFY_FORGOT_PASSWORD', value: 'VERIFY_FORGOT_PASSWORD' },
-  { id: 'CONFIRM_RESET_PASSWORD', value: 'CONFIRM_RESET_PASSWORD' },
-  { id: 'FORCE_RESET_PASSWORD', value: 'FORCE_RESET_PASSWORD' },
-  { id: 'ADD_POINT', value: 'ADD_POINT' },
-  { id: 'ACCEPT_TRANSACTION', value: 'ACCEPT_TRANSACTION' },
-  { id: 'DECLINE_TRANSACTION', value: 'DECLINE_TRANSACTION' },
-  { id: 'REQUEST_TRANSACTION', value: 'REQUEST_TRANSACTION' },
+  { id: 'CONFIRM_USER_REGISTER', value: 'Confirm user register' },
+  { id: 'VERIFY_FORGOT_PASSWORD', value: 'Verify forgot password' },
+  { id: 'CONFIRM_RESET_PASSWORD', value: 'Confirm reset password' },
+  { id: 'FORCE_RESET_PASSWORD', value: 'Force reset password' },
+  { id: 'ADD_POINT', value: 'Add point' },
+  { id: 'ACCEPT_TRANSACTION', value: 'Accept transaction' },
+  { id: 'DECLINE_TRANSACTION', value: 'Decline transaction' },
+  { id: 'REQUEST_TRANSACTION', value: 'Request transaction' },
 ];
