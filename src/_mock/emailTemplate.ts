@@ -8,7 +8,6 @@ export const emailTemplateMockData: EmailTemplateType.Data[] = [
     subject: 'Welcome',
     htmlBody: '',
     status: 'ARCHIVED',
-    // type: 'default',
     createdAt: '14/06/2001',
     category: '',
   },

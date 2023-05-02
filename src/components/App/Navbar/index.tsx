@@ -291,7 +291,6 @@ export default function AppNavbar(props: Props) {
                   fontSize: 14,
                   fontWeight: 500,
                 }}
-                // onClick={() => navigate('/notifications')}
               >
                 View All
               </Typography>

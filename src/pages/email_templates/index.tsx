@@ -21,15 +21,17 @@ const EmailTemplate = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchValue, setSearchValue] = useState('');
+  const [sort, setSort] = useState<string>();
 
   useEffect(() => {
     fetchEmailTemplates();
-  }, [page, rowsPerPage, searchValue]);
+  }, [page, rowsPerPage, searchValue, sort]);
 
   const fetchEmailTemplates = async () => {
     await onGetEmailTemplates({
       filterBy: {
         search: searchValue,
+        sort: sort,
       },
       cursor: { page: page, size: rowsPerPage },
     });
@@ -59,7 +61,11 @@ const EmailTemplate = () => {
       <EmailTemplateTable
         emailTemplateData={emailTemplates}
         onAction={handleClickAction}
-        onSort={() => {}}
+        onSort={(value) => {
+          if (value) {
+            setSort(value);
+          }
+        }}
       />
       <EmailTemplatePagination
         page={page}

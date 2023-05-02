@@ -31,9 +31,5 @@ export declare namespace Location {
     filterBy: {
       search: string;
     };
-    // cursor: {
-    //   page: number;
-    //   size: number;
-    // };
   };
 }

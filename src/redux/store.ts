@@ -22,7 +22,6 @@ import {
   userReducer,
   locationReducer,
   pointReducer,
-  awardReducer,
   productReducer,
   rewardReducer,
   activityReducer,
@@ -30,7 +29,6 @@ import {
   tabletReducer,
   transactionReducer,
   emailTemplateReducer,
-  hashCodeReducer,
 } from './slices';
 
 const combinedReducer = combineReducers({
@@ -40,7 +38,6 @@ const combinedReducer = combineReducers({
   location: locationReducer,
   asset: assetReducer,
   point: pointReducer,
-  award: awardReducer,
   product: productReducer,
   reward: rewardReducer,
   activity: activityReducer,
@@ -48,7 +45,6 @@ const combinedReducer = combineReducers({
   tablet: tabletReducer,
   transaction: transactionReducer,
   emailTemplate: emailTemplateReducer,
-  hashCode: hashCodeReducer,
 });
 
 const createStore = () => {
@@ -63,7 +59,6 @@ const createStore = () => {
       'asset',
       'location',
       'point',
-      'award',
       'product',
       'reward',
       'activity',
@@ -71,7 +66,6 @@ const createStore = () => {
       'tablet',
       'transaction',
       'emailTemplate',
-      'hashCode',
     ],
   };
 

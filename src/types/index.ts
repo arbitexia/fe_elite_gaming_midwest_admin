@@ -24,7 +24,6 @@ export type {
   RefreshTokenPrams,
   RefreshTokenType,
 } from './auth.type';
-export type { AwardType, CreateAwardParam, GetAwardsParam } from './award.type';
 export type { CommonType } from './common.type';
 export type { Location } from './location.type';
 export type {
@@ -54,4 +53,3 @@ export type {
 export type { TabletType } from './tablet.type';
 export type { TransactionType } from './transaction.type';
 export type { EmailTemplateType } from './emailTemplate.type';
-export type { HashCodeType } from './hashCode.type';

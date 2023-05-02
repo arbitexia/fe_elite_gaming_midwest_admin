@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { format } from 'date-fns';
-import {
-  TableHead,
-  TableBody,
-  TableRow,
-  Typography,
-  // IconButton,
-} from '@mui/material';
-// import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
+import { TableHead, TableBody, TableRow, Typography } from '@mui/material';
+
 import {
   UICardBox,
   UIChip,
@@ -97,18 +91,6 @@ const LocationDetailRewardTable = () => {
                         )
                       : ''}
                   </UITableCell>
-                  {/* <UITableCell>
-                    <IconButton
-                      data-key={item.id}
-                      // onClick={(event: React.MouseEvent<HTMLElement>) => {
-                      //   setAnchorElOptionsMenu(event.currentTarget);
-                      // }}
-                    >
-                      <MoreHorizIcon
-                        sx={{ color: 'rgba(137, 200, 198, 0.5)' }}
-                      />
-                    </IconButton>
-                  </UITableCell> */}
                 </UITableRow>
               );
             })
