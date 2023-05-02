@@ -9,7 +9,6 @@ import {
   RewardCard,
 } from '@/modules/Rewards';
 import { Reward } from '@/types';
-import RewardDetailTable from '@/modules/Rewards/List/RewardDetailTable';
 import { useAppToast } from '@/providers';
 
 const Rewards = () => {

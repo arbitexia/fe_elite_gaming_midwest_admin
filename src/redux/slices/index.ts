@@ -6,17 +6,6 @@ export {
 } from './app.slice';
 
 export {
-  default as awardReducer,
-  awardSelector,
-  resetAwardMessage,
-  createAward,
-  acceptAward,
-  declineAward,
-  getAward,
-  getAwards,
-} from './award.slice';
-
-export {
   default as assetReducer,
   assetSelector,
   clearAssetMessage,
@@ -143,10 +132,3 @@ export {
   resetEmailTemplateMessage,
   getSendinBlueEmails,
 } from './emailTemplate.slice';
-
-export {
-  default as hashCodeReducer,
-  getHashCodes,
-  resetHashCodeMessage,
-  hashCodeSelector,
-} from './hashCode.slice';

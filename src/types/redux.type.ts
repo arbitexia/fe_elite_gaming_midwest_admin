@@ -5,7 +5,6 @@ import { CommonType } from './common.type';
 import { UserType } from './users.type';
 import { Location } from './location.type';
 import { PointType } from './point.type';
-import { AwardType } from './award.type';
 import { Product } from './product.type';
 import { Reward } from './reward.type';
 import { ActivityItemType } from './activity.type';
@@ -13,7 +12,6 @@ import { ConfigType } from './config.type';
 import { TabletType } from './tablet.type';
 import { TransactionType } from './transaction.type';
 import { EmailTemplateType } from './emailTemplate.type';
-import { HashCodeType } from './hashCode.type';
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
     loading: boolean;
@@ -26,15 +24,6 @@ export declare namespace ReduxJson {
       mode: PaletteMode;
       loading: boolean;
     };
-  };
-
-  export type AwardState = {
-    loading: boolean;
-    status: ResponseStatus | null;
-    message: string | null;
-    error: string | null;
-    awards: AwardType[];
-    pageInfo: CommonType.PageInfo | null;
   };
 
   export type AssetState = {
@@ -149,13 +138,5 @@ export declare namespace ReduxJson {
     pageInfo: CommonType.PageInfo | null;
     sendinEmails: EmailTemplateType.SendinBlueEmail[] | null;
     emailTemplate: EmailTemplateType.Data | null;
-  };
-
-  export type HashCodeState = {
-    loading: boolean;
-    status: ResponseStatus | null;
-    message: string | null;
-    error: string | null;
-    hashCodes: HashCodeType.Data[];
   };
 }

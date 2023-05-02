@@ -25,6 +25,7 @@ export declare namespace EmailTemplateType {
   type Filter = {
     filterBy: {
       search: string;
+      sort?: string;
     };
     cursor: {
       page: number;

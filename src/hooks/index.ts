@@ -11,4 +11,3 @@ export { useTablet } from './tablet';
 export { useActivity } from './activity';
 export { useTransaction } from './transaction';
 export { useEmailTemplate } from './emailTemplate';
-export { useHashCode } from './hashCode';

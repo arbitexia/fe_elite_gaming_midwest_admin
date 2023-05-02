@@ -1,5 +1,4 @@
 export * as authApi from './auth.api';
-export * as awardApi from './award.api';
 export * as assetApi from './asset.api';
 export * as userApi from './user.api';
 export * as locationApi from './location.api';
@@ -11,5 +10,4 @@ export * as configApi from './config.api';
 export * as tabletApi from './tablet.api';
 export * as transactionApi from './transaction.api';
 export * as emailTemplateApi from './emailTemplate.api';
-export * as hashCodeApi from './hashCode.api';
 export { jwtAxios, setupJwt } from './axios.api';

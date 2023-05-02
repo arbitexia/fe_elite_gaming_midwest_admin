@@ -3,7 +3,6 @@ export {
   ActivityModel,
   Assets,
   AuthCallbackStatus,
-  AwardStatus,
   MenuAction,
   ProductStatus,
   RequestStatus,
