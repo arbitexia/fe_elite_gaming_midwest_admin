@@ -28,17 +28,6 @@ const EditEmailTemplatePage = () => {
     }
   };
   useEffect(() => {
-    if (id) {
-      const filteredItem = emailTemplates.find((obj) => obj.id === Number(id));
-      if (!filteredItem) {
-        router.push('/email_templates');
-        return;
-      }
-      setSelectedEmailTemplate(filteredItem);
-    }
-  }, [id]);
-
-  useEffect(() => {
     const fetchSendinBlueEmails = async () => {
       try {
         await onGetSendinBlueEmails();
@@ -46,10 +35,18 @@ const EditEmailTemplatePage = () => {
         console.log(error);
       }
     };
-    if (!sendinEmails) {
-      fetchSendinBlueEmails();
+    if (id) {
+      const filteredItem = emailTemplates.find((obj) => obj.id === Number(id));
+      if (!filteredItem) {
+        router.push('/email_templates');
+        return;
+      }
+      setSelectedEmailTemplate(filteredItem);
+      if (sendinEmails?.length === 0) {
+        fetchSendinBlueEmails();
+      }
     }
-  }, [sendinEmails]);
+  }, [id]);
 
   return (
     <DashboardLayout title="EmailTemplate">

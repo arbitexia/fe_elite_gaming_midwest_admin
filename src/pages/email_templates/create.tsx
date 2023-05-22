@@ -18,7 +18,7 @@ const CreateEmailTemplate = () => {
         console.log(error);
       }
     };
-    if (!sendinEmails) {
+    if (!sendinEmails || sendinEmails.length === 0) {
       fetchSendinBlueEmails();
     }
   }, [sendinEmails]);
