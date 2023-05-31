@@ -10,9 +10,10 @@ import {
   Divider,
   TableSortLabel,
   Typography,
+  Box,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
-import { menuActions } from '@/_mock/users';
+import { menuCustomerActions } from '@/constants/user';
 import {
   UIChip,
   UIOptionMenuItemText,
@@ -24,40 +25,53 @@ import {
 import { MenuAction } from '@/constants';
 import { formatPhoneNumber, getColor } from '@/libs/data-helper';
 import { UserType } from '@/types';
-import { useUser } from '@/hooks';
 
 type UsersTableProps = {
   usersTableData: UserType.User[];
+  onSelectedUserIds?: (ids: string[]) => void;
+  onSelectedCustomer?: (cid: number) => void;
+  onDeleteCustomer?: (cid: number) => void;
 };
 
-const UsersTable = ({ usersTableData }: UsersTableProps) => {
+const UsersTable = ({
+  usersTableData,
+  onSelectedUserIds,
+  onSelectedCustomer,
+  onDeleteCustomer,
+}: UsersTableProps) => {
   const router = useRouter();
-  const { onDeleteUser } = useUser();
   const [selected, setSelected] = useState<readonly string[]>([]);
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
-
   const handleNavBtnClick = (key: string) => {
     if (key === MenuAction.DELETE) {
-      //TODO Delete Action
-      onDeleteUser(
-        parseInt(anchorElOptionsMenu?.getAttribute('data-key') ?? '0')
-      );
-    } else
+      onDeleteCustomer &&
+        onDeleteCustomer(
+          parseInt(anchorElOptionsMenu?.getAttribute('data-key') ?? '0')
+        );
+    } else if (key === MenuAction.SEND_EMAIL) {
+      onSelectedCustomer &&
+        onSelectedCustomer(
+          parseInt(anchorElOptionsMenu?.getAttribute('data-key') ?? '0')
+        );
+    } else {
       router.push(
         `${router.asPath}${
           key === MenuAction.EDIT ? '/edit' : ''
         }/${anchorElOptionsMenu?.getAttribute('data-key')}`
       );
+    }
   };
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       const newSelected = usersTableData.map((n) => n.id.toString());
+      onSelectedUserIds && onSelectedUserIds(newSelected);
       setSelected(newSelected);
       return;
     }
+    onSelectedUserIds && onSelectedUserIds([]);
     setSelected([]);
   };
 
@@ -77,7 +91,7 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
         selected.slice(selectedIndex + 1)
       );
     }
-
+    onSelectedUserIds && onSelectedUserIds(newSelected as string[]);
     setSelected(newSelected);
   };
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
@@ -176,6 +190,7 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
               onChange={handleSelectAllClick}
             />
           </UIListTableCell>
+          <UIListTableCell>Avatar</UIListTableCell>
           <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'id'}
@@ -265,6 +280,19 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
                     }
                   />
                 </UIListTableCell>
+                <UIListTableCell>
+                  <Box
+                    component="img"
+                    src={
+                      userItem?.avatar
+                        ? userItem.avatar.url
+                        : '/images/noImage.jpg'
+                    }
+                    width={60}
+                    height={60}
+                    sx={{ borderRadius: '50%', objectFit: 'cover' }}
+                  />
+                </UIListTableCell>
                 <UIListTableCell
                   onClick={() => router.push(`${router.asPath}/${userItem.id}`)}
                   sx={{ cursor: 'pointer' }}
@@ -322,10 +350,10 @@ const UsersTable = ({ usersTableData }: UsersTableProps) => {
           setAnchorElOptionsMenu(null);
         }}
       >
-        {menuActions.map((item, index) => {
+        {menuCustomerActions.map((item, index) => {
           return (
             <div key={index}>
-              {index === 2 && <Divider />}
+              {index === 3 && <Divider />}
               <UIOptionMenuItem
                 disableRipple
                 disableTouchRipple

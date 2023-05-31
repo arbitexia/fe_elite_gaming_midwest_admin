@@ -36,7 +36,7 @@ import {
 } from '@mui/icons-material';
 import { formatPhoneNumber } from '@/libs/data-helper';
 import ConfirmModal from '@/components/App/Modal/ConfirmModal';
-import { menuActivityActions } from '@/_mock/users';
+import { menuActivityActions } from '@/constants/user';
 import { ActivityModel } from '@/constants';
 import { useTablet } from '@/hooks';
 
@@ -204,12 +204,14 @@ const ActivityTable = ({
               {activity.attributes.status}
             </UIInfoValue>
           </UIFlexWrapBox>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <DescriptionIcon sx={{ fontSize: '16px' }} />
-            <UIInfoValue sx={{ width: 'auto' }}>
-              {activity.attributes.description}
-            </UIInfoValue>
-          </UIFlexWrapBox>
+          {!activity.attributes.description.includes('jwt expired') && (
+            <UIFlexWrapBox sx={{ alignItems: 'flex-start' }}>
+              <DescriptionIcon sx={{ fontSize: '16px' }} />
+              <UIInfoValue sx={{ width: 'auto' }}>
+                {activity.attributes.description}
+              </UIInfoValue>
+            </UIFlexWrapBox>
+          )}
         </Box>
       );
     } else {

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { Typography, InputAdornment, Divider } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
-import { userStatus } from '@/_mock/users';
+import { userStatus } from '@/constants/user';
 import {
   UIFlexSpaceBox,
   UIFlexWrapBox,
@@ -9,7 +9,10 @@ import {
   UIFlexCenterBox,
   UIDefaultButton,
   UISelectMenuItem,
+  UIActionButton,
 } from '@/components/UI';
+import { Send as SendIcon } from '@mui/icons-material';
+import { useLocation } from '@/hooks';
 
 interface UsersListHeaderProps {
   onSearch: () => void;
@@ -17,6 +20,9 @@ interface UsersListHeaderProps {
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
   searchStatus: string;
   setSearchStatus: React.Dispatch<React.SetStateAction<string>>;
+  searchLocation: string;
+  setSearchLocation: React.Dispatch<React.SetStateAction<string>>;
+  onOpenSendEmail: () => void;
 }
 
 const UsersListHeader = ({
@@ -25,15 +31,15 @@ const UsersListHeader = ({
   setSearchValue,
   searchStatus,
   setSearchStatus,
+  searchLocation,
+  setSearchLocation,
+  onOpenSendEmail,
 }: UsersListHeaderProps) => {
+  const { locations } = useLocation();
   const router = useRouter();
   const { slug } = router.query;
   let title = slug as string;
   if (title === 'admins') title = 'Administrators';
-
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.keyCode == 13) onSearch();
-  };
 
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);
@@ -54,6 +60,37 @@ const UsersListHeader = ({
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
         <UIFlexCenterBox>
           <Typography sx={{ fontWeight: 500, fontSize: 14, color: '#374E4E' }}>
+            Locations
+          </Typography>
+          <UIDefaultTextField
+            size="small"
+            select
+            value={searchLocation}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setSearchLocation(e.target.value);
+            }}
+            sx={{
+              width: '160px',
+              '.MuiInputBase-input': {
+                fontWeight: 600,
+                fontSize: 14,
+                lineHeight: '21px',
+                color: 'rgba(137, 200, 198, 0.8)',
+              },
+            }}
+          >
+            <UISelectMenuItem key={'ALL'} value={'ALL'}>
+              ALL
+            </UISelectMenuItem>
+            {locations?.map((option) => (
+              <UISelectMenuItem key={`location${option.id}`} value={option.id}>
+                {option.name}
+              </UISelectMenuItem>
+            ))}
+          </UIDefaultTextField>
+        </UIFlexCenterBox>
+        <UIFlexCenterBox>
+          <Typography sx={{ fontWeight: 500, fontSize: 14, color: '#374E4E' }}>
             Status
           </Typography>
           <UIDefaultTextField
@@ -62,7 +99,6 @@ const UsersListHeader = ({
             value={searchStatus}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setSearchStatus(e.target.value);
-              onSearch();
             }}
             sx={{
               width: '160px',
@@ -96,7 +132,6 @@ const UsersListHeader = ({
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setSearchValue(e.target.value);
           }}
-          onKeyDown={onKeyDown}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -104,6 +139,13 @@ const UsersListHeader = ({
               </InputAdornment>
             ),
           }}
+        />
+        <UIActionButton
+          icon={<SendIcon />}
+          color="#28B446 "
+          title="Send Email"
+          handleClick={onOpenSendEmail}
+          sx={{ marginLeft: 0 }}
         />
         <Divider orientation="vertical" sx={{ height: '40px' }} />
         <UIDefaultButton

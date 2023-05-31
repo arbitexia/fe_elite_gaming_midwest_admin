@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
 import {
@@ -6,7 +6,6 @@ import {
   UIFlexSpaceBox,
   UIEditTextField,
   UIDefaultButton,
-  UIInfoTitle,
 } from '@/components/UI';
 
 import { EmailTemplateType } from '@/types';
@@ -20,6 +19,7 @@ import {
 
 import { useAppToast } from '@/providers';
 import { emailTemplateStatus, emailTemplateCategories } from '@/constants';
+import { useEmailTemplate } from '@/hooks';
 
 interface EditEmailTemplateProps {
   title: string;
@@ -35,6 +35,8 @@ const EditEmailTemplate = ({
   onAction,
 }: EditEmailTemplateProps) => {
   const appToast = useAppToast();
+  const { sendinEmails, emailTemplates } = useEmailTemplate();
+  const [selectedTemplateId, setSelectedTemplateId] = useState<number>();
 
   const emailTemplateFormik = useFormik({
     initialValues: emailTemplate ?? {
@@ -45,11 +47,39 @@ const EditEmailTemplate = ({
       category: '',
     },
     onSubmit: async (values) => {
-      onAction({
-        input: { ...values, id: emailTemplate ? emailTemplate.id : 0 },
-      });
+      if (
+        values.category !== 'OTHER' &&
+        emailTemplates?.some((obj) => obj.category === values.category)
+      ) {
+        appToast({
+          severity: 'error',
+          message: 'The template has already been created.',
+        });
+        return;
+      }
+      if (
+        values.name &&
+        values.status &&
+        values.templateId &&
+        values.category
+      ) {
+        onAction({
+          input: { ...values, id: emailTemplate ? emailTemplate.id : 0 },
+        });
+      } else {
+        appToast({
+          severity: 'error',
+          message: 'The form should be filled out.',
+        });
+      }
     },
   });
+
+  useEffect(() => {
+    if (emailTemplate) {
+      setSelectedTemplateId(emailTemplate.templateId);
+    }
+  }, [emailTemplate]);
 
   return (
     <Box component="form" onSubmit={emailTemplateFormik.handleSubmit}>
@@ -108,7 +138,10 @@ const EditEmailTemplate = ({
                   <StyledUserInfoTitle>Template ID:</StyledUserInfoTitle>
                   <UIEditTextField
                     name="templateId"
-                    onChange={emailTemplateFormik.handleChange}
+                    onChange={(e) => {
+                      emailTemplateFormik.handleChange(e);
+                      setSelectedTemplateId(Number(e.target.value));
+                    }}
                     value={emailTemplateFormik.values?.templateId ?? ''}
                     select
                     sx={{
@@ -174,6 +207,14 @@ const EditEmailTemplate = ({
             </UIFlexWrapBox>
           </Box>
         </StyledUserInfoCardContent>
+        <Box
+          dangerouslySetInnerHTML={{
+            __html:
+              sendinEmails?.find((obj) => obj.id === selectedTemplateId)
+                ?.htmlContent ?? '',
+          }}
+          sx={{ my: 4 }}
+        ></Box>
       </StyledUserInfoCard>
     </Box>
   );

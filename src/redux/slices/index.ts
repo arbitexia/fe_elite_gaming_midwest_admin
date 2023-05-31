@@ -131,4 +131,5 @@ export {
   sendTestEmail,
   resetEmailTemplateMessage,
   getSendinBlueEmails,
+  sendCampaignEmail,
 } from './emailTemplate.slice';

@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
-import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
-import { userStatus } from '@/_mock/users';
 import {
-  UIFlexWrapBox,
-  UIFlexSpaceBox,
-  UIEditTextField,
-  UIActionButton,
-} from '@/components/UI';
+  Box,
+  Divider,
+  Typography,
+  Stack,
+  MenuItem,
+  InputAdornment,
+} from '@mui/material';
+import { userStatus } from '@/constants/user';
+import { UIFlexWrapBox, UIActionButton } from '@/components/UI';
 import { UserRole } from '@/constants/enum';
 import { useAsset, useAuth } from '@/hooks';
 import { UpdateUserParam, UserType } from '@/types';
+import { CalendarToday as CalendarTodayIcon } from '@mui/icons-material';
 
 import {
   StyledUserInfoTitle,
@@ -33,6 +36,7 @@ import { Delete } from '@mui/icons-material';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { Moment } from 'moment';
+import { UserSchema } from '@/libs/yupSchema';
 
 interface UsersDetailHeaderProps {
   user: UserType.User;
@@ -43,6 +47,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
   const { slug } = router.query;
   const [uploadPhoto, setUploadPhoto] = useState<File>();
   const [selectedFile, setSelectedFile] = useState<string>();
+  const [errorMsg, setErrorMsg] = useState<string>();
   const appToast = useAppToast();
 
   const { onCreateNewUser, onUpdateUser } = useAuth({
@@ -52,7 +57,8 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
   });
   const { onCreateAsset } = useAsset();
   const userFormik = useFormik({
-    initialValues: { ...user, birthday: '1991-10-10' },
+    initialValues: user,
+    validationSchema: UserSchema,
     onSubmit: async (values) => {
       const assetData = uploadPhoto
         ? await onCreateAsset(uploadPhoto)
@@ -75,8 +81,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
         });
       }
     },
-  });
-
+  });  
   const onAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const reader = new FileReader();
@@ -94,9 +99,29 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
     reader.readAsDataURL(file);
   };
 
+  useEffect(() => {
+    if (errorMsg) {
+      appToast({
+        severity: 'error',
+        message: errorMsg,
+      });
+      setErrorMsg(undefined);
+    }
+  }, [errorMsg]);
+
+  const handleClickSave = () => {
+    if (JSON.stringify(userFormik.errors) !== '{}') {
+      const errorKey = Object.keys(
+        userFormik.errors
+      )[0] as keyof typeof userFormik.errors;
+      setErrorMsg(userFormik.errors[errorKey] as string | undefined);
+      return;
+    }
+    userFormik.handleSubmit();
+  };
   return (
-    <Box component="form" onSubmit={userFormik.handleSubmit}>
-      <UsersDetailHeader user={user} />
+    <Box>
+      <UsersDetailHeader user={user} onSave={handleClickSave} />
       <Divider sx={{ my: '18px' }} />
       <StyledUserInfoCard>
         <StyledUserInfoCardHeader />
@@ -184,65 +209,16 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
           </Box>
 
           <Box flex="1">
-            <UIFlexSpaceBox
-              sx={{
-                alignItems: 'flex-end',
-                gap: 3,
-              }}
-            >
-              <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                <StyledUserInfoTitle sx={{ width: 'auto' }}>
-                  FirstName:{' '}
-                </StyledUserInfoTitle>
-                <UIEditTextField
-                  name="firstName"
-                  value={userFormik.values.firstName}
-                  onChange={userFormik.handleChange}
-                  sx={{
-                    width: '250px',
-                  }}
-                />
-              </UIFlexWrapBox>
-              <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                <StyledUserInfoTitle sx={{ width: 'auto' }}>
-                  LastName:{' '}
-                </StyledUserInfoTitle>
-                <UIEditTextField
-                  name="lastName"
-                  value={userFormik.values.lastName}
-                  onChange={userFormik.handleChange}
-                  sx={{
-                    width: '250px',
-                  }}
-                />
-              </UIFlexWrapBox>
-              <UIFlexWrapBox
-                sx={{
-                  alignItems: 'flex-end',
-                }}
-              >
-                <UIEditTextField
-                  name="status"
-                  onChange={userFormik.handleChange}
-                  value={userFormik.values.status}
-                  select
-                  sx={{
-                    width: '250px',
-                  }}
-                >
-                  {userStatus.map((item) => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.value}
-                      </MenuItem>
-                    );
-                  })}
-                </UIEditTextField>
-              </UIFlexWrapBox>
-            </UIFlexSpaceBox>
-            <Divider sx={{ mt: '25px' }} />
             <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
               <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                  <StyledUserInfoTitle>FirstName:</StyledUserInfoTitle>
+                  <StyledUserEditTextField
+                    name="firstName"
+                    value={userFormik.values.firstName}
+                    onChange={userFormik.handleChange}
+                  />
+                </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
                   <StyledUserInfoTitle>Phone:</StyledUserInfoTitle>
                   <StyledUserEditTextField
@@ -260,39 +236,43 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
-                {/* <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Address1:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="address.address1"
-                    value={userFormik.values.address?.address1}
-                    onChange={userFormik.handleChange}
-                  />
-                </UIFlexWrapBox>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>City:</StyledUserInfoTitle>
+                  <StyledUserInfoTitle>Status:</StyledUserInfoTitle>
                   <StyledUserEditTextField
-                    name="address.city"
-                    value={userFormik.values.address?.city}
+                    name="status"
                     onChange={userFormik.handleChange}
-                  />
+                    value={userFormik.values.status}
+                    select
+                  >
+                    {userStatus.map((item) => {
+                      return (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.value}
+                        </MenuItem>
+                      );
+                    })}
+                  </StyledUserEditTextField>
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>ZipCode:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="address.zipcode"
-                    value={userFormik.values.address?.zipcode}
-                    onChange={userFormik.handleChange}
-                  />
-                </UIFlexWrapBox> */}
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
-                  {/* <StyledUserEditTextField
-                    name="birthday"
-                    value={userFormik.values.birthday}
+                  <StyledUserInfoTitle>LastName:</StyledUserInfoTitle>
+                  <StyledUserEditTextField
+                    name="lastName"
+                    value={userFormik.values.lastName}
                     onChange={userFormik.handleChange}
-                  /> */}
+                  />
+                </UIFlexWrapBox>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                  <StyledUserInfoTitle>Username:</StyledUserInfoTitle>
+                  <StyledUserEditTextField
+                    name="userName"
+                    value={userFormik.values.userName}
+                    onChange={userFormik.handleChange}
+                  />
+                </UIFlexWrapBox>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                  <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
                   <LocalizationProvider dateAdapter={AdapterMoment}>
                     <MobileDatePicker
                       inputFormat="MM/DD/YYYY"
@@ -305,10 +285,19 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                       }}
                       renderInput={(params) => {
                         return (
-                          <StyledUserEditTextField
-                            {...params}
-                            placeholder="Birthday"
-                          />
+                          <Box sx={{ position: 'relative' }}>
+                            <StyledUserEditTextField
+                              {...params}
+                              placeholder="MM/DD/YYYY"
+                              InputProps={{
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <CalendarTodayIcon />
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                          </Box>
                         );
                       }}
                     />
@@ -331,30 +320,6 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                     })}
                   </StyledUserEditTextField>
                 </UIFlexWrapBox>
-                {/* <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Address2:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="address.address2"
-                    value={userFormik.values.address?.address2}
-                    onChange={userFormik.handleChange}
-                  />
-                </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>State:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="address.state"
-                    value={userFormik.values.address?.state}
-                    onChange={userFormik.handleChange}
-                  />
-                </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Country:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="address.country"
-                    value={userFormik.values.address?.country}
-                    onChange={userFormik.handleChange}
-                  />
-                </UIFlexWrapBox> */}
               </Stack>
             </UIFlexWrapBox>
           </Box>

@@ -12,6 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { NotificationMenuItemProps } from '@/types';
+import { UIInfoTitle } from '@/components/UI';
 
 export const Search = styled(Box)({
   position: 'relative',
@@ -108,11 +109,13 @@ export const StyledNavbarMenu = (props: MenuProps) => {
       PaperProps={{
         elevation: 0,
         sx: {
+          display: 'block',
           background: '#FFFFFF',
           borderRadius: '8px',
           border: '1px solid rgba(137, 200, 198, 0.15)',
           boxShadow: '10px 10px 25px rgba(25, 42, 89, 0.15)',
           overflow: 'visible',
+          width: '340px',
           '& .MuiAvatar-root': {
             width: 32,
             height: 32,
@@ -149,12 +152,8 @@ export const StyledProfileMenuItem = styled(MenuItem)(() => ({
 
 const Notification = styled(MenuItem)(() => ({
   padding: '8px 20px 8px 20px',
-  display: 'flex',
-  width: '300px',
+  position: 'relative',
   alignItems: 'baseline',
-  span: {
-    fontWeight: 700,
-  },
 }));
 
 export const NotificationMenuItem = ({
@@ -171,7 +170,7 @@ export const NotificationMenuItem = ({
   switch (notification.model) {
     case 'USER':
       title = 'New user is resistered';
-      detail = `New user name is ${notification.data?.firstName} ${notification.data?.lastName}\nPhonenumber is ${notification.data?.phonenumber}`;
+      detail = `New user name is ${notification.data?.firstName} ${notification.data?.lastName} Phonenumber is ${notification.data?.phonenumber}`;
       break;
     case 'REWARD':
       title = 'New product is created';
@@ -194,15 +193,20 @@ export const NotificationMenuItem = ({
           marginLeft: '10px',
         }}
       />
-      <Box>
-        <Typography sx={{ fontSize: 14 }}>
-          <Box component="span">{title}</Box>
-          <br />
+      <Box sx={{ width: '250px' }}>
+        <UIInfoTitle>{title}</UIInfoTitle>
+        <Typography sx={{ fontSize: 14, whiteSpace: 'pre-wrap' }}>
           {detail}
         </Typography>
         <Box
           component="div"
-          sx={{ fontSize: 12, display: 'flex', marginTop: '5px' }}
+          sx={{
+            fontSize: 12,
+            display: 'flex',
+            alignItems: 'flex-start',
+            marginTop: '5px',
+            whiteSpace: 'pre-wrap',
+          }}
         >
           <Box
             component="img"
@@ -221,7 +225,6 @@ export const NotificationMenuContainer = styled(MenuItem)(() => ({
   margin: '0px 20px',
   borderRadius: '8px',
   padding: '8px 0px 8px 0px',
-  width: '300px',
   display: 'flex',
   justifyContent: 'space-between',
   '&:hover': {

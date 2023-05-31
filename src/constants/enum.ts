@@ -45,6 +45,7 @@ export enum MenuAction {
   EDIT = `edit`,
   DELETE = `delete`,
   CHANGE_PASSWORD = `changePassword`,
+  SEND_EMAIL = 'sendEmail',
 }
 
 export enum ProductStatus {

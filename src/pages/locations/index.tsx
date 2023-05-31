@@ -20,11 +20,11 @@ const LocationsPage = () => {
       />
       <Divider sx={{ my: '18px' }} />
       <Box
-        component={hasElInArray(locations) ? UIFlexWrapBox : UIFlexCenterBox}
+        component={hasElInArray(locations!) ? UIFlexWrapBox : UIFlexCenterBox}
         sx={{ gap: '26px' }}
       >
-        {hasElInArray(locations) ? (
-          locations.map((item) => {
+        {hasElInArray(locations!) ? (
+          locations?.map((item) => {
             return <LocationsCard key={item.id} item={item} />;
           })
         ) : (
