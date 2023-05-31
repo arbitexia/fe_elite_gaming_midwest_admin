@@ -36,7 +36,7 @@ const EditEmailTemplatePage = () => {
       }
     };
     if (id) {
-      const filteredItem = emailTemplates.find((obj) => obj.id === Number(id));
+      const filteredItem = emailTemplates?.find((obj) => obj.id === Number(id));
       if (!filteredItem) {
         router.push('/email_templates');
         return;

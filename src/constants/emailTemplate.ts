@@ -18,4 +18,5 @@ export const emailTemplateCategories = [
   { id: 'ACCEPT_TRANSACTION', value: 'Accept transaction' },
   { id: 'DECLINE_TRANSACTION', value: 'Decline transaction' },
   { id: 'REQUEST_TRANSACTION', value: 'Request transaction' },
+  { id: 'OTHER', value: 'Other' },
 ];

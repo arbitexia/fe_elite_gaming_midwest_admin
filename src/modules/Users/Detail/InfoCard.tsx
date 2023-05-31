@@ -69,11 +69,8 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                   <StyledUserInfoValue>{user.email}</StyledUserInfoValue>
                 </Stack>
                 <Stack direction="row">
-                  <StyledUserInfoTitle>Address:</StyledUserInfoTitle>
-                  <StyledUserInfoValue>
-                    {user.address &&
-                      `${user.address?.address1} ${user.address?.address2} ${user.address?.city} ${user.address?.state} ${user.address?.zipcode} ${user.address?.country}`}
-                  </StyledUserInfoValue>
+                  <StyledUserInfoTitle>Username:</StyledUserInfoTitle>
+                  <StyledUserInfoValue>{user.userName}</StyledUserInfoValue>
                 </Stack>
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '18px' }}>

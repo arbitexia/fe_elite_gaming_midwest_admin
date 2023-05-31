@@ -9,3 +9,4 @@ export { default as UserDetailTransactionCard } from './Detail/TransactionCard';
 export { default as UserDetailPointsCard } from './Detail/PointsCard';
 export { default as UserDetailRewardsCard } from './Detail/RewardsCard';
 export { default as UserDetailActivityCard } from './Detail/ActivityCard';
+export { default as SendEmailDialog } from './Dialog/SendEmail';

@@ -9,7 +9,7 @@ import { ReduxJson, Location } from '@/types';
 const initialState: ReduxJson.LocationState = {
   loading: true,
   status: null,
-  locations: [],
+  locations: null,
   pageInfo: null,
   message: null,
   error: null,

@@ -9,6 +9,7 @@ import {
   getEmailTemplateById,
   resetEmailTemplateMessage,
   emailTemplateSelector,
+  sendCampaignEmail,
 } from '@/redux/slices';
 import { useAppSelector, useAppDispatch } from './redux';
 import { EmailTemplateType } from '@/types';
@@ -63,6 +64,12 @@ export const useEmailTemplate = () => {
     await dispatch(getEmailTemplateById(param));
   };
 
+  const onSendCampaignEmail = async (
+    body: EmailTemplateType.UserCampaignType
+  ) => {
+    await dispatch(sendCampaignEmail(body));
+  };
+
   return {
     emailTemplates,
     emailTemplate,
@@ -74,5 +81,6 @@ export const useEmailTemplate = () => {
     onGetEmailTemplateById,
     onSendTestEmail,
     onGetSendinBlueEmails,
+    onSendCampaignEmail,
   };
 };

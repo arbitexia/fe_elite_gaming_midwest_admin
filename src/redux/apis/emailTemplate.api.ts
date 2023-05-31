@@ -43,3 +43,12 @@ export const getSendinBlueEmails = async () => {
   });
   return response.data;
 };
+
+export const sendCampaignEmail = async (
+  body: EmailTemplateType.UserCampaignType
+) => {
+  const response = await jwtAxios.post(`/send_campaign_email`, body, {
+    headers: getAuthorizeHeader(),
+  });
+  return response.data;
+};

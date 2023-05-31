@@ -11,7 +11,7 @@ const initialState: ReduxJson.EmailTemplateState = {
   status: null,
   message: null,
   error: null,
-  emailTemplates: [],
+  emailTemplates: null,
   pageInfo: null,
   sendinEmails: [],
   emailTemplate: null,
@@ -106,6 +106,22 @@ export const getSendinBlueEmails = createAsyncThunk<
     return thunkAPI.rejectWithValue(err.response?.data);
   }
 });
+
+export const sendCampaignEmail = createAsyncThunk<
+  CommonType.Message,
+  EmailTemplateType.UserCampaignType,
+  { dispatch: AppDispatch; state: RootState }
+>(
+  'emailTemplate/sendCampaignEmail',
+  async (body: EmailTemplateType.UserCampaignType, thunkAPI) => {
+    try {
+      return await emailTemplateApi.sendCampaignEmail(body);
+    } catch (error) {
+      const err = error as AxiosError;
+      return thunkAPI.rejectWithValue(err.response?.data);
+    }
+  }
+);
 
 // Actual Slice
 export const emailTemplateSlice = createSlice({
@@ -242,6 +258,26 @@ export const emailTemplateSlice = createSlice({
         }
       )
       .addCase(getSendinBlueEmails.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(sendCampaignEmail.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        sendCampaignEmail.fulfilled,
+        (state, { payload }: PayloadAction<CommonType.Message>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.message = payload.message;
+        }
+      )
+      .addCase(sendCampaignEmail.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;

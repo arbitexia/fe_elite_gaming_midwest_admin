@@ -59,7 +59,7 @@ export declare namespace ReduxJson {
   export type LocationState = {
     loading: boolean;
     status: ResponseStatus | null;
-    locations: Location.Data[];
+    locations: Location.Data[] | null;
     pageInfo: CommonType.PageInfo | null;
     message: string | null;
     error: string | null;
@@ -134,7 +134,7 @@ export declare namespace ReduxJson {
     status: ResponseStatus | null;
     message: string | null;
     error: string | null;
-    emailTemplates: EmailTemplateType.Data[];
+    emailTemplates: EmailTemplateType.Data[] | null;
     pageInfo: CommonType.PageInfo | null;
     sendinEmails: EmailTemplateType.SendinBlueEmail[] | null;
     emailTemplate: EmailTemplateType.Data | null;

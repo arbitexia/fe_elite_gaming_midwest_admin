@@ -54,6 +54,7 @@ export type GetUsersParam = {
     type: string;
     status: string;
     search: string;
+    location: string;
   };
   cursor: {
     page: number;

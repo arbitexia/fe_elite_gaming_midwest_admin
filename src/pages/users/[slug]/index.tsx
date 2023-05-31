@@ -1,33 +1,57 @@
 import { useState, useEffect } from 'react';
 import { Divider } from '@mui/material';
 import {
+  SendEmailDialog,
   UsersListHeader,
   UsersListPagination,
   UsersListTable,
 } from '@/modules/Users';
 import { DashboardLayout } from '@/layouts';
-import { slugIndex } from '@/_mock/users';
-import { UserType } from '@/types';
+import { slugIndex } from '@/constants/user';
 import { useRouter } from 'next/router';
-import { useUser } from '@/hooks';
+import { useEmailTemplate, useLocation, useUser } from '@/hooks';
+import { EmailTemplateType } from '@/types';
+import ConfirmModal from '@/components/App/Modal/ConfirmModal';
 
 const UsersListPage = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const { users, pageInfo, onGetUsers } = useUser();
-  const [userList, setUserList] = useState<UserType.User[]>([]);
+  const { users, pageInfo, onGetUsers, onDeleteUser } = useUser();
+  const { locations, onGetLocations } = useLocation();
+  const { emailTemplates, onGetEmailTemplates, onSendCampaignEmail } =
+    useEmailTemplate();
+
   const [searchValue, setSearchValue] = useState('');
   const [searchStatus, setSearchStatus] = useState('ALL');
+  const [searchLocation, setSearchLocation] = useState('ALL');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [openEmailModal, setOpenEmailModal] = useState(false);
+  const [selectedUserIds, setSelectedUserIds] = useState<string[]>();
+  const [selectedCustomerId, setSelectedCustomerId] = useState<number>();
 
   useEffect(() => {
-    setUserList(users);
-  }, [users]);
+    if (!locations) {
+      onGetLocations({ filterBy: { search: '' } });
+    }
+  }, [locations]);
 
   useEffect(() => {
-    handleSearch();
-  }, [searchStatus, searchValue, page, rowsPerPage, slug]);
+    if (!emailTemplates) {
+      onGetEmailTemplates({
+        filterBy: {
+          search: '',
+        },
+        cursor: { page: 0, size: 1000 },
+      });
+    }
+  }, [emailTemplates]);
+
+  useEffect(() => {
+    if (slug) {
+      handleSearch();
+    }
+  }, [searchValue, searchStatus, searchLocation, page, rowsPerPage, slug]);
 
   const handleSearch = () => {
     onGetUsers({
@@ -35,27 +59,81 @@ const UsersListPage = () => {
         type: slugIndex[slug as keyof typeof slugIndex],
         status: searchStatus,
         search: searchValue,
+        location: searchLocation,
       },
       cursor: { page: page, size: rowsPerPage },
     });
   };
+
+  const handleSendEmail = (values: EmailTemplateType.UserCampaignType) => {
+    onSendCampaignEmail({
+      ...values,
+      ...(selectedUserIds &&
+        selectedUserIds?.length > 0 && { customerIds: selectedUserIds }),
+    });
+  };
+
+  const handleSelectedUsers = (ids: string[]) => {
+    setSelectedUserIds(ids);
+  };
+
   return (
     <DashboardLayout title="Users">
       <UsersListHeader
         onSearch={handleSearch}
         searchValue={searchValue}
         searchStatus={searchStatus}
+        searchLocation={searchLocation}
         setSearchValue={setSearchValue}
         setSearchStatus={setSearchStatus}
+        setSearchLocation={setSearchLocation}
+        onOpenSendEmail={() => setOpenEmailModal(true)}
       />
       <Divider sx={{ mt: '30px' }} />
-      <UsersListTable usersTableData={userList} />
+      <UsersListTable
+        usersTableData={users}
+        onSelectedUserIds={handleSelectedUsers}
+        onSelectedCustomer={(cid: number) => {
+          setOpenEmailModal(true);
+          setSelectedUserIds([cid.toString()]);
+        }}
+        onDeleteCustomer={(cid: number) => {
+          setSelectedCustomerId(cid);
+        }}
+      />
       <UsersListPagination
         page={page}
         rowsPerPage={rowsPerPage}
         total={pageInfo?.total ?? 0}
         setPage={setPage}
         setRowsPerPage={setRowsPerPage}
+      />
+
+      <SendEmailDialog
+        onClose={() => {
+          setOpenEmailModal(false);
+          setSelectedUserIds(undefined);
+        }}
+        open={openEmailModal}
+        title="Send Email"
+        onSendEmail={handleSendEmail}
+        isSelectedUser={
+          selectedUserIds && selectedUserIds?.length > 0 ? true : false
+        }
+      />
+      <ConfirmModal
+        open={!!selectedCustomerId}
+        onClose={() => {
+          setSelectedCustomerId(undefined);
+        }}
+        title="Delete"
+        content="Are you sure you want to remove this user?"
+        onAction={() => {
+          if (selectedCustomerId) {
+            onDeleteUser(selectedCustomerId);
+            setSelectedCustomerId(undefined);
+          }
+        }}
       />
     </DashboardLayout>
   );

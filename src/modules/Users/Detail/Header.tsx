@@ -20,9 +20,10 @@ import { useRouter } from 'next/router';
 
 interface UsersDetailHeaderProps {
   user: UserType.User;
+  onSave?: () => void;
 }
 
-const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
+const UsersDetailHeader = ({ user, onSave }: UsersDetailHeaderProps) => {
   const router = useRouter();
   const { slug, id } = router.query;
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -44,11 +45,7 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
               color: '#89C8C6',
             }}
           >
-            {user.id === 0
-              ? 'Create User'
-              : `${user?.firstName ?? ''} ${
-                  user?.lastName ?? 'Customer'
-                }'s Information`}
+            {user.id === 0 ? 'Create User' : `${user?.userName ?? 'Customer'}`}
           </Typography>
           <Stack direction="row" spacing={2} justifyContent="flex-end">
             <Box
@@ -61,6 +58,7 @@ const UsersDetailHeader = ({ user }: UsersDetailHeaderProps) => {
                 <UIDefaultButton
                   sx={{ minWidth: '110px', borderRadius: '8px' }}
                   type="submit"
+                  onClick={onSave}
                 >
                   Save
                 </UIDefaultButton>

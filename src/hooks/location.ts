@@ -28,7 +28,7 @@ export const useLocation = () => {
   }, [loading]);
 
   const onGetLocationById = (id: number) => {
-    const location = locations.find(
+    const location = locations?.find(
       (location: Location.Data) => location.id === id
     );
     dispatch(setGalleries(location?.gallery ?? []));

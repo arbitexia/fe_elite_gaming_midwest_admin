@@ -59,7 +59,7 @@ const EmailTemplate = () => {
       />
       <Divider sx={{ mt: '30px' }} />
       <EmailTemplateTable
-        emailTemplateData={emailTemplates}
+        emailTemplateData={emailTemplates ?? []}
         onAction={handleClickAction}
         onSort={(value) => {
           if (value) {
