@@ -7,7 +7,8 @@ import {
 import { DashboardLayout } from '@/layouts';
 import { Divider } from '@mui/material';
 import { useTransaction } from '@/hooks';
-import { TransactionStatus } from '@/constants';
+import { TransactionStatus, transactionsType } from '@/constants';
+import { TransactionType } from '@/types';
 
 const TransactionsPage = () => {
   const { transactions, pageInfo, onGetTransactions, onDeleteTransaction } =
@@ -16,10 +17,13 @@ const TransactionsPage = () => {
   const [searchType, setSearchType] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [transactionList, setTransactionList] = useState<
+    TransactionType.Data[]
+  >([]);
 
   useEffect(() => {
     fetchTransactions();
-  }, [page, rowsPerPage, searchValue]);
+  }, [page, rowsPerPage, searchValue, searchType]);
 
   const fetchTransactions = async () => {
     try {
@@ -27,6 +31,7 @@ const TransactionsPage = () => {
         filterBy: {
           search: searchValue,
           status: TransactionStatus.ACCEPTED,
+          type: transactionsType.find((obj) => obj.id === searchType)?.value,
         },
         cursor: { page, size: rowsPerPage },
       });
@@ -34,6 +39,10 @@ const TransactionsPage = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    setTransactionList(transactions);
+  }, [transactions]);
 
   const handleDelete = async (transactionId: number) => {
     await onDeleteTransaction({ id: transactionId });
@@ -50,7 +59,7 @@ const TransactionsPage = () => {
       />
       <Divider sx={{ mt: '30px' }} />
       <TransactionsTable
-        transactionTableData={transactions}
+        transactionTableData={transactionList}
         onDelete={handleDelete}
       />
       <TransactionsPagination

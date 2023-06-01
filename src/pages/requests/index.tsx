@@ -15,6 +15,7 @@ const Requests = () => {
   const [searchValue, setSearchValue] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [requestList, setRequestList] = useState<TransactionType.Data[]>([]);
 
   useEffect(() => {
     fetchTransaction();
@@ -26,6 +27,10 @@ const Requests = () => {
       cursor: { page: page, size: rowsPerPage },
     });
   };
+
+  useEffect(() => {
+    setRequestList(transactions);
+  }, [transactions]);
 
   const handleAction = async (data: TransactionType.Param) => {
     await onUpdateTransaction(data);
@@ -43,7 +48,7 @@ const Requests = () => {
         onValueChange={(value) => setSearchValue(value)}
       />
       <Divider sx={{ my: '30px' }} />
-      <RequestTable requestsData={transactions} onAction={handleAction} />
+      <RequestTable requestsData={requestList} onAction={handleAction} />
       <RequestsPagination
         page={page}
         rowsPerPage={rowsPerPage}

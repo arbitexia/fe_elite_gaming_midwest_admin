@@ -56,7 +56,7 @@ const TransactionsListHeader = ({
               },
             }}
           >
-            <StyledSelectMenuItem value={0}>All</StyledSelectMenuItem>
+            <StyledSelectMenuItem value={0}>ALL</StyledSelectMenuItem>
             {transactionsType.map((option) => (
               <StyledSelectMenuItem key={option.id} value={option.id}>
                 {option.value}

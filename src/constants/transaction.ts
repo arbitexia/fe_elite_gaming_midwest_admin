@@ -1,6 +1,6 @@
 export const transactionsType = [
-  { id: 1, value: 'Coupon' },
-  { id: 2, value: 'Point' },
+  { id: 1, value: 'COUPON' },
+  { id: 2, value: 'POINT' },
 ];
 
 export const transactionsStatus = [

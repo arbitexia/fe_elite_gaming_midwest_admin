@@ -32,6 +32,7 @@ export declare namespace TransactionType {
       status?: string;
       search: string;
       sort?: string;
+      type?: string;
     };
     cursor: {
       page: number;
