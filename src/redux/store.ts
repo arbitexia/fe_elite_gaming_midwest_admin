@@ -29,6 +29,7 @@ import {
   tabletReducer,
   transactionReducer,
   emailTemplateReducer,
+  userLocationReducer,
 } from './slices';
 
 const combinedReducer = combineReducers({
@@ -45,6 +46,7 @@ const combinedReducer = combineReducers({
   tablet: tabletReducer,
   transaction: transactionReducer,
   emailTemplate: emailTemplateReducer,
+  userLocation: userLocationReducer,
 });
 
 const createStore = () => {
@@ -66,6 +68,7 @@ const createStore = () => {
       'tablet',
       'transaction',
       'emailTemplate',
+      'userLocation',
     ],
   };
 

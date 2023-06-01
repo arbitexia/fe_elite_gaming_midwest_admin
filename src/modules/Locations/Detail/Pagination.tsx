@@ -1,19 +1,19 @@
 import React from 'react';
 import { TablePagination } from '@mui/material';
-interface RewordsPaginationProps {
+interface LocationPaginationProps {
   page: number;
   rowsPerPage: number;
   total: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   setRowsPerPage: React.Dispatch<React.SetStateAction<number>>;
 }
-export default function RewardsPagination({
+export default function LocationPagination({
   page,
   rowsPerPage,
   total,
   setPage,
   setRowsPerPage,
-}: RewordsPaginationProps) {
+}: LocationPaginationProps) {
   const handleChangePage = (
     _event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number

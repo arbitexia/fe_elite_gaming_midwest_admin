@@ -21,6 +21,7 @@ import {
   UIOptionMenuItem,
   UIListTableCell,
   UIListTableRow,
+  UIInfoValue,
 } from '@/components/UI';
 import { MenuAction } from '@/constants';
 import { formatPhoneNumber, getColor } from '@/libs/data-helper';
@@ -29,14 +30,14 @@ import { UserType } from '@/types';
 type UsersTableProps = {
   usersTableData: UserType.User[];
   onSelectedUserIds?: (ids: string[]) => void;
-  onSelectedCustomer?: (cid: number) => void;
+  onFollowupCustomer?: (cid: number) => void;
   onDeleteCustomer?: (cid: number) => void;
 };
 
 const UsersTable = ({
   usersTableData,
   onSelectedUserIds,
-  onSelectedCustomer,
+  onFollowupCustomer,
   onDeleteCustomer,
 }: UsersTableProps) => {
   const router = useRouter();
@@ -50,9 +51,9 @@ const UsersTable = ({
         onDeleteCustomer(
           parseInt(anchorElOptionsMenu?.getAttribute('data-key') ?? '0')
         );
-    } else if (key === MenuAction.SEND_EMAIL) {
-      onSelectedCustomer &&
-        onSelectedCustomer(
+    } else if (key === MenuAction.FOLLOWUP_EMAIL) {
+      onFollowupCustomer &&
+        onFollowupCustomer(
           parseInt(anchorElOptionsMenu?.getAttribute('data-key') ?? '0')
         );
     } else {
@@ -129,11 +130,11 @@ const UsersTable = ({
     b: UserType.User,
     orderBy: keyof UserType.User
   ) {
-    if (orderBy === 'firstName') {
-      if (`${b.firstName} ${b.lastName}` < `${a.firstName} ${a.lastName}`) {
+    if (orderBy === 'userName') {
+      if (`${a.userName?.toLowerCase()}` < `${a.userName?.toLowerCase()}`) {
         return -1;
       }
-      if (`${b.firstName} ${b.lastName}` > `${a.firstName} ${a.lastName}`) {
+      if (`${b.userName?.toLowerCase()}` > `${a.userName?.toLowerCase()}`) {
         return 1;
       }
     }
@@ -143,7 +144,6 @@ const UsersTable = ({
     if ((b[orderBy] ?? '') > (a[orderBy] ?? '')) {
       return 1;
     }
-
     return 0;
   }
 
@@ -190,7 +190,7 @@ const UsersTable = ({
               onChange={handleSelectAllClick}
             />
           </UIListTableCell>
-          <UIListTableCell>Avatar</UIListTableCell>
+
           <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'id'}
@@ -200,11 +200,12 @@ const UsersTable = ({
               Id
             </TableSortLabel>
           </UIListTableCell>
+          <UIListTableCell></UIListTableCell>
           <UIListTableCell>
             <TableSortLabel
-              active={orderBy === 'firstName'}
+              active={orderBy === 'userName'}
               direction={order}
-              onClick={createSortHandler('firstName')}
+              onClick={createSortHandler('userName')}
             >
               Name
             </TableSortLabel>
@@ -280,6 +281,12 @@ const UsersTable = ({
                     }
                   />
                 </UIListTableCell>
+                <UIListTableCell
+                  onClick={() => router.push(`${router.asPath}/${userItem.id}`)}
+                  sx={{ cursor: 'pointer' }}
+                >
+                  #{userItem.id}
+                </UIListTableCell>
                 <UIListTableCell>
                   <Box
                     component="img"
@@ -293,15 +300,9 @@ const UsersTable = ({
                     sx={{ borderRadius: '50%', objectFit: 'cover' }}
                   />
                 </UIListTableCell>
-                <UIListTableCell
-                  onClick={() => router.push(`${router.asPath}/${userItem.id}`)}
-                  sx={{ cursor: 'pointer' }}
-                >
-                  #{userItem.id}
+                <UIListTableCell>
+                  <UIInfoValue>{`${userItem?.userName ?? ''}`}</UIInfoValue>
                 </UIListTableCell>
-                <UIListTableCell>{`${userItem?.firstName ?? ''} ${
-                  userItem?.lastName ?? ''
-                }`}</UIListTableCell>
                 <UIListTableCell>{userItem.email}</UIListTableCell>
                 <UIListTableCell>
                   {formatPhoneNumber(userItem.phone)}

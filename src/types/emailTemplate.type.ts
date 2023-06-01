@@ -45,9 +45,18 @@ export declare namespace EmailTemplateType {
     subject: string;
     htmlContent: string;
   };
+
   type UserCampaignType = {
     templateId: number;
     locationId: number;
     customerIds?: string[];
+  };
+
+  type FollowUpEmailType = {
+    templateId: number;
+    from: string;
+    to?: string;
+    subject: string;
+    content: string;
   };
 }

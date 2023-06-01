@@ -10,7 +10,7 @@ export const menuActions = [
 export const menuCustomerActions = [
   { label: 'View more', color: '#28B446', action: MenuAction.VIEW },
   { label: 'Edit', color: '#667180', action: MenuAction.EDIT },
-  { label: 'Send email', color: '#667180', action: MenuAction.SEND_EMAIL },
+  { label: 'Send email', color: '#667180', action: MenuAction.FOLLOWUP_EMAIL },
   { label: 'Delete', color: '#fb020299', action: MenuAction.DELETE },
 ];
 

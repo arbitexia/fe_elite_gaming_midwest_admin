@@ -22,3 +22,24 @@ export const UserSchema = Yup.object({
   status: Yup.string().required('Status is required'),
   roleId: Yup.number().required('User role is required'),
 });
+
+export const FollowUpSchema = Yup.object({
+  from: Yup.string().email().required(),
+  subject: Yup.string().required(),
+  content: Yup.string().required(),
+});
+
+export const LocationSchema = Yup.object().shape({
+  status: Yup.string().required(),
+  name: Yup.string().required(),
+  address: Yup.object({
+    address1: Yup.string().required(),
+    address2: Yup.string(),
+    city: Yup.string().required(),
+    state: Yup.string().required(),
+    zipcode: Yup.string().required(),
+    country: Yup.string().required(),
+  }).required(),
+  type: Yup.string().required(),
+  description: Yup.string(),
+});

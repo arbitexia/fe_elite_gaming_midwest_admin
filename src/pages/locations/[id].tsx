@@ -7,10 +7,11 @@ import {
   LocationsDetailCarouselCard,
   LocationsDetailInfoCard,
   LocationDetailRewardTable,
+  LocationDetailCustomerTable,
 } from '@/modules/Locations';
 import { Location } from '@/types';
 import { useLocation } from '@/hooks';
-import { Divider } from '@mui/material';
+import { Divider, Box } from '@mui/material';
 
 const LocationsById = () => {
   const router = useRouter();
@@ -21,18 +22,22 @@ const LocationsById = () => {
   useEffect(() => {
     setLocationItem(onGetLocationById(parseInt(id as string)));
   }, [id]);
+
   return (
     <DashboardLayout title={locationItem ? locationItem.name : 'Locations'}>
       {locationItem && (
-        <>
+        <Box>
           <LocationDetailHeader name={locationItem.name} isEditable={false} />
           <Divider sx={{ my: '18px' }} />
           <UIFlexSpaceBox sx={{ gap: '20px' }}>
             <LocationsDetailCarouselCard />
             <LocationsDetailInfoCard locationItem={locationItem} />
           </UIFlexSpaceBox>
-          <LocationDetailRewardTable />
-        </>
+          <UIFlexSpaceBox sx={{ gap: '20px' }}>
+            <LocationDetailRewardTable />
+            <LocationDetailCustomerTable />
+          </UIFlexSpaceBox>
+        </Box>
       )}
     </DashboardLayout>
   );

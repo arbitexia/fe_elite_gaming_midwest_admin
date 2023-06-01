@@ -2,6 +2,7 @@ import { UserStatus } from '@/constants/enum';
 import { AssetType } from './asset.type';
 import { CommonType } from './common.type';
 import { RoleType } from './role.type';
+import { Location } from './location.type';
 
 export declare namespace UserType {
   type User = {
@@ -78,6 +79,18 @@ export type UserLocationsType = {
   locationId: number;
   createdAt: string;
   updatedAt: string;
+  user?: UserType.User;
+  location?: Location.Data;
+};
+
+export type UserLocationFilter = {
+  filterBy: {
+    locationId: number;
+  };
+  cursor: {
+    page: number;
+    size: number;
+  };
 };
 
 export type DeleteUserParam = {

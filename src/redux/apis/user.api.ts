@@ -4,6 +4,7 @@ import {
   UpdateUserParam,
   DeleteUserParam,
   UserType,
+  UserLocationFilter,
 } from '@/types';
 import { jwtAxios } from './axios.api';
 import { getAuthorizeHeader } from '@/libs/data-helper';
@@ -42,6 +43,14 @@ export const changePasswordUser = async (
 ) => {
   const response = await jwtAxios.post(`/password`, params, {
     headers: getAuthorizeHeader(),
+  });
+  return response.data;
+};
+
+export const getUsersByLocationId = async (params: UserLocationFilter) => {
+  const response = await jwtAxios.get(`/user_locations`, {
+    headers: getAuthorizeHeader(),
+    params,
   });
   return response.data;
 };

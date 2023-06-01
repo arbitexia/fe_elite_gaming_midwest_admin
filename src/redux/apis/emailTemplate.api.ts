@@ -52,3 +52,12 @@ export const sendCampaignEmail = async (
   });
   return response.data;
 };
+
+export const followUpEmail = async (
+  body: EmailTemplateType.FollowUpEmailType
+) => {
+  const response = await jwtAxios.post(`/followup_email`, body, {
+    headers: getAuthorizeHeader(),
+  });
+  return response.data;
+};

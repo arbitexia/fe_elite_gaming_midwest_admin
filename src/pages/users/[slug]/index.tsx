@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Divider } from '@mui/material';
 import {
+  FollowUpEmailDialog,
   SendEmailDialog,
   UsersListHeader,
   UsersListPagination,
@@ -18,8 +19,12 @@ const UsersListPage = () => {
   const { slug } = router.query;
   const { users, pageInfo, onGetUsers, onDeleteUser } = useUser();
   const { locations, onGetLocations } = useLocation();
-  const { emailTemplates, onGetEmailTemplates, onSendCampaignEmail } =
-    useEmailTemplate();
+  const {
+    emailTemplates,
+    onGetEmailTemplates,
+    onSendCampaignEmail,
+    onFollowUpEmail,
+  } = useEmailTemplate();
 
   const [searchValue, setSearchValue] = useState('');
   const [searchStatus, setSearchStatus] = useState('ALL');
@@ -28,7 +33,8 @@ const UsersListPage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openEmailModal, setOpenEmailModal] = useState(false);
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>();
-  const [selectedCustomerId, setSelectedCustomerId] = useState<number>();
+  const [followUpCustomerId, setFollowUpCustomerId] = useState<number>();
+  const [deletedCustomerId, setDeletedCustomerId] = useState<number>();
 
   useEffect(() => {
     if (!locations) {
@@ -73,10 +79,6 @@ const UsersListPage = () => {
     });
   };
 
-  const handleSelectedUsers = (ids: string[]) => {
-    setSelectedUserIds(ids);
-  };
-
   return (
     <DashboardLayout title="Users">
       <UsersListHeader
@@ -92,13 +94,12 @@ const UsersListPage = () => {
       <Divider sx={{ mt: '30px' }} />
       <UsersListTable
         usersTableData={users}
-        onSelectedUserIds={handleSelectedUsers}
-        onSelectedCustomer={(cid: number) => {
-          setOpenEmailModal(true);
-          setSelectedUserIds([cid.toString()]);
+        onSelectedUserIds={(ids: string[]) => setSelectedUserIds(ids)}
+        onFollowupCustomer={(cid: number) => {
+          setFollowUpCustomerId(cid);
         }}
         onDeleteCustomer={(cid: number) => {
-          setSelectedCustomerId(cid);
+          setDeletedCustomerId(cid);
         }}
       />
       <UsersListPagination
@@ -109,10 +110,32 @@ const UsersListPage = () => {
         setRowsPerPage={setRowsPerPage}
       />
 
+      <FollowUpEmailDialog
+        open={!!followUpCustomerId}
+        onClose={() => {
+          setFollowUpCustomerId(undefined);
+        }}
+        title="Follow-up Email"
+        onFollowUpEmail={(values) => {
+          if (values.templateId > 0) {
+            if (followUpCustomerId) {
+              onSendCampaignEmail({
+                templateId: values.templateId,
+                locationId: 0,
+                customerIds: [followUpCustomerId.toString()],
+              });
+            }
+          } else {
+            onFollowUpEmail({
+              ...values,
+              to: users.find((obj) => obj.id === followUpCustomerId)?.email,
+            });
+          }
+        }}
+      />
       <SendEmailDialog
         onClose={() => {
           setOpenEmailModal(false);
-          setSelectedUserIds(undefined);
         }}
         open={openEmailModal}
         title="Send Email"
@@ -122,16 +145,16 @@ const UsersListPage = () => {
         }
       />
       <ConfirmModal
-        open={!!selectedCustomerId}
+        open={!!deletedCustomerId}
         onClose={() => {
-          setSelectedCustomerId(undefined);
+          setDeletedCustomerId(undefined);
         }}
         title="Delete"
         content="Are you sure you want to remove this user?"
         onAction={() => {
-          if (selectedCustomerId) {
-            onDeleteUser(selectedCustomerId);
-            setSelectedCustomerId(undefined);
+          if (deletedCustomerId) {
+            onDeleteUser(deletedCustomerId);
+            setDeletedCustomerId(undefined);
           }
         }}
       />

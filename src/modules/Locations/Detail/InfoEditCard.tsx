@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { FormikProps } from 'formik';
 import mapboxgl from 'mapbox-gl';
 import { Typography, Stack, Box, MenuItem } from '@mui/material';
-import { locationStatus, locationType } from '@/_mock/locations';
+import { locationStatus, locationType } from '@/constants/location';
 
 import {
   UICardBox,
@@ -94,115 +94,116 @@ const LocationsDetailInfoEditCard = ({
           </Box>
         </UIFlexWrapBox>
       </UIFlexSpaceBox>
-      <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
-        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>Name:</UIInfoTitle>
-            <Box>
-              <UIEditTextField
-                name="name"
-                value={locationFormik.values.name ?? ''}
-                onChange={locationFormik.handleChange}
-                fullWidth
-              />
-            </Box>
-          </UIFlexWrapBox>
-        </Stack>
-        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>Type:</UIInfoTitle>
-            <Box flexGrow={1}>
-              <UIEditTextField
-                name="type"
-                value={locationFormik.values.type ?? locationType[0].id}
-                onChange={locationFormik.handleChange}
-                fullWidth
-                select
-              >
-                {locationType.map((item) => {
-                  return (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.value}
-                    </MenuItem>
-                  );
-                })}
-              </UIEditTextField>
-            </Box>
-          </UIFlexWrapBox>
-        </Stack>
-      </UIFlexWrapBox>
-      <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
-        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>Address1:</UIInfoTitle>
-            <Box>
-              <UIEditTextField
-                name="address.address1"
-                value={locationFormik.values.address?.address1 ?? ''}
-                onChange={locationFormik.handleChange}
-                fullWidth
-              />
-            </Box>
-          </UIFlexWrapBox>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>City:</UIInfoTitle>
-            <Box>
-              <UIEditTextField
-                name="address.city"
-                value={locationFormik.values.address?.city ?? ''}
-                onChange={locationFormik.handleChange}
-                fullWidth
-              />
-            </Box>
-          </UIFlexWrapBox>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>ZipCode:</UIInfoTitle>
-            <Box>
-              <UIEditTextField
-                name="address.zipcode"
-                value={locationFormik.values.address?.zipcode ?? ''}
-                onChange={locationFormik.handleChange}
-                fullWidth
-              />
-            </Box>
-          </UIFlexWrapBox>
-        </Stack>
-        <Stack direction="column" sx={{ flex: '1 1 0', gap: '18px' }}>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>Address2:</UIInfoTitle>
-            <Box>
-              <UIEditTextField
-                name="address.address2"
-                value={locationFormik.values.address?.address2 ?? ''}
-                onChange={locationFormik.handleChange}
-                fullWidth
-              />
-            </Box>
-          </UIFlexWrapBox>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>State:</UIInfoTitle>
-            <Box>
-              <UIEditTextField
-                name="address.state"
-                value={locationFormik.values.address?.state ?? ''}
-                onChange={locationFormik.handleChange}
-                fullWidth
-              />
-            </Box>
-          </UIFlexWrapBox>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <UIInfoTitle>Country:</UIInfoTitle>
-            <Box>
-              <UIEditTextField
-                name="address.country"
-                value={locationFormik.values.address?.country ?? ''}
-                onChange={locationFormik.handleChange}
-                fullWidth
-              />
-            </Box>
-          </UIFlexWrapBox>
-        </Stack>
-      </UIFlexWrapBox>
+
+      <UIFlexSpaceBox sx={{ paddingTop: '20px' }}>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <UIInfoTitle>Name:</UIInfoTitle>
+          <Box>
+            <UIEditTextField
+              name="name"
+              value={locationFormik.values.name ?? ''}
+              onChange={locationFormik.handleChange}
+              fullWidth
+            />
+          </Box>
+        </UIFlexWrapBox>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <UIInfoTitle>Type:</UIInfoTitle>
+          <Box width={210}>
+            <UIEditTextField
+              name="type"
+              value={locationFormik.values.type ?? locationType[0].id}
+              onChange={locationFormik.handleChange}
+              fullWidth
+              select
+            >
+              {locationType.map((item) => {
+                return (
+                  <MenuItem key={item.id} value={item.id}>
+                    {item.value}
+                  </MenuItem>
+                );
+              })}
+            </UIEditTextField>
+          </Box>
+        </UIFlexWrapBox>
+      </UIFlexSpaceBox>
+
+      <UIFlexSpaceBox sx={{ paddingTop: '20px' }}>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <UIInfoTitle>Address1:</UIInfoTitle>
+          <Box>
+            <UIEditTextField
+              name="address.address1"
+              value={locationFormik.values.address?.address1 ?? ''}
+              onChange={locationFormik.handleChange}
+              fullWidth
+            />
+          </Box>
+        </UIFlexWrapBox>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <UIInfoTitle>Address2:</UIInfoTitle>
+          <Box>
+            <UIEditTextField
+              name="address.address2"
+              value={locationFormik.values.address?.address2 ?? ''}
+              onChange={locationFormik.handleChange}
+              fullWidth
+            />
+          </Box>
+        </UIFlexWrapBox>
+      </UIFlexSpaceBox>
+
+      <UIFlexSpaceBox sx={{ paddingTop: '20px' }}>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <UIInfoTitle>City:</UIInfoTitle>
+          <Box>
+            <UIEditTextField
+              name="address.city"
+              value={locationFormik.values.address?.city ?? ''}
+              onChange={locationFormik.handleChange}
+              fullWidth
+            />
+          </Box>
+        </UIFlexWrapBox>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <UIInfoTitle>State:</UIInfoTitle>
+          <Box>
+            <UIEditTextField
+              name="address.state"
+              value={locationFormik.values.address?.state ?? ''}
+              onChange={locationFormik.handleChange}
+              fullWidth
+            />
+          </Box>
+        </UIFlexWrapBox>
+      </UIFlexSpaceBox>
+
+      <UIFlexSpaceBox sx={{ paddingTop: '20px' }}>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <UIInfoTitle>ZipCode:</UIInfoTitle>
+          <Box>
+            <UIEditTextField
+              name="address.zipcode"
+              value={locationFormik.values.address?.zipcode ?? ''}
+              onChange={locationFormik.handleChange}
+              fullWidth
+            />
+          </Box>
+        </UIFlexWrapBox>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <UIInfoTitle>Country:</UIInfoTitle>
+          <Box>
+            <UIEditTextField
+              name="address.country"
+              value={locationFormik.values.address?.country ?? ''}
+              onChange={locationFormik.handleChange}
+              fullWidth
+            />
+          </Box>
+        </UIFlexWrapBox>
+      </UIFlexSpaceBox>
+
       <Box
         sx={{
           width: '100%',

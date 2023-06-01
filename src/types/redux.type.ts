@@ -2,7 +2,7 @@ import { PaletteMode } from '@mui/material';
 import { ResponseStatus } from '@/constants';
 import { AssetType } from './asset.type';
 import { CommonType } from './common.type';
-import { UserType } from './users.type';
+import { UserLocationsType, UserType } from './users.type';
 import { Location } from './location.type';
 import { PointType } from './point.type';
 import { Product } from './product.type';
@@ -138,5 +138,14 @@ export declare namespace ReduxJson {
     pageInfo: CommonType.PageInfo | null;
     sendinEmails: EmailTemplateType.SendinBlueEmail[] | null;
     emailTemplate: EmailTemplateType.Data | null;
+  };
+
+  export type UserLocationState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    message: string | null;
+    error: string | null;
+    userLocations: UserLocationsType[] | null;
+    pageInfo: CommonType.PageInfo | null;
   };
 }

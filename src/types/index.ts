@@ -43,6 +43,8 @@ export type {
   GetUsersParam,
   UpdateUserParam,
   DeleteUserParam,
+  UserLocationsType,
+  UserLocationFilter,
 } from './users.type';
 export type {
   ConfigType,

@@ -33,3 +33,6 @@ export {
   menuTransactionActions,
   menuCustomerActions,
 } from './user';
+
+export { locationType, locationStatus } from './location';
+export { transactionsStatus, transactionsType } from './transaction';

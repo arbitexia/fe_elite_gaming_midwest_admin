@@ -6,4 +6,5 @@ export { default as LocationsDetailCarouselEditCard } from './Detail/CarouselEdi
 export { default as LocationsDetailInfoEditCard } from './Detail/InfoEditCard';
 export { default as LocationDetailHeader } from './Detail/Header';
 export { default as LocationDetailRewardTable } from './Detail/RewardTable';
-export { default as RewardsPagination } from './Detail/Pagination';
+export { default as LocationPagination } from './Detail/Pagination';
+export { default as LocationDetailCustomerTable } from './Detail/CustomerTable';

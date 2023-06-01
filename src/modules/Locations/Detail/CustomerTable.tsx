@@ -11,34 +11,28 @@ import {
   UITableCell,
 } from '@/components/UI';
 import { getColor } from '@/libs/data-helper';
-import RewardsPagination from './Pagination';
-import { useReward } from '@/hooks';
-import { Reward } from '@/types';
+import { useUserLocation } from '@/hooks';
+import { UserLocationsType } from '@/types';
+import LocationPagination from './Pagination';
 
-const LocationDetailRewardTable = () => {
+const LocationDetailCustomerTable = () => {
   const router = useRouter();
   const { id: locationId } = router.query;
-  const { rewards, onFilterRewards, pageInfo } = useReward();
+  const { userLocations, onGetUserLocationById, pageInfo } = useUserLocation();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   useEffect(() => {
-    const fetchRewards = async () => {
-      try {
-        await getRewardsByLocationId({
-          filterBy: { locationId: Number(locationId), search: '' },
-          cursor: { page, size: rowsPerPage },
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchRewards();
-  }, [locationId, router]);
+    if (locationId) {
+      fetchUserLocations();
+    }
+  }, [page, rowsPerPage, locationId]);
 
-  const getRewardsByLocationId = async (filter: Reward.Filter) => {
-    await onFilterRewards(filter);
+  const fetchUserLocations = async () => {
+    await onGetUserLocationById({
+      filterBy: { locationId: Number(locationId ?? 0) },
+      cursor: { page: page, size: rowsPerPage },
+    });
   };
-  const rewardsByLocation = rewards?.[0]?.reward ?? [];
   return (
     <UICardBox sx={{ marginTop: '30px' }}>
       <Typography
@@ -49,43 +43,43 @@ const LocationDetailRewardTable = () => {
           color: '#222B35',
         }}
       >
-        Rewards
+        Customers
       </Typography>
       <UITable size="small">
         <TableHead>
           <TableRow>
             <UITableCell>ID</UITableCell>
-            <UITableCell>Product</UITableCell>
-            <UITableCell>Detail</UITableCell>
-            <UITableCell>Points</UITableCell>
+            <UITableCell>Name</UITableCell>
+            <UITableCell>Phone</UITableCell>
             <UITableCell>Status</UITableCell>
-            <UITableCell>Due Date</UITableCell>
+            <UITableCell>Created At</UITableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rewardsByLocation.length > 0 ? (
-            rewardsByLocation.map((item: Reward.Data) => {
+          {userLocations && userLocations?.length > 0 ? (
+            userLocations.map((item: UserLocationsType) => {
               return (
                 <UITableRow key={item.id}>
                   <UITableCell
-                    onClick={() => router.push(`locations/${item.id}`)}
+                    onClick={() =>
+                      router.push(`/users/customers/${item?.user?.id}`)
+                    }
                     sx={{ cursor: 'pointer' }}
                   >
                     #{item.id}
                   </UITableCell>
-                  <UITableCell>{item.product?.name}</UITableCell>
-                  <UITableCell>{item.product?.short}</UITableCell>
-                  <UITableCell>{item.point}</UITableCell>
+                  <UITableCell>{item.user?.userName}</UITableCell>
+                  <UITableCell>{item.user?.phone}</UITableCell>
                   <UITableCell>
                     <UIChip
-                      label={item.product?.status}
-                      color={getColor(item.product?.status ?? 'error')}
+                      label={item.user?.status}
+                      color={getColor(item.user?.status ?? 'error')}
                     />
                   </UITableCell>
                   <UITableCell sx={{ color: '#B3B3B3 !important' }}>
-                    {item.product?.createdAt
+                    {item.user?.createdAt
                       ? format(
-                          new Date(item.product.createdAt),
+                          new Date(item.user.createdAt),
                           'yyyy-MM-dd hh:mm'
                         )
                       : ''}
@@ -107,7 +101,7 @@ const LocationDetailRewardTable = () => {
           )}
         </TableBody>
       </UITable>
-      <RewardsPagination
+      <LocationPagination
         page={page}
         rowsPerPage={rowsPerPage}
         total={pageInfo?.total ?? 0}
@@ -118,4 +112,4 @@ const LocationDetailRewardTable = () => {
   );
 };
 
-export default LocationDetailRewardTable;
+export default LocationDetailCustomerTable;

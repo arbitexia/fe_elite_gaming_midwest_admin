@@ -9,7 +9,7 @@ import {
   TableSortLabel,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
-import { menuTransactionActions } from '@/_mock/users';
+import { menuTransactionActions } from '@/constants/user';
 import { UIChip } from '@/components/UI';
 import { MenuAction } from '@/constants';
 import { getColor } from '@/libs/data-helper';

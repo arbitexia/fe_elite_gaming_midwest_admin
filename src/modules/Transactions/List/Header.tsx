@@ -1,6 +1,6 @@
 import { Typography, InputAdornment } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
-import { transactionsType } from '@/_mock/transactions';
+import { transactionsType } from '@/constants/transaction';
 import {
   UIFlexSpaceBox,
   UIFlexWrapBox,

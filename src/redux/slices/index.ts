@@ -132,4 +132,12 @@ export {
   resetEmailTemplateMessage,
   getSendinBlueEmails,
   sendCampaignEmail,
+  followUpEmail,
 } from './emailTemplate.slice';
+
+export {
+  default as userLocationReducer,
+  userLocationSelector,
+  resetUserLocationMessage,
+  getUsersByLocationId,
+} from './userLocation.slice';
