@@ -1,13 +1,18 @@
-import { Box, Typography, Stack } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Replay as ReplayIcon } from '@mui/icons-material';
-import { UIActionButton, UIDefaultButton } from '@/components/UI';
+import {
+  UIActionButton,
+  UIDefaultButton,
+  UIFlexSpaceBox,
+  UIFlexWrapBox,
+} from '@/components/UI';
 
 type ProfileHeaderProps = {
   onChangePassword: () => void;
 };
 const ProfileHeader = ({ onChangePassword }: ProfileHeaderProps) => {
   return (
-    <Box sx={{ mb: '20px' }}>
+    <UIFlexSpaceBox>
       <Typography
         sx={{
           fontWeight: '600',
@@ -19,25 +24,21 @@ const ProfileHeader = ({ onChangePassword }: ProfileHeaderProps) => {
       >
         Profile
       </Typography>
-      <Stack direction="row" spacing={2} justifyContent="flex-end">
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-          }}
+      <UIFlexWrapBox sx={{ alignItems: 'center', gap: 2 }}>
+        <UIActionButton
+          icon={<ReplayIcon />}
+          color="#667180"
+          title="Change password"
+          handleClick={onChangePassword}
+        />
+        <UIDefaultButton
+          sx={{ minWidth: '110px', borderRadius: '8px' }}
+          type="submit"
         >
-          <UIActionButton
-            icon={<ReplayIcon />}
-            color="#667180"
-            title="Change password"
-            handleClick={onChangePassword}
-          />
-          <UIDefaultButton sx={{ marginLeft: '8px' }} type="submit">
-            Save
-          </UIDefaultButton>
-        </Box>
-      </Stack>
-    </Box>
+          Save
+        </UIDefaultButton>
+      </UIFlexWrapBox>
+    </UIFlexSpaceBox>
   );
 };
 

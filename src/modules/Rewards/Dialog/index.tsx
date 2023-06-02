@@ -36,6 +36,7 @@ const RewardCreateDialog = ({
   const [searchProductVal, setSearchProductVal] = useState('');
   const [locationId, setLocationId] = useState(0);
   const [productIds, setProductIds] = useState<number[]>([]);
+  const [errorMsg, setErrorMsg] = useState<string>();
 
   useEffect(() => {
     handleLocationSearch();
@@ -75,18 +76,33 @@ const RewardCreateDialog = ({
     setProductIds(newChecked);
   };
 
-  const handleOk = async () => {
-    if (productIds.length > 0) {
-      const body: Reward.Body = {
-        input: productIds.map((productId) => ({ locationId, productId })),
-      };
-      onCreateRewards(body);
+  useEffect(() => {
+    if (errorMsg) {
+      appToast({
+        severity: 'error',
+        message: errorMsg,
+      });
+      setErrorMsg(undefined);
     }
+  }, [errorMsg]);
+
+  const handleOk = () => {
+    if (locationId <= 0) {
+      setErrorMsg('Please select a location');
+      return;
+    }
+    if (productIds.length <= 0) {
+      setErrorMsg('Please select a product');
+      return;
+    }
+    const body: Reward.Body = {
+      input: productIds.map((productId) => ({ locationId, productId })),
+    };
+    onCreateRewards(body);
     appToast({
       severity: 'success',
       message: 'New reward item has been added!',
     });
-
     closeDlg();
     resetValues();
   };
@@ -178,27 +194,29 @@ const RewardCreateDialog = ({
                 bgcolor: 'background.paper',
               }}
             >
-              {products.map((product) => {
-                const labelId = `product-checkbox-list-secondary-label-${product.name}-${product.id}`;
-                return (
-                  <ListItem
-                    key={labelId}
-                    onClick={handleToggleProduct(product.id)}
-                    disablePadding
-                  >
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <Checkbox
-                          edge="start"
-                          checked={productIds.indexOf(product.id) !== -1}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </ListItemIcon>
-                      <ListItemText id={labelId} primary={product.name} />
-                    </ListItemButton>
-                  </ListItem>
-                );
-              })}
+              {products
+                .filter((p) => p.amount > 0)
+                .map((product) => {
+                  const labelId = `product-checkbox-list-secondary-label-${product.name}-${product.id}`;
+                  return (
+                    <ListItem
+                      key={labelId}
+                      onClick={handleToggleProduct(product.id)}
+                      disablePadding
+                    >
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <Checkbox
+                            edge="start"
+                            checked={productIds.indexOf(product.id) !== -1}
+                            inputProps={{ 'aria-labelledby': labelId }}
+                          />
+                        </ListItemIcon>
+                        <ListItemText id={labelId} primary={product.name} />
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                })}
             </List>
           </Paper>
         </UIFlexWrapBox>

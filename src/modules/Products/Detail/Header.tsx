@@ -61,7 +61,12 @@ const ProductDetailHeader = ({
       </Typography>
       <UIFlexWrapBox>
         {isEditable ? (
-          <UIDefaultButton type="submit">Save</UIDefaultButton>
+          <UIDefaultButton
+            type="submit"
+            sx={{ minWidth: '110px', borderRadius: '8px' }}
+          >
+            Save
+          </UIDefaultButton>
         ) : (
           <>
             <UIActionButton

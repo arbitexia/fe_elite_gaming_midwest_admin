@@ -32,6 +32,7 @@ export {
   menuTabletActions,
   menuTransactionActions,
   menuCustomerActions,
+  userRole,
 } from './user';
 
 export { locationType, locationStatus } from './location';

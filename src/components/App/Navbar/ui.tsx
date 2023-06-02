@@ -115,7 +115,6 @@ export const StyledNavbarMenu = (props: MenuProps) => {
           border: '1px solid rgba(137, 200, 198, 0.15)',
           boxShadow: '10px 10px 25px rgba(25, 42, 89, 0.15)',
           overflow: 'visible',
-          width: '340px',
           '& .MuiAvatar-root': {
             width: 32,
             height: 32,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Box, Stack } from '@mui/material';
 import { useAuth } from '@/hooks';
@@ -13,6 +13,7 @@ import { AppModal } from '@/components/App';
 
 import { useAppToast } from '@/providers';
 import { UserType } from '@/types';
+import { ProfileChangePwdSchema } from '@/libs/yupSchema';
 
 type ChangePasswordProps = {
   title: string;
@@ -26,42 +27,23 @@ const ChangePasswordDialog = ({
 }: ChangePasswordProps) => {
   const { me, onChangePasswordUser } = useAuth({});
   const appToast = useAppToast();
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState<string>();
 
-  const initValues: UserType.ChangePasswordParam = {
-    oldPassword: '',
-    password: '',
-  };
+  const initValues: UserType.ChangePasswordParam & { confirmPassword: string } =
+    {
+      oldPassword: '',
+      password: '',
+      confirmPassword: '',
+    };
 
   const resetValues = () => {
     userFormik.resetForm();
-    setConfirmPassword('');
   };
 
   const userFormik = useFormik({
     initialValues: initValues,
+    validationSchema: ProfileChangePwdSchema,
     onSubmit: async (values) => {
-      if (!values?.oldPassword) {
-        appToast({
-          severity: 'error',
-          message: 'The old password is required!',
-        });
-        return;
-      }
-      if (!values?.password) {
-        appToast({
-          severity: 'error',
-          message: 'The password is required!',
-        });
-        return;
-      }
-      if (values?.password !== confirmPassword) {
-        appToast({
-          severity: 'error',
-          message: 'Passwords do not match! Please try again!',
-        });
-        return;
-      }
       const dataToSave: UserType.ChangePasswordParam = {
         userId: (me as UserType.User)?.id,
         oldPassword: values.oldPassword,
@@ -81,6 +63,28 @@ const ChangePasswordDialog = ({
     },
   });
 
+  useEffect(() => {
+    if (errorMsg) {
+      appToast({
+        severity: 'error',
+        message: errorMsg,
+      });
+      setErrorMsg(undefined);
+    }
+  }, [errorMsg]);
+
+  const handleClickSave = (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (JSON.stringify(userFormik.errors) !== '{}') {
+      const errorKey = Object.keys(
+        userFormik.errors
+      )[0] as keyof typeof userFormik.errors;
+      setErrorMsg(userFormik.errors[errorKey] as string | undefined);
+      return;
+    }
+    userFormik.handleSubmit();
+  };
+
   return (
     <AppModal
       title={title.toUpperCase()}
@@ -90,7 +94,7 @@ const ChangePasswordDialog = ({
         resetValues();
       }}
     >
-      <Box component="form" onSubmit={userFormik.handleSubmit} sx={{ p: 4 }}>
+      <Box component="form" onSubmit={handleClickSave} sx={{ p: 4 }}>
         <UIFlexCenterBox>
           <Stack direction="column" sx={{ width: '100%', gap: '10px' }}>
             <UIFlexWrapBox sx={{ alignItems: 'center' }}>
@@ -121,8 +125,8 @@ const ChangePasswordDialog = ({
                 type="password"
                 name="confirmPassword"
                 sx={{ width: '250px' }}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={userFormik.values?.confirmPassword ?? ''}
+                onChange={userFormik.handleChange}
               />
             </UIFlexWrapBox>
           </Stack>

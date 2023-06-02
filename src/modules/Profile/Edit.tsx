@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { Box, Divider, Typography, Stack } from '@mui/material';
+import { Box, Divider, Typography, InputAdornment } from '@mui/material';
 import { UIFlexWrapBox } from '@/components/UI';
 import { UserStatus } from '@/constants';
 import { UpdateUserParam, UserType } from '@/types';
@@ -14,12 +14,13 @@ import {
   StyledUserInfoCardStatus,
   StyledUserEditTextField,
 } from './ui';
-import { format } from 'date-fns';
 import { convertMBtoBytes } from '@/libs/data-helper';
 import { useAppToast } from '@/providers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { Moment } from 'moment';
+import { CalendarToday as CalendarTodayIcon } from '@mui/icons-material';
+import { ProfileSchema } from '@/libs/yupSchema';
 
 interface ProfileEditProps {
   user: UserType.User;
@@ -30,10 +31,12 @@ interface ProfileEditProps {
 const ProfileEdit = ({ user, onEdit, onChangePassword }: ProfileEditProps) => {
   const [uploadPhoto, setUploadPhoto] = useState<File>();
   const [selectedFile, setSelectedFile] = useState<string>();
+  const [errorMsg, setErrorMsg] = useState<string>();
   const appToast = useAppToast();
 
   const profileFormik = useFormik({
     initialValues: user,
+    validationSchema: ProfileSchema,
     onSubmit: async (values) => {
       const dataToSave: UpdateUserParam = {
         userId: Number(user.id),
@@ -71,9 +74,32 @@ const ProfileEdit = ({ user, onEdit, onChangePassword }: ProfileEditProps) => {
     reader.readAsDataURL(file);
   };
 
+  useEffect(() => {
+    if (errorMsg) {
+      appToast({
+        severity: 'error',
+        message: errorMsg,
+      });
+      setErrorMsg(undefined);
+    }
+  }, [errorMsg]);
+
+  const handleClickSave = (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (JSON.stringify(profileFormik.errors) !== '{}') {
+      const errorKey = Object.keys(
+        profileFormik.errors
+      )[0] as keyof typeof profileFormik.errors;
+      setErrorMsg(profileFormik.errors[errorKey] as string | undefined);
+      return;
+    }
+    profileFormik.handleSubmit();
+  };
+
   return (
-    <Box component="form" onSubmit={profileFormik.handleSubmit}>
+    <Box component="form" onSubmit={handleClickSave}>
       <ProfileHeader onChangePassword={onChangePassword} />
+      <Divider sx={{ mt: '12px', mb: '24px' }} />
       <StyledUserInfoCard>
         <StyledUserInfoCardHeader />
         <StyledUserInfoCardContent>
@@ -146,7 +172,7 @@ const ProfileEdit = ({ user, onEdit, onChangePassword }: ProfileEditProps) => {
             </Typography>
           </Box>
 
-          <Box flex="1">
+          <Box flex="1" sx={{ mt: 2 }}>
             <UIFlexWrapBox>
               <UIFlexWrapBox sx={{ width: '49%', alignItems: 'center' }}>
                 <StyledUserInfoTitle>FirstName: </StyledUserInfoTitle>
@@ -165,110 +191,60 @@ const ProfileEdit = ({ user, onEdit, onChangePassword }: ProfileEditProps) => {
                 />
               </UIFlexWrapBox>
             </UIFlexWrapBox>
-            <Divider sx={{ mt: '25px' }} />
-            <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
-              <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Phone number:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="phone"
-                    type="number"
-                    value={profileFormik.values.phone}
-                    onChange={profileFormik.handleChange}
-                  />
-                </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Email:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="email"
-                    value={profileFormik.values.email}
-                    onChange={profileFormik.handleChange}
-                  />
-                </UIFlexWrapBox>
-                {/* <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Address1:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="address.address1"
-                    value={profileFormik.values.address?.address1 ?? ''}
-                    onChange={profileFormik.handleChange}
-                  />
-                </UIFlexWrapBox> */}
-                {/* <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>City:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="address.city"
-                    value={profileFormik.values.address?.city ?? ''}
-                    onChange={profileFormik.handleChange}
-                  />
-                </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>ZipCode:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="address.zipcode"
-                    value={profileFormik.values.address?.zipcode ?? ''}
-                    onChange={profileFormik.handleChange}
-                  />
-                </UIFlexWrapBox> */}
-              </Stack>
-              <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
-                  {/* <StyledUserEditTextField
-                    name="birthday"
-                    value={
-                      format(
-                        new Date(profileFormik.values.birthday),
-                        'yyyy-MM-dd hh:mm'
-                      ) ?? ''
-                    }
-                    onChange={profileFormik.handleChange}
-                  /> */}
-                  <LocalizationProvider dateAdapter={AdapterMoment}>
-                    <MobileDatePicker
-                      inputFormat="MM/DD/YYYY"
-                      value={profileFormik.values.birthday}
-                      onChange={(value: Moment | null) => {
-                        profileFormik.setFieldValue(
-                          'birthday',
-                          value ? value.format('MM/DD/YYYY') : ''
-                        );
-                      }}
-                      renderInput={(params) => {
-                        return (
+
+            <UIFlexWrapBox sx={{ mt: 3 }}>
+              <UIFlexWrapBox sx={{ width: '49%', alignItems: 'center' }}>
+                <StyledUserInfoTitle>Phone number:</StyledUserInfoTitle>
+                <StyledUserEditTextField
+                  name="phone"
+                  type="number"
+                  value={profileFormik.values.phone}
+                  onChange={profileFormik.handleChange}
+                />
+              </UIFlexWrapBox>
+              <UIFlexWrapBox sx={{ width: '49%', alignItems: 'center' }}>
+                <StyledUserInfoTitle>Email:</StyledUserInfoTitle>
+                <StyledUserEditTextField
+                  name="email"
+                  value={profileFormik.values.email}
+                  onChange={profileFormik.handleChange}
+                />
+              </UIFlexWrapBox>
+            </UIFlexWrapBox>
+
+            <UIFlexWrapBox sx={{ mt: 3 }}>
+              <UIFlexWrapBox sx={{ width: '49%', alignItems: 'center' }}>
+                <StyledUserInfoTitle>Birthday:</StyledUserInfoTitle>
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                  <MobileDatePicker
+                    inputFormat="MM/DD/YYYY"
+                    value={profileFormik.values.birthday}
+                    onChange={(value: Moment | null) => {
+                      profileFormik.setFieldValue(
+                        'birthday',
+                        value ? value.format('MM/DD/YYYY') : ''
+                      );
+                    }}
+                    renderInput={(params) => {
+                      return (
+                        <Box sx={{ position: 'relative' }}>
                           <StyledUserEditTextField
                             {...params}
-                            placeholder="Birthday"
+                            placeholder="MM/DD/YYYY"
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <CalendarTodayIcon />
+                                </InputAdornment>
+                              ),
+                            }}
                           />
-                        );
-                      }}
-                    />
-                  </LocalizationProvider>
-                </UIFlexWrapBox>
-                {/* <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Address2:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="address.address2"
-                    value={profileFormik.values.address?.address2 ?? ''}
-                    onChange={profileFormik.handleChange}
+                        </Box>
+                      );
+                    }}
                   />
-                </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>State:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="address.state"
-                    value={profileFormik.values.address?.state ?? ''}
-                    onChange={profileFormik.handleChange}
-                  />
-                </UIFlexWrapBox> */}
-                {/* <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Country:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="address.country"
-                    value={profileFormik.values.address?.country ?? ''}
-                    onChange={profileFormik.handleChange}
-                  />
-                </UIFlexWrapBox> */}
-              </Stack>
+                </LocalizationProvider>
+              </UIFlexWrapBox>
             </UIFlexWrapBox>
           </Box>
         </StyledUserInfoCardContent>

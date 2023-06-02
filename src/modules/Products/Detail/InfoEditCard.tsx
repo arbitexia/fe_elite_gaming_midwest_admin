@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
 import { FormikProps } from 'formik';
-import { Box, Typography, Stack } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import {
   UICardBox,
   UIFlexWrapBox,
@@ -9,16 +8,7 @@ import {
   UIInfoTitle,
   UIFlexSpaceBox,
 } from '@/components/UI';
-import { formats, modules } from '@/constants';
 import { Product } from '@/types';
-import 'react-quill/dist/quill.snow.css';
-
-const ReactQuill = dynamic(
-  () => {
-    return import('react-quill');
-  },
-  { loading: () => null, ssr: false }
-);
 
 interface IProductsDetailInfoEditCard {
   productFormik: FormikProps<Product.Data>;

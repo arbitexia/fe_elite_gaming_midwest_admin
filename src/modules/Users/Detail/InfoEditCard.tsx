@@ -9,9 +9,8 @@ import {
   MenuItem,
   InputAdornment,
 } from '@mui/material';
-import { userStatus } from '@/constants/user';
+import { userRole, userStatus } from '@/constants/user';
 import { UIFlexWrapBox, UIActionButton } from '@/components/UI';
-import { UserRole } from '@/constants/enum';
 import { useAsset, useAuth } from '@/hooks';
 import { UpdateUserParam, UserType } from '@/types';
 import { CalendarToday as CalendarTodayIcon } from '@mui/icons-material';
@@ -81,7 +80,7 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
         });
       }
     },
-  });  
+  });
   const onAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const reader = new FileReader();
@@ -311,10 +310,10 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                     onChange={userFormik.handleChange}
                     select
                   >
-                    {Object.values(UserRole).map((item, index) => {
+                    {userRole.map(({ id, value }) => {
                       return (
-                        <MenuItem key={item} value={index + 1}>
-                          {item}
+                        <MenuItem key={id} value={id}>
+                          {value}
                         </MenuItem>
                       );
                     })}

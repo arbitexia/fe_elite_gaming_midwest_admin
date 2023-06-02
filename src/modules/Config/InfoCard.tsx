@@ -4,6 +4,7 @@ import {
   UIFlexWrapBox,
   UIFlexSpaceBox,
   UIDefaultButton,
+  UIFlexColumnBox,
 } from '@/components/UI';
 import { ConfigInputType, ConfigType } from '@/types';
 import {
@@ -59,44 +60,42 @@ const ConfigInfoCard = ({
         </Stack>
       </UIFlexSpaceBox>
       <Divider sx={{ my: '18px' }} />
-      <StyledConfigInfoCard>
-        <StyledConfigInfoCardHeader />
-        <StyledConfigInfoCardContent>
-          <Box flex="1">
-            <UIFlexWrapBox sx={{ paddingTop: '20px' }}>
-              <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledConfigInfoTitle>Daily:</StyledConfigInfoTitle>
-                  <StyledConfigEditTextField
-                    type="number"
-                    name="daily"
-                    value={configFormik.values.daily}
-                    onChange={configFormik.handleChange}
-                  />
-                </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledConfigInfoTitle>Weekly:</StyledConfigInfoTitle>
-                  <StyledConfigEditTextField
-                    type="number"
-                    name="weekly"
-                    value={configFormik.values.weekly}
-                    onChange={configFormik.handleChange}
-                  />
-                </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledConfigInfoTitle>Monthly:</StyledConfigInfoTitle>
-                  <StyledConfigEditTextField
-                    type="number"
-                    name="monthly"
-                    value={configFormik.values.monthly}
-                    onChange={configFormik.handleChange}
-                  />
-                </UIFlexWrapBox>
-              </Stack>
+      <UIFlexColumnBox
+        sx={{ alignItems: 'center', height: 'calc(100vh - 380px)' }}
+      >
+        <StyledConfigInfoCard>
+          <StyledConfigInfoCardHeader />
+          <StyledConfigInfoCardContent>
+            <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+              <StyledConfigInfoTitle>Daily:</StyledConfigInfoTitle>
+              <StyledConfigEditTextField
+                type="number"
+                name="daily"
+                value={configFormik.values.daily}
+                onChange={configFormik.handleChange}
+              />
             </UIFlexWrapBox>
-          </Box>
-        </StyledConfigInfoCardContent>
-      </StyledConfigInfoCard>
+            <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+              <StyledConfigInfoTitle>Weekly:</StyledConfigInfoTitle>
+              <StyledConfigEditTextField
+                type="number"
+                name="weekly"
+                value={configFormik.values.weekly}
+                onChange={configFormik.handleChange}
+              />
+            </UIFlexWrapBox>
+            <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+              <StyledConfigInfoTitle>Monthly:</StyledConfigInfoTitle>
+              <StyledConfigEditTextField
+                type="number"
+                name="monthly"
+                value={configFormik.values.monthly}
+                onChange={configFormik.handleChange}
+              />
+            </UIFlexWrapBox>
+          </StyledConfigInfoCardContent>
+        </StyledConfigInfoCard>
+      </UIFlexColumnBox>
     </Box>
   );
 };

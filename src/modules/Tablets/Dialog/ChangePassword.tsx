@@ -11,8 +11,8 @@ import {
 } from '@/components/UI';
 import { AppModal } from '@/components/App';
 import { TabletType } from '@/types';
-import { UserStatus } from '@/constants';
 import { useAppToast } from '@/providers';
+import { TabletChangePwdSchema } from '@/libs/yupSchema';
 
 type ChangePasswordProps = {
   selectedTablet?: TabletType.Data;
@@ -28,53 +28,60 @@ const ChangePasswordDialog = ({
 }: ChangePasswordProps) => {
   const { onChangePasswordTablet } = useTablet();
   const appToast = useAppToast();
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  const initValues: TabletType.ChangePasswordParam = {
+  const initValues: TabletType.ChangePasswordParam & {
+    confirmPassword: string;
+  } = {
     tabletId: 0,
     oldPassword: '',
     password: '',
+    confirmPassword: '',
   };
+  const [errorMsg, setErrorMsg] = useState<string>();
 
   const resetValues = () => {
     tabletFormik.resetForm();
-    setConfirmPassword('');
   };
 
   const tabletFormik = useFormik({
     initialValues: initValues,
+    validationSchema: TabletChangePwdSchema,
     onSubmit: async (values) => {
-      if (!values?.oldPassword) {
-        appToast({
-          severity: 'error',
-          message: 'The old password is required!',
-        });
-        return;
+      try {
+        const dataToSave: TabletType.ChangePasswordParam = {
+          tabletId: selectedTablet ? selectedTablet.id : 0,
+          oldPassword: values.oldPassword,
+          password: values?.password,
+        };
+        await onChangePasswordTablet(dataToSave);
+        onClose();
+        resetValues();
+      } catch (error) {
+        console.log(error);
       }
-      if (!values?.password && !selectedTablet) {
-        appToast({
-          severity: 'error',
-          message: 'The password is required!',
-        });
-        return;
-      }
-      if (values?.password !== confirmPassword && !selectedTablet) {
-        appToast({
-          severity: 'error',
-          message: 'Passwords do not match! Please try again!',
-        });
-        return;
-      }
-      const dataToSave: TabletType.ChangePasswordParam = {
-        tabletId: selectedTablet ? selectedTablet.id : 0,
-        oldPassword: values.oldPassword,
-        password: values?.password,
-      };
-      onChangePasswordTablet(dataToSave);
-      onClose();
-      resetValues();
     },
   });
+
+  useEffect(() => {
+    if (errorMsg) {
+      appToast({
+        severity: 'error',
+        message: errorMsg,
+      });
+      setErrorMsg(undefined);
+    }
+  }, [errorMsg]);
+
+  const handleClickSave = (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (JSON.stringify(tabletFormik.errors) !== '{}') {
+      const errorKey = Object.keys(
+        tabletFormik.errors
+      )[0] as keyof typeof tabletFormik.errors;
+      setErrorMsg(tabletFormik.errors[errorKey] as string | undefined);
+      return;
+    }
+    tabletFormik.handleSubmit();
+  };
 
   return (
     <AppModal
@@ -85,7 +92,7 @@ const ChangePasswordDialog = ({
         resetValues();
       }}
     >
-      <Box component="form" onSubmit={tabletFormik.handleSubmit} sx={{ p: 4 }}>
+      <Box component="form" onSubmit={handleClickSave} sx={{ p: 4 }}>
         <UIFlexCenterBox>
           <Stack direction="column" sx={{ width: '100%', gap: '10px' }}>
             <UIFlexWrapBox sx={{ alignItems: 'center' }}>
@@ -116,8 +123,8 @@ const ChangePasswordDialog = ({
                 type="password"
                 name="confirmPassword"
                 sx={{ width: '250px' }}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={tabletFormik.values?.confirmPassword ?? ''}
+                onChange={tabletFormik.handleChange}
               />
             </UIFlexWrapBox>
           </Stack>

@@ -36,13 +36,11 @@ const ProfilePage = () => {
   return (
     <DashboardLayout title="Profile">
       {profileData && (
-        <Stack direction="column" spacing={2.5} paddingTop={4}>
-          <ProfileEdit
-            user={me as UserType.User}
-            onEdit={handleEdit}
-            onChangePassword={() => setOpenModal(true)}
-          />
-        </Stack>
+        <ProfileEdit
+          user={me as UserType.User}
+          onEdit={handleEdit}
+          onChangePassword={() => setOpenModal(true)}
+        />
       )}
       <ChangePasswordDialog
         open={openModal}

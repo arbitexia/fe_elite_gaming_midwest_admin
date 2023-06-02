@@ -15,6 +15,7 @@ import { TabletType } from '@/types';
 import { UserStatus } from '@/constants';
 import { useAppToast } from '@/providers';
 import { LocationStatus } from '@/constants/enum';
+import { TabletCreateSchema, TabletEditSchema } from '@/libs/yupSchema';
 
 type TabletDialogProps = {
   selectedTablet?: TabletType.Data;
@@ -30,17 +31,16 @@ const TabletDialog = ({
 }: TabletDialogProps) => {
   const { locations } = useLocation();
   const { onCreateTablet, onUpdateTablet } = useTablet();
-
   const appToast = useAppToast();
+  const [errorMsg, setErrorMsg] = useState<string>();
 
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  const initValues: TabletType.Data = {
+  const initValues: TabletType.Data & { confirmPassword: string } = {
     id: 0,
     name: '',
     status: undefined,
     locationId: undefined,
     password: '',
+    confirmPassword: '',
   };
 
   useEffect(() => {
@@ -56,26 +56,12 @@ const TabletDialog = ({
 
   const resetValues = () => {
     tabletFormik.resetForm();
-    setConfirmPassword('');
   };
 
   const tabletFormik = useFormik({
     initialValues: initValues,
+    validationSchema: selectedTablet ? TabletEditSchema : TabletCreateSchema,
     onSubmit: async (values) => {
-      if (!values?.password && !selectedTablet) {
-        appToast({
-          severity: 'error',
-          message: 'The password is required!',
-        });
-        return;
-      }
-      if (values?.password !== confirmPassword && !selectedTablet) {
-        appToast({
-          severity: 'error',
-          message: 'Passwords do not match! Please try again!',
-        });
-        return;
-      }
       const dataToSave: TabletType.Input = {
         input: {
           id: selectedTablet ? selectedTablet.id : 0,
@@ -95,6 +81,28 @@ const TabletDialog = ({
     },
   });
 
+  useEffect(() => {
+    if (errorMsg) {
+      appToast({
+        severity: 'error',
+        message: errorMsg,
+      });
+      setErrorMsg(undefined);
+    }
+  }, [errorMsg]);
+
+  const handleClickSave = (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (JSON.stringify(tabletFormik.errors) !== '{}') {
+      const errorKey = Object.keys(
+        tabletFormik.errors
+      )[0] as keyof typeof tabletFormik.errors;
+      setErrorMsg(tabletFormik.errors[errorKey] as string | undefined);
+      return;
+    }
+    tabletFormik.handleSubmit();
+  };
+
   return (
     <AppModal
       title={actionType.toUpperCase()}
@@ -104,7 +112,7 @@ const TabletDialog = ({
         resetValues();
       }}
     >
-      <Box component="form" onSubmit={tabletFormik.handleSubmit} sx={{ p: 4 }}>
+      <Box component="form" onSubmit={handleClickSave} sx={{ p: 4 }}>
         <UIFlexCenterBox>
           <Stack direction="column" sx={{ width: '100%', gap: '10px' }}>
             <UIFlexWrapBox sx={{ alignItems: 'center' }}>
@@ -174,8 +182,8 @@ const TabletDialog = ({
                     type="password"
                     name="confirmPassword"
                     sx={{ width: '250px' }}
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    value={tabletFormik.values.confirmPassword}
+                    onChange={tabletFormik.handleChange}
                   />
                 </UIFlexWrapBox>
               </>

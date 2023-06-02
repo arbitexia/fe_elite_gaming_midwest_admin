@@ -1,4 +1,4 @@
-import { UIEditTextField, UIFlexWrapBox } from '@/components/UI';
+import { UIEditTextField, UIFlexColumnBox } from '@/components/UI';
 import { styled, Box, Typography } from '@mui/material';
 
 export const StyledConfigInfoTitle = styled(Typography)({
@@ -31,10 +31,10 @@ export const StyledConfigInfoCardHeader = styled(Box)({
   backgroundSize: 'cover',
 });
 
-export const StyledConfigInfoCardContent = styled(UIFlexWrapBox)({
-  padding: '20px 40px',
-  gap: '50px',
+export const StyledConfigInfoCardContent = styled(UIFlexColumnBox)({
   position: 'relative',
+  padding: '42px',
+  gap: '32px',
 });
 
 export const StyledConfigEditTextField = styled(UIEditTextField)({

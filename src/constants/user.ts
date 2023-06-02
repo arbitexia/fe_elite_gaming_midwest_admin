@@ -1,4 +1,4 @@
-import { MenuAction } from '@/constants';
+import { MenuAction, UserRole } from '@/constants';
 
 export const menuActions = [
   { label: 'View more', color: '#28B446', action: MenuAction.VIEW },
@@ -47,4 +47,11 @@ export const userStatus = [
   { id: 'DISABLED', value: 'Disabled' },
   { id: 'VERIFY_EMAIL', value: 'Verify Email' },
   { id: 'VERIFY_PHONE', value: 'Verify Phone' },
+];
+
+export const userRole = [
+  { id: 1, value: UserRole.GUEST },
+  { id: 2, value: UserRole.CUSTOMER },
+  { id: 4, value: UserRole.ADMIN },
+  { id: 5, value: UserRole.SUPER },
 ];
