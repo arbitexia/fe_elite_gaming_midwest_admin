@@ -17,7 +17,7 @@ import {
   UIOptionMenu,
   UIOptionMenuItem,
 } from '@/components/UI';
-import { getColor } from '@/libs/data-helper';
+import { formatCurrency, getColor } from '@/libs/data-helper';
 import { menuRewardActions } from '@/_mock/users';
 import { MenuAction } from '@/constants';
 import ConfirmModal from '@/components/App/Modal/ConfirmModal';
@@ -93,8 +93,12 @@ const RewardDetailTable = ({
                 >
                   {product?.short}
                 </UIListTableCell>
-                <UIListTableCell>{point}</UIListTableCell>
-                <UIListTableCell>{coupon}</UIListTableCell>
+                <UIListTableCell>
+                  {point ? `E ${formatCurrency(point)}` : ''}
+                </UIListTableCell>
+                <UIListTableCell>
+                  {coupon ? formatCurrency(coupon) : ''}
+                </UIListTableCell>
                 <UIListTableCell>
                   <UIChip
                     label={product?.status}

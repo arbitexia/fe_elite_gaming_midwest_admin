@@ -67,3 +67,12 @@ export const formatPhoneNumber = (str: string) => {
 export const phoneNumberToString = (str: string) => {
   return ('' + str).replace(/\D/g, '');
 };
+
+export const formatCurrency = (amount: number) => {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
+  return formatter.format(amount);
+};
