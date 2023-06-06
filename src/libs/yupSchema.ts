@@ -103,3 +103,16 @@ export const ProductSchema = Yup.object().shape({
   short: Yup.string().required(),
   description: Yup.string(),
 });
+
+export const ForgotPasswordSchema = Yup.object({
+  identifier: Yup.string().email().required('Email is required'),
+});
+
+export const ResetPasswordSchema = Yup.object({
+  password: Yup.string()
+    .min(8, 'Password should be of minimum 8 characters length')
+    .required('Password is required'),
+  confirmPassword: Yup.string()
+    .required('Confirm password is required')
+    .oneOf([Yup.ref('password')], 'Passwords must match'),
+});

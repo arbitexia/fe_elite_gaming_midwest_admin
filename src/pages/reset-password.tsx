@@ -23,21 +23,11 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useAuth } from '@/hooks';
 import { useRouter } from 'next/router';
+import { ResetPasswordSchema } from '@/libs/yupSchema';
 
 type ResetPasswordValue = {
   password: string;
 };
-
-export const ResetPasswordSchema = yup.object({
-  password: yup
-    .string()
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
-  confirmPassword: yup
-    .string()
-    .required('Confirm password is required')
-    .oneOf([yup.ref('password')], 'Passwords must match'),
-});
 
 const ResetPassword = () => {
   const router = useRouter();

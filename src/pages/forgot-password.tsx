@@ -14,16 +14,12 @@ import {
 } from '@/components/UI';
 import { AuthLayout } from '@/layouts';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import { useAuth } from '@/hooks';
+import { ForgotPasswordSchema } from '@/libs/yupSchema';
 
 type LoginValue = {
   identifier: string;
 };
-
-export const ForgotPasswordSchema = yup.object({
-  identifier: yup.string().email().required('Email is required'),
-});
 
 const ForgotPassword = () => {
   const { onForgotPassword } = useAuth();
