@@ -18,10 +18,8 @@ const CreateEmailTemplate = () => {
         console.log(error);
       }
     };
-    if (!sendinEmails || sendinEmails.length === 0) {
-      fetchSendinBlueEmails();
-    }
-  }, [sendinEmails]);
+    fetchSendinBlueEmails();
+  }, []);
 
   const handleClickAction = async (value: EmailTemplateType.Body) => {
     try {

@@ -106,7 +106,7 @@ export declare namespace ReduxJson {
   export type ConfigState = {
     loading: boolean;
     status: ResponseStatus | null;
-    configItem: ConfigType;
+    configItem: ConfigType | null;
     message: string | null;
     error: string | null;
   };

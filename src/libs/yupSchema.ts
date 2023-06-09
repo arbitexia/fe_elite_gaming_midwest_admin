@@ -116,3 +116,10 @@ export const ResetPasswordSchema = Yup.object({
     .required('Confirm password is required')
     .oneOf([Yup.ref('password')], 'Passwords must match'),
 });
+
+export const RewardSchema = Yup.object({
+  point: Yup.number().positive().required(),
+  pointThreshold: Yup.number().max(Yup.ref('point')),
+  coupon: Yup.number().positive().required(),
+  couponThreshold: Yup.number().max(Yup.ref('coupon')),
+});

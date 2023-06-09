@@ -13,7 +13,7 @@ const initialState: ReduxJson.EmailTemplateState = {
   error: null,
   emailTemplates: null,
   pageInfo: null,
-  sendinEmails: [],
+  sendinEmails: null,
   emailTemplate: null,
 };
 

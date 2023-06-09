@@ -42,7 +42,7 @@ const EditEmailTemplatePage = () => {
         return;
       }
       setSelectedEmailTemplate(filteredItem);
-      if (sendinEmails?.length === 0) {
+      if (!sendinEmails) {
         fetchSendinBlueEmails();
       }
     }

@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { Box, Typography, Stack, Divider } from '@mui/material';
+import { Box, Typography, Stack, Divider, InputAdornment } from '@mui/material';
 import {
   UIFlexWrapBox,
   UIFlexSpaceBox,
@@ -90,6 +90,30 @@ const ConfigInfoCard = ({
                 type="number"
                 name="monthly"
                 value={configFormik.values.monthly}
+                onChange={configFormik.handleChange}
+              />
+            </UIFlexWrapBox>
+            <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+              <StyledConfigInfoTitle>Checkin threshold:</StyledConfigInfoTitle>
+              <StyledConfigEditTextField
+                type="number"
+                name="checkinThreshold"
+                value={configFormik.values?.checkinThreshold ?? 0}
+                onChange={configFormik.handleChange}
+              />
+            </UIFlexWrapBox>
+
+            <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+              <StyledConfigInfoTitle>Coupon:</StyledConfigInfoTitle>
+              <StyledConfigEditTextField
+                type="number"
+                name="coupon"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  ),
+                }}
+                value={configFormik.values?.coupon ?? 0}
                 onChange={configFormik.handleChange}
               />
             </UIFlexWrapBox>
