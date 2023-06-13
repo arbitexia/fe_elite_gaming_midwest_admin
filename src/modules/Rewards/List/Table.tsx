@@ -35,19 +35,6 @@ const Row = ({ row, id }: { row: Reward.DataList; id: number }) => {
         <UIListTableCell align="center">{row.address.state}</UIListTableCell>
         <UIListTableCell align="center">{row.address.city}</UIListTableCell>
       </UIListTableRow>
-      {/* {open && row.reward.length > 0 && (
-        <UIListTableRow>
-          <UIListTableCell sx={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                <RewardDetailTable
-                  rewards={row.reward.map((reward) => reward.product)}
-                />
-              </Box>
-            </Collapse>
-          </UIListTableCell>
-        </UIListTableRow>
-      )} */}
     </>
   );
 };

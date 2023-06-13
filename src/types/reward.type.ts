@@ -9,6 +9,8 @@ export declare namespace Reward {
     product?: Product.Data;
     point?: number;
     coupon?: number;
+    pointThreshold?: number;
+    couponThreshold?: number;
     createdAt?: string;
     updatedAt?: string;
   };

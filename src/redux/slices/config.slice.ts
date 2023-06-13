@@ -16,11 +16,13 @@ const initConfigData: ConfigType = {
   daily: 50,
   weekly: 50,
   monthly: 50,
+  checkinThreshold: 0,
+  coupon: 0,
 };
 const initialState: ReduxJson.ConfigState = {
   loading: true,
   status: null,
-  configItem: initConfigData,
+  configItem: null,
   message: null,
   error: null,
 };
