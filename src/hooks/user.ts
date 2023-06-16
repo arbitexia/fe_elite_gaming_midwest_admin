@@ -45,6 +45,7 @@ export const useUser = () => {
   };
 
   return {
+    loading,
     users,
     currentUser,
     pageInfo,

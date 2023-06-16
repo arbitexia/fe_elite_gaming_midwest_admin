@@ -19,7 +19,7 @@ export const UserSchema = Yup.object({
     .min(8, tooShort)
     .max(60, tooLong)
     .required('Email is required'),
-  status: Yup.string().required('Status is required'),
+  status: Yup.string(),
   roleId: Yup.number().required('User role is required'),
 });
 

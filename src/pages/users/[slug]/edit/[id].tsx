@@ -17,7 +17,7 @@ const UsersDetailPage = () => {
   return (
     <DashboardLayout title="Users">
       {currentId === parseInt(id as string) && currentUser && (
-        <UserDetailInfoEditCard user={currentUser} />
+        <UserDetailInfoEditCard user={currentUser} type={'edit'} />
       )}
     </DashboardLayout>
   );

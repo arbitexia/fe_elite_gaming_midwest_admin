@@ -1,8 +1,11 @@
+import { useEffect } from 'react';
 import { UserDetailInfoEditCard } from '@/modules/Users';
 import { DashboardLayout } from '@/layouts';
 import { UserType } from '@/types';
+import { useLocation } from '@/hooks';
 
 const UsersDetailPage = () => {
+  const { onGetLocations } = useLocation();
   const initUserData: UserType.User = {
     id: 0,
     firstName: '',
@@ -16,13 +19,17 @@ const UsersDetailPage = () => {
       zipcode: '',
       country: '',
     },
+    locationId: 0,
     phone: '',
     birthday: '',
     createdAt: '',
   };
+  useEffect(() => {
+    onGetLocations({ filterBy: { search: '' } });
+  }, []);
   return (
     <DashboardLayout title="Users">
-      <UserDetailInfoEditCard user={initUserData} />
+      <UserDetailInfoEditCard user={initUserData} type="create" />
     </DashboardLayout>
   );
 };

@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { userRole, userStatus } from '@/constants/user';
 import { UIFlexWrapBox, UIActionButton } from '@/components/UI';
-import { useAsset, useAuth } from '@/hooks';
+import { useAsset, useAuth, useLocation } from '@/hooks';
 import { UpdateUserParam, UserType } from '@/types';
 import { CalendarToday as CalendarTodayIcon } from '@mui/icons-material';
 
@@ -39,16 +39,17 @@ import { UserSchema } from '@/libs/yupSchema';
 
 interface UsersDetailHeaderProps {
   user: UserType.User;
+  type: 'create' | 'edit';
 }
 
-const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
+const UserDetailInfoCard = ({ user, type }: UsersDetailHeaderProps) => {
   const router = useRouter();
   const { slug } = router.query;
   const [uploadPhoto, setUploadPhoto] = useState<File>();
   const [selectedFile, setSelectedFile] = useState<string>();
   const [errorMsg, setErrorMsg] = useState<string>();
   const appToast = useAppToast();
-
+  const { locations } = useLocation();
   const { onCreateNewUser, onUpdateUser } = useAuth({
     handleRegisterUserSuccess: () => {
       router.push('/users/customers');
@@ -235,23 +236,43 @@ const UserDetailInfoCard = ({ user }: UsersDetailHeaderProps) => {
                     onChange={userFormik.handleChange}
                   />
                 </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledUserInfoTitle>Status:</StyledUserInfoTitle>
-                  <StyledUserEditTextField
-                    name="status"
-                    onChange={userFormik.handleChange}
-                    value={userFormik.values.status}
-                    select
-                  >
-                    {userStatus.map((item) => {
-                      return (
-                        <MenuItem key={item.id} value={item.id}>
-                          {item.value}
-                        </MenuItem>
-                      );
-                    })}
-                  </StyledUserEditTextField>
-                </UIFlexWrapBox>
+                {type === 'edit' ? (
+                  <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                    <StyledUserInfoTitle>Status:</StyledUserInfoTitle>
+                    <StyledUserEditTextField
+                      name="status"
+                      onChange={userFormik.handleChange}
+                      value={userFormik.values.status}
+                      select
+                    >
+                      {userStatus.map((item) => {
+                        return (
+                          <MenuItem key={item.id} value={item.id}>
+                            {item.value}
+                          </MenuItem>
+                        );
+                      })}
+                    </StyledUserEditTextField>
+                  </UIFlexWrapBox>
+                ) : (
+                  <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                    <StyledUserInfoTitle>Locations:</StyledUserInfoTitle>
+                    <StyledUserEditTextField
+                      name="locationId"
+                      onChange={userFormik.handleChange}
+                      value={userFormik.values.locationId}
+                      select
+                    >
+                      {locations?.map((item) => {
+                        return (
+                          <MenuItem key={item.id} value={item.id}>
+                            {item.name}
+                          </MenuItem>
+                        );
+                      })}
+                    </StyledUserEditTextField>
+                  </UIFlexWrapBox>
+                )}
               </Stack>
               <Stack direction="column" sx={{ width: '49%', gap: '10px' }}>
                 <UIFlexWrapBox sx={{ alignItems: 'center' }}>

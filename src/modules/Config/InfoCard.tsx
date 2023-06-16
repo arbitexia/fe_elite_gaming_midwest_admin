@@ -1,19 +1,31 @@
+import { useState } from 'react';
 import { useFormik } from 'formik';
-import { Box, Typography, Stack, Divider, InputAdornment } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Stack,
+  Divider,
+  InputAdornment,
+  Tabs,
+  Tab,
+  TextField,
+} from '@mui/material';
+import { SecurityUpdateGood, Schedule } from '@mui/icons-material';
 import {
   UIFlexWrapBox,
   UIFlexSpaceBox,
   UIDefaultButton,
-  UIFlexColumnBox,
+  UIInfoTitle,
+  UIInfoValue,
 } from '@/components/UI';
 import { ConfigInputType, ConfigType } from '@/types';
 import {
   StyledConfigInfoTitle,
   StyledConfigInfoCard,
-  StyledConfigInfoCardHeader,
   StyledConfigInfoCardContent,
   StyledConfigEditTextField,
 } from './ui';
+
 interface ConfigInfoCardProps {
   configData: ConfigType;
   onCreateConfig: (value: ConfigInputType) => void;
@@ -23,6 +35,7 @@ const ConfigInfoCard = ({
   configData,
   onCreateConfig,
 }: ConfigInfoCardProps) => {
+  const [currentTab, setCurrentTab] = useState(0);
   const configFormik = useFormik({
     initialValues: configData,
     onSubmit: async (values) => {
@@ -60,52 +73,99 @@ const ConfigInfoCard = ({
         </Stack>
       </UIFlexSpaceBox>
       <Divider sx={{ my: '18px' }} />
-      <UIFlexColumnBox
-        sx={{ alignItems: 'center', height: 'calc(100vh - 380px)' }}
-      >
-        <StyledConfigInfoCard>
-          <StyledConfigInfoCardHeader />
-          <StyledConfigInfoCardContent>
-            <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-              <StyledConfigInfoTitle>Daily:</StyledConfigInfoTitle>
-              <StyledConfigEditTextField
-                type="number"
-                name="daily"
-                value={configFormik.values.daily}
-                onChange={configFormik.handleChange}
-              />
-            </UIFlexWrapBox>
-            <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-              <StyledConfigInfoTitle>Weekly:</StyledConfigInfoTitle>
-              <StyledConfigEditTextField
-                type="number"
-                name="weekly"
-                value={configFormik.values.weekly}
-                onChange={configFormik.handleChange}
-              />
-            </UIFlexWrapBox>
-            <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-              <StyledConfigInfoTitle>Monthly:</StyledConfigInfoTitle>
-              <StyledConfigEditTextField
-                type="number"
-                name="monthly"
-                value={configFormik.values.monthly}
-                onChange={configFormik.handleChange}
-              />
-            </UIFlexWrapBox>
-            <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-              <StyledConfigInfoTitle>Checkin threshold:</StyledConfigInfoTitle>
-              <StyledConfigEditTextField
-                type="number"
-                name="checkinThreshold"
-                value={configFormik.values?.checkinThreshold ?? 0}
-                onChange={configFormik.handleChange}
-              />
-            </UIFlexWrapBox>
 
-            <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-              <StyledConfigInfoTitle>Coupon:</StyledConfigInfoTitle>
-              <StyledConfigEditTextField
+      <StyledConfigInfoCard>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            height: '100%',
+          }}
+        >
+          <Tabs
+            value={currentTab}
+            orientation="vertical"
+            onChange={(event: React.SyntheticEvent, newValue: number) =>
+              setCurrentTab(newValue)
+            }
+            sx={{
+              borderRight: 1,
+              borderColor: 'divider',
+              minWidth: 'max-content',
+            }}
+          >
+            <Tab
+              label="Checkin"
+              sx={{
+                justifyContent: 'flex-start',
+                mt: 2,
+                mx: 2,
+                minHeight: '40px',
+              }}
+              icon={<Schedule sx={{ width: '18px', mb: '2px' }} />}
+              iconPosition="start"
+            />
+            <Tab
+              label="Back office"
+              sx={{ justifyContent: 'flex-start', mx: 2, minHeight: '48px' }}
+              icon={<SecurityUpdateGood sx={{ width: '18px', mb: '2px' }} />}
+              iconPosition="start"
+            />
+          </Tabs>
+
+          {currentTab === 0 && (
+            <UIFlexWrapBox sx={{ flexWrap: 'nowrap', ml: 4 }}>
+              <StyledConfigInfoCardContent>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                  <StyledConfigInfoTitle>Daily:</StyledConfigInfoTitle>
+                  <StyledConfigEditTextField
+                    type="number"
+                    name="daily"
+                    value={configFormik.values.daily}
+                    onChange={configFormik.handleChange}
+                  />
+                </UIFlexWrapBox>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                  <StyledConfigInfoTitle>Weekly:</StyledConfigInfoTitle>
+                  <StyledConfigEditTextField
+                    type="number"
+                    name="weekly"
+                    value={configFormik.values.weekly}
+                    onChange={configFormik.handleChange}
+                  />
+                </UIFlexWrapBox>
+                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                  <StyledConfigInfoTitle>Monthly:</StyledConfigInfoTitle>
+                  <StyledConfigEditTextField
+                    type="number"
+                    name="monthly"
+                    value={configFormik.values.monthly}
+                    onChange={configFormik.handleChange}
+                  />
+                </UIFlexWrapBox>
+              </StyledConfigInfoCardContent>
+              <StyledConfigInfoCardContent>
+                <UIInfoTitle>Description</UIInfoTitle>
+                <UIInfoValue sx={{ pr: 4 }}>
+                  Et in lorem qui ipsum deserunt duis exercitation lorem elit
+                  qui qui ipsum tempor nulla velit aliquip enim consequat
+                  incididunt pariatur duis excepteur elit irure nulla ipsum
+                  dolor dolore est. Aute deserunt nostrud id non ipsum do
+                  adipisicing laboris in minim officia magna elit minim mollit
+                  elit velit veniam lorem pariatur veniam sit excepteur irure
+                  commodo excepteur duis quis in.
+                </UIInfoValue>
+              </StyledConfigInfoCardContent>
+            </UIFlexWrapBox>
+          )}
+
+          {currentTab === 1 && (
+            <UIFlexWrapBox
+              sx={{ alignItems: 'center', height: '180px', ml: 4 }}
+            >
+              <Typography>Customers get</Typography>
+              <TextField
+                variant="standard"
                 type="number"
                 name="coupon"
                 InputProps={{
@@ -115,11 +175,22 @@ const ConfigInfoCard = ({
                 }}
                 value={configFormik.values?.coupon ?? 0}
                 onChange={configFormik.handleChange}
+                sx={{ width: '120px' }}
               />
+              <Typography>freeplay when they check in for</Typography>
+              <TextField
+                variant="standard"
+                type="number"
+                name="checkinThreshold"
+                value={configFormik.values?.checkinThreshold ?? 0}
+                onChange={configFormik.handleChange}
+                sx={{ width: '80px' }}
+              />
+              <Typography>times.</Typography>
             </UIFlexWrapBox>
-          </StyledConfigInfoCardContent>
-        </StyledConfigInfoCard>
-      </UIFlexColumnBox>
+          )}
+        </Box>
+      </StyledConfigInfoCard>
     </Box>
   );
 };

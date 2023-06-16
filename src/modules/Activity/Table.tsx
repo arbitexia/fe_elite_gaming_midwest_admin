@@ -204,7 +204,7 @@ const ActivityTable = ({
               {activity.attributes.status}
             </UIInfoValue>
           </UIFlexWrapBox>
-          {!activity.attributes.description.includes('jwt expired') && (
+          {!activity?.attributes?.description?.includes('jwt expired') && (
             <UIFlexWrapBox sx={{ alignItems: 'flex-start' }}>
               <DescriptionIcon sx={{ fontSize: '16px' }} />
               <UIInfoValue sx={{ width: 'auto' }}>

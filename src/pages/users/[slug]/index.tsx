@@ -54,10 +54,18 @@ const UsersListPage = () => {
   }, [emailTemplates]);
 
   useEffect(() => {
-    if (slug) {
+    if (slug && !deletedCustomerId) {
       handleSearch();
     }
-  }, [searchValue, searchStatus, searchLocation, page, rowsPerPage, slug]);
+  }, [
+    searchValue,
+    searchStatus,
+    searchLocation,
+    page,
+    rowsPerPage,
+    slug,
+    deletedCustomerId,
+  ]);
 
   const handleSearch = () => {
     onGetUsers({
@@ -151,7 +159,7 @@ const UsersListPage = () => {
         }}
         title="Delete"
         content="Are you sure you want to remove this user?"
-        onAction={() => {
+        onAction={async () => {
           if (deletedCustomerId) {
             onDeleteUser(deletedCustomerId);
             setDeletedCustomerId(undefined);
