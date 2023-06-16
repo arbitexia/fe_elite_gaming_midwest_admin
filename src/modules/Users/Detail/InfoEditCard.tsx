@@ -36,6 +36,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { Moment } from 'moment';
 import { UserSchema } from '@/libs/yupSchema';
+import { UserRoleIDEnum } from '@/constants';
 
 interface UsersDetailHeaderProps {
   user: UserType.User;
@@ -50,7 +51,7 @@ const UserDetailInfoCard = ({ user, type }: UsersDetailHeaderProps) => {
   const [errorMsg, setErrorMsg] = useState<string>();
   const appToast = useAppToast();
   const { locations } = useLocation();
-  const { onCreateNewUser, onUpdateUser } = useAuth({
+  const { me, onCreateNewUser, onUpdateUser } = useAuth({
     handleRegisterUserSuccess: () => {
       router.push('/users/customers');
     },
@@ -225,6 +226,7 @@ const UserDetailInfoCard = ({ user, type }: UsersDetailHeaderProps) => {
                     name="phone"
                     value={formatPhoneNumber(userFormik.values.phone)}
                     onChange={userFormik.handleChange}
+                    inputProps={{ maxLength: 12 }}
                     disabled={user?.id > 0 ? true : false}
                   />
                 </UIFlexWrapBox>
@@ -332,6 +334,12 @@ const UserDetailInfoCard = ({ user, type }: UsersDetailHeaderProps) => {
                     select
                   >
                     {userRole.map(({ id, value }) => {
+                      if (
+                        (me as UserType.User).roleId === UserRoleIDEnum.ADMIN &&
+                        id === UserRoleIDEnum.SUPER
+                      ) {
+                        return;
+                      }
                       return (
                         <MenuItem key={id} value={id}>
                           {value}

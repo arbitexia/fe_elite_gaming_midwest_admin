@@ -30,6 +30,7 @@ export declare namespace Location {
   type Filter = {
     filterBy: {
       search: string;
+      userId?: number;
     };
   };
 }

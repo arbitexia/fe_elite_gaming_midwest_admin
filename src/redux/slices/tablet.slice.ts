@@ -55,7 +55,7 @@ export const updateTablet = createAsyncThunk<
 });
 
 export const deleteTablet = createAsyncThunk<
-  TabletType.Data,
+  CommonType.Message,
   { id: number },
   { dispatch: AppDispatch; state: RootState }
 >('tablet/deleteTablet', async (params: { id: number }, thunkAPI) => {
@@ -173,9 +173,10 @@ export const tabletSlice = createSlice({
       })
       .addCase(
         deleteTablet.fulfilled,
-        (state, { payload }: PayloadAction<TabletType.Data>) => {
+        (state, { payload }: PayloadAction<CommonType.Message>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
+          state.message = payload.message;
           // state.tablets = state.tablets.filter((t) => t.id != payload.id);
         }
       )

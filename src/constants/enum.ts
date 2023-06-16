@@ -118,3 +118,11 @@ export enum EmailTemplateCategoryEnum {
   DECLINE_TRANSACTION = 'DECLINE_TRANSACTION',
   REQUEST_TRANSACTION = 'REQUEST_TRANSACTION',
 }
+
+export enum UserRoleIDEnum {
+  GUEST = 1,
+  USER = 2,
+  TABLET = 3,
+  ADMIN = 4,
+  SUPER = 5,
+}

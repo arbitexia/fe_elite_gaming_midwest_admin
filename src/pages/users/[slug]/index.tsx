@@ -10,15 +10,17 @@ import {
 import { DashboardLayout } from '@/layouts';
 import { slugIndex } from '@/constants/user';
 import { useRouter } from 'next/router';
-import { useEmailTemplate, useLocation, useUser } from '@/hooks';
-import { EmailTemplateType } from '@/types';
+import { useAuth, useEmailTemplate, useLocation, useUser } from '@/hooks';
+import { EmailTemplateType, UserType } from '@/types';
 import ConfirmModal from '@/components/App/Modal/ConfirmModal';
+import { UserRoleIDEnum } from '@/constants';
 
 const UsersListPage = () => {
   const router = useRouter();
   const { slug } = router.query;
   const { users, pageInfo, onGetUsers, onDeleteUser } = useUser();
   const { locations, onGetLocations } = useLocation();
+  const { me } = useAuth();
   const {
     emailTemplates,
     onGetEmailTemplates,
@@ -38,7 +40,14 @@ const UsersListPage = () => {
 
   useEffect(() => {
     if (!locations) {
-      onGetLocations({ filterBy: { search: '' } });
+      onGetLocations({
+        filterBy: {
+          search: '',
+          ...((me as UserType.User)?.roleId === UserRoleIDEnum.ADMIN && {
+            userId: Number((me as UserType.User).id),
+          }),
+        },
+      });
     }
   }, [locations]);
 

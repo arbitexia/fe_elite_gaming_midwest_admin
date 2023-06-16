@@ -25,6 +25,7 @@ import { getColor } from '@/libs/data-helper';
 import { TabletType } from '@/types';
 import { useTablet } from '@/hooks';
 import ConfirmModal from '@/components/App/Modal/ConfirmModal';
+import { useAppToast } from '@/providers';
 
 type TabletsTableProps = {
   tabletsTableData: TabletType.Data[];
@@ -41,6 +42,7 @@ const TabletsTable = ({
 }: TabletsTableProps) => {
   const router = useRouter();
   const { onDeleteTablet } = useTablet();
+  const appToast = useAppToast();
   const [selected, setSelected] = useState<readonly string[]>([]);
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);

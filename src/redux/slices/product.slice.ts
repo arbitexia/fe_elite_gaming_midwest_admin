@@ -206,9 +206,6 @@ export const productSlice = createSlice({
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.message = payload.message;
-          state.products = state.products.filter(
-            (product) => product.id !== parseInt(payload.id)
-          );
         }
       )
       .addCase(deleteProduct.rejected, (state, { payload }) => {

@@ -78,10 +78,6 @@ const ProductsTable = ({
   const handleOk = () => {
     onDeleteProduct({ id: anchorId });
     setOpenDeleteModal(false);
-    appToast({
-      severity: 'success',
-      message: `The ${name} has been removed!`,
-    });
   };
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -313,7 +309,9 @@ const ProductsTable = ({
               <UIListTableCell align="center" sx={{ color: '#000!important' }}>
                 <IconButton
                   onClick={() => {
-                    handleChangeAmount('Decrease', productItem);
+                    if (productItem.amount > 0) {
+                      handleChangeAmount('Decrease', productItem);
+                    }
                   }}
                 >
                   <MinusIcon />

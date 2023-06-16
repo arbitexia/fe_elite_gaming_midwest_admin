@@ -4,13 +4,23 @@ import { UIFlexCenterBox, UIFlexWrapBox, UIInfoValue } from '@/components/UI';
 import { LocationsHeader, LocationsCard } from '@/modules/Locations';
 import { hasElInArray } from '@/libs/data-helper';
 import { DashboardLayout } from '@/layouts';
-import { useLocation } from '@/hooks';
+import { useAuth, useLocation } from '@/hooks';
+import { UserType } from '@/types';
+import { UserRoleIDEnum } from '@/constants';
 
 const LocationsPage = () => {
   const { locations, onGetLocations } = useLocation();
   const [searchValue, setSearchValue] = useState('');
+  const { me } = useAuth();
   useEffect(() => {
-    onGetLocations({ filterBy: { search: searchValue } });
+    onGetLocations({
+      filterBy: {
+        search: searchValue,
+        ...((me as UserType.User).roleId === UserRoleIDEnum.ADMIN && {
+          userId: Number((me as UserType.User).id),
+        }),
+      },
+    });
   }, [searchValue]);
   return (
     <DashboardLayout title="Locations">
