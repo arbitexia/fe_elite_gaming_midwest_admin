@@ -104,7 +104,7 @@ const ProductsDetailCarouselEditCard = () => {
             onChangeIndex={handleStepChange}
             enableMouseEvents
           >
-            {galleries.length > 0 ? (
+            {galleries?.length > 0 ? (
               galleries.map((gallery, index) => {
                 return Math.abs(activeStep - index) <= 2 ? (
                   <Box
@@ -137,7 +137,7 @@ const ProductsDetailCarouselEditCard = () => {
           sx={{ width: '100px', height: 350 }}
         >
           <Box>
-            {galleries.map((gallery, index) => {
+            {galleries?.map((gallery, index) => {
               return (
                 <Thumbnail
                   key={index}

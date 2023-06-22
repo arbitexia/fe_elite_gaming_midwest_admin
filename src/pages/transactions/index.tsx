@@ -6,11 +6,16 @@ import {
 } from '@/modules/Transactions';
 import { DashboardLayout } from '@/layouts';
 import { Divider } from '@mui/material';
-import { useTransaction } from '@/hooks';
-import { TransactionStatus, transactionsType } from '@/constants';
+import { useAuth, useTransaction } from '@/hooks';
+import {
+  TransactionStatus,
+  UserRoleIDEnum,
+  transactionsType,
+} from '@/constants';
 import { TransactionType } from '@/types';
 
 const TransactionsPage = () => {
+  const { me } = useAuth();
   const { transactions, pageInfo, onGetTransactions, onDeleteTransaction } =
     useTransaction();
   const [searchValue, setSearchValue] = useState('');
@@ -32,6 +37,9 @@ const TransactionsPage = () => {
           search: searchValue,
           status: TransactionStatus.ACCEPTED,
           type: transactionsType.find((obj) => obj.id === searchType)?.value,
+          ...(me?.roleId === UserRoleIDEnum.ADMIN && {
+            locationId: me?.userLocations?.[0]?.locationId,
+          }),
         },
         cursor: { page, size: rowsPerPage },
       });

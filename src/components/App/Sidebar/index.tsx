@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Collapse, List } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { superSidebarItems } from '@/_mock/App';
 import { UIFlexCenterBox, UIImage } from '@/components/UI';
 import {
   StyledSidebarActiveButton,
@@ -12,16 +11,38 @@ import {
   StyledSidebarWrapper,
   StyledSidebarDropButton,
 } from './ui';
+import {
+  superSidebarItems,
+  adminSidebarItems,
+  UserRoleIDEnum,
+} from '@/constants';
+import { MenuItemObj } from '@/types';
+import { useAuth } from '@/hooks';
 
 const Sidebar = () => {
   const router = useRouter();
+  const { me } = useAuth();
+
   const [selectedMenu, setSelectedMenu] = useState<number>(1);
   const [selectedDropdown, setSelectedDropdown] = useState<string>('');
   const [dropdownOpen, setDropdownOpen] = useState('');
+  const [sidebarMenus, setSidebarMenus] =
+    useState<MenuItemObj[]>(adminSidebarItems);
+
   const path = router.asPath;
 
   useEffect(() => {
-    superSidebarItems.map((item) => {
+    if (me) {
+      setSidebarMenus(
+        me.roleId === UserRoleIDEnum.ADMIN
+          ? adminSidebarItems
+          : superSidebarItems
+      );
+    }
+  }, [me]);
+
+  useEffect(() => {
+    sidebarMenus.map((item) => {
       if (item.dropdown)
         item.dropdown.map((dropdown) => {
           if (dropdown.route && path.includes(dropdown.route)) {
@@ -35,7 +56,7 @@ const Sidebar = () => {
         setDropdownOpen(item.text);
       }
     });
-  }, [superSidebarItems, path]);
+  }, [path, sidebarMenus]);
 
   return (
     <StyledSidebarWrapper>
@@ -43,7 +64,7 @@ const Sidebar = () => {
         <UIImage src="images/icons/logo.svg" width={56} height={54} />
       </UIFlexCenterBox>
       <StyledSidebarMenuWrapper>
-        {superSidebarItems.map((item, index) => {
+        {sidebarMenus.map((item, index) => {
           return (
             <Box sx={{ position: 'relative' }} key={index}>
               {item.id === selectedMenu && <StyledSidebarActiveBar />}

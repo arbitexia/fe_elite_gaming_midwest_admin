@@ -147,47 +147,67 @@ const ConfigInfoCard = ({
               <StyledConfigInfoCardContent>
                 <UIInfoTitle>Description</UIInfoTitle>
                 <UIInfoValue sx={{ pr: 4 }}>
-                  Et in lorem qui ipsum deserunt duis exercitation lorem elit
-                  qui qui ipsum tempor nulla velit aliquip enim consequat
-                  incididunt pariatur duis excepteur elit irure nulla ipsum
-                  dolor dolore est. Aute deserunt nostrud id non ipsum do
-                  adipisicing laboris in minim officia magna elit minim mollit
-                  elit velit veniam lorem pariatur veniam sit excepteur irure
-                  commodo excepteur duis quis in.
+                  On the settings page, have three different point allocations
+                  available for customers when they check in on the tablet:
+                  daily, weekly, and monthly. Daily Points: Customers receive{' '}
+                  {configData.daily} points every day when they check in on the
+                  tablet. Weekly Points: In addition to the daily points,
+                  customers also receive {configData.weekly} points on a weekly
+                  basis. Monthly Points: Alongside the daily and weekly points,
+                  customers are rewarded with {configData.monthly} points at the
+                  beginning of each month.
                 </UIInfoValue>
               </StyledConfigInfoCardContent>
             </UIFlexWrapBox>
           )}
 
           {currentTab === 1 && (
-            <UIFlexWrapBox
-              sx={{ alignItems: 'center', height: '180px', ml: 4 }}
-            >
-              <Typography>Customers get</Typography>
-              <TextField
-                variant="standard"
-                type="number"
-                name="coupon"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">$</InputAdornment>
-                  ),
-                }}
-                value={configFormik.values?.coupon ?? 0}
-                onChange={configFormik.handleChange}
-                sx={{ width: '120px' }}
-              />
-              <Typography>freeplay when they check in for</Typography>
-              <TextField
-                variant="standard"
-                type="number"
-                name="checkinThreshold"
-                value={configFormik.values?.checkinThreshold ?? 0}
-                onChange={configFormik.handleChange}
-                sx={{ width: '80px' }}
-              />
-              <Typography>times.</Typography>
-            </UIFlexWrapBox>
+            <Box sx={{ ml: 4, mt: 6 }}>
+              <UIFlexWrapBox sx={{ alignItems: 'center', my: 4 }}>
+                <Typography>Customers will receive a coupon of</Typography>
+                <TextField
+                  variant="standard"
+                  type="number"
+                  name="initialCoupon"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">$</InputAdornment>
+                    ),
+                  }}
+                  value={configFormik.values?.initialCoupon ?? 0}
+                  onChange={configFormik.handleChange}
+                  sx={{ width: '120px' }}
+                />
+                <Typography>upon signing up.</Typography>
+              </UIFlexWrapBox>
+
+              <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+                <Typography>Customers get</Typography>
+                <TextField
+                  variant="standard"
+                  type="number"
+                  name="coupon"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">$</InputAdornment>
+                    ),
+                  }}
+                  value={configFormik.values?.coupon ?? 0}
+                  onChange={configFormik.handleChange}
+                  sx={{ width: '120px' }}
+                />
+                <Typography>freeplay when they check in for</Typography>
+                <TextField
+                  variant="standard"
+                  type="number"
+                  name="checkinThreshold"
+                  value={configFormik.values?.checkinThreshold ?? 0}
+                  onChange={configFormik.handleChange}
+                  sx={{ width: '80px' }}
+                />
+                <Typography>times.</Typography>
+              </UIFlexWrapBox>
+            </Box>
           )}
         </Box>
       </StyledConfigInfoCard>

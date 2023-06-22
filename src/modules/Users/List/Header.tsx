@@ -12,10 +12,10 @@ import {
   UIActionButton,
 } from '@/components/UI';
 import { Send as SendIcon } from '@mui/icons-material';
-import { useLocation } from '@/hooks';
+import { useAuth, useLocation } from '@/hooks';
+import { UserRoleIDEnum } from '@/constants';
 
 interface UsersListHeaderProps {
-  onSearch: () => void;
   searchValue: string;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
   searchStatus: string;
@@ -26,7 +26,6 @@ interface UsersListHeaderProps {
 }
 
 const UsersListHeader = ({
-  onSearch,
   searchValue,
   setSearchValue,
   searchStatus,
@@ -36,6 +35,7 @@ const UsersListHeader = ({
   onOpenSendEmail,
 }: UsersListHeaderProps) => {
   const { locations } = useLocation();
+  const { me } = useAuth();
   const router = useRouter();
   const { slug } = router.query;
   let title = slug as string;
@@ -58,37 +58,45 @@ const UsersListHeader = ({
         {title && `${title.charAt(0).toUpperCase() + title.slice(1)}`}
       </Typography>
       <UIFlexWrapBox sx={{ gap: '40px', alignItems: 'center' }}>
-        <UIFlexCenterBox>
-          <Typography sx={{ fontWeight: 500, fontSize: 14, color: '#374E4E' }}>
-            Locations
-          </Typography>
-          <UIDefaultTextField
-            size="small"
-            select
-            value={searchLocation}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setSearchLocation(e.target.value);
-            }}
-            sx={{
-              width: '160px',
-              '.MuiInputBase-input': {
-                fontWeight: 600,
-                fontSize: 14,
-                lineHeight: '21px',
-                color: 'rgba(137, 200, 198, 0.8)',
-              },
-            }}
-          >
-            <UISelectMenuItem key={'ALL'} value={'ALL'}>
-              ALL
-            </UISelectMenuItem>
-            {locations?.map((option) => (
-              <UISelectMenuItem key={`location${option.id}`} value={option.id}>
-                {option.name}
+        {me?.roleId === UserRoleIDEnum.SUPER && (
+          <UIFlexCenterBox>
+            <Typography
+              sx={{ fontWeight: 500, fontSize: 14, color: '#374E4E' }}
+            >
+              Locations
+            </Typography>
+            <UIDefaultTextField
+              size="small"
+              select
+              value={searchLocation}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setSearchLocation(e.target.value);
+              }}
+              sx={{
+                width: '160px',
+                '.MuiInputBase-input': {
+                  fontWeight: 600,
+                  fontSize: 14,
+                  lineHeight: '21px',
+                  color: 'rgba(137, 200, 198, 0.8)',
+                },
+              }}
+            >
+              <UISelectMenuItem key={'ALL'} value={'ALL'}>
+                ALL
               </UISelectMenuItem>
-            ))}
-          </UIDefaultTextField>
-        </UIFlexCenterBox>
+              {locations?.map((option) => (
+                <UISelectMenuItem
+                  key={`location${option.id}`}
+                  value={option.id}
+                >
+                  {option.name}
+                </UISelectMenuItem>
+              ))}
+            </UIDefaultTextField>
+          </UIFlexCenterBox>
+        )}
+
         <UIFlexCenterBox>
           <Typography sx={{ fontWeight: 500, fontSize: 14, color: '#374E4E' }}>
             Status

@@ -7,6 +7,8 @@ import {
   UIDefaultButton,
   UIListHeader,
 } from '@/components/UI';
+import { useAuth } from '@/hooks';
+import { UserRoleIDEnum } from '@/constants';
 
 interface IProductsListHeader {
   searchValue: string;
@@ -18,6 +20,7 @@ const ProductsListHeader = ({
   onValueChange,
 }: IProductsListHeader) => {
   const router = useRouter();
+  const { me } = useAuth();
   const handleCreate = () => {
     router.push(`${router.asPath}/create`);
   };
@@ -43,13 +46,17 @@ const ProductsListHeader = ({
             ),
           }}
         />
-        <Divider orientation="vertical" sx={{ height: '40px' }} />
-        <UIDefaultButton
-          sx={{ minWidth: '110px', borderRadius: '8px' }}
-          onClick={handleCreate}
-        >
-          Add new product
-        </UIDefaultButton>
+        {me?.roleId === UserRoleIDEnum.SUPER && (
+          <>
+            <Divider orientation="vertical" sx={{ height: '40px' }} />
+            <UIDefaultButton
+              sx={{ minWidth: '110px', borderRadius: '8px' }}
+              onClick={handleCreate}
+            >
+              Add new product
+            </UIDefaultButton>
+          </>
+        )}
       </UIFlexWrapBox>
     </UIListHeader>
   );

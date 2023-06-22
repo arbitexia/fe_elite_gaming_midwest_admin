@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Box } from '@mui/material';
 import { AppSEO, AppNavbar, AppSidebar } from '@/components/App';
 import { UIAppLayoutWrapper, UIContainer } from '@/components/UI';
 import { useAuth } from '@/hooks';
+import { UserRoleIDEnum } from '@/constants';
 
 interface Props {
   title?: string;
@@ -13,16 +14,35 @@ interface Props {
 
 const AppLayout = (props: Props) => {
   const router = useRouter();
-  const { isAuthenticated } = useAuth({});
+  const { isAuthenticated, me } = useAuth({});
+  const [isPath, setIsPath] = useState(true);
 
   useEffect(() => {
-    if (!isAuthenticated) router.push('/login');
+    if (!isAuthenticated) {
+      router.push('/login');
+    }
+
+    if (isAuthenticated && me?.roleId === UserRoleIDEnum.ADMIN) {
+      const protectedPaths = [
+        'locations',
+        'tablets',
+        'users/admins',
+        'activity',
+        'products/create',
+        'config',
+        'email_templates',
+      ];
+      if (protectedPaths.some((path) => router.pathname.includes(path))) {
+        router.push('/404');
+        setIsPath(false);
+      }
+    }
   }, [isAuthenticated]);
 
   return (
     <UIAppLayoutWrapper sx={{ background: '#F7F7F7' }}>
       <AppSEO title={props.title as string} description="" />
-      {isAuthenticated && (
+      {isAuthenticated && isPath && (
         <Box sx={{ display: 'flex' }}>
           <AppSidebar />
           <Box

@@ -33,6 +33,7 @@ export declare namespace TransactionType {
       search: string;
       sort?: string;
       type?: string;
+      locationId?: number;
     };
     cursor: {
       page: number;

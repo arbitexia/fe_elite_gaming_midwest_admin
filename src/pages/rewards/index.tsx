@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Divider } from '@mui/material';
-import { useReward } from '@/hooks';
+import { useAuth, useLocation, useReward } from '@/hooks';
 import { DashboardLayout } from '@/layouts';
 import {
   RewardsListHeader,
@@ -10,14 +10,29 @@ import {
 } from '@/modules/Rewards';
 import { Reward } from '@/types';
 import { useAppToast } from '@/providers';
+import { UserRoleIDEnum } from '@/constants';
 
 const Rewards = () => {
   const router = useRouter();
   const { rewards, onFilterRewards, onDeleteReward, onUpdateRewards } =
     useReward();
   const appToast = useAppToast();
+  const { me } = useAuth();
+  const { locations, onGetLocations } = useLocation();
+
   const [searchValue, setSearchValue] = useState('');
   const [isOpenCreateDlg, setIsOpenCreateDlg] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (me?.roleId === UserRoleIDEnum.ADMIN) {
+      onGetLocations({
+        filterBy: {
+          search: searchValue,
+          userId: Number(me?.id),
+        },
+      });
+    }
+  }, [me]);
 
   useEffect(() => {
     fetchRewards();
@@ -26,7 +41,12 @@ const Rewards = () => {
   const fetchRewards = async () => {
     try {
       await onFilterRewards({
-        filterBy: { search: searchValue },
+        filterBy: {
+          search: searchValue,
+          ...(me?.roleId === UserRoleIDEnum.ADMIN && {
+            locationId: locations?.[0]?.id,
+          }),
+        },
         cursor: { page: 0, size: 1000 },
       });
     } catch (error) {

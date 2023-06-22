@@ -3,14 +3,16 @@ import { Divider } from '@mui/material';
 import { RequestsHeader, RequestTable } from '@/modules/Requests';
 import { DashboardLayout } from '@/layouts';
 import { TransactionType } from '@/types';
-import { useTransaction } from '@/hooks';
-import { TransactionStatus } from '@/constants';
+import { useAuth, useTransaction } from '@/hooks';
+import { TransactionStatus, UserRoleIDEnum } from '@/constants';
 import RequestsPagination from '@/modules/Requests/List/Pagination';
 import { useAppToast } from '@/providers';
 
 const Requests = () => {
+  const { me } = useAuth();
   const { transactions, onGetTransactions, pageInfo, onUpdateTransaction } =
     useTransaction();
+
   const appToast = useAppToast();
   const [searchValue, setSearchValue] = useState('');
   const [page, setPage] = useState(0);
@@ -23,7 +25,13 @@ const Requests = () => {
 
   const fetchTransaction = async () => {
     await onGetTransactions({
-      filterBy: { search: searchValue, status: TransactionStatus.WAITING },
+      filterBy: {
+        search: searchValue,
+        status: TransactionStatus.WAITING,
+        ...(me?.roleId === UserRoleIDEnum.ADMIN && {
+          locationId: me?.userLocations?.[0]?.locationId,
+        }),
+      },
       cursor: { page: page, size: rowsPerPage },
     });
   };

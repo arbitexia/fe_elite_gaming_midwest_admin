@@ -336,7 +336,8 @@ const UserDetailInfoCard = ({ user, type }: UsersDetailHeaderProps) => {
                     {userRole.map(({ id, value }) => {
                       if (
                         (me as UserType.User).roleId === UserRoleIDEnum.ADMIN &&
-                        id === UserRoleIDEnum.SUPER
+                        (id === UserRoleIDEnum.SUPER ||
+                          id === UserRoleIDEnum.ADMIN)
                       ) {
                         return;
                       }

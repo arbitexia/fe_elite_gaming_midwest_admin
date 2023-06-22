@@ -18,6 +18,7 @@ const initConfigData: ConfigType = {
   monthly: 50,
   checkinThreshold: 0,
   coupon: 0,
+  initialCoupon: 10000,
 };
 const initialState: ReduxJson.ConfigState = {
   loading: true,

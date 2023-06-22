@@ -39,7 +39,7 @@ export declare namespace ReduxJson {
     status: ResponseStatus | null;
     accessToken: string;
     refreshToken: string;
-    user: object | null;
+    user: UserType.User | null;
     role: object;
     message: string | null;
     error: string | null;

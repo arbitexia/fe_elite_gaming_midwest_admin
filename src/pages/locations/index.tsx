@@ -16,8 +16,8 @@ const LocationsPage = () => {
     onGetLocations({
       filterBy: {
         search: searchValue,
-        ...((me as UserType.User).roleId === UserRoleIDEnum.ADMIN && {
-          userId: Number((me as UserType.User).id),
+        ...(me?.roleId === UserRoleIDEnum.ADMIN && {
+          userId: Number(me?.id),
         }),
       },
     });

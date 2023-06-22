@@ -39,17 +39,17 @@ const UsersListPage = () => {
   const [deletedCustomerId, setDeletedCustomerId] = useState<number>();
 
   useEffect(() => {
-    if (!locations) {
+    if (me) {
       onGetLocations({
         filterBy: {
           search: '',
-          ...((me as UserType.User)?.roleId === UserRoleIDEnum.ADMIN && {
-            userId: Number((me as UserType.User).id),
+          ...(me?.roleId === UserRoleIDEnum.ADMIN && {
+            userId: Number(me.id),
           }),
         },
       });
     }
-  }, [locations]);
+  }, [me]);
 
   useEffect(() => {
     if (!emailTemplates) {
@@ -82,7 +82,10 @@ const UsersListPage = () => {
         type: slugIndex[slug as keyof typeof slugIndex],
         status: searchStatus,
         search: searchValue,
-        location: searchLocation,
+        location:
+          me?.roleId === UserRoleIDEnum.ADMIN
+            ? (locations?.[0]?.id ?? 0).toString()
+            : searchLocation,
       },
       cursor: { page: page, size: rowsPerPage },
     });
@@ -99,7 +102,6 @@ const UsersListPage = () => {
   return (
     <DashboardLayout title="Users">
       <UsersListHeader
-        onSearch={handleSearch}
         searchValue={searchValue}
         searchStatus={searchStatus}
         searchLocation={searchLocation}
