@@ -193,14 +193,7 @@ const TabletsTable = ({
                     }
                   />
                 </UIListTableCell>
-                <UIListTableCell
-                  onClick={() =>
-                    router.push(`${router.asPath}/${tabletItem.id}`)
-                  }
-                  sx={{ cursor: 'pointer' }}
-                >
-                  #{tabletItem.id}
-                </UIListTableCell>
+                <UIListTableCell>#{tabletItem.id}</UIListTableCell>
                 <UIListTableCell>{tabletItem.name}</UIListTableCell>
                 <UIListTableCell align="center">
                   <UIChip

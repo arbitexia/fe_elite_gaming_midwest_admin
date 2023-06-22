@@ -29,6 +29,7 @@ const AppLayout = (props: Props) => {
         'users/admins',
         'activity',
         'products/create',
+        'products/edit',
         'config',
         'email_templates',
       ];

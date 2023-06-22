@@ -32,8 +32,8 @@ import {
   UIOptionMenuItemText,
   UIEditTextField,
 } from '@/components/UI';
-import { MenuAction } from '@/constants';
-import { useProduct } from '@/hooks';
+import { MenuAction, UserRoleIDEnum } from '@/constants';
+import { useAuth, useProduct } from '@/hooks';
 import { getColor } from '@/libs/data-helper';
 import { useAppToast } from '@/providers';
 import { Product } from '@/types';
@@ -49,6 +49,7 @@ const ProductsTable = ({
   onOrder,
   onUpdateAmount,
 }: ProductsTableProps) => {
+  const { me } = useAuth();
   const router = useRouter();
   const appToast = useAppToast();
   const { onDeleteProduct } = useProduct();
@@ -309,7 +310,10 @@ const ProductsTable = ({
               <UIListTableCell align="center" sx={{ color: '#000!important' }}>
                 <IconButton
                   onClick={() => {
-                    if (productItem.amount > 0) {
+                    if (
+                      productItem.amount > 0 &&
+                      me?.roleId === UserRoleIDEnum.SUPER
+                    ) {
                       handleChangeAmount('Decrease', productItem);
                     }
                   }}
@@ -328,7 +332,9 @@ const ProductsTable = ({
                 />
                 <IconButton
                   onClick={() => {
-                    handleChangeAmount('Increase', productItem);
+                    if (me?.roleId === UserRoleIDEnum.SUPER) {
+                      handleChangeAmount('Increase', productItem);
+                    }
                   }}
                 >
                   <PlusIcon />
@@ -371,6 +377,12 @@ const ProductsTable = ({
         }}
       >
         {menuActions.map((item, index) => {
+          if (
+            me?.roleId === UserRoleIDEnum.ADMIN &&
+            item.action !== MenuAction.VIEW
+          ) {
+            return;
+          }
           return (
             <div key={index}>
               {index === 2 && <Divider />}

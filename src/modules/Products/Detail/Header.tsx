@@ -15,8 +15,9 @@ import {
   UIActionButton,
   UIFlexWrapBox,
 } from '@/components/UI';
-import { useProduct } from '@/hooks';
+import { useAuth, useProduct } from '@/hooks';
 import { useAppToast } from '@/providers';
+import { UserRoleIDEnum } from '@/constants';
 
 export type ProductDetailHeaderProps = {
   name: string;
@@ -27,6 +28,7 @@ const ProductDetailHeader = ({
   name,
   isEditable,
 }: ProductDetailHeaderProps) => {
+  const { me } = useAuth();
   const router = useRouter();
   const { id } = router.query;
   const appToast = useAppToast();
@@ -68,22 +70,24 @@ const ProductDetailHeader = ({
             Save
           </UIDefaultButton>
         ) : (
-          <>
-            <UIActionButton
-              icon={<Edit />}
-              color="#28B446"
-              title="Edit"
-              handleClick={() => {
-                router.push(`/products/edit/${id}`);
-              }}
-            />
-            <UIActionButton
-              icon={<Delete />}
-              color="#F14336"
-              title="Delete"
-              handleClick={() => setOpenDeleteModal(true)}
-            />
-          </>
+          me?.roleId === UserRoleIDEnum.SUPER && (
+            <>
+              <UIActionButton
+                icon={<Edit />}
+                color="#28B446"
+                title="Edit"
+                handleClick={() => {
+                  router.push(`/products/edit/${id}`);
+                }}
+              />
+              <UIActionButton
+                icon={<Delete />}
+                color="#F14336"
+                title="Delete"
+                handleClick={() => setOpenDeleteModal(true)}
+              />
+            </>
+          )
         )}
       </UIFlexWrapBox>
       <Dialog
