@@ -55,3 +55,8 @@ export const userRole = [
   { id: UserRoleIDEnum.ADMIN, value: UserRole.ADMIN },
   { id: UserRoleIDEnum.SUPER, value: UserRole.SUPER },
 ];
+
+export const menuCampaignActions = [
+  { label: 'Edit', color: '#667180', action: MenuAction.EDIT },
+  { label: 'Delete', color: '#fb020299', action: MenuAction.DELETE },
+];

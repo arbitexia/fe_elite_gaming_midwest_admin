@@ -32,6 +32,7 @@ const AppLayout = (props: Props) => {
         'products/edit',
         'config',
         'email_templates',
+        'campaigns',
       ];
       if (protectedPaths.some((path) => router.pathname.includes(path))) {
         router.push('/404');

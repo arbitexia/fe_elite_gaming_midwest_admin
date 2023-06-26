@@ -1,6 +1,6 @@
 import { Typography, InputAdornment, Divider } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
-import { userStatus } from '@/_mock/users';
+import { userStatus } from '@/constants';
 import {
   UIFlexSpaceBox,
   UIFlexWrapBox,

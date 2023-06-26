@@ -10,6 +10,7 @@ import {
   Analytics,
   Settings,
   Devices,
+  Campaign,
 } from '@mui/icons-material';
 
 export const languageMenuItems = [
@@ -114,6 +115,14 @@ export const superSidebarItems: MenuItemObj[] = [
   },
   {
     id: 10,
+    text: 'Campaigns',
+    isSelected: false,
+    icon: <Campaign sx={{ marginRight: 2, width: 18 }} />,
+    route: 'campaigns',
+    disabled: false,
+  },
+  {
+    id: 11,
     text: 'Site Settings',
     disabled: false,
     isSelected: false,

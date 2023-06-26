@@ -10,7 +10,7 @@ import {
   UIDefaultButton,
 } from '@/components/UI';
 import { AppModal } from '@/components/App';
-import { userStatus } from '@/_mock/users';
+import { userStatus } from '@/constants';
 import { TabletType } from '@/types';
 import { UserStatus } from '@/constants';
 import { useAppToast } from '@/providers';

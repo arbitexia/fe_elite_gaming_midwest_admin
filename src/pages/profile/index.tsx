@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import { Stack } from '@mui/material';
 import { ChangePasswordDialog, ProfileEdit } from '@/modules/Profile';
 import { DashboardLayout } from '@/layouts';
-
-import { profileData } from '@/_mock/users';
 import { useAsset, useAuth } from '@/hooks';
 import { UpdateUserParam, UserType } from '@/types';
 import { useAppToast } from '@/providers';
@@ -35,13 +32,11 @@ const ProfilePage = () => {
   };
   return (
     <DashboardLayout title="Profile">
-      {profileData && (
-        <ProfileEdit
-          user={me as UserType.User}
-          onEdit={handleEdit}
-          onChangePassword={() => setOpenModal(true)}
-        />
-      )}
+      <ProfileEdit
+        user={me as UserType.User}
+        onEdit={handleEdit}
+        onChangePassword={() => setOpenModal(true)}
+      />
       <ChangePasswordDialog
         open={openModal}
         title={'Change password'}

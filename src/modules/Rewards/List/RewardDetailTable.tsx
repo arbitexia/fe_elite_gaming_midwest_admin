@@ -18,7 +18,7 @@ import {
   UIOptionMenuItem,
 } from '@/components/UI';
 import { formatCurrency, getColor } from '@/libs/data-helper';
-import { menuRewardActions } from '@/_mock/users';
+import { menuRewardActions } from '@/constants';
 import { MenuAction } from '@/constants';
 import ConfirmModal from '@/components/App/Modal/ConfirmModal';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';

@@ -5,73 +5,66 @@ import {
   Table,
   TableHead,
   TableBody,
-  Checkbox,
   IconButton,
   Divider,
   TableSortLabel,
+  Switch,
+  Box,
+  Typography,
+  LinearProgress,
 } from '@mui/material';
+import { LinearProgressProps } from '@mui/material/LinearProgress';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import {
-  UIChip,
   UIOptionMenuItemText,
   UIOptionMenu,
   UIOptionMenuItem,
   UIListTableCell,
   UIListTableRow,
 } from '@/components/UI';
-import { MenuAction, menuTabletActions } from '@/constants';
-import { getColor } from '@/libs/data-helper';
-import { TabletType } from '@/types';
+import {
+  MenuAction,
+  campaignNameIcons,
+  menuCampaignActions,
+} from '@/constants';
+import { CampaignType } from '@/types';
 import { useTablet } from '@/hooks';
 import ConfirmModal from '@/components/App/Modal/ConfirmModal';
 import { useAppToast } from '@/providers';
 
-type TabletsTableProps = {
-  tabletsTableData: TabletType.Data[];
-  onAction: (value: TabletType.Data, type: 'edit' | 'change_password') => void;
-  onSort: (value: string) => void;
+type CampaignTableProps = {
+  campaignTableData: CampaignType.Data[];
+  onAction: (value: CampaignType.Data, type: 'edit' | 'delete') => void;
 };
 
 type Order = 'asc' | 'desc';
 
-const TabletsTable = ({
-  tabletsTableData,
-  onAction,
-  onSort,
-}: TabletsTableProps) => {
+const CampaignTable = ({ campaignTableData, onAction }: CampaignTableProps) => {
   const router = useRouter();
   const { onDeleteTablet } = useTablet();
   const appToast = useAppToast();
+  const [checked, setChecked] = useState(true);
   const [selected, setSelected] = useState<readonly string[]>([]);
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
 
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof TabletType.Data>('id');
+  const [orderBy, setOrderBy] = useState<keyof CampaignType.Data>('id');
   const [deleteId, setDeleteId] = useState<number>();
 
   const handleClickMenuAction = (key: string) => {
     const selectedId = parseInt(
       anchorElOptionsMenu?.getAttribute('data-key') ?? '0'
     );
-    const selectedItem = tabletsTableData.find((t) => t.id === selectedId);
+    const selectedItem = campaignTableData.find((t) => t.id === selectedId);
     if (key === MenuAction.EDIT) {
       selectedItem && onAction(selectedItem, 'edit');
     } else if (key === MenuAction.DELETE) {
       setDeleteId(selectedId);
     } else {
-      selectedItem && onAction(selectedItem, 'change_password');
+      selectedItem && onAction(selectedItem, 'delete');
     }
-  };
-
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = tabletsTableData.map((n) => n.id.toString());
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
   };
 
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
@@ -96,35 +89,44 @@ const TabletsTable = ({
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
   const createSortHandler =
-    (property: keyof TabletType.Data) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof CampaignType.Data) =>
+    (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof TabletType.Data
+    property: keyof CampaignType.Data
   ) => {
     const newOrder = orderBy === property && order === 'asc' ? 'desc' : 'asc';
     setOrder(newOrder);
     setOrderBy(property);
-    onSort(`${property}|${newOrder}`);
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
+  };
+
+  const LinearProgressWithLabel = (
+    props: LinearProgressProps & { value: number }
+  ) => {
+    return (
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ width: '100%', mr: 1 }}>
+          <LinearProgress variant="determinate" {...props} />
+        </Box>
+        <Box sx={{ minWidth: 35 }}>
+          <Typography variant="body2" color="text.secondary">{`${Math.round(
+            props.value
+          )}%`}</Typography>
+        </Box>
+      </Box>
+    );
   };
 
   return (
     <Table>
       <TableHead>
         <UIListTableRow>
-          <UIListTableCell>
-            <Checkbox
-              indeterminate={
-                selected.length > 0 && selected.length < tabletsTableData.length
-              }
-              checked={
-                tabletsTableData.length > 0 &&
-                selected.length === tabletsTableData.length
-              }
-              onChange={handleSelectAllClick}
-            />
-          </UIListTableCell>
           <UIListTableCell>
             <TableSortLabel
               active={orderBy === 'id'}
@@ -143,73 +145,120 @@ const TabletsTable = ({
               Name
             </TableSortLabel>
           </UIListTableCell>
-          <UIListTableCell align="center">
+          <UIListTableCell>
             <TableSortLabel
-              active={orderBy === 'status'}
+              active={orderBy === 'type'}
               direction={order}
-              onClick={createSortHandler('status')}
+              onClick={createSortHandler('type')}
             >
-              Status
+              Type
             </TableSortLabel>
           </UIListTableCell>
           <UIListTableCell>
             <TableSortLabel
-              active={orderBy === 'location'}
+              active={orderBy === 'offer'}
               direction={order}
-              onClick={createSortHandler('location')}
+              onClick={createSortHandler('offer')}
             >
-              Location
+              Offer
             </TableSortLabel>
           </UIListTableCell>
           <UIListTableCell>
             <TableSortLabel
-              active={orderBy === 'createdAt'}
+              active={orderBy === 'total'}
               direction={order}
-              onClick={createSortHandler('createdAt')}
+              onClick={createSortHandler('total')}
             >
-              Created At
+              Total
+            </TableSortLabel>
+          </UIListTableCell>
+          <UIListTableCell>
+            <TableSortLabel
+              active={orderBy === 'redeemed'}
+              direction={order}
+              onClick={createSortHandler('redeemed')}
+            >
+              Redeemed
+            </TableSortLabel>
+          </UIListTableCell>
+
+          <UIListTableCell>%Redeemed</UIListTableCell>
+          <UIListTableCell>Enabled</UIListTableCell>
+          <UIListTableCell>
+            <TableSortLabel
+              active={orderBy === 'startDate'}
+              direction={order}
+              onClick={createSortHandler('startDate')}
+            >
+              Start Date
+            </TableSortLabel>
+          </UIListTableCell>
+          <UIListTableCell>
+            <TableSortLabel
+              active={orderBy === 'endDate'}
+              direction={order}
+              onClick={createSortHandler('endDate')}
+            >
+              End Date
             </TableSortLabel>
           </UIListTableCell>
           <UIListTableCell />
         </UIListTableRow>
       </TableHead>
       <TableBody>
-        {tabletsTableData?.length > 0 ? (
-          tabletsTableData?.map((tabletItem) => {
-            const isItemSelected = isSelected(tabletItem.id.toString());
-
+        {campaignTableData?.length > 0 ? (
+          campaignTableData?.map((item) => {
             return (
-              <UIListTableRow
-                key={tabletItem.id}
-                data-key={tabletItem.id}
-                role="checkbox"
-              >
+              <UIListTableRow key={item.id} data-key={item.id} role="checkbox">
+                <UIListTableCell>#{item.id}</UIListTableCell>
                 <UIListTableCell>
-                  <Checkbox
-                    checked={isItemSelected}
-                    onClick={(event) =>
-                      handleClick(event, tabletItem.id.toString())
+                  <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 1 }}>
+                    {
+                      campaignNameIcons.find((obj) => obj.name === item.type)
+                        ?.icon
                     }
-                  />
+                    {item.name}
+                  </Box>
                 </UIListTableCell>
-                <UIListTableCell>#{tabletItem.id}</UIListTableCell>
-                <UIListTableCell>{tabletItem.name}</UIListTableCell>
-                <UIListTableCell align="center">
-                  <UIChip
-                    label={tabletItem.status}
-                    color={getColor(tabletItem.status ?? 'ACTIVATED')}
-                  />
-                </UIListTableCell>
-                <UIListTableCell>{tabletItem?.location?.name}</UIListTableCell>
+                <UIListTableCell>{item.type}</UIListTableCell>
                 <UIListTableCell>
-                  {format(
-                    new Date(tabletItem.createdAt as string),
+                  {item?.offer > 0 && `${item?.offer} Free Game play`}
+                </UIListTableCell>
+                <UIListTableCell>
+                  {item?.total > 0 ? item.total : '-'}
+                </UIListTableCell>
+                <UIListTableCell>
+                  {item?.redeemed > 0 ? item.redeemed : '-'}
+                </UIListTableCell>
+                <UIListTableCell>
+                  <LinearProgressWithLabel value={70} />
+                </UIListTableCell>
+                <UIListTableCell>
+                  <Switch
+                    checked={item.status === 0 ? false : true}
+                    onChange={handleChange}
+                    inputProps={{ 'aria-label': 'controlled' }}
+                  />
+                </UIListTableCell>
+                <UIListTableCell>
+                  {/* {format(
+                    new Date(item.createdAt as string),
                     'yyyy-MM-dd'
                   )}
+                   */}
+                  {item.startDate}
+                </UIListTableCell>
+                <UIListTableCell>
+                  {/* {format(
+                    new Date(item.createdAt as string),
+                    'yyyy-MM-dd'
+                  )}
+                   */}
+                  {item.endDate}
                 </UIListTableCell>
                 <UIListTableCell>
                   <IconButton
-                    data-key={tabletItem.id}
+                    data-key={item.id}
                     onClick={(event: React.MouseEvent<HTMLElement>) => {
                       setAnchorElOptionsMenu(event.currentTarget);
                     }}
@@ -227,7 +276,7 @@ const TabletsTable = ({
               backgroundColor: 'transparent !important',
             }}
           >
-            <UIListTableCell colSpan={6} sx={{ textAlign: 'center' }}>
+            <UIListTableCell colSpan={10} sx={{ textAlign: 'center' }}>
               No Data
             </UIListTableCell>
           </UIListTableRow>
@@ -248,10 +297,10 @@ const TabletsTable = ({
           setAnchorElOptionsMenu(null);
         }}
       >
-        {menuTabletActions.map((item, index) => {
+        {menuCampaignActions.map((item, index) => {
           return (
             <div key={index}>
-              {index === 2 && <Divider />}
+              {index === 1 && <Divider />}
               <UIOptionMenuItem
                 disableRipple
                 disableTouchRipple
@@ -287,4 +336,4 @@ const TabletsTable = ({
   );
 };
 
-export default TabletsTable;
+export default CampaignTable;

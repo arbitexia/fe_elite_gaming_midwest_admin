@@ -22,7 +22,7 @@ import {
   Add as PlusIcon,
   Remove as MinusIcon,
 } from '@mui/icons-material';
-import { menuActions } from '@/_mock/users';
+import { menuActions } from '@/constants';
 import {
   UIChip,
   UIListTableRow,

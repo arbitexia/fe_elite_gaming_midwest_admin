@@ -64,6 +64,7 @@ export const UIListTableCell = styled(TableCell)({
     lineHeight: '21px',
     letterSpacing: '0.1px',
     textTransform: 'uppercase',
+    padding: '8px',
     color: 'rgba(0, 0, 0, 0.3)',
     '.MuiCheckbox-root': {
       color: 'rgba(0, 0, 0, 0.3)',
@@ -75,9 +76,10 @@ export const UIListTableCell = styled(TableCell)({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    height: '80px',
+    // height: '80px',
+    padding: '8px',
     fontWeight: 400,
-    color: 'rgba(0, 0, 0, 0.3)',
+    color: 'rgba(0, 0, 0, 0.7)',
     '&:nth-of-type(3)': {
       color: '#06251F',
       fontWeight: 600,
@@ -91,11 +93,11 @@ export const UIListTableCell = styled(TableCell)({
       fontWeight: 500,
     },
     '&:nth-of-type(6)': {
-      color: 'rgba(0, 0, 0, 0.5)',
+      color: 'rgba(0, 0, 0, 0.7)',
       fontWeight: 500,
     },
     '.MuiCheckbox-root': {
-      color: 'rgba(0, 0, 0, 0.2)',
+      color: 'rgba(0, 0, 0, 0.7)',
 
       '&.Mui-checked': {
         color: '#89C8C6',

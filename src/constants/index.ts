@@ -33,6 +33,7 @@ export {
   menuTabletActions,
   menuTransactionActions,
   menuCustomerActions,
+  menuCampaignActions,
   userRole,
 } from './user';
 
@@ -43,3 +44,5 @@ export {
   superSidebarItems,
   adminSidebarItems,
 } from './sidebar';
+
+export { campaignNameIcons } from './campaign';

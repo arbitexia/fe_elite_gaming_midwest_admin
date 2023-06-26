@@ -5,7 +5,6 @@ import { LocationsHeader, LocationsCard } from '@/modules/Locations';
 import { hasElInArray } from '@/libs/data-helper';
 import { DashboardLayout } from '@/layouts';
 import { useAuth, useLocation } from '@/hooks';
-import { UserType } from '@/types';
 import { UserRoleIDEnum } from '@/constants';
 
 const LocationsPage = () => {

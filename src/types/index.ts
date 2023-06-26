@@ -55,3 +55,4 @@ export type {
 export type { TabletType } from './tablet.type';
 export type { TransactionType } from './transaction.type';
 export type { EmailTemplateType } from './emailTemplate.type';
+export type { CampaignType } from './campaign.type';

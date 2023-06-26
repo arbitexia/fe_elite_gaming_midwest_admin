@@ -10,7 +10,7 @@ import {
   TableSortLabel,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
-import { menuActions } from '@/_mock/users';
+import { menuActions } from '@/constants';
 import {
   UIChip,
   UIOptionMenuItemText,
