@@ -4,6 +4,9 @@ export const initCampaignData: CampaignType.Data[] = [
   {
     id: 1,
     name: 'Birthday',
+    model: '',
+    offerType: '',
+    channels: 1,
     status: 1,
     type: 'BIRTHDAY',
     offer: 20,
@@ -14,6 +17,9 @@ export const initCampaignData: CampaignType.Data[] = [
   },
   {
     id: 2,
+    model: '',
+    offerType: '',
+    channels: 1,
     name: 'New Member',
     status: 0,
     type: 'WELCOME',
@@ -28,6 +34,9 @@ export const initCampaignData: CampaignType.Data[] = [
 export const initCampaignOnDemand: CampaignType.Data[] = [];
 export const initCampaignInformational: CampaignType.Data[] = [
   {
+    model: '',
+    offerType: '',
+    channels: 1,
     id: 1,
     name: 'Communication Jun162023',
     status: 1,

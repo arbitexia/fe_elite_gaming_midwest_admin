@@ -19,7 +19,7 @@ export const CampaignHeader = ({
 }: CampaignHeaderProps) => {
   const router = useRouter();
   const handleCreate = () => {
-    router.push('/locations/create');
+    router.push('/campaigns/create');
   };
   return (
     <UIFlexSpaceBox>

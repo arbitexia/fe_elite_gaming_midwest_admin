@@ -126,3 +126,37 @@ export enum UserRoleIDEnum {
   ADMIN = 4,
   SUPER = 5,
 }
+
+export enum CampaignTypeEnum {
+  BIRTHDAY = 'BIRTHDAY',
+  APPRECIATION = 'APPRECIATION',
+  REFERRAL = 'REFERRAL',
+  REWARDS = 'REWARDS',
+  WELCOME = 'WELCOME',
+  NEWSLETTER = 'NEWSLETTER',
+}
+
+export enum CampaignModelEnum {
+  AUTO_PILOT = 'AUTO_PILOT',
+  ON_DEMAND = 'ON_DEMAND',
+  INFORMATIONAL = 'INFORMATIONAL',
+}
+
+export enum CampaignStatusEnum {
+  ENABLED = 1,
+  DISABLED = 0,
+}
+
+export enum CampaignChannelsEnum {
+  EMAIL = 1,
+  PHONE = 2,
+  BOTH = 3,
+}
+
+export enum CouponEnum {
+  COUPON = 'COUPON',
+}
+
+export enum PointEnum {
+  POINT = 'POINT',
+}

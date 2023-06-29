@@ -141,3 +141,12 @@ export {
   resetUserLocationMessage,
   getUsersByLocationId,
 } from './userLocation.slice';
+
+export {
+  default as campaignReducer,
+  campaignSelector,
+  resetCampaignMessage,
+  getCampaigns,
+  saveCampaign,
+  deleteCampaign,
+} from './campaign.slice';

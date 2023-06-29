@@ -12,6 +12,7 @@ import { ConfigType } from './config.type';
 import { TabletType } from './tablet.type';
 import { TransactionType } from './transaction.type';
 import { EmailTemplateType } from './emailTemplate.type';
+import { CampaignType } from './campaign.type';
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
     loading: boolean;
@@ -147,5 +148,14 @@ export declare namespace ReduxJson {
     error: string | null;
     userLocations: UserLocationsType[] | null;
     pageInfo: CommonType.PageInfo | null;
+  };
+
+  export type CampaignState = {
+    loading: boolean;
+    status: ResponseStatus | null;
+    campaigns: CampaignType.Data[] | null;
+    pageInfo: CommonType.PageInfo | null;
+    message: string | null;
+    error: string | null;
   };
 }

@@ -15,6 +15,11 @@ export {
   EmailTemplateTypeEnum,
   EmailTemplateCategoryEnum,
   UserRoleIDEnum,
+  CampaignTypeEnum,
+  CampaignModelEnum,
+  CampaignStatusEnum,
+  CouponEnum,
+  PointEnum,
 } from './enum';
 export { productStatus } from './product';
 export { formats, modules } from './quill';
@@ -45,4 +50,10 @@ export {
   adminSidebarItems,
 } from './sidebar';
 
-export { campaignNameIcons } from './campaign';
+export {
+  campaignNameIcons,
+  campaignType,
+  campaignModel,
+  campaignOfferType,
+  campaignStatus,
+} from './campaign';

@@ -12,3 +12,4 @@ export { useActivity } from './activity';
 export { useTransaction } from './transaction';
 export { useEmailTemplate } from './emailTemplate';
 export { useUserLocation } from './userLocation';
+export { useCampaign } from './campaign';

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import { format } from 'date-fns';
 import {
   Table,
@@ -14,7 +13,11 @@ import {
   LinearProgress,
 } from '@mui/material';
 import { LinearProgressProps } from '@mui/material/LinearProgress';
-import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
+import {
+  MoreHoriz as MoreHorizIcon,
+  PhoneIphone as PhoneIcon,
+  Textsms as SmsICon,
+} from '@mui/icons-material';
 import {
   UIOptionMenuItemText,
   UIOptionMenu,
@@ -23,35 +26,32 @@ import {
   UIListTableRow,
 } from '@/components/UI';
 import {
+  CouponEnum,
   MenuAction,
   campaignNameIcons,
   menuCampaignActions,
 } from '@/constants';
 import { CampaignType } from '@/types';
-import { useTablet } from '@/hooks';
-import ConfirmModal from '@/components/App/Modal/ConfirmModal';
-import { useAppToast } from '@/providers';
+import { formatCurrency } from '@/libs/data-helper';
+import { CampaignChannelsEnum } from '@/constants/enum';
 
 type CampaignTableProps = {
   campaignTableData: CampaignType.Data[];
-  onAction: (value: CampaignType.Data, type: 'edit' | 'delete') => void;
+  onAction: (
+    value: CampaignType.Data,
+    type: 'edit' | 'delete' | 'enabled'
+  ) => void;
 };
 
 type Order = 'asc' | 'desc';
 
 const CampaignTable = ({ campaignTableData, onAction }: CampaignTableProps) => {
-  const router = useRouter();
-  const { onDeleteTablet } = useTablet();
-  const appToast = useAppToast();
-  const [checked, setChecked] = useState(true);
-  const [selected, setSelected] = useState<readonly string[]>([]);
   const [anchorElOptionsMenu, setAnchorElOptionsMenu] =
     useState<null | HTMLElement>(null);
   const isOptionsMenuOpen = Boolean(anchorElOptionsMenu);
 
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof CampaignType.Data>('id');
-  const [deleteId, setDeleteId] = useState<number>();
 
   const handleClickMenuAction = (key: string) => {
     const selectedId = parseInt(
@@ -61,32 +61,9 @@ const CampaignTable = ({ campaignTableData, onAction }: CampaignTableProps) => {
     if (key === MenuAction.EDIT) {
       selectedItem && onAction(selectedItem, 'edit');
     } else if (key === MenuAction.DELETE) {
-      setDeleteId(selectedId);
-    } else {
       selectedItem && onAction(selectedItem, 'delete');
     }
   };
-
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: readonly string[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
-  const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
   const createSortHandler =
     (property: keyof CampaignType.Data) =>
@@ -102,8 +79,9 @@ const CampaignTable = ({ campaignTableData, onAction }: CampaignTableProps) => {
     setOrderBy(property);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
+  const handleChangeEnable = (value: CampaignType.Data) => {
+    const dataToUpdate = { ...value, status: value.status === 1 ? 0 : 1 };
+    onAction(dataToUpdate, 'enabled');
   };
 
   const LinearProgressWithLabel = (
@@ -136,72 +114,16 @@ const CampaignTable = ({ campaignTableData, onAction }: CampaignTableProps) => {
               Id
             </TableSortLabel>
           </UIListTableCell>
-          <UIListTableCell>
-            <TableSortLabel
-              active={orderBy === 'name'}
-              direction={order}
-              onClick={createSortHandler('name')}
-            >
-              Name
-            </TableSortLabel>
-          </UIListTableCell>
-          <UIListTableCell>
-            <TableSortLabel
-              active={orderBy === 'type'}
-              direction={order}
-              onClick={createSortHandler('type')}
-            >
-              Type
-            </TableSortLabel>
-          </UIListTableCell>
-          <UIListTableCell>
-            <TableSortLabel
-              active={orderBy === 'offer'}
-              direction={order}
-              onClick={createSortHandler('offer')}
-            >
-              Offer
-            </TableSortLabel>
-          </UIListTableCell>
-          <UIListTableCell>
-            <TableSortLabel
-              active={orderBy === 'total'}
-              direction={order}
-              onClick={createSortHandler('total')}
-            >
-              Total
-            </TableSortLabel>
-          </UIListTableCell>
-          <UIListTableCell>
-            <TableSortLabel
-              active={orderBy === 'redeemed'}
-              direction={order}
-              onClick={createSortHandler('redeemed')}
-            >
-              Redeemed
-            </TableSortLabel>
-          </UIListTableCell>
-
+          <UIListTableCell>Name</UIListTableCell>
+          <UIListTableCell>Type</UIListTableCell>
+          <UIListTableCell>Offer</UIListTableCell>
+          <UIListTableCell>Total</UIListTableCell>
+          <UIListTableCell>Redeemed</UIListTableCell>
           <UIListTableCell>%Redeemed</UIListTableCell>
           <UIListTableCell>Enabled</UIListTableCell>
-          <UIListTableCell>
-            <TableSortLabel
-              active={orderBy === 'startDate'}
-              direction={order}
-              onClick={createSortHandler('startDate')}
-            >
-              Start Date
-            </TableSortLabel>
-          </UIListTableCell>
-          <UIListTableCell>
-            <TableSortLabel
-              active={orderBy === 'endDate'}
-              direction={order}
-              onClick={createSortHandler('endDate')}
-            >
-              End Date
-            </TableSortLabel>
-          </UIListTableCell>
+          <UIListTableCell>Channels</UIListTableCell>
+          <UIListTableCell>Start Date</UIListTableCell>
+          <UIListTableCell>End Date</UIListTableCell>
           <UIListTableCell />
         </UIListTableRow>
       </TableHead>
@@ -222,7 +144,9 @@ const CampaignTable = ({ campaignTableData, onAction }: CampaignTableProps) => {
                 </UIListTableCell>
                 <UIListTableCell>{item.type}</UIListTableCell>
                 <UIListTableCell>
-                  {item?.offer > 0 && `${item?.offer} Free Game play`}
+                  {item?.offer > 0 && item.offerType === CouponEnum.COUPON
+                    ? `${formatCurrency(item.offer)} Free Game play`
+                    : `${item.offer} points`}
                 </UIListTableCell>
                 <UIListTableCell>
                   {item?.total > 0 ? item.total : '-'}
@@ -231,30 +155,53 @@ const CampaignTable = ({ campaignTableData, onAction }: CampaignTableProps) => {
                   {item?.redeemed > 0 ? item.redeemed : '-'}
                 </UIListTableCell>
                 <UIListTableCell>
-                  <LinearProgressWithLabel value={70} />
+                  {item.redeemed > 0 ? (
+                    <LinearProgressWithLabel
+                      value={Number(
+                        ((item.redeemed / item.total) * 100).toFixed(0)
+                      )}
+                    />
+                  ) : (
+                    '-'
+                  )}
                 </UIListTableCell>
                 <UIListTableCell>
                   <Switch
                     checked={item.status === 0 ? false : true}
-                    onChange={handleChange}
+                    onChange={() => {
+                      handleChangeEnable(item);
+                    }}
                     inputProps={{ 'aria-label': 'controlled' }}
                   />
                 </UIListTableCell>
                 <UIListTableCell>
-                  {/* {format(
-                    new Date(item.createdAt as string),
-                    'yyyy-MM-dd'
-                  )}
-                   */}
-                  {item.startDate}
+                  <SmsICon
+                    sx={{
+                      width: '22px',
+                      mr: 1,
+                      color:
+                        item.channels === CampaignChannelsEnum.EMAIL ||
+                        item.channels === CampaignChannelsEnum.BOTH
+                          ? '#18a98d'
+                          : '#494b4b',
+                    }}
+                  />
+                  <PhoneIcon
+                    sx={{
+                      width: '22px',
+                      color:
+                        item.channels === CampaignChannelsEnum.PHONE ||
+                        item.channels === CampaignChannelsEnum.BOTH
+                          ? '#18a98d'
+                          : '#494b4b',
+                    }}
+                  />
                 </UIListTableCell>
                 <UIListTableCell>
-                  {/* {format(
-                    new Date(item.createdAt as string),
-                    'yyyy-MM-dd'
-                  )}
-                   */}
-                  {item.endDate}
+                  {format(new Date(item.startDate as string), 'yyyy-MM-dd')}
+                </UIListTableCell>
+                <UIListTableCell>
+                  {format(new Date(item.endDate as string), 'yyyy-MM-dd')}
                 </UIListTableCell>
                 <UIListTableCell>
                   <IconButton
@@ -320,18 +267,6 @@ const CampaignTable = ({ campaignTableData, onAction }: CampaignTableProps) => {
           );
         })}
       </UIOptionMenu>
-      <ConfirmModal
-        open={!!deleteId}
-        onClose={() => {
-          setDeleteId(undefined);
-        }}
-        title="Delete"
-        content="Are you sure you want to remove this tablet?"
-        onAction={() => {
-          onDeleteTablet(deleteId ?? 0);
-          setDeleteId(undefined);
-        }}
-      />
     </Table>
   );
 };

@@ -123,3 +123,25 @@ export const RewardSchema = Yup.object({
   coupon: Yup.number().positive().required(),
   couponThreshold: Yup.number().max(Yup.ref('coupon')),
 });
+
+export const CampaignSchema = Yup.object({
+  name: Yup.string().required(),
+  model: Yup.string().required(),
+  type: Yup.string().required(),
+  offer: Yup.number().positive().required('Invalid offer'),
+  offerType: Yup.string().required(),
+  startDate: Yup.string().required(),
+  endDate: Yup.string().when('startDate', (startDate, schema) =>
+    schema
+      .required()
+      .test(
+        'is-greater',
+        'End date must be greater than start date',
+        function (endDate) {
+          return new Date(endDate) > new Date(startDate.toString());
+        }
+      )
+  ),
+  channels: Yup.number().positive().required('Select channels'),
+  status: Yup.number().positive().required(),
+});
