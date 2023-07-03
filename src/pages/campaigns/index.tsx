@@ -8,15 +8,11 @@ import {
   CampaignOverview,
 } from '@/modules/Campaign';
 import { Divider } from '@mui/material';
-import {
-  initCampaignData,
-  initCampaignInformational,
-  initCampaignOnDemand,
-} from '@/_mock/campaigns';
 import { UIInfoTitle } from '@/components/UI';
 import { useCampaign } from '@/hooks';
 import { useRouter } from 'next/router';
 import ConfirmModal from '@/components/App/Modal/ConfirmModal';
+import { CampaignModelEnum } from '@/constants';
 
 const CampaignsPage = () => {
   const router = useRouter();
@@ -67,20 +63,37 @@ const CampaignsPage = () => {
       />
       <UIInfoTitle sx={{ fontSize: 18, width: 'auto' }}>Auto-Pilot</UIInfoTitle>
       <CampaignListTable
-        campaignTableData={campaigns ?? []}
+        campaignTableData={
+          campaigns
+            ? campaigns.filter((c) => c.model === CampaignModelEnum.AUTO_PILOT)
+            : []
+        }
         onAction={handleTableAction}
       />
       <UIInfoTitle sx={{ mt: 2, fontSize: 18, width: 'auto' }}>
         On Demand
       </UIInfoTitle>
       <CampaignListTable
-        campaignTableData={initCampaignOnDemand}
+        campaignTableData={
+          campaigns
+            ? campaigns.filter((c) => c.model === CampaignModelEnum.ON_DEMAND)
+            : []
+        }
         onAction={handleTableAction}
       />
       <UIInfoTitle sx={{ mt: 2, fontSize: 18, width: 'auto' }}>
         Informational
       </UIInfoTitle>
-      <CampaignListTable campaignTableData={[]} onAction={handleTableAction} />
+      <CampaignListTable
+        campaignTableData={
+          campaigns
+            ? campaigns.filter(
+                (c) => c.model === CampaignModelEnum.INFORMATIONAL
+              )
+            : []
+        }
+        onAction={handleTableAction}
+      />
       <ConfirmModal
         open={!!campaignDeleteId}
         onClose={() => {
