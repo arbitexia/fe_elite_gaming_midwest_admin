@@ -172,7 +172,7 @@ const UsersListPage = () => {
         content="Are you sure you want to remove this user?"
         onAction={async () => {
           if (deletedCustomerId) {
-            onDeleteUser(deletedCustomerId);
+            await onDeleteUser(deletedCustomerId);
             setDeletedCustomerId(undefined);
           }
         }}

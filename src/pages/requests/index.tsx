@@ -18,10 +18,13 @@ const Requests = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [requestList, setRequestList] = useState<TransactionType.Data[]>([]);
-
+  const [isChanged, setIsChanged] = useState(false);
   useEffect(() => {
     fetchTransaction();
-  }, [searchValue, page, rowsPerPage]);
+    if (isChanged) {
+      setIsChanged(false);
+    }
+  }, [searchValue, page, rowsPerPage, isChanged]);
 
   const fetchTransaction = async () => {
     await onGetTransactions({
@@ -37,7 +40,9 @@ const Requests = () => {
   };
 
   useEffect(() => {
-    setRequestList(transactions);
+    if (transactions) {
+      setRequestList(transactions);
+    }
   }, [transactions]);
 
   const handleAction = async (data: TransactionType.Param) => {
@@ -47,7 +52,7 @@ const Requests = () => {
       message:
         data.status === TransactionStatus.ACCEPTED ? 'Accepted!' : 'Declined!',
     });
-    await fetchTransaction();
+    setIsChanged(true);
   };
   return (
     <DashboardLayout title="Locations">

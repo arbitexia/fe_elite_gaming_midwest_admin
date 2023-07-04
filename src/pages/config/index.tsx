@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ConfigInfoCard } from '@/modules/Config';
 import { DashboardLayout } from '@/layouts';
 import { useConfig } from '@/hooks';
@@ -7,16 +7,19 @@ import { useAppToast } from '@/providers';
 
 const ConfigPage = () => {
   const { configItem, onGetConfig, onCreateConfig } = useConfig();
+  const [isChanged, setIsChanged] = useState(true);
   const appToast = useAppToast();
 
   useEffect(() => {
-    if (!configItem) {
+    if (isChanged) {
       onGetConfig({ locationId: 0 });
+      setIsChanged(false);
     }
-  }, [configItem]);
+  }, [isChanged]);
 
   const handleSaveConfig = async (value: ConfigInputType) => {
     await onCreateConfig(value);
+    setIsChanged(true);
     appToast({ severity: 'success', message: 'Config has been updated.' });
   };
 

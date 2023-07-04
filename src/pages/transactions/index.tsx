@@ -25,10 +25,14 @@ const TransactionsPage = () => {
   const [transactionList, setTransactionList] = useState<
     TransactionType.Data[]
   >([]);
+  const [isChanged, setIsChanged] = useState(false);
 
   useEffect(() => {
     fetchTransactions();
-  }, [page, rowsPerPage, searchValue, searchType]);
+    if (isChanged) {
+      setIsChanged(false);
+    }
+  }, [page, rowsPerPage, searchValue, searchType, isChanged]);
 
   const fetchTransactions = async () => {
     try {
@@ -49,12 +53,15 @@ const TransactionsPage = () => {
   };
 
   useEffect(() => {
-    setTransactionList(transactions);
+    if (transactions) {
+      setTransactionList(transactions);
+      setIsChanged(false);
+    }
   }, [transactions]);
 
   const handleDelete = async (transactionId: number) => {
     await onDeleteTransaction({ id: transactionId });
-    await fetchTransactions();
+    setIsChanged(true);
   };
 
   return (

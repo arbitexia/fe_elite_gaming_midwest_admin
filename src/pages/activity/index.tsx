@@ -20,13 +20,17 @@ const ActivityPage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [csvData, setCsvData] = useState<any[]>([]);
   const [sort, setSort] = useState('id|desc');
+  const [isChanged, setIsChanged] = useState(false);
   const csvLinkRef = useRef<
     CSVLink & HTMLAnchorElement & { link: HTMLAnchorElement }
   >(null);
 
   useEffect(() => {
     fetchActivities();
-  }, [page, rowsPerPage, searchValue, searchType, sort]);
+    if (isChanged) {
+      setIsChanged(false);
+    }
+  }, [page, rowsPerPage, searchValue, searchType, sort, isChanged]);
 
   const fetchActivities = async () => {
     try {
@@ -73,7 +77,7 @@ const ActivityPage = () => {
   const handleDelete = async (value: ActivityItemType) => {
     try {
       await onDeleteActivity(value.id);
-      await fetchActivities();
+      setIsChanged(true);
     } catch (error) {
       console.log(error);
     }
