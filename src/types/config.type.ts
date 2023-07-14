@@ -5,6 +5,7 @@ export type ConfigType = {
   monthly: number;
   checkinThreshold: number;
   coupon: number;
+  requestCoupon: number;
   initialCoupon: number;
 };
 

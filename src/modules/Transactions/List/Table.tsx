@@ -11,8 +11,8 @@ import {
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import { menuTransactionActions } from '@/constants/user';
 import { UIChip } from '@/components/UI';
-import { MenuAction } from '@/constants';
-import { getColor } from '@/libs/data-helper';
+import { CouponEnum, MenuAction } from '@/constants';
+import { formatCurrency, getColor } from '@/libs/data-helper';
 import { TransactionType } from '@/types';
 import {
   StyledTableRow,
@@ -173,7 +173,11 @@ const TransactionsTable = ({
                 <StyledTableCell>
                   {transactionItem?.reward?.product?.name}
                 </StyledTableCell>
-                <StyledTableCell>{transactionItem?.amount}</StyledTableCell>
+                <StyledTableCell>
+                  {transactionItem.type === CouponEnum.COUPON
+                    ? formatCurrency(transactionItem?.amount)
+                    : transactionItem?.amount}
+                </StyledTableCell>
                 <StyledTableCell>{transactionItem?.type}</StyledTableCell>
                 <StyledTableCell>{`${transactionItem.assignee?.firstName} ${transactionItem.assignee?.lastName}`}</StyledTableCell>
                 <StyledTableCell align="center">

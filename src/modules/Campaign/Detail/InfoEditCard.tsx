@@ -11,7 +11,7 @@ import {
   FormControlLabel,
 } from '@mui/material';
 import { UIFlexWrapBox } from '@/components/UI';
-import { CampaignType } from '@/types';
+import { CampaignType, EmailTemplateType } from '@/types';
 import { CalendarToday as CalendarTodayIcon } from '@mui/icons-material';
 
 import {
@@ -34,19 +34,23 @@ import {
   campaignStatus,
   campaignType,
 } from '@/constants';
+import { CampaignChannelsEnum } from '@/constants/enum';
 
 interface CampaignDetailHeaderProps {
   campaign: CampaignType.Data;
-  type: 'create' | 'edit';
+  emailTemplates: EmailTemplateType.Data[];
+  sendinEmails: EmailTemplateType.SendinBlueEmail[];
   onSave: (value: CampaignType.Body) => void;
 }
 
 const CampaignDetailInfoCard = ({
   campaign,
-  type,
+  emailTemplates,
+  sendinEmails,
   onSave,
 }: CampaignDetailHeaderProps) => {
   const [errorMsg, setErrorMsg] = useState<string>();
+  const [selectedTempId, setSelectedTempId] = useState<number>();
   const appToast = useAppToast();
 
   const campaignFormik = useFormik({
@@ -262,11 +266,14 @@ const CampaignDetailInfoCard = ({
                       <Checkbox
                         value="1"
                         checked={
-                          campaignFormik.values.channels === 1 ||
-                          campaignFormik.values.channels === 3
+                          campaignFormik.values.channels ===
+                            CampaignChannelsEnum.EMAIL ||
+                          campaignFormik.values.channels ===
+                            CampaignChannelsEnum.BOTH
                         }
                         onChange={handleChannels}
                         name="email"
+                        disabled={!campaignFormik.values.type}
                       />
                     }
                     label="Email"
@@ -276,11 +283,14 @@ const CampaignDetailInfoCard = ({
                       <Checkbox
                         value="2"
                         checked={
-                          campaignFormik.values.channels === 2 ||
-                          campaignFormik.values.channels === 3
+                          campaignFormik.values.channels ===
+                            CampaignChannelsEnum.PHONE ||
+                          campaignFormik.values.channels ===
+                            CampaignChannelsEnum.BOTH
                         }
                         onChange={handleChannels}
                         name="phone"
+                        disabled={!campaignFormik.values.type}
                       />
                     }
                     label="Phone"
@@ -290,6 +300,13 @@ const CampaignDetailInfoCard = ({
             </UIFlexWrapBox>
           </Box>
         </StyledUserInfoCardContent>
+        <Box
+          dangerouslySetInnerHTML={{
+            __html:
+              sendinEmails?.find((obj) => obj.id === 1)?.htmlContent ?? '',
+          }}
+          sx={{ my: 4 }}
+        ></Box>
       </StyledUserInfoCard>
     </Box>
   );

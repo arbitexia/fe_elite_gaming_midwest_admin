@@ -164,6 +164,23 @@ const ConfigInfoCard = ({
           {currentTab === 1 && (
             <Box sx={{ ml: 4, mt: 6 }}>
               <UIFlexWrapBox sx={{ alignItems: 'center', my: 4 }}>
+                <Typography>Customers can request a coupon of</Typography>
+                <TextField
+                  variant="standard"
+                  type="number"
+                  name="requestCoupon"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">$</InputAdornment>
+                    ),
+                  }}
+                  value={configFormik.values?.requestCoupon ?? 0}
+                  onChange={configFormik.handleChange}
+                  sx={{ width: '120px' }}
+                />
+              </UIFlexWrapBox>
+
+              <UIFlexWrapBox sx={{ alignItems: 'center', my: 4 }}>
                 <Typography>Customers will receive a coupon of</Typography>
                 <TextField
                   variant="standard"

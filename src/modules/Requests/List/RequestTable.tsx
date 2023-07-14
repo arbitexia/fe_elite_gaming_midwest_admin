@@ -21,13 +21,17 @@ import {
   SmartToy as SmartToyIcon,
   DriveFileRenameOutline as DriveFileRenameOutlineIcon,
 } from '@mui/icons-material';
-import { formatPhoneNumber, getColor } from '@/libs/data-helper';
+import {
+  formatCurrency,
+  formatPhoneNumber,
+  getColor,
+} from '@/libs/data-helper';
 import { TransactionType, UserType, Product, Location } from '@/types';
 import { StyledRequestTableRow, StyledRequestTableCell } from './ui';
 import { format } from 'date-fns';
 import Link from 'next/link';
 import { useAuth } from '@/hooks';
-import { TransactionStatus } from '@/constants';
+import { CouponEnum, TransactionStatus } from '@/constants';
 
 interface RequestTableProps {
   requestsData: TransactionType.Data[];
@@ -201,7 +205,7 @@ const RequestTable = ({ requestsData, onAction }: RequestTableProps) => {
               Game Place
             </TableSortLabel>
           </StyledRequestTableCell>
-
+          <StyledRequestTableCell>Type</StyledRequestTableCell>
           <StyledRequestTableCell>
             <TableSortLabel
               active={orderBy === 'amount'}
@@ -248,10 +252,17 @@ const RequestTable = ({ requestsData, onAction }: RequestTableProps) => {
                     renderProduct(request.reward.product)}
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
-                  {renderLocation(request.location)}
+                  {request?.location && renderLocation(request.location)}
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
-                  {request.amount}
+                  {request.reward?.product && request?.location
+                    ? 'Reward'
+                    : 'Coupon'}
+                </StyledRequestTableCell>
+                <StyledRequestTableCell>
+                  {request.type === CouponEnum.COUPON
+                    ? formatCurrency(request.amount)
+                    : request.amount}
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
                   <UIChip

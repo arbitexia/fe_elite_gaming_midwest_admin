@@ -15,7 +15,7 @@ import {
 } from './enum';
 
 export const campaignNameIcons = [
-  { id: 1, icon: <PersonAdd sx={{ width: 20 }} />, name: 'WELCOME' },
+  // { id: 1, icon: <PersonAdd sx={{ width: 20 }} />, name: 'WELCOME' },
   { id: 2, icon: <Group sx={{ width: 20 }} />, name: 'REFERRAL' },
   { id: 3, icon: <Cake sx={{ width: 20 }} />, name: 'BIRTHDAY' },
   { id: 4, icon: <EmojiEvents sx={{ width: 20 }} />, name: 'REWARDS' },
@@ -28,7 +28,7 @@ export const campaignType = [
   { id: CampaignTypeEnum.APPRECIATION, value: CampaignTypeEnum.APPRECIATION },
   { id: CampaignTypeEnum.REFERRAL, value: CampaignTypeEnum.REFERRAL },
   { id: CampaignTypeEnum.REWARDS, value: CampaignTypeEnum.REWARDS },
-  { id: CampaignTypeEnum.WELCOME, value: CampaignTypeEnum.WELCOME },
+  // { id: CampaignTypeEnum.WELCOME, value: CampaignTypeEnum.WELCOME },
   { id: CampaignTypeEnum.NEWSLETTER, value: CampaignTypeEnum.NEWSLETTER },
 ];
 

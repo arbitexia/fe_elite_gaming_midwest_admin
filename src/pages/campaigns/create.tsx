@@ -1,13 +1,20 @@
+import { useEffect } from 'react';
 import { CampaignDetailInfoEditCard } from '@/modules/Campaign';
 import { DashboardLayout } from '@/layouts';
 import { CampaignType } from '@/types';
-import { useCampaign } from '@/hooks';
+import { useCampaign, useEmailTemplate } from '@/hooks';
 import { useRouter } from 'next/router';
 import { CouponEnum } from '@/constants';
 
 const CreateCampaignPage = () => {
   const router = useRouter();
   const { onSaveCampaign } = useCampaign();
+  const {
+    emailTemplates,
+    onGetEmailTemplates,
+    sendinEmails,
+    onGetSendinBlueEmails,
+  } = useEmailTemplate();
   const initCampaignData: CampaignType.Data = {
     id: 0,
     name: '',
@@ -23,6 +30,19 @@ const CreateCampaignPage = () => {
     status: 1,
   };
 
+  useEffect(() => {
+    const fetchEmailTemplates = async () => {
+      await onGetEmailTemplates({
+        filterBy: {
+          search: '',
+        },
+        cursor: { page: 0, size: 1000 },
+      });
+      await onGetSendinBlueEmails();
+    };
+    fetchEmailTemplates();
+  }, []);
+
   const handleSave = (value: CampaignType.Body) => {
     onSaveCampaign(value);
     router.push('/campaigns');
@@ -31,8 +51,9 @@ const CreateCampaignPage = () => {
     <DashboardLayout title="Campaigns">
       <CampaignDetailInfoEditCard
         campaign={initCampaignData}
-        type="create"
         onSave={handleSave}
+        emailTemplates={emailTemplates ?? []}
+        sendinEmails={sendinEmails ?? []}
       />
     </DashboardLayout>
   );

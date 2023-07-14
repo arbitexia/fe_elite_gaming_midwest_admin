@@ -2,16 +2,25 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { DashboardLayout } from '@/layouts';
-import { useCampaign } from '@/hooks';
+import { useCampaign, useEmailTemplate } from '@/hooks';
 import { CampaignType } from '@/types';
 import { CampaignDetailInfoEditCard } from '@/modules/Campaign';
 
 const EditCampaignPage = () => {
   const router = useRouter();
   const { onSaveCampaign, onSelectCampaign } = useCampaign();
+  const { emailTemplates, onGetEmailTemplates } = useEmailTemplate();
   const [selectedCampaign, setSelectedCampaign] = useState<CampaignType.Data>();
   const { id } = router.query;
   useEffect(() => {
+    const fetchEmailTemplates = async () => {
+      await onGetEmailTemplates({
+        filterBy: {
+          search: '',
+        },
+        cursor: { page: 0, size: 1000 },
+      });
+    };
     if (id) {
       const campaign = onSelectCampaign(Number(id));
       if (!campaign) {
@@ -19,8 +28,10 @@ const EditCampaignPage = () => {
         return;
       }
       setSelectedCampaign(campaign);
+      fetchEmailTemplates();
     }
   }, [id]);
+
   const handleSave = (value: CampaignType.Body) => {
     onSaveCampaign(value);
     router.push('/campaigns');
@@ -31,8 +42,8 @@ const EditCampaignPage = () => {
       {selectedCampaign && (
         <CampaignDetailInfoEditCard
           campaign={selectedCampaign}
-          type="edit"
           onSave={handleSave}
+          emailTemplates={emailTemplates ?? []}
         />
       )}
     </DashboardLayout>
