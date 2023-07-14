@@ -39,7 +39,7 @@ import { CampaignChannelsEnum } from '@/constants/enum';
 interface CampaignDetailHeaderProps {
   campaign: CampaignType.Data;
   emailTemplates: EmailTemplateType.Data[];
-  sendinEmails: EmailTemplateType.SendinBlueEmail[];
+  sendinEmails?: EmailTemplateType.SendinBlueEmail[];
   onSave: (value: CampaignType.Body) => void;
 }
 
