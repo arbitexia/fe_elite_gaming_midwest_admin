@@ -178,7 +178,11 @@ const TransactionsTable = ({
                     ? formatCurrency(transactionItem?.amount)
                     : transactionItem?.amount}
                 </StyledTableCell>
-                <StyledTableCell>{transactionItem?.type}</StyledTableCell>
+                <StyledTableCell>
+                  {transactionItem.reward?.product && transactionItem?.location
+                    ? 'Reward'
+                    : 'Coupon'}
+                </StyledTableCell>
                 <StyledTableCell>{`${transactionItem.assignee?.firstName} ${transactionItem.assignee?.lastName}`}</StyledTableCell>
                 <StyledTableCell align="center">
                   <UIChip

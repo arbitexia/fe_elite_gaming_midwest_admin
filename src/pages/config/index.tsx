@@ -17,7 +17,6 @@ const ConfigPage = () => {
     }
   }, [isChanged]);
   const handleSaveConfig = async (value: ConfigInputType) => {
-    // console.log(value);
     await onCreateConfig(value);
     setIsChanged(true);
     appToast({ severity: 'success', message: 'Config has been updated.' });

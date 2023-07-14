@@ -300,13 +300,13 @@ const CampaignDetailInfoCard = ({
             </UIFlexWrapBox>
           </Box>
         </StyledUserInfoCardContent>
-        <Box
+        {/* <Box
           dangerouslySetInnerHTML={{
             __html:
               sendinEmails?.find((obj) => obj.id === 1)?.htmlContent ?? '',
           }}
           sx={{ my: 4 }}
-        ></Box>
+        ></Box> */}
       </StyledUserInfoCard>
     </Box>
   );
