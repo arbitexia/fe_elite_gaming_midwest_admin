@@ -26,7 +26,13 @@ import {
   formatPhoneNumber,
   getColor,
 } from '@/libs/data-helper';
-import { TransactionType, UserType, Product, Location } from '@/types';
+import {
+  TransactionType,
+  UserType,
+  Product,
+  Location,
+  BackOfficeType,
+} from '@/types';
 import { StyledRequestTableRow, StyledRequestTableCell } from './ui';
 import { format } from 'date-fns';
 import Link from 'next/link';
@@ -66,6 +72,36 @@ const renderProduct = (product: Product.Data) => (
     </UIFlexWrapBox>
   </Box>
 );
+
+const renderBackOffice = (info?: BackOfficeType) => {
+  return (
+    info && (
+      <Box
+        key={`backOffice-${info.id}`}
+        sx={{ color: '#000', justifyContent: 'flex-start' }}
+      >
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <InventoryOutlinedIcon sx={{ fontSize: '14px' }} />
+          <Typography variant="body2">
+            {`${info.type} PLAY`} {formatCurrency(info.coupon)}
+          </Typography>
+        </UIFlexWrapBox>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <LoyaltyIcon sx={{ fontSize: '14px' }} />
+          <Typography variant="caption">
+            Checkin count: {info.checkinThreshold}
+          </Typography>
+        </UIFlexWrapBox>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <AccessTimeIcon sx={{ fontSize: '14px' }} />
+          <Typography variant="caption">
+            {format(new Date(info?.createdAt || ''), 'dd MMM KK:mm aa')}
+          </Typography>
+        </UIFlexWrapBox>
+      </Box>
+    )
+  );
+};
 
 const renderUser = (user: UserType.User) => (
   <Box
@@ -248,16 +284,17 @@ const RequestTable = ({ requestsData, onAction }: RequestTableProps) => {
                   {renderUser(request.user)}
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
-                  {request.reward?.product &&
-                    renderProduct(request.reward.product)}
+                  {request.reward?.product
+                    ? renderProduct(request.reward.product)
+                    : renderBackOffice(request?.backOffice)}
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
                   {request?.location && renderLocation(request.location)}
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
-                  {request.reward?.product && request?.location
-                    ? 'Reward'
-                    : 'Coupon'}
+                  {request?.backOffice
+                    ? `${request.backOffice.type} PLAY`
+                    : 'Reward'}
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
                   {request.type === CouponEnum.COUPON

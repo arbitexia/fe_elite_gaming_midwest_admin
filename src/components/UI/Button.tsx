@@ -35,6 +35,7 @@ type UIActionButtonProps = {
   icon: React.ReactNode | React.ReactNode[];
   color: string;
   title: string;
+  type?: 'button' | 'submit' | 'reset';
   size?: number;
   sx?: SxProps<Theme>;
 };
@@ -45,12 +46,14 @@ export const UIActionButton = ({
   color,
   title,
   size,
+  type,
   sx,
 }: UIActionButtonProps) => {
   return (
     <Button
       onClick={handleClick}
       sx={{ marginLeft: 3, textTransform: 'none', ...sx }}
+      type={type ?? 'button'}
     >
       <SvgIcon
         sx={{ color: { color }, width: size ?? '17px', height: size ?? '17px' }}

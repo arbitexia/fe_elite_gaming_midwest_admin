@@ -7,13 +7,15 @@ import {
   IconButton,
   Divider,
   TableSortLabel,
+  Box,
+  Typography,
 } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import { menuTransactionActions } from '@/constants/user';
-import { UIChip } from '@/components/UI';
+import { UIChip, UIFlexWrapBox } from '@/components/UI';
 import { CouponEnum, MenuAction } from '@/constants';
 import { formatCurrency, getColor } from '@/libs/data-helper';
-import { TransactionType } from '@/types';
+import { BackOfficeType, TransactionType } from '@/types';
 import {
   StyledTableRow,
   StyledTableCell,
@@ -23,6 +25,11 @@ import {
 } from './ui';
 import { format } from 'date-fns';
 import ConfirmModal from '@/components/App/Modal/ConfirmModal';
+import {
+  Loyalty as LoyaltyIcon,
+  AccessTime as AccessTimeIcon,
+  InventoryOutlined as InventoryOutlinedIcon,
+} from '@mui/icons-material';
 
 type TransactionsTableProps = {
   transactionTableData: TransactionType.Data[];
@@ -68,6 +75,36 @@ const TransactionsTable = ({
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+  };
+
+  const renderBackOffice = (info?: BackOfficeType) => {
+    return (
+      info && (
+        <Box
+          key={`backOffice-${info.id}`}
+          sx={{ color: '#000', justifyContent: 'flex-start' }}
+        >
+          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+            <InventoryOutlinedIcon sx={{ fontSize: '14px' }} />
+            <Typography variant="body2">
+              {`${info.type} PLAY`} {formatCurrency(info.coupon)}
+            </Typography>
+          </UIFlexWrapBox>
+          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+            <LoyaltyIcon sx={{ fontSize: '14px' }} />
+            <Typography variant="caption">
+              Checkin count: {info.checkinThreshold}
+            </Typography>
+          </UIFlexWrapBox>
+          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+            <AccessTimeIcon sx={{ fontSize: '14px' }} />
+            <Typography variant="caption">
+              {format(new Date(info?.createdAt || ''), 'dd MMM KK:mm aa')}
+            </Typography>
+          </UIFlexWrapBox>
+        </Box>
+      )
+    );
   };
 
   return (
@@ -171,7 +208,9 @@ const TransactionsTable = ({
                 </StyledTableCell>
 
                 <StyledTableCell>
-                  {transactionItem?.reward?.product?.name}
+                  {transactionItem?.backOffice
+                    ? renderBackOffice(transactionItem?.backOffice)
+                    : transactionItem?.reward?.product?.name}
                 </StyledTableCell>
                 <StyledTableCell>
                   {transactionItem.type === CouponEnum.COUPON
@@ -179,9 +218,9 @@ const TransactionsTable = ({
                     : transactionItem?.amount}
                 </StyledTableCell>
                 <StyledTableCell>
-                  {transactionItem.reward?.product && transactionItem?.location
-                    ? 'Reward'
-                    : 'Coupon'}
+                  {transactionItem?.backOffice
+                    ? `${transactionItem.backOffice.type} PLAY`
+                    : 'Reward'}
                 </StyledTableCell>
                 <StyledTableCell>{`${transactionItem.assignee?.firstName} ${transactionItem.assignee?.lastName}`}</StyledTableCell>
                 <StyledTableCell align="center">

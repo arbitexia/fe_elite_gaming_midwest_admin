@@ -3,16 +3,23 @@ import { useAppToast } from '@/providers';
 import {
   getConfig,
   createConfig,
+  saveBackOffice,
   resetConfigMessage,
   configSelector,
+  getBackOffice,
 } from '@/redux/slices';
 import { useAppSelector, useAppDispatch } from './redux';
-import { ConfigInputType, ConfigType, GetConfigParam } from '@/types';
+import {
+  BackOfficeType,
+  ConfigInputType,
+  ConfigType,
+  GetConfigParam,
+} from '@/types';
 import { PayloadAction } from '@reduxjs/toolkit';
 
 export const useConfig = () => {
   const appToast = useAppToast();
-  const { configItem, loading, message, error } =
+  const { configItem, backOfficeItems, loading, message, error } =
     useAppSelector(configSelector);
   const dispatch = useAppDispatch();
 
@@ -27,18 +34,32 @@ export const useConfig = () => {
     await dispatch(getConfig(param));
   };
 
-  const onCreateConfig = async (
-    param: ConfigInputType
-  ): Promise<ConfigType> => {
+  const onGetBackOffice = async () => {
+    await dispatch(getBackOffice(''));
+  };
+
+  const onSaveConfig = async (param: ConfigInputType): Promise<ConfigType> => {
     const { payload }: PayloadAction<unknown> = await dispatch(
       createConfig(param)
     );
     return payload as ConfigType;
   };
 
+  const onSaveBackOffice = async (
+    param: BackOfficeType[]
+  ): Promise<ConfigType> => {
+    const { payload }: PayloadAction<unknown> = await dispatch(
+      saveBackOffice(param)
+    );
+    return payload as ConfigType;
+  };
+
   return {
     configItem,
+    backOfficeItems,
     onGetConfig,
-    onCreateConfig,
+    onSaveConfig,
+    onSaveBackOffice,
+    onGetBackOffice,
   };
 };

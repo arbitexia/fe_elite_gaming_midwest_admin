@@ -97,7 +97,9 @@ export {
   default as configReducer,
   configSelector,
   getConfig,
+  getBackOffice,
   createConfig,
+  saveBackOffice,
   resetConfigMessage,
 } from './config.slice';
 

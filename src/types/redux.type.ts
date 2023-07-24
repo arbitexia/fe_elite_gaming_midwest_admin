@@ -8,7 +8,7 @@ import { PointType } from './point.type';
 import { Product } from './product.type';
 import { Reward } from './reward.type';
 import { ActivityItemType } from './activity.type';
-import { ConfigType } from './config.type';
+import { BackOfficeType, ConfigType } from './config.type';
 import { TabletType } from './tablet.type';
 import { TransactionType } from './transaction.type';
 import { EmailTemplateType } from './emailTemplate.type';
@@ -108,6 +108,7 @@ export declare namespace ReduxJson {
     loading: boolean;
     status: ResponseStatus | null;
     configItem: ConfigType | null;
+    backOfficeItems: BackOfficeType[] | null;
     message: string | null;
     error: string | null;
   };

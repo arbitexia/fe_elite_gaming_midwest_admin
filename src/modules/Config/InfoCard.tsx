@@ -1,79 +1,51 @@
-import { useState } from 'react';
-import { useFormik } from 'formik';
-import {
-  Box,
-  Typography,
-  Stack,
-  Divider,
-  InputAdornment,
-  Tabs,
-  Tab,
-  TextField,
-} from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Box, Tabs, Tab, Divider } from '@mui/material';
 import { SecurityUpdateGood, Schedule } from '@mui/icons-material';
-import {
-  UIFlexWrapBox,
-  UIFlexSpaceBox,
-  UIDefaultButton,
-  UIInfoTitle,
-  UIInfoValue,
-} from '@/components/UI';
-import { ConfigInputType, ConfigType } from '@/types';
-import {
-  StyledConfigInfoTitle,
-  StyledConfigInfoCard,
-  StyledConfigInfoCardContent,
-  StyledConfigEditTextField,
-} from './ui';
-
+import { BackOfficeType, ConfigInputType, ConfigType } from '@/types';
+import { StyledConfigInfoCard } from './ui';
+import CheckinTabPanel from './Detail/CheckinTabPanel';
+import ConfigHeader from './Header';
+import { useFormik } from 'formik';
+import BackOfficeTabPanel from './Detail/BackOfficeTabPanel';
 interface ConfigInfoCardProps {
   configData: ConfigType;
-  onCreateConfig: (value: ConfigInputType) => void;
+  backOfficeData: BackOfficeType[];
+  onSaveConfig: (value: ConfigInputType) => void;
+  onSaveBackOffice: (value: BackOfficeType[]) => void;
 }
 
 const ConfigInfoCard = ({
   configData,
-  onCreateConfig,
+  backOfficeData,
+  onSaveConfig,
+  onSaveBackOffice,
 }: ConfigInfoCardProps) => {
   const [currentTab, setCurrentTab] = useState(0);
+  const [backOfficeValues, setBackOfficeValues] =
+    useState<BackOfficeType[]>(backOfficeData);
+
+  useEffect(() => {
+    setBackOfficeValues(backOfficeData);
+  }, [backOfficeData]);
+
   const configFormik = useFormik({
     initialValues: configData,
-    onSubmit: async (values) => {
-      onCreateConfig({ input: { ...values, id: configData.id } });
+    onSubmit: (values) => {
+      onSaveConfig({ input: { ...values, id: configData.id } });
     },
   });
 
+  const handleClickSave = () => {
+    if (currentTab === 0) {
+      configFormik.handleSubmit();
+    } else {
+      onSaveBackOffice(backOfficeValues);
+    }
+  };
   return (
-    <Box component="form" onSubmit={configFormik.handleSubmit}>
-      <UIFlexSpaceBox>
-        <Typography
-          sx={{
-            fontWeight: 600,
-            fontSize: 36,
-            lineHeight: '54px',
-            color: '#89C8C6',
-          }}
-        >
-          Settings/Config
-        </Typography>
-        <Stack direction="row" spacing={2} justifyContent="flex-end">
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <UIDefaultButton
-              sx={{ minWidth: '110px', borderRadius: '8px' }}
-              type="submit"
-            >
-              Save
-            </UIDefaultButton>
-          </Box>
-        </Stack>
-      </UIFlexSpaceBox>
+    <Box>
+      <ConfigHeader onSave={handleClickSave} />
       <Divider sx={{ my: '18px' }} />
-
       <StyledConfigInfoCard>
         <Box
           sx={{
@@ -114,100 +86,17 @@ const ConfigInfoCard = ({
           </Tabs>
 
           {currentTab === 0 && (
-            <UIFlexWrapBox sx={{ flexWrap: 'nowrap', ml: 4 }}>
-              <StyledConfigInfoCardContent>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledConfigInfoTitle>Daily:</StyledConfigInfoTitle>
-                  <StyledConfigEditTextField
-                    type="number"
-                    name="daily"
-                    value={configFormik.values.daily}
-                    onChange={configFormik.handleChange}
-                  />
-                </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledConfigInfoTitle>Weekly:</StyledConfigInfoTitle>
-                  <StyledConfigEditTextField
-                    type="number"
-                    name="weekly"
-                    value={configFormik.values.weekly}
-                    onChange={configFormik.handleChange}
-                  />
-                </UIFlexWrapBox>
-                <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                  <StyledConfigInfoTitle>Monthly:</StyledConfigInfoTitle>
-                  <StyledConfigEditTextField
-                    type="number"
-                    name="monthly"
-                    value={configFormik.values.monthly}
-                    onChange={configFormik.handleChange}
-                  />
-                </UIFlexWrapBox>
-              </StyledConfigInfoCardContent>
-              <StyledConfigInfoCardContent>
-                <UIInfoTitle>Description</UIInfoTitle>
-                <UIInfoValue sx={{ pr: 4 }}>
-                  On the settings page, have three different point allocations
-                  available for customers when they check in on the tablet:
-                  daily, weekly, and monthly. Daily Points: Customers receive{' '}
-                  {configData.daily} points every day when they check in on the
-                  tablet. Weekly Points: In addition to the daily points,
-                  customers also receive {configData.weekly} points on a weekly
-                  basis. Monthly Points: Alongside the daily and weekly points,
-                  customers are rewarded with {configData.monthly} points at the
-                  beginning of each month.
-                </UIInfoValue>
-              </StyledConfigInfoCardContent>
-            </UIFlexWrapBox>
+            <CheckinTabPanel
+              configData={configData}
+              configFormik={configFormik}
+            />
           )}
 
           {currentTab === 1 && (
-            <Box sx={{ ml: 4, mt: 6 }}>
-              <UIFlexWrapBox sx={{ alignItems: 'center', my: 4 }}>
-                <Typography>Customers will receive a coupon of</Typography>
-                <TextField
-                  variant="standard"
-                  type="number"
-                  name="initialCoupon"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">$</InputAdornment>
-                    ),
-                  }}
-                  value={configFormik.values?.initialCoupon ?? 0}
-                  onChange={configFormik.handleChange}
-                  sx={{ width: '120px' }}
-                />
-                <Typography>upon signing up.</Typography>
-              </UIFlexWrapBox>
-
-              <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-                <Typography>Customers get</Typography>
-                <TextField
-                  variant="standard"
-                  type="number"
-                  name="coupon"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">$</InputAdornment>
-                    ),
-                  }}
-                  value={configFormik.values?.coupon ?? 0}
-                  onChange={configFormik.handleChange}
-                  sx={{ width: '120px' }}
-                />
-                <Typography>freeplay when they check in for</Typography>
-                <TextField
-                  variant="standard"
-                  type="number"
-                  name="checkinThreshold"
-                  value={configFormik.values?.checkinThreshold ?? 0}
-                  onChange={configFormik.handleChange}
-                  sx={{ width: '80px' }}
-                />
-                <Typography>times.</Typography>
-              </UIFlexWrapBox>
-            </Box>
+            <BackOfficeTabPanel
+              backOfficeValues={backOfficeValues}
+              setBackOfficeValues={setBackOfficeValues}
+            />
           )}
         </Box>
       </StyledConfigInfoCard>

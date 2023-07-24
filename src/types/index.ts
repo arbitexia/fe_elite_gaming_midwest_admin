@@ -50,6 +50,7 @@ export type {
   ConfigType,
   ConfigInputType,
   GetConfigParam,
+  BackOfficeType,
 } from './config.type';
 
 export type { TabletType } from './tablet.type';

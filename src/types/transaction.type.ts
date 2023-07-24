@@ -3,6 +3,7 @@ import { Location } from './location.type';
 import { Reward } from './reward.type';
 import { UserType } from './users.type';
 import { PointType } from './point.type';
+import { BackOfficeType } from './config.type';
 
 export declare namespace TransactionType {
   type Data = {
@@ -13,6 +14,8 @@ export declare namespace TransactionType {
     assignee: UserType.User;
     pointId?: number;
     point?: PointType;
+    backOffice?: BackOfficeType;
+    backOfficeId?: number;
     type: string;
     status: string;
     amount: number;

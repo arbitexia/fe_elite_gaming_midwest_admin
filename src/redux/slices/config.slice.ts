@@ -8,6 +8,8 @@ import {
   ConfigType,
   ConfigInputType,
   GetConfigParam,
+  BackOfficeType,
+  CommonType,
 } from '@/types';
 
 // Initial state
@@ -25,6 +27,7 @@ const initialState: ReduxJson.ConfigState = {
   loading: true,
   status: null,
   configItem: null,
+  backOfficeItems: null,
   message: null,
   error: null,
 };
@@ -49,6 +52,32 @@ export const createConfig = createAsyncThunk<
 >('config/createConfig', async (params: ConfigInputType, thunkAPI) => {
   try {
     return await configApi.createConfig(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
+export const saveBackOffice = createAsyncThunk<
+  CommonType.Message,
+  BackOfficeType[],
+  { dispatch: AppDispatch; state: RootState }
+>('config/saveBackOffice', async (params: BackOfficeType[], thunkAPI) => {
+  try {
+    return await configApi.saveBackOffice(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
+export const getBackOffice = createAsyncThunk<
+  BackOfficeType[],
+  string,
+  { dispatch: AppDispatch; state: RootState }
+>('config/getBackOffice', async (_, thunkAPI) => {
+  try {
+    return await configApi.getBackOffice();
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
@@ -102,6 +131,46 @@ export const configSlice = createSlice({
         }
       )
       .addCase(createConfig.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(saveBackOffice.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        saveBackOffice.fulfilled,
+        (state, { payload }: PayloadAction<CommonType.Message>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.message = payload.message;
+        }
+      )
+      .addCase(saveBackOffice.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(getBackOffice.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        getBackOffice.fulfilled,
+        (state, { payload }: PayloadAction<BackOfficeType[]>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.backOfficeItems = payload;
+        }
+      )
+      .addCase(getBackOffice.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;

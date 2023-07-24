@@ -16,3 +16,15 @@ export type ConfigInputType = {
 export type GetConfigParam = {
   locationId: number;
 };
+
+export type BackOfficeType = {
+  id: number;
+  coupon: number;
+  type: 'FREE' | 'MATCH';
+  checkinThreshold: number;
+  days: number;
+  status: number;
+  code: string;
+  expirationDate: string;
+  createdAt?: number;
+};
