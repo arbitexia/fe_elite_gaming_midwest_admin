@@ -24,7 +24,5 @@ export type BackOfficeType = {
   checkinThreshold: number;
   days: number;
   status: number;
-  code: string;
-  expirationDate: string;
   createdAt?: number;
 };

@@ -77,29 +77,32 @@ const TransactionsTable = ({
     setOrderBy(property);
   };
 
-  const renderBackOffice = (info?: BackOfficeType) => {
+  const renderMetadata = (info?: any) => {
     return (
       info && (
-        <Box
-          key={`backOffice-${info.id}`}
-          sx={{ color: '#000', justifyContent: 'flex-start' }}
-        >
+        <Box sx={{ color: '#000', justifyContent: 'flex-start' }}>
+          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+            <InventoryOutlinedIcon sx={{ fontSize: '14px' }} />
+            <Typography variant="body2">{info.desc}</Typography>
+          </UIFlexWrapBox>
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
             <InventoryOutlinedIcon sx={{ fontSize: '14px' }} />
             <Typography variant="body2">
               {`${info.type} PLAY`} {formatCurrency(info.coupon)}
             </Typography>
           </UIFlexWrapBox>
-          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-            <LoyaltyIcon sx={{ fontSize: '14px' }} />
-            <Typography variant="caption">
-              Checkin count: {info.checkinThreshold}
-            </Typography>
-          </UIFlexWrapBox>
+          {info?.checkinThreshold && (
+            <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+              <LoyaltyIcon sx={{ fontSize: '14px' }} />
+              <Typography variant="caption">
+                Checkin count: {info.checkinThreshold}
+              </Typography>
+            </UIFlexWrapBox>
+          )}
           <UIFlexWrapBox sx={{ alignItems: 'center' }}>
             <AccessTimeIcon sx={{ fontSize: '14px' }} />
             <Typography variant="caption">
-              {format(new Date(info?.createdAt || ''), 'dd MMM KK:mm aa')}
+              {format(new Date(info?.date ?? new Date()), 'dd MMM KK:mm aa')}
             </Typography>
           </UIFlexWrapBox>
         </Box>
@@ -208,8 +211,8 @@ const TransactionsTable = ({
                 </StyledTableCell>
 
                 <StyledTableCell>
-                  {transactionItem?.backOffice
-                    ? renderBackOffice(transactionItem?.backOffice)
+                  {transactionItem?.metadata
+                    ? renderMetadata(transactionItem?.metadata)
                     : transactionItem?.reward?.product?.name}
                 </StyledTableCell>
                 <StyledTableCell>
@@ -218,8 +221,8 @@ const TransactionsTable = ({
                     : transactionItem?.amount}
                 </StyledTableCell>
                 <StyledTableCell>
-                  {transactionItem?.backOffice
-                    ? `${transactionItem.backOffice.type} PLAY`
+                  {transactionItem?.metadata
+                    ? `${transactionItem.metadata.type} PLAY`
                     : 'Reward'}
                 </StyledTableCell>
                 <StyledTableCell>{`${transactionItem.assignee?.firstName} ${transactionItem.assignee?.lastName}`}</StyledTableCell>

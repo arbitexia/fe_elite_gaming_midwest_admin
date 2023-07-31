@@ -73,29 +73,32 @@ const renderProduct = (product: Product.Data) => (
   </Box>
 );
 
-const renderBackOffice = (info?: BackOfficeType) => {
+const renderMetadata = (info?: any) => {
   return (
     info && (
-      <Box
-        key={`backOffice-${info.id}`}
-        sx={{ color: '#000', justifyContent: 'flex-start' }}
-      >
+      <Box sx={{ color: '#000', justifyContent: 'flex-start' }}>
+        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+          <InventoryOutlinedIcon sx={{ fontSize: '14px' }} />
+          <Typography variant="body2">{info.desc}</Typography>
+        </UIFlexWrapBox>
         <UIFlexWrapBox sx={{ alignItems: 'center' }}>
           <InventoryOutlinedIcon sx={{ fontSize: '14px' }} />
           <Typography variant="body2">
             {`${info.type} PLAY`} {formatCurrency(info.coupon)}
           </Typography>
         </UIFlexWrapBox>
-        <UIFlexWrapBox sx={{ alignItems: 'center' }}>
-          <LoyaltyIcon sx={{ fontSize: '14px' }} />
-          <Typography variant="caption">
-            Checkin count: {info.checkinThreshold}
-          </Typography>
-        </UIFlexWrapBox>
+        {info?.checkinThreshold && (
+          <UIFlexWrapBox sx={{ alignItems: 'center' }}>
+            <LoyaltyIcon sx={{ fontSize: '14px' }} />
+            <Typography variant="caption">
+              Checkin count: {info.checkinThreshold}
+            </Typography>
+          </UIFlexWrapBox>
+        )}
         <UIFlexWrapBox sx={{ alignItems: 'center' }}>
           <AccessTimeIcon sx={{ fontSize: '14px' }} />
           <Typography variant="caption">
-            {format(new Date(info?.createdAt || ''), 'dd MMM KK:mm aa')}
+            {format(new Date(info?.date ?? new Date()), 'dd MMM KK:mm aa')}
           </Typography>
         </UIFlexWrapBox>
       </Box>
@@ -286,14 +289,14 @@ const RequestTable = ({ requestsData, onAction }: RequestTableProps) => {
                 <StyledRequestTableCell>
                   {request.reward?.product
                     ? renderProduct(request.reward.product)
-                    : renderBackOffice(request?.backOffice)}
+                    : renderMetadata(request?.metadata)}
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
                   {request?.location && renderLocation(request.location)}
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>
-                  {request?.backOffice
-                    ? `${request.backOffice.type} PLAY`
+                  {request?.metadata
+                    ? `${request.metadata.type} PLAY`
                     : 'Reward'}
                 </StyledRequestTableCell>
                 <StyledRequestTableCell>

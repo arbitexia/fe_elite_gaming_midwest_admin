@@ -4,7 +4,6 @@ import { DashboardLayout } from '@/layouts';
 import { useConfig } from '@/hooks';
 import { BackOfficeType, ConfigInputType } from '@/types';
 import { useAppToast } from '@/providers';
-import { v4 as uuidv4 } from 'uuid';
 
 const initialBackOffice: BackOfficeType[] = [
   {
@@ -13,8 +12,6 @@ const initialBackOffice: BackOfficeType[] = [
     checkinThreshold: 5,
     days: 10,
     type: 'FREE',
-    code: uuidv4(),
-    expirationDate: new Date().toISOString(),
     status: 0,
   },
   {
@@ -23,8 +20,6 @@ const initialBackOffice: BackOfficeType[] = [
     checkinThreshold: 6,
     days: 10,
     type: 'FREE',
-    code: uuidv4(),
-    expirationDate: new Date().toISOString(),
     status: 0,
   },
   {
@@ -33,8 +28,6 @@ const initialBackOffice: BackOfficeType[] = [
     checkinThreshold: 7,
     days: 10,
     type: 'FREE',
-    code: uuidv4(),
-    expirationDate: new Date().toISOString(),
     status: 0,
   },
   {
@@ -43,8 +36,6 @@ const initialBackOffice: BackOfficeType[] = [
     checkinThreshold: 8,
     days: 10,
     type: 'FREE',
-    code: uuidv4(),
-    expirationDate: new Date().toISOString(),
     status: 0,
   },
   {
@@ -53,8 +44,6 @@ const initialBackOffice: BackOfficeType[] = [
     checkinThreshold: 9,
     days: 10,
     type: 'FREE',
-    code: uuidv4(),
-    expirationDate: new Date().toISOString(),
     status: 0,
   },
   {
@@ -63,8 +52,6 @@ const initialBackOffice: BackOfficeType[] = [
     checkinThreshold: 10,
     days: 10,
     type: 'FREE',
-    code: uuidv4(),
-    expirationDate: new Date().toISOString(),
     status: 0,
   },
   {
@@ -73,8 +60,6 @@ const initialBackOffice: BackOfficeType[] = [
     checkinThreshold: 11,
     days: 10,
     type: 'FREE',
-    code: uuidv4(),
-    expirationDate: new Date().toISOString(),
     status: 0,
   },
   {
@@ -83,8 +68,6 @@ const initialBackOffice: BackOfficeType[] = [
     checkinThreshold: 12,
     days: 10,
     type: 'MATCH',
-    code: uuidv4(),
-    expirationDate: new Date().toISOString(),
     status: 0,
   },
   {
@@ -93,8 +76,6 @@ const initialBackOffice: BackOfficeType[] = [
     checkinThreshold: 13,
     days: 10,
     type: 'MATCH',
-    code: uuidv4(),
-    expirationDate: new Date().toISOString(),
     status: 0,
   },
 ];
