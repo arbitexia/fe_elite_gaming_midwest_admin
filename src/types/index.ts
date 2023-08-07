@@ -45,6 +45,7 @@ export type {
   DeleteUserParam,
   UserLocationsType,
   UserLocationFilter,
+  UserSMSParam,
 } from './users.type';
 export type {
   ConfigType,

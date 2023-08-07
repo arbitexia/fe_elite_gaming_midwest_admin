@@ -7,8 +7,14 @@ import {
   updateUser,
   usersSelector,
   resetUserMessage,
+  sendSMSToUser,
 } from '@/redux/slices';
-import { GetUsersParam, UpdateUserParam, UserType } from '@/types';
+import {
+  GetUsersParam,
+  UpdateUserParam,
+  UserSMSParam,
+  UserType,
+} from '@/types';
 import { useAppSelector, useAppDispatch } from './redux';
 
 export const useUser = () => {
@@ -44,6 +50,10 @@ export const useUser = () => {
     await dispatch(deleteUser({ userId: id }));
   };
 
+  const onSendSMSToUser = async (param: UserSMSParam) => {
+    await dispatch(sendSMSToUser(param));
+  };
+
   return {
     loading,
     users,
@@ -55,5 +65,6 @@ export const useUser = () => {
     onGetUsers,
     onUpdateUser,
     onDeleteUser,
+    onSendSMSToUser,
   };
 };

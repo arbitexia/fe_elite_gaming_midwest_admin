@@ -11,3 +11,4 @@ export { default as UserDetailRewardsCard } from './Detail/RewardsCard';
 export { default as UserDetailActivityCard } from './Detail/ActivityCard';
 export { default as SendEmailDialog } from './Dialog/SendEmail';
 export { default as FollowUpEmailDialog } from './Dialog/FollowUpEmail';
+export { default as SendSMSDialog } from './Dialog/SendSMS';

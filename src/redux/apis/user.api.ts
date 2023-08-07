@@ -5,6 +5,7 @@ import {
   DeleteUserParam,
   UserType,
   UserLocationFilter,
+  UserSMSParam,
 } from '@/types';
 import { jwtAxios } from './axios.api';
 import { getAuthorizeHeader } from '@/libs/data-helper';
@@ -51,6 +52,13 @@ export const getUsersByLocationId = async (params: UserLocationFilter) => {
   const response = await jwtAxios.get(`/user_locations`, {
     headers: getAuthorizeHeader(),
     params,
+  });
+  return response.data;
+};
+
+export const sendSMSToUser = async (params: UserSMSParam) => {
+  const response = await jwtAxios.post(`/sms/user`, params, {
+    headers: getAuthorizeHeader(),
   });
   return response.data;
 };

@@ -31,6 +31,7 @@ type UsersTableProps = {
   usersTableData: UserType.User[];
   onSelectedUserIds?: (ids: string[]) => void;
   onFollowupCustomer?: (cid: number) => void;
+  onSendSMS?: (cid: number) => void;
   onDeleteCustomer?: (cid: number) => void;
 };
 
@@ -39,6 +40,7 @@ const UsersTable = ({
   onSelectedUserIds,
   onFollowupCustomer,
   onDeleteCustomer,
+  onSendSMS,
 }: UsersTableProps) => {
   const router = useRouter();
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -54,6 +56,11 @@ const UsersTable = ({
     } else if (key === MenuAction.FOLLOWUP_EMAIL) {
       onFollowupCustomer &&
         onFollowupCustomer(
+          parseInt(anchorElOptionsMenu?.getAttribute('data-key') ?? '0')
+        );
+    } else if (key === MenuAction.SEND_SMS) {
+      onSendSMS &&
+        onSendSMS(
           parseInt(anchorElOptionsMenu?.getAttribute('data-key') ?? '0')
         );
     } else {
@@ -354,7 +361,7 @@ const UsersTable = ({
         {menuCustomerActions.map((item, index) => {
           return (
             <div key={index}>
-              {index === 3 && <Divider />}
+              {index === 4 && <Divider />}
               <UIOptionMenuItem
                 disableRipple
                 disableTouchRipple

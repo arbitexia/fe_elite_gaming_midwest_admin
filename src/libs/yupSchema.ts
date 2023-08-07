@@ -145,3 +145,7 @@ export const CampaignSchema = Yup.object({
   channels: Yup.number().positive().required('Select channels'),
   status: Yup.number().positive().required(),
 });
+
+export const SMSSchema = Yup.object({
+  text: Yup.string().min(10).max(150).required(),
+});

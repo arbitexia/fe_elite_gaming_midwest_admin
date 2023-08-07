@@ -11,6 +11,7 @@ import {
   DeleteUserParam,
   UserType,
   CommonType,
+  UserSMSParam,
 } from '@/types';
 
 // Initial state
@@ -71,6 +72,19 @@ export const deleteUser = createAsyncThunk<
 >('user/deleteUser', async (params: DeleteUserParam, thunkAPI) => {
   try {
     return await userApi.deleteUser(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
+export const sendSMSToUser = createAsyncThunk<
+  CommonType.Message,
+  UserSMSParam,
+  { dispatch: AppDispatch; state: RootState }
+>('user/sendSMSToUser', async (params: UserSMSParam, thunkAPI) => {
+  try {
+    return await userApi.sendSMSToUser(params);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
@@ -170,6 +184,26 @@ export const userSlice = createSlice({
         }
       )
       .addCase(deleteUser.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(sendSMSToUser.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        sendSMSToUser.fulfilled,
+        (state, { payload }: PayloadAction<CommonType.Message>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.message = payload.message;
+        }
+      )
+      .addCase(sendSMSToUser.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;

@@ -82,6 +82,7 @@ export {
   getUsers,
   updateUser,
   deleteUser,
+  sendSMSToUser,
   resetUserMessage,
 } from './user.slice';
 

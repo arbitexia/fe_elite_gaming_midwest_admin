@@ -96,3 +96,8 @@ export type UserLocationFilter = {
 export type DeleteUserParam = {
   userId: number;
 };
+
+export type UserSMSParam = {
+  userId: number;
+  text: string;
+};

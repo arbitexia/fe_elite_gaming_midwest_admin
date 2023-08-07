@@ -3,6 +3,7 @@ import { Divider } from '@mui/material';
 import {
   FollowUpEmailDialog,
   SendEmailDialog,
+  SendSMSDialog,
   UsersListHeader,
   UsersListPagination,
   UsersListTable,
@@ -18,7 +19,8 @@ import { UserRoleIDEnum } from '@/constants';
 const UsersListPage = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const { users, pageInfo, onGetUsers, onDeleteUser } = useUser();
+  const { users, pageInfo, onGetUsers, onDeleteUser, onSendSMSToUser } =
+    useUser();
   const { locations, onGetLocations } = useLocation();
   const { me } = useAuth();
   const {
@@ -37,6 +39,7 @@ const UsersListPage = () => {
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>();
   const [followUpCustomerId, setFollowUpCustomerId] = useState<number>();
   const [deletedCustomerId, setDeletedCustomerId] = useState<number>();
+  const [smsCustomerId, setSmsCustomerId] = useState<number>();
 
   useEffect(() => {
     if (me) {
@@ -120,6 +123,9 @@ const UsersListPage = () => {
         onDeleteCustomer={(cid: number) => {
           setDeletedCustomerId(cid);
         }}
+        onSendSMS={(cid: number) => {
+          setSmsCustomerId(cid);
+        }}
       />
       <UsersListPagination
         page={page}
@@ -149,6 +155,18 @@ const UsersListPage = () => {
               ...values,
               to: users.find((obj) => obj.id === followUpCustomerId)?.email,
             });
+          }
+        }}
+      />
+      <SendSMSDialog
+        open={!!smsCustomerId}
+        onClose={() => {
+          setSmsCustomerId(undefined);
+        }}
+        title="SMS"
+        onSendSMS={(value) => {
+          if (smsCustomerId) {
+            onSendSMSToUser({ ...value, userId: smsCustomerId });
           }
         }}
       />
